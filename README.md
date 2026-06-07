@@ -18,6 +18,8 @@
 npm install
 npm run dev
 npm run build
+npm run smoke:massive -- AAPL
+npm run fetch:real -- AAPL AMD
 ```
 
 ## Massive API Timing
@@ -28,6 +30,27 @@ npm run build
 2. 要開始 API smoke test 時，註冊 Massive free account 並把 API key 放進 `.env`。
 3. Free tier 被 rate limit 或欄位權限卡住時，再升級到 `Options Starter`。
 4. 若 Weekly CSP 要用於接近盤中實盤決策，再評估 `Options Advanced`，因為 real-time quotes 對 bid/ask spread 更重要。
+
+## Massive Starter Findings
+
+`Options Starter` 已可讀取 option snapshot endpoint，包含 contract details、Greeks、implied volatility、open interest、day OHLCV 和 underlying ticker。Starter 目前沒有 options quote/trade entitlement；`last_quote`、bid/ask、last trade endpoint 會缺失或回 403。只訂 Options plan 時，stock snapshot 也會回 403，因此 underlying price 需要用其他資料源、Stocks plan，或暫時用外部/手動 price feed 補齊。
+
+## Real Data MVP Strategy
+
+目前 real-data MVP 使用 Massive Options Starter + Nasdaq no-key quote endpoint：
+
+- Massive: option snapshot、Greeks、IV、OI、option day OHLCV。
+- Nasdaq: underlying stock/ETF last sale price。
+- Bid/ask: Starter 沒有 quote entitlement，暫時用 option day close 作為 price proxy。
+- IV Percentile: Massive 不直接提供，暫時用 current IV 作為 proxy；之後累積歷史 snapshot 後再改成真正 percentile。
+
+產生 real data：
+
+```bash
+npm run fetch:real -- AAPL AMD NVDA TSLA MSFT SMH
+```
+
+輸出檔案會寫到 `src/data/generated/realOptions.json`，Dashboard 會自動啟用 Real data mode。
 
 `.env` example:
 

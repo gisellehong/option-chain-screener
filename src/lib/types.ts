@@ -65,6 +65,9 @@ export interface OptionCandidate {
   volume: number;
   dayChangePct: number;
   earningsDate?: string;
+  priceSource?: string;
+  underlyingPriceSource?: string;
+  ivPercentileSource?: string;
 }
 
 export interface ScoredCandidate extends OptionCandidate {

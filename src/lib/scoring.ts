@@ -90,6 +90,18 @@ function buildWarnings(candidate: OptionCandidate, derived: ReturnType<typeof de
     warnings.push("Thin OI");
   }
 
+  if (candidate.priceSource === "option_day_close_proxy") {
+    warnings.push("No bid/ask; using option day close");
+  }
+
+  if (candidate.underlyingPriceSource && candidate.underlyingPriceSource !== "massive_snapshot") {
+    warnings.push(`Underlying from ${candidate.underlyingPriceSource}`);
+  }
+
+  if (candidate.ivPercentileSource === "current_iv_proxy") {
+    warnings.push("IV percentile proxy");
+  }
+
   return warnings;
 }
 

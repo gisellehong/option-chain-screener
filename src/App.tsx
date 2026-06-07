@@ -11,10 +11,13 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { mockOptions } from "./data/mockOptions";
+import realOptionsRaw from "./data/generated/realOptions.json";
 import { screenerConfigs } from "./data/screenerConfigs";
 import { compactNumber, formatCurrency, formatNumber, formatPercent } from "./lib/format";
 import { scoreCandidates } from "./lib/scoring";
-import type { ScoredCandidate, ScreenerConfig, ScreenerId } from "./lib/types";
+import type { DataSourceMode, OptionCandidate, ScoredCandidate, ScreenerConfig, ScreenerId } from "./lib/types";
+
+const realOptions = realOptionsRaw as OptionCandidate[];
 
 function filterLabel(config: ScreenerConfig): string {
   return config.filters
@@ -265,9 +268,11 @@ function DetailPanel({ row, config }: { row?: ScoredCandidate; config: ScreenerC
 export function App() {
   const [activeScreenerId, setActiveScreenerId] = useState<ScreenerId>("leaps_deep_itm_call");
   const [showAll, setShowAll] = useState(false);
+  const [dataSource, setDataSource] = useState<DataSourceMode>(realOptions.length > 0 ? "massive" : "mock");
   const activeConfig = screenerConfigs.find((config) => config.id === activeScreenerId) ?? screenerConfigs[0];
-  const rows = useMemo(() => scoreCandidates(activeConfig, mockOptions, showAll), [activeConfig, showAll]);
-  const matchedRows = useMemo(() => scoreCandidates(activeConfig, mockOptions, false), [activeConfig]);
+  const dataSet = dataSource === "massive" && realOptions.length > 0 ? realOptions : mockOptions;
+  const rows = useMemo(() => scoreCandidates(activeConfig, dataSet, showAll), [activeConfig, dataSet, showAll]);
+  const matchedRows = useMemo(() => scoreCandidates(activeConfig, dataSet, false), [activeConfig, dataSet]);
   const [selectedId, setSelectedId] = useState<string>("");
   const selectedRow = rows.find((row) => row.id === selectedId) ?? rows[0];
 
@@ -322,7 +327,11 @@ export function App() {
         <SummaryMetric label="Matched" value={String(matchedRows.length)} subValue={`${rows.length} visible rows`} />
         <SummaryMetric label="Best Score" value={formatNumber(bestScore, 0)} subValue={activeConfig.shortName} />
         <SummaryMetric label="Avg Spread" value={formatCurrency(avgSpread)} subValue="matched contracts" />
-        <SummaryMetric label="Data Source" value="Mock" subValue={`Updated ${reportTime}`} />
+        <SummaryMetric
+          label="Data Source"
+          value={dataSource === "massive" && realOptions.length > 0 ? "Massive + Nasdaq" : "Mock"}
+          subValue={`Updated ${reportTime}`}
+        />
       </section>
 
       <section className="workspace">
@@ -335,10 +344,21 @@ export function App() {
               </div>
               <p>{activeConfig.intent}</p>
             </div>
-            <label className="toggle">
-              <input type="checkbox" checked={showAll} onChange={(event) => setShowAll(event.target.checked)} />
-              <span>Show rejects</span>
-            </label>
+            <div className="screenerControls">
+              <label className="toggle">
+                <input type="checkbox" checked={showAll} onChange={(event) => setShowAll(event.target.checked)} />
+                <span>Show rejects</span>
+              </label>
+              <label className="toggle">
+                <input
+                  type="checkbox"
+                  checked={dataSource === "massive" && realOptions.length > 0}
+                  disabled={realOptions.length === 0}
+                  onChange={(event) => setDataSource(event.target.checked ? "massive" : "mock")}
+                />
+                <span>Real data</span>
+              </label>
+            </div>
           </section>
 
           <section className="filterRail">
