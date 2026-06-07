@@ -1,6 +1,8 @@
 # Option Chain Screener
 
-本專案是用來取代手動調整 Moomoo/Futubull options screener 的本地 MVP。第一版先以兩個策略為核心：
+本專案是用來取代手動調整 Moomoo/Futubull options screener 的本地 MVP。資料源已固定為 moomoo OpenD live data，並保留 mock data 作為 UI / 離線開發用途。
+
+第一版先以兩個策略為核心：
 
 - `Deep ITM LEAPS Call`: 尋找可替代正股持倉的深度價內 LEAPS Call。
 - `IV Expansion for Weekly CSP`: 尋找高 IV、短天期、流動性足夠的 Weekly Cash Secured Put。
@@ -8,9 +10,19 @@
 ## MVP Scope
 
 - Strategy configs: 把篩選條件集中在 `src/data/screenerConfigs.ts`。
+- Scenario filters: 每個策略同時有 `Best case` 和 `Middle case`，Dashboard 會同時呈現兩組結果。
 - Scoring engine: 由 `src/lib/scoring.ts` 計算衍生欄位、filter pass/fail 和 score。
 - Dashboard: 顯示 overview、filter rail、candidate table、contract detail、warnings 和 CSV export。
-- Data source: 預設使用 mock data，Massive API adapter 已先建立在 `src/api/massiveClient.ts`。
+- Data source: moomoo OpenD live snapshot，輸出到 `src/data/generated/realOptions.json`。
+
+## Screener Scenarios
+
+每個 screener strategy 不再只有一組 fixed filters，而是同時顯示兩個 scenario：
+
+- `Best case`: 嚴格條件，用來找最接近理想交易結構的候選。
+- `Middle case`: 放寬後的次要選擇，用來找還值得研究、但不完全符合最佳條件的候選。
+
+Dashboard 每個 scenario 都有 `Adjust filters` 區塊，可以直接在 UI 修改 min/max threshold，結果會即時重算。這些 UI 調整目前只保留在當次 session；要改預設值時，再更新 `src/data/screenerConfigs.ts` 裡對應 strategy 的 `scenarios`。
 
 ## Local Commands
 
@@ -18,53 +30,107 @@
 npm install
 npm run dev
 npm run build
-npm run smoke:massive -- AAPL
-npm run fetch:real -- AAPL AMD
+npm run fetch:moomoo -- AAPL AMD NVDA TSLA MSFT SMH
+npm run snapshot -- --session pre_market
+npm run report:telegram -- --session pre_market
 ```
 
-## Massive API Timing
+## GitHub Pages
 
-現在不需要立刻付費。建議流程：
+This app can be deployed as a static GitHub Pages site. The deployed page shows the latest committed `src/data/generated/realOptions.json`; GitHub Pages does not call moomoo OpenD directly.
 
-1. 先用 mock data 確認 dashboard、欄位、score 和排序邏輯。
-2. 要開始 API smoke test 時，註冊 Massive free account 並把 API key 放進 `.env`。
-3. Free tier 被 rate limit 或欄位權限卡住時，再升級到 `Options Starter`。
-4. 若 Weekly CSP 要用於接近盤中實盤決策，再評估 `Options Advanced`，因為 real-time quotes 對 bid/ask spread 更重要。
-
-## Massive Starter Findings
-
-`Options Starter` 已可讀取 option snapshot endpoint，包含 contract details、Greeks、implied volatility、open interest、day OHLCV 和 underlying ticker。Starter 目前沒有 options quote/trade entitlement；`last_quote`、bid/ask、last trade endpoint 會缺失或回 403。只訂 Options plan 時，stock snapshot 也會回 403，因此 underlying price 需要用其他資料源、Stocks plan，或暫時用外部/手動 price feed 補齊。
-
-## Real Data MVP Strategy
-
-目前 real-data MVP 使用 Massive Options Starter + Nasdaq no-key quote endpoint：
-
-- Massive: option snapshot、Greeks、IV、OI、option day OHLCV。
-- Nasdaq: underlying stock/ETF last sale price。
-- Bid/ask: Starter 沒有 quote entitlement，暫時用 option day close 作為 price proxy。
-- IV Percentile: Massive 不直接提供，暫時用 current IV 作為 proxy；之後累積歷史 snapshot 後再改成真正 percentile。
-
-產生 real data：
+Deployment flow:
 
 ```bash
-npm run fetch:real -- AAPL AMD NVDA TSLA MSFT SMH
+npm run fetch:moomoo -- AAPL AMD NVDA TSLA MSFT SMH
+npm run build
+git add .
+git commit -m "Update moomoo screener data"
+git push origin main
 ```
 
-輸出檔案會寫到 `src/data/generated/realOptions.json`，Dashboard 會自動啟用 Real data mode。
+After pushing, GitHub Actions runs `.github/workflows/deploy-pages.yml` and publishes `dist/` to Pages.
 
-`.env` example:
+## Moomoo OpenD Data Source
+
+moomoo API 需要先啟動並登入 OpenD gateway；它不是單純 REST API。資料流程會用 Python SDK 連到 OpenD，批量抓取 option chain，再用 market snapshot 補 bid/ask、Greeks、IV、OI、volume 和 underlying price，最後寫入 `src/data/generated/realOptions.json`。
+
+首次使用：
 
 ```bash
-VITE_MASSIVE_API_KEY=your_key_here
-VITE_DATA_SOURCE=mock
+python3 -m pip install moomoo
+npm run fetch:moomoo -- AAPL AMD NVDA TSLA MSFT SMH
 ```
 
-## API Notes
+OpenD host/port 可用環境變數覆蓋：
 
-Massive option chain snapshot 可對應 Greeks、implied volatility、open interest、bid/ask、last trade、underlying price 等欄位。`IV Percentile`、market cap、sector、earnings date、day change 這類欄位可能需要從其他 endpoint、外部資料或本地歷史累積計算取得。
+```bash
+MOOMOO_OPEND_HOST=127.0.0.1 MOOMOO_OPEND_PORT=11111 npm run fetch:moomoo -- AAPL
+```
 
-## Automation Roadmap
+## Scheduled Snapshots and Telegram Reports
 
-- Daily report: 把 matched candidates 轉成 Markdown/JSON，交給 Hermes Agent 或 Telegram bot。
-- Scheduled job: 先用本地 cron 或 launchd；等資料流程穩定後再接 Codex automation/thread wakeup。
-- Run history: 儲存每日 screener results，用於新增/移除標的、IV percentile 和回測。
+Watchlists live in `config/watchlists.json` and are split by strategy:
+
+- `leaps`: long-term deep ITM call universe.
+- `weekly_csp`: short-dated cash-secured put universe.
+
+Run a session snapshot manually:
+
+```bash
+npm run snapshot -- --session pre_market
+npm run snapshot -- --session open_30m
+npm run snapshot -- --session hourly
+npm run snapshot -- --session pre_close
+```
+
+The snapshot runner:
+
+- Reads the combined watchlist.
+- Calls the moomoo fetcher unless `--skip-fetch` is passed.
+- Updates `src/data/generated/realOptions.json`.
+- Writes `src/data/generated/realOptions.meta.json` for the Dashboard.
+- Archives a local snapshot under `data/snapshots/`.
+- Writes a Markdown session report under `data/reports/`.
+
+Send the latest generated data to Telegram:
+
+```bash
+npm run report:telegram -- --session pre_market
+```
+
+Telegram requires `.env` values:
+
+```bash
+TELEGRAM_BOT_TOKEN=...
+TELEGRAM_CHAT_ID=...
+```
+
+For dry runs without calling OpenD:
+
+```bash
+npm run snapshot -- --session manual --skip-fetch
+```
+
+目前 moomoo fetcher 會：
+
+- 用 `get_option_expiration_date` 找 weekly CSP 與 LEAPS 目標到期日。
+- 用 `get_option_chain` 取合約代碼並先依 strike range 粗篩。
+- 用 `get_market_snapshot` 批量補報價與 Greeks。
+- 暫時用 current IV 作為 `IV Proxy`；等累積歷史 snapshot 後再改成真正 IV percentile / IV rank。
+
+注意事項：
+
+- OpenD 必須已登入並完成 API questionnaire / agreement。
+- 美股 options data 需要對應 OPRA / option quote right；沒有權限時 snapshot 或 subscription 可能回錯。
+- `get_option_chain` 官方限制為 10 requests / 30 seconds，script 內建節流，抓多個 ticker 需要等待。
+
+## Fine-tuning Checklist
+
+- Universe: 決定 watchlist 是固定大型股/ETF，還是從 moomoo screener 動態找標的。
+- Strategy windows: 校準 Weekly CSP 的 DTE range，以及 LEAPS 的 DTE range。
+- Liquidity filters: 用 moomoo live bid/ask、OI、volume 重新調整最低流動性條件。
+- Pricing quality: `moomoo_last_price_proxy` 會被排除，避免沒有 bid/ask 的合約進入候選。
+- IV percentile: 累積 run history，從 `IV Proxy` 改成真正 IV percentile / IV rank。
+- Scoring weights: 用實際候選清單調整 score 權重，讓排序符合交易直覺。
+- Reporting: 把 matched candidates 轉成 Markdown/JSON，交給 Hermes Agent 或 Telegram bot。

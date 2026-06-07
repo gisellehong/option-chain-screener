@@ -75,6 +75,17 @@ function passesFilter(candidate: ScoredCandidate, filter: FilterRule): boolean {
   return value <= Number(filter.max);
 }
 
+function hasUsableQuote(candidate: OptionCandidate): boolean {
+  return (
+    candidate.priceSource !== "moomoo_last_price_proxy" &&
+    Number.isFinite(candidate.bid) &&
+    Number.isFinite(candidate.ask) &&
+    candidate.bid > 0 &&
+    candidate.ask > 0 &&
+    candidate.ask >= candidate.bid
+  );
+}
+
 function buildWarnings(candidate: OptionCandidate, derived: ReturnType<typeof derive>): string[] {
   const warnings: string[] = [];
 
@@ -90,16 +101,12 @@ function buildWarnings(candidate: OptionCandidate, derived: ReturnType<typeof de
     warnings.push("Thin OI");
   }
 
-  if (candidate.priceSource === "option_day_close_proxy") {
-    warnings.push("No bid/ask; using option day close");
-  }
-
-  if (candidate.underlyingPriceSource && candidate.underlyingPriceSource !== "massive_snapshot") {
+  if (candidate.underlyingPriceSource && candidate.underlyingPriceSource !== "moomoo_snapshot") {
     warnings.push(`Underlying from ${candidate.underlyingPriceSource}`);
   }
 
   if (candidate.ivPercentileSource === "current_iv_proxy") {
-    warnings.push("IV percentile proxy");
+    warnings.push("IV proxy; no history yet");
   }
 
   return warnings;
@@ -108,30 +115,32 @@ function buildWarnings(candidate: OptionCandidate, derived: ReturnType<typeof de
 function scoreLeaps(candidate: ScoredCandidate): number {
   const deltaFit = 100 - Math.abs(candidate.delta - 0.8) * 800;
   const intrinsicFit = 100 - Math.abs(candidate.intrinsicValuePct - 78) * 4;
-  const lowIv = 100 - candidate.ivPercentile;
+  const lowIvProxy = 100 - candidate.ivPercentile;
   const tightSpread = 100 - candidate.spreadPct * 3;
   const liquidity = clamp(Math.log10(candidate.openInterest + candidate.volume + 1) * 18);
 
-  return clamp(deltaFit * 0.24 + intrinsicFit * 0.26 + lowIv * 0.22 + tightSpread * 0.14 + liquidity * 0.14);
+  return clamp(deltaFit * 0.24 + intrinsicFit * 0.26 + lowIvProxy * 0.22 + tightSpread * 0.14 + liquidity * 0.14);
 }
 
 function scoreWeeklyCsp(candidate: ScoredCandidate): number {
-  const highIv = clamp(candidate.ivPercentile);
+  const highIvProxy = clamp(candidate.ivPercentile);
   const liquidity = clamp(Math.log10(candidate.volume + candidate.openInterest + 1) * 16);
   const tightSpread = 100 - candidate.spreadPct * 3.5;
   const premium = clamp(candidate.annualizedRoi / 8);
   const otmBuffer = clamp(candidate.distanceOtmPct * 9);
   const dteFit = 100 - Math.abs(candidate.dte - 5) * 10;
 
-  return clamp(highIv * 0.24 + liquidity * 0.2 + tightSpread * 0.18 + premium * 0.18 + otmBuffer * 0.12 + dteFit * 0.08);
+  return clamp(highIvProxy * 0.24 + liquidity * 0.2 + tightSpread * 0.18 + premium * 0.18 + otmBuffer * 0.12 + dteFit * 0.08);
 }
 
 export function scoreCandidates(
   config: ScreenerConfig,
+  filters: FilterRule[],
   candidates: OptionCandidate[],
   showAll = false,
 ): ScoredCandidate[] {
   return candidates
+    .filter(hasUsableQuote)
     .filter((candidate) => candidate.optionType === config.optionType)
     .map((candidate) => {
       const derived = derive(candidate);
@@ -143,7 +152,7 @@ export function scoreCandidates(
         failedFilters: [],
         warnings: buildWarnings(candidate, derived),
       };
-      const failedFilters = config.filters
+      const failedFilters = filters
         .filter((filter) => !passesFilter(scoredBase, filter))
         .map((filter) => filter.label);
       const score = config.id === "leaps_deep_itm_call" ? scoreLeaps(scoredBase) : scoreWeeklyCsp(scoredBase);

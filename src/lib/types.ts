@@ -4,7 +4,7 @@ export type OptionType = "call" | "put";
 
 export type FilterOperator = "between" | "gte" | "lte";
 
-export type DataSourceMode = "mock" | "massive";
+export type DataSourceMode = "mock" | "moomoo";
 
 export type MetricField =
   | keyof OptionCandidate
@@ -31,14 +31,22 @@ export interface FilterRule {
   unit?: string;
 }
 
+export interface ScreenerScenario {
+  id: "best" | "middle";
+  name: string;
+  shortName: string;
+  intent: string;
+  filters: FilterRule[];
+}
+
 export interface ScreenerConfig {
   id: ScreenerId;
   name: string;
   shortName: string;
   intent: string;
   optionType: OptionType;
-  filters: FilterRule[];
   sortDescription: string;
+  scenarios: ScreenerScenario[];
 }
 
 export interface OptionCandidate {

@@ -12,27 +12,57 @@ import {
 } from "lucide-react";
 import { mockOptions } from "./data/mockOptions";
 import realOptionsRaw from "./data/generated/realOptions.json";
+import realOptionsMetaRaw from "./data/generated/realOptions.meta.json";
 import { screenerConfigs } from "./data/screenerConfigs";
 import { compactNumber, formatCurrency, formatNumber, formatPercent } from "./lib/format";
 import { scoreCandidates } from "./lib/scoring";
-import type { DataSourceMode, OptionCandidate, ScoredCandidate, ScreenerConfig, ScreenerId } from "./lib/types";
+import type {
+  DataSourceMode,
+  FilterRule,
+  OptionCandidate,
+  ScoredCandidate,
+  ScreenerConfig,
+  ScreenerId,
+  ScreenerScenario,
+} from "./lib/types";
 
 const realOptions = realOptionsRaw as OptionCandidate[];
+const realOptionsMeta = realOptionsMetaRaw as {
+  generatedAt: string | null;
+  session: string;
+  candidateCount: number;
+  reportPath: string | null;
+  telegram?: {
+    enabled: boolean;
+    sent: boolean;
+    error: string | null;
+  };
+};
 
-function filterLabel(config: ScreenerConfig): string {
-  return config.filters
-    .map((filter) => {
-      if (filter.operator === "between") {
-        return `${filter.label}: ${filter.min}${filter.unit ?? ""}-${filter.max}${filter.unit ?? ""}`;
-      }
+const sessionLabels: Record<string, string> = {
+  pre_market: "Pre-market",
+  open_30m: "Open +30m",
+  hourly: "Hourly",
+  pre_close: "Pre-close",
+  manual: "Manual",
+  none: "No snapshot",
+};
 
-      if (filter.operator === "gte") {
-        return `${filter.label}: >=${filter.min}${filter.unit ?? ""}`;
-      }
+function dataSourceLabel(dataSource: DataSourceMode): string {
+  if (dataSource === "moomoo") return "Moomoo OpenD";
+  return "Mock";
+}
 
-      return `${filter.label}: <=${filter.max}${filter.unit ?? ""}`;
-    })
-    .join("  ");
+function formatFilterRule(filter: FilterRule): string {
+  if (filter.operator === "between") {
+    return `${filter.label}: ${filter.min}${filter.unit ?? ""}-${filter.max}${filter.unit ?? ""}`;
+  }
+
+  if (filter.operator === "gte") {
+    return `${filter.label}: >=${filter.min}${filter.unit ?? ""}`;
+  }
+
+  return `${filter.label}: <=${filter.max}${filter.unit ?? ""}`;
 }
 
 function scoreTone(score: number): string {
@@ -41,8 +71,19 @@ function scoreTone(score: number): string {
   return "weak";
 }
 
-function exportCsv(rows: ScoredCandidate[], config: ScreenerConfig): void {
+function filterStep(field: FilterRule["field"]): number {
+  if (field === "delta" || field === "gamma" || field === "theta" || field === "vega") return 0.01;
+  if (field === "spread" || field === "lastPrice" || field === "bid" || field === "ask") return 0.05;
+  if (field === "dte" || field === "openInterest" || field === "volume") return 1;
+  return 0.1;
+}
+
+function exportCsv(
+  scenarioResults: Array<{ scenario: ScreenerScenario; rows: ScoredCandidate[] }>,
+  config: ScreenerConfig,
+): void {
   const headers = [
+    "scenario",
     "ticker",
     "expiration",
     "dte",
@@ -50,7 +91,7 @@ function exportCsv(rows: ScoredCandidate[], config: ScreenerConfig): void {
     "underlyingPrice",
     "delta",
     "iv",
-    "ivPercentile",
+    "ivProxy",
     "bid",
     "ask",
     "mid",
@@ -61,13 +102,20 @@ function exportCsv(rows: ScoredCandidate[], config: ScreenerConfig): void {
   ];
   const csv = [
     headers.join(","),
-    ...rows.map((row) =>
-      headers
-        .map((header) => {
-          const value = row[header as keyof ScoredCandidate];
-          return typeof value === "string" ? `"${value}"` : String(value ?? "");
-        })
-        .join(","),
+    ...scenarioResults.flatMap(({ scenario, rows }) =>
+      rows.map((row) =>
+        headers
+          .map((header) => {
+            const value =
+              header === "scenario"
+                ? scenario.name
+                : header === "ivProxy"
+                  ? row.ivPercentile
+                  : row[header as keyof ScoredCandidate];
+            return typeof value === "string" ? `"${value}"` : String(value ?? "");
+          })
+          .join(","),
+      ),
     ),
   ].join("\n");
   const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
@@ -99,70 +147,156 @@ function SummaryMetric({
 
 function CandidateTable({
   config,
+  scenario,
+  filters,
   rows,
   selectedId,
   onSelect,
+  onFilterChange,
+  onResetFilters,
 }: {
   config: ScreenerConfig;
+  scenario: ScreenerScenario;
+  filters: FilterRule[];
   rows: ScoredCandidate[];
   selectedId: string;
   onSelect: (id: string) => void;
+  onFilterChange: (filterIndex: number, bound: "min" | "max", value: number | undefined) => void;
+  onResetFilters: () => void;
 }) {
   const isLeaps = config.id === "leaps_deep_itm_call";
 
   return (
-    <div className="tableWrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Score</th>
-            <th>Ticker</th>
-            <th>Expiry</th>
-            <th>DTE</th>
-            <th>Strike</th>
-            <th>Delta</th>
-            <th>IV</th>
-            <th>IV %ile</th>
-            <th>Bid/Ask</th>
-            <th>{isLeaps ? "% Intrinsic" : "Ann. ROI"}</th>
-            <th>{isLeaps ? "Leverage" : "% OTM"}</th>
-            <th>OI</th>
-            <th>Volume</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row) => (
-            <tr
-              key={row.id}
-              className={row.id === selectedId ? "selected" : ""}
-              onClick={() => onSelect(row.id)}
-            >
-              <td>
-                <span className={`score ${scoreTone(row.score)}`}>{formatNumber(row.score, 0)}</span>
-              </td>
-              <td>
-                <strong>{row.ticker}</strong>
-                <small>{row.sector}</small>
-              </td>
-              <td>{row.expiration}</td>
-              <td>{row.dte}</td>
-              <td>{formatCurrency(row.strike, 0)}</td>
-              <td>{formatNumber(row.delta, 2)}</td>
-              <td>{formatPercent(row.iv, 1)}</td>
-              <td>{formatPercent(row.ivPercentile, 0)}</td>
-              <td>
-                {formatCurrency(row.bid)} / {formatCurrency(row.ask)}
-                <small>{formatCurrency(row.spread)} spread</small>
-              </td>
-              <td>{isLeaps ? formatPercent(row.intrinsicValuePct, 1) : formatPercent(row.annualizedRoi, 0)}</td>
-              <td>{isLeaps ? `${formatNumber(row.leverageRatio, 1)}x` : formatPercent(row.distanceOtmPct, 1)}</td>
-              <td>{compactNumber(row.openInterest)}</td>
-              <td>{compactNumber(row.volume)}</td>
-            </tr>
+    <section className={`scenarioPanel ${scenario.id}`}>
+      <div className="scenarioHead">
+        <div>
+          <span>{scenario.shortName}</span>
+          <h3>{scenario.name}</h3>
+          <p>{scenario.intent}</p>
+        </div>
+        <strong>{rows.length}</strong>
+      </div>
+
+      <section className="filterRail">
+        <SlidersHorizontal size={18} />
+        <div>
+          {filters.map((filter) => (
+            <span key={`${filter.field}-${filter.label}`}>{formatFilterRule(filter)}</span>
           ))}
-        </tbody>
-      </table>
-    </div>
+        </div>
+      </section>
+
+      <details className="filterEditor">
+        <summary>Adjust filters</summary>
+        <div className="filterGrid">
+          {filters.map((filter, index) => (
+            <label key={`${filter.field}-${filter.label}`} className="filterControl">
+              <span>{filter.label}</span>
+              {filter.operator === "between" && (
+                <div>
+                  <input
+                    type="number"
+                    step={filterStep(filter.field)}
+                    value={filter.min ?? ""}
+                    onChange={(event) =>
+                      onFilterChange(index, "min", event.target.value === "" ? undefined : Number(event.target.value))
+                    }
+                  />
+                  <input
+                    type="number"
+                    step={filterStep(filter.field)}
+                    value={filter.max ?? ""}
+                    onChange={(event) =>
+                      onFilterChange(index, "max", event.target.value === "" ? undefined : Number(event.target.value))
+                    }
+                  />
+                </div>
+              )}
+              {filter.operator === "gte" && (
+                <div>
+                  <input
+                    type="number"
+                    step={filterStep(filter.field)}
+                    value={filter.min ?? ""}
+                    onChange={(event) =>
+                      onFilterChange(index, "min", event.target.value === "" ? undefined : Number(event.target.value))
+                    }
+                  />
+                </div>
+              )}
+              {filter.operator === "lte" && (
+                <div>
+                  <input
+                    type="number"
+                    step={filterStep(filter.field)}
+                    value={filter.max ?? ""}
+                    onChange={(event) =>
+                      onFilterChange(index, "max", event.target.value === "" ? undefined : Number(event.target.value))
+                    }
+                  />
+                </div>
+              )}
+            </label>
+          ))}
+        </div>
+        <button type="button" className="resetFilters" onClick={onResetFilters}>
+          Reset {scenario.shortName}
+        </button>
+      </details>
+
+      <div className="tableWrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Score</th>
+              <th>Ticker</th>
+              <th>Expiry</th>
+              <th>DTE</th>
+              <th>Strike</th>
+              <th>Delta</th>
+              <th>IV</th>
+              <th>IV Proxy</th>
+              <th>Bid/Ask</th>
+              <th>{isLeaps ? "% Intrinsic" : "Ann. ROI"}</th>
+              <th>{isLeaps ? "Leverage" : "% OTM"}</th>
+              <th>OI</th>
+              <th>Volume</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row) => (
+              <tr
+                key={`${scenario.id}-${row.id}`}
+                className={row.id === selectedId ? "selected" : ""}
+                onClick={() => onSelect(row.id)}
+              >
+                <td>
+                  <span className={`score ${scoreTone(row.score)}`}>{formatNumber(row.score, 0)}</span>
+                </td>
+                <td>
+                  <strong>{row.ticker}</strong>
+                  <small>{row.sector}</small>
+                </td>
+                <td>{row.expiration}</td>
+                <td>{row.dte}</td>
+                <td>{formatCurrency(row.strike, 0)}</td>
+                <td>{formatNumber(row.delta, 2)}</td>
+                <td>{formatPercent(row.iv, 1)}</td>
+                <td>{formatPercent(row.ivPercentile, 0)}</td>
+                <td>
+                  {formatCurrency(row.bid)} / {formatCurrency(row.ask)}
+                  <small>{formatCurrency(row.spread)} spread</small>
+                </td>
+                <td>{isLeaps ? formatPercent(row.intrinsicValuePct, 1) : formatPercent(row.annualizedRoi, 0)}</td>
+                <td>{isLeaps ? `${formatNumber(row.leverageRatio, 1)}x` : formatPercent(row.distanceOtmPct, 1)}</td>
+                <td>{compactNumber(row.openInterest)}</td>
+                <td>{compactNumber(row.volume)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
   );
 }
 
@@ -232,7 +366,7 @@ function DetailPanel({ row, config }: { row?: ScoredCandidate; config: ScreenerC
           </dd>
         </div>
         <div>
-          <dt>IV / IV Percentile</dt>
+          <dt>IV / IV Proxy</dt>
           <dd>
             {formatPercent(row.iv, 1)} / {formatPercent(row.ivPercentile, 0)}
           </dd>
@@ -268,23 +402,72 @@ function DetailPanel({ row, config }: { row?: ScoredCandidate; config: ScreenerC
 export function App() {
   const [activeScreenerId, setActiveScreenerId] = useState<ScreenerId>("leaps_deep_itm_call");
   const [showAll, setShowAll] = useState(false);
-  const [dataSource, setDataSource] = useState<DataSourceMode>(realOptions.length > 0 ? "massive" : "mock");
+  const realDataSource: DataSourceMode = realOptions.length > 0 ? "moomoo" : "mock";
+  const [dataSource, setDataSource] = useState<DataSourceMode>(realDataSource);
+  const [filterOverrides, setFilterOverrides] = useState<Record<string, FilterRule[]>>({});
   const activeConfig = screenerConfigs.find((config) => config.id === activeScreenerId) ?? screenerConfigs[0];
-  const dataSet = dataSource === "massive" && realOptions.length > 0 ? realOptions : mockOptions;
-  const rows = useMemo(() => scoreCandidates(activeConfig, dataSet, showAll), [activeConfig, dataSet, showAll]);
-  const matchedRows = useMemo(() => scoreCandidates(activeConfig, dataSet, false), [activeConfig, dataSet]);
+  const dataSet = dataSource !== "mock" && realOptions.length > 0 ? realOptions : mockOptions;
+  const scenarioKey = (scenario: ScreenerScenario) => `${activeConfig.id}:${scenario.id}`;
+  const scenarioResults = useMemo(
+    () =>
+      activeConfig.scenarios.map((scenario) => {
+        const filters = filterOverrides[`${activeConfig.id}:${scenario.id}`] ?? scenario.filters;
+        return {
+          scenario,
+          filters,
+          rows: scoreCandidates(activeConfig, filters, dataSet, showAll),
+          matchedRows: scoreCandidates(activeConfig, filters, dataSet, false),
+        };
+      }),
+    [activeConfig, dataSet, filterOverrides, showAll],
+  );
+  const bestResult = scenarioResults.find((result) => result.scenario.id === "best") ?? scenarioResults[0];
+  const middleResult = scenarioResults.find((result) => result.scenario.id === "middle") ?? scenarioResults[1];
+  const allRows = scenarioResults.flatMap((result) => result.rows);
+  const allMatchedRows = scenarioResults.flatMap((result) => result.matchedRows);
   const [selectedId, setSelectedId] = useState<string>("");
-  const selectedRow = rows.find((row) => row.id === selectedId) ?? rows[0];
+  const selectedRow = allRows.find((row) => row.id === selectedId) ?? allRows[0];
 
-  const bestScore = matchedRows[0]?.score ?? 0;
+  const bestScore = allMatchedRows[0]?.score ?? 0;
   const avgSpread =
-    matchedRows.length > 0 ? matchedRows.reduce((sum, row) => sum + row.spread, 0) / matchedRows.length : 0;
-  const reportTime = new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(new Date());
+    allMatchedRows.length > 0 ? allMatchedRows.reduce((sum, row) => sum + row.spread, 0) / allMatchedRows.length : 0;
+  const reportTime = realOptionsMeta.generatedAt
+    ? new Intl.DateTimeFormat("en-US", {
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      }).format(new Date(realOptionsMeta.generatedAt))
+    : "Not generated";
+  const sessionLabel = sessionLabels[realOptionsMeta.session] ?? realOptionsMeta.session;
+  const telegramStatus = realOptionsMeta.telegram?.sent
+    ? "Telegram sent"
+    : realOptionsMeta.telegram?.enabled
+      ? "Telegram failed"
+      : "Telegram off";
+
+  function updateScenarioFilter(
+    scenario: ScreenerScenario,
+    filterIndex: number,
+    bound: "min" | "max",
+    value: number | undefined,
+  ): void {
+    const key = scenarioKey(scenario);
+    const currentFilters = filterOverrides[key] ?? scenario.filters;
+    const nextFilters = currentFilters.map((filter, index) =>
+      index === filterIndex ? { ...filter, [bound]: value } : filter,
+    );
+    setFilterOverrides((current) => ({ ...current, [key]: nextFilters }));
+  }
+
+  function resetScenarioFilters(scenario: ScreenerScenario): void {
+    const key = scenarioKey(scenario);
+    setFilterOverrides((current) => {
+      const next = { ...current };
+      delete next[key];
+      return next;
+    });
+  }
 
   return (
     <main>
@@ -300,7 +483,7 @@ export function App() {
           <button type="button" title="Telegram report">
             <Bell size={18} />
           </button>
-          <button type="button" title="Export CSV" onClick={() => exportCsv(rows, activeConfig)}>
+          <button type="button" title="Export CSV" onClick={() => exportCsv(scenarioResults, activeConfig)}>
             <Download size={18} />
           </button>
         </div>
@@ -324,13 +507,27 @@ export function App() {
       </section>
 
       <section className="overview">
-        <SummaryMetric label="Matched" value={String(matchedRows.length)} subValue={`${rows.length} visible rows`} />
+        <SummaryMetric
+          label="Best Case"
+          value={String(bestResult?.matchedRows.length ?? 0)}
+          subValue={`${bestResult?.rows.length ?? 0} visible rows`}
+        />
+        <SummaryMetric
+          label="Middle Case"
+          value={String(middleResult?.matchedRows.length ?? 0)}
+          subValue={`${middleResult?.rows.length ?? 0} visible rows`}
+        />
         <SummaryMetric label="Best Score" value={formatNumber(bestScore, 0)} subValue={activeConfig.shortName} />
-        <SummaryMetric label="Avg Spread" value={formatCurrency(avgSpread)} subValue="matched contracts" />
+        <SummaryMetric label="Avg Spread" value={formatCurrency(avgSpread)} subValue="all matched contracts" />
         <SummaryMetric
           label="Data Source"
-          value={dataSource === "massive" && realOptions.length > 0 ? "Massive + Nasdaq" : "Mock"}
-          subValue={`Updated ${reportTime}`}
+          value={dataSourceLabel(dataSource !== "mock" && realOptions.length > 0 ? realDataSource : "mock")}
+          subValue={`${sessionLabel} · ${reportTime}`}
+        />
+        <SummaryMetric
+          label="Snapshot"
+          value={String(realOptionsMeta.candidateCount || realOptions.length)}
+          subValue={telegramStatus}
         />
       </section>
 
@@ -352,26 +549,32 @@ export function App() {
               <label className="toggle">
                 <input
                   type="checkbox"
-                  checked={dataSource === "massive" && realOptions.length > 0}
+                  checked={dataSource !== "mock" && realOptions.length > 0}
                   disabled={realOptions.length === 0}
-                  onChange={(event) => setDataSource(event.target.checked ? "massive" : "mock")}
+                  onChange={(event) => setDataSource(event.target.checked ? "moomoo" : "mock")}
                 />
                 <span>Real data</span>
               </label>
             </div>
           </section>
 
-          <section className="filterRail">
-            <SlidersHorizontal size={18} />
-            <span>{filterLabel(activeConfig)}</span>
-          </section>
-
-          <CandidateTable
-            config={activeConfig}
-            rows={rows}
-            selectedId={selectedRow?.id ?? ""}
-            onSelect={setSelectedId}
-          />
+          <div className="scenarioStack">
+            {scenarioResults.map((result) => (
+              <CandidateTable
+                key={result.scenario.id}
+                config={activeConfig}
+                scenario={result.scenario}
+                filters={result.filters}
+                rows={result.rows}
+                selectedId={selectedRow?.id ?? ""}
+                onSelect={setSelectedId}
+                onFilterChange={(filterIndex, bound, value) =>
+                  updateScenarioFilter(result.scenario, filterIndex, bound, value)
+                }
+                onResetFilters={() => resetScenarioFilters(result.scenario)}
+              />
+            ))}
+          </div>
         </div>
 
         <DetailPanel row={selectedRow} config={activeConfig} />

@@ -49,7 +49,8 @@ main {
 }
 
 h1,
-h2 {
+h2,
+h3 {
   margin: 0;
   letter-spacing: 0;
 }
@@ -61,6 +62,11 @@ h1 {
 
 h2 {
   font-size: 19px;
+}
+
+h3 {
+  font-size: 17px;
+  line-height: 1.25;
 }
 
 .actions {
@@ -112,7 +118,7 @@ h2 {
 
 .overview {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 12px;
   padding: 18px 32px;
   background: #fbfaf7;
@@ -205,23 +211,173 @@ h2 {
 
 .filterRail {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
   min-height: 44px;
   margin-bottom: 14px;
   padding: 10px 12px;
-  overflow: hidden;
   border: 1px solid #ded8ce;
   border-radius: 8px;
   background: #fffdfa;
   color: #625c55;
   font-size: 13px;
-  white-space: nowrap;
+}
+
+.filterRail > svg {
+  flex: 0 0 auto;
+  margin-top: 4px;
+}
+
+.filterRail > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-width: 0;
 }
 
 .filterRail span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 3px 8px;
+  border: 1px solid #e2dbcf;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #504b45;
+  font-size: 12px;
+  font-weight: 720;
+  line-height: 1.25;
+}
+
+.scenarioStack {
+  display: grid;
+  gap: 18px;
+}
+
+.scenarioPanel {
+  min-width: 0;
+}
+
+.scenarioHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 10px;
+  padding: 14px 16px;
+  border: 1px solid #ded8ce;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.scenarioHead span {
+  display: inline-flex;
+  margin-bottom: 4px;
+  color: #6f675d;
+  font-size: 12px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.scenarioHead p {
+  max-width: 820px;
+  margin: 6px 0 0;
+  color: #5f5a52;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.scenarioHead > strong {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 54px;
+  height: 38px;
+  border-radius: 999px;
+  background: #202225;
+  color: #ffffff;
+  font-size: 17px;
+}
+
+.scenarioPanel.middle .scenarioHead > strong {
+  background: #4f7fbd;
+}
+
+.filterEditor {
+  margin: -4px 0 14px;
+  border: 1px solid #ded8ce;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.filterEditor summary {
+  min-height: 40px;
+  padding: 10px 12px;
+  color: #403d38;
+  font-size: 13px;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.filterGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 10px;
+  padding: 0 12px 12px;
+}
+
+.filterControl {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.filterControl span {
   overflow: hidden;
+  color: #6b645b;
+  font-size: 12px;
+  font-weight: 750;
   text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.filterControl div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.filterControl div:has(input:only-child) {
+  grid-template-columns: 1fr;
+}
+
+.filterControl input {
+  width: 100%;
+  min-width: 0;
+  height: 34px;
+  padding: 0 8px;
+  border: 1px solid #d6cec1;
+  border-radius: 8px;
+  background: #fffdfa;
+  color: #222427;
+  font-size: 13px;
+}
+
+.filterControl input:focus {
+  border-color: #4f7fbd;
+  outline: 2px solid #dce8f7;
+}
+
+.resetFilters {
+  min-height: 34px;
+  margin: 0 12px 12px;
+  padding: 0 12px;
+  border: 1px solid #cfc7b8;
+  border-radius: 8px;
+  background: #fbfaf7;
+  color: #403d38;
+  font-size: 13px;
+  font-weight: 800;
 }
 
 .tableWrap {
