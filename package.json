@@ -9,7 +9,11 @@
     "preview": "vite preview --host 127.0.0.1",
     "fetch:moomoo": "python3 scripts/fetch-moomoo-data.py",
     "snapshot": "python3 scripts/run-scheduled-snapshot.py",
-    "report:telegram": "python3 scripts/run-scheduled-snapshot.py --skip-fetch --send-telegram"
+    "report:telegram": "python3 scripts/run-scheduled-snapshot.py --skip-fetch --send-telegram",
+    "scheduler:run-due": "python3 scripts/run-due-snapshot.py",
+    "scheduler:install": "python3 scripts/install-launchd-scheduler.py",
+    "scheduler:status": "python3 scripts/install-launchd-scheduler.py --status",
+    "scheduler:uninstall": "python3 scripts/install-launchd-scheduler.py --uninstall"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^5.0.0",

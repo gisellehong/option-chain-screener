@@ -51,6 +51,19 @@ git push origin main
 
 After pushing, GitHub Actions runs `.github/workflows/deploy-pages.yml` and publishes `dist/` to Pages.
 
+Local scheduled snapshots can also publish fresh generated data automatically. Set this in `.env`:
+
+```bash
+AUTO_PUBLISH_GITHUB=true
+```
+
+When enabled, successful non-`--skip-fetch` snapshot runs will commit and push only:
+
+- `src/data/generated/realOptions.json`
+- `src/data/generated/realOptions.meta.json`
+
+GitHub Actions then rebuilds and redeploys the GitHub Pages dashboard. Other local code or config edits are not included in those automatic data commits.
+
 ## Moomoo OpenD Data Source
 
 moomoo API 需要先啟動並登入 OpenD gateway；它不是單純 REST API。資料流程會用 Python SDK 連到 OpenD，批量抓取 option chain，再用 market snapshot 補 bid/ask、Greeks、IV、OI、volume 和 underlying price，最後寫入 `src/data/generated/realOptions.json`。
@@ -104,6 +117,8 @@ Telegram requires `.env` values:
 ```bash
 TELEGRAM_BOT_TOKEN=...
 TELEGRAM_CHAT_ID=...
+DASHBOARD_URL=https://gisellehong.github.io/option-chain-screener/
+AUTO_PUBLISH_GITHUB=true
 ```
 
 For dry runs without calling OpenD:
@@ -111,6 +126,37 @@ For dry runs without calling OpenD:
 ```bash
 npm run snapshot -- --session manual --skip-fetch
 ```
+
+## macOS Auto Schedule
+
+The scheduler is installed as a user LaunchAgent. Launchd wakes it every 5 minutes; `scripts/run-due-snapshot.py` then checks New York time and only runs once for each due session.
+
+Configured session times:
+
+- `pre_market`: 09:00 ET.
+- `open_30m`: 10:00 ET.
+- `hourly`: 10:30, 11:30, 12:30, 13:30, 14:30 ET.
+- `pre_close`: 15:45 ET.
+
+Install or update the scheduler:
+
+```bash
+npm run scheduler:install
+```
+
+Check status:
+
+```bash
+npm run scheduler:status
+```
+
+Stop and remove it:
+
+```bash
+npm run scheduler:uninstall
+```
+
+Logs are written to `data/logs/`, and run state is stored under `data/scheduler/`.
 
 目前 moomoo fetcher 會：
 

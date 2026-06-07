@@ -13,6 +13,7 @@ import urllib.request
 from datetime import datetime
 from pathlib import Path
 from typing import Any
+from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
 WATCHLIST_PATH = ROOT / "config/watchlists.json"
@@ -20,18 +21,19 @@ REAL_OPTIONS_PATH = ROOT / "src/data/generated/realOptions.json"
 META_PATH = ROOT / "src/data/generated/realOptions.meta.json"
 SNAPSHOT_ROOT = ROOT / "data/snapshots"
 REPORT_ROOT = ROOT / "data/reports"
+NY_TZ = ZoneInfo("America/New_York")
 
 SESSION_LABELS = {
-    "pre_market": "Pre-market",
-    "open_30m": "Open +30m",
-    "hourly": "Hourly",
-    "pre_close": "Pre-close",
-    "manual": "Manual",
+    "pre_market": "開盤前 / Pre-market",
+    "open_30m": "開盤後 30 分鐘 / Open +30m",
+    "hourly": "盤中每小時 / Hourly",
+    "pre_close": "收盤前 / Pre-close",
+    "manual": "手動測試 / Manual",
 }
 
 SCREENER_CONFIGS = {
     "leaps": {
-        "title": "Deep ITM LEAPS Call",
+        "title": "LEAPS Call - 深度 ITM 替代正股",
         "option_type": "call",
         "filters": [
             ("dte", "between", 540, 900),
@@ -48,7 +50,7 @@ SCREENER_CONFIGS = {
         ],
     },
     "weekly_csp": {
-        "title": "IV Expansion Weekly CSP",
+        "title": "Weekly CSP - 高 IV 現金擔保 Put",
         "option_type": "put",
         "filters": [
             ("lastPrice", "gte", 2.5, None),
@@ -75,7 +77,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--meta-output", type=Path, default=META_PATH)
     parser.add_argument("--skip-fetch", action="store_true", help="Use the current output JSON instead of calling moomoo.")
     parser.add_argument("--send-telegram", action="store_true", help="Send the generated report to Telegram.")
-    parser.add_argument("--top", type=int, default=5, help="Number of candidates per strategy in the report.")
+    parser.add_argument("--publish", action="store_true", help="Commit and push generated data after a successful fetch.")
+    parser.add_argument("--no-publish", action="store_true", help="Disable AUTO_PUBLISH_GITHUB for this run.")
+    parser.add_argument("--top", type=int, default=3, help="Number of candidates per strategy in the report.")
     return parser.parse_args()
 
 
@@ -247,6 +251,98 @@ def fmt_pct(value: Any, digits: int = 1) -> str:
     return f"{number(value):.{digits}f}%"
 
 
+def fmt_compact(value: Any) -> str:
+    numeric = number(value)
+    if abs(numeric) >= 1_000_000:
+        return f"{numeric / 1_000_000:.1f}M"
+    if abs(numeric) >= 1_000:
+        return f"{numeric / 1_000:.1f}K"
+    return f"{numeric:.0f}"
+
+
+def fmt_time(iso_value: str) -> str:
+    parsed = datetime.fromisoformat(iso_value)
+    local_text = parsed.strftime("%Y-%m-%d %H:%M %Z")
+    ny_text = parsed.astimezone(NY_TZ).strftime("%H:%M %Z")
+    return f"{local_text} / {ny_text}"
+
+
+def score_label(score: Any) -> str:
+    value = number(score)
+    if value >= 78:
+        return "強 / Strong"
+    if value >= 62:
+        return "觀察 / Watch"
+    return "弱 / Weak"
+
+
+def warning_text(warnings: list[str]) -> str:
+    if not warnings:
+        return "無明顯警告"
+    labels = {
+        "wide spread": "價差偏寬",
+        "thin OI": "OI 偏薄",
+        "IV proxy": "IV proxy",
+    }
+    return "、".join(labels.get(item, item) for item in warnings)
+
+
+def short_warning_text(warnings: list[str]) -> str:
+    actionable = [item for item in warnings if item != "IV proxy"]
+    if not actionable:
+        return ""
+    return f" | {warning_text(actionable)}"
+
+
+def contract_line(row: dict[str, Any]) -> str:
+    return (
+        f"{row['ticker']} {row['expiration']} {str(row['optionType']).upper()} "
+        f"{fmt_money(row['strike'])}"
+    )
+
+
+def quote_line(row: dict[str, Any]) -> str:
+    return (
+        f"Mid {fmt_money(row['mid'])} | Bid/Ask {fmt_money(row['bid'])}/{fmt_money(row['ask'])} | "
+        f"Spread {fmt_money(row['spread'])} ({fmt_pct(row['spreadPct'])})"
+    )
+
+
+def risk_line(row: dict[str, Any]) -> str:
+    return (
+        f"DTE {number(row['dte']):.0f} | Delta {number(row['delta']):.2f} | IV {fmt_pct(row['iv'])} | "
+        f"OI {fmt_compact(row['openInterest'])} / Vol {fmt_compact(row['volume'])}"
+    )
+
+
+def leaps_focus_line(row: dict[str, Any]) -> str:
+    return (
+        f"ITM {fmt_pct(row['percentItm'])} | Intrinsic {fmt_pct(row['intrinsicValuePct'])} | "
+        f"Leverage {number(row['leverageRatio']):.1f}x | 警告: {warning_text(row['warnings'])}"
+    )
+
+
+def csp_focus_line(row: dict[str, Any]) -> str:
+    return (
+        f"Ann ROI {fmt_pct(row['annualizedRoi'], 0)} | OTM {fmt_pct(row['distanceOtmPct'])} | "
+        f"Cash Req {fmt_money(row['cashRequired'])} | 警告: {warning_text(row['warnings'])}"
+    )
+
+
+def compact_candidate_line(strategy: str, index: int, row: dict[str, Any]) -> str:
+    if strategy == "leaps":
+        metrics = (
+            f"Score {number(row['score']):.0f}, Delta {number(row['delta']):.2f}, "
+            f"IV {fmt_pct(row['iv'])}, Intr {fmt_pct(row['intrinsicValuePct'], 0)}, Mid {fmt_money(row['mid'])}"
+        )
+    else:
+        metrics = (
+            f"Score {number(row['score']):.0f}, AnnROI {fmt_pct(row['annualizedRoi'], 0)}, "
+            f"OTM {fmt_pct(row['distanceOtmPct'])}, Delta {number(row['delta']):.2f}, Mid {fmt_money(row['mid'])}"
+        )
+    return f"{index}. {contract_line(row)} - {metrics}{short_warning_text(row['warnings'])}"
+
+
 def build_report(
     session: str,
     generated_at: str,
@@ -254,35 +350,30 @@ def build_report(
     candidates: list[dict[str, Any]],
     top: int,
 ) -> str:
+    scored_by_strategy = {
+        "leaps": scored_candidates(candidates, "leaps", watchlists["leaps"]),
+        "weekly_csp": scored_candidates(candidates, "weekly_csp", watchlists["weekly_csp"]),
+    }
+    total_matches = sum(len(rows) for rows in scored_by_strategy.values())
+    dashboard_url = os.getenv("DASHBOARD_URL", "").strip()
     lines = [
-        f"*Option Chain Session Report*",
-        f"Session: {SESSION_LABELS[session]}",
-        f"Generated: {generated_at}",
-        f"Universe: {len(watchlists['combined'])} tickers",
-        "",
+        "*Option Snapshot*",
+        f"{SESSION_LABELS[session]} | {fmt_time(generated_at)}",
+        f"Matched {total_matches} / Raw {len(candidates)} | Universe {len(watchlists['combined'])}",
     ]
-    for strategy, tickers in (("leaps", watchlists["leaps"]), ("weekly_csp", watchlists["weekly_csp"])):
-        rows = scored_candidates(candidates, strategy, tickers)
+    if dashboard_url:
+        lines.append(f"Dashboard: {dashboard_url}")
+    lines.append("")
+
+    for strategy in ("leaps", "weekly_csp"):
+        rows = scored_by_strategy[strategy]
         lines.append(f"*{SCREENER_CONFIGS[strategy]['title']}*")
         if not rows:
-            lines.append("No matched candidates.")
+            lines.append("目前沒有符合條件的候選。")
             lines.append("")
             continue
         for index, row in enumerate(rows[:top], start=1):
-            warn = f" ({', '.join(row['warnings'])})" if row["warnings"] else ""
-            if strategy == "leaps":
-                detail = (
-                    f"{index}. {row['ticker']} {row['expiration']} CALL {fmt_money(row['strike'])} | "
-                    f"score {number(row['score']):.0f} | delta {number(row['delta']):.2f} | "
-                    f"IV {fmt_pct(row['iv'])} | mid {fmt_money(row['mid'])}{warn}"
-                )
-            else:
-                detail = (
-                    f"{index}. {row['ticker']} {row['expiration']} PUT {fmt_money(row['strike'])} | "
-                    f"score {number(row['score']):.0f} | ann ROI {fmt_pct(row['annualizedRoi'], 0)} | "
-                    f"OTM {fmt_pct(row['distanceOtmPct'])} | mid {fmt_money(row['mid'])}{warn}"
-                )
-            lines.append(detail)
+            lines.append(compact_candidate_line(strategy, index, row))
         lines.append("")
     return "\n".join(lines).strip() + "\n"
 
@@ -297,7 +388,6 @@ def send_telegram(message: str) -> dict[str, Any]:
         "chat_id": chat_id,
         "text": message,
         "parse_mode": "Markdown",
-        "disable_web_page_preview": "true",
     }).encode("utf-8")
     request = urllib.request.Request(f"https://api.telegram.org/bot{token}/sendMessage", data=payload)
     try:
@@ -306,6 +396,54 @@ def send_telegram(message: str) -> dict[str, Any]:
         return {"enabled": True, "sent": True, "error": None, "response": body}
     except Exception as exc:  # noqa: BLE001
         return {"enabled": True, "sent": False, "error": str(exc)}
+
+
+def env_truthy(name: str) -> bool:
+    return os.getenv(name, "").strip().lower() in {"1", "true", "yes", "on"}
+
+
+def run_git(args: list[str]) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(["git", *args], cwd=ROOT, text=True, capture_output=True, check=False)
+
+
+def publish_generated_data(session: str, generated_at: str) -> dict[str, Any]:
+    paths = [
+        "src/data/generated/realOptions.json",
+        "src/data/generated/realOptions.meta.json",
+    ]
+    status = run_git(["status", "--porcelain", "--", *paths])
+    if status.returncode != 0:
+        return {"enabled": True, "published": False, "error": status.stderr.strip(), "commit": None}
+    if not status.stdout.strip():
+        return {"enabled": True, "published": False, "error": None, "commit": None, "message": "No generated data changes."}
+
+    add = run_git(["add", *paths])
+    if add.returncode != 0:
+        return {"enabled": True, "published": False, "error": add.stderr.strip(), "commit": None}
+
+    commit_message = f"Update option snapshot: {session} {generated_at}"
+    commit = run_git(["commit", "-m", commit_message])
+    if commit.returncode != 0:
+        return {"enabled": True, "published": False, "error": commit.stderr.strip() or commit.stdout.strip(), "commit": None}
+
+    commit_id = run_git(["rev-parse", "--short", "HEAD"])
+    push = run_git(["push", "origin", "HEAD"])
+    if push.returncode != 0:
+        return {
+            "enabled": True,
+            "published": False,
+            "error": push.stderr.strip() or push.stdout.strip(),
+            "commit": commit_id.stdout.strip() if commit_id.returncode == 0 else None,
+        }
+
+    return {
+        "enabled": True,
+        "published": True,
+        "error": None,
+        "commit": commit_id.stdout.strip() if commit_id.returncode == 0 else None,
+        "stdout": push.stdout.strip(),
+        "stderr": push.stderr.strip(),
+    }
 
 
 def write_outputs(
@@ -362,7 +500,15 @@ def main() -> int:
         fetch_result = run_fetch(watchlists["combined"], args.output)
         if fetch_result["exitCode"] != 0:
             generated_at = datetime.now().astimezone().isoformat(timespec="seconds")
-            write_outputs(args, generated_at, watchlists, [], fetch_result, "Fetch failed.\n", {"enabled": args.send_telegram, "sent": False, "error": None})
+            write_outputs(
+                args,
+                generated_at,
+                watchlists,
+                [],
+                fetch_result,
+                "Fetch failed.\n",
+                {"enabled": args.send_telegram, "sent": False, "error": None},
+            )
             print(fetch_result["stderr"], file=sys.stderr)
             return int(fetch_result["exitCode"])
 
@@ -370,7 +516,11 @@ def main() -> int:
     generated_at = datetime.now().astimezone().isoformat(timespec="seconds")
     report = build_report(args.session, generated_at, watchlists, candidates, args.top)
     telegram = send_telegram(report) if args.send_telegram else {"enabled": False, "sent": False, "error": None}
+    should_publish = (args.publish or env_truthy("AUTO_PUBLISH_GITHUB")) and not args.no_publish
+    publish = {"enabled": should_publish, "published": False, "error": None, "commit": None}
     metadata = write_outputs(args, generated_at, watchlists, candidates, fetch_result, report, telegram)
+    if should_publish and not args.skip_fetch:
+        publish = publish_generated_data(args.session, generated_at)
 
     print(json.dumps({
         "generatedAt": generated_at,
@@ -378,6 +528,7 @@ def main() -> int:
         "candidateCount": len(candidates),
         "reportPath": metadata["reportPath"],
         "telegram": telegram,
+        "publish": publish,
     }, indent=2))
     print("\n" + report)
     return 0 if not telegram.get("error") else 1
