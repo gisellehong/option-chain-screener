@@ -189,6 +189,13 @@ function statusLabel(status: unknown): string {
   return "tracking";
 }
 
+function formatPutStrikeDistance(underlyingPrice: number | null | undefined, strike: number): string {
+  if (!underlyingPrice || !Number.isFinite(underlyingPrice) || underlyingPrice <= 0) return "N/A";
+  const distancePct = ((underlyingPrice - strike) / underlyingPrice) * 100;
+  const label = distancePct >= 0 ? "OTM" : "ITM";
+  return `${formatPercent(Math.abs(distancePct), 1)} ${label}`;
+}
+
 function SignalTracker({ trackingData }: { trackingData: TrackingData }) {
   const signals = trackingData.signals;
   const summary = trackingData.summary ?? {};
@@ -276,7 +283,8 @@ function SignalTracker({ trackingData }: { trackingData: TrackingData }) {
                 {group.signals.map((signal) => {
                   const isWeekly = signal.strategy === "weekly_csp";
                   const capturePct = signal.outcome.bestProfitCapturePct as number | null;
-                  const pointsToTarget = isWeekly && typeof capturePct === "number" ? Math.max(0, 80 - capturePct) : null;
+                  const targetAsk = signal.outcome.targetAsk as number | null;
+                  const latestUnderlying = signal.latest?.underlyingPrice ?? signal.entry.underlyingPrice;
 
                   return (
                     <tr key={signal.id}>
@@ -302,25 +310,21 @@ function SignalTracker({ trackingData }: { trackingData: TrackingData }) {
                       </td>
                       <td>
                         {isWeekly
-                          ? `${formatMaybePercent(capturePct, 1)} captured`
+                          ? `${formatMaybePercent(capturePct, 1)} premium captured`
                           : formatMaybePercent(signal.outcome.optionReturnPct as number | null, 1)}
                         <small>
                           {isWeekly
-                            ? pointsToTarget === null
-                              ? `Target ask ${formatCurrency((signal.outcome.targetAsk as number | null) ?? 0)}`
-                              : `${formatNumber(pointsToTarget, 1)} pts to 80%`
+                            ? `Target ask <= ${targetAsk === null ? "N/A" : formatCurrency(targetAsk)}`
                             : `vs stock ${formatMaybePercent(signal.outcome.relativeReturnPct as number | null, 1)}`}
                         </small>
                       </td>
                       <td>
                         {isWeekly
-                          ? signal.outcome.wentItm
-                            ? "Went ITM"
-                            : "OTM so far"
+                          ? formatPutStrikeDistance(latestUnderlying, signal.strike)
                           : `Delta ${formatMaybeNumber(signal.outcome.deltaChange as number | null, 2)}`}
                         <small>
                           {isWeekly
-                            ? `Low ${formatCurrency((signal.outcome.lowestUnderlying as number | null) ?? signal.entry.underlyingPrice)}`
+                            ? `Last ${formatCurrency(latestUnderlying)} · Strike ${formatCurrency(signal.strike, 0)}`
                             : `IV chg ${formatMaybePercent(signal.outcome.ivChange as number | null, 1)}`}
                         </small>
                       </td>
