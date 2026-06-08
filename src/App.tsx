@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import {
   AlertTriangle,
+  BarChart3,
   Bell,
   CheckCircle2,
   Database,
@@ -13,6 +14,7 @@ import {
 import { mockOptions } from "./data/mockOptions";
 import realOptionsRaw from "./data/generated/realOptions.json";
 import realOptionsMetaRaw from "./data/generated/realOptions.meta.json";
+import trackingRaw from "./data/generated/tracking.json";
 import { screenerConfigs } from "./data/screenerConfigs";
 import { compactNumber, formatCurrency, formatNumber, formatPercent } from "./lib/format";
 import { scoreCandidates } from "./lib/scoring";
@@ -24,6 +26,8 @@ import type {
   ScreenerConfig,
   ScreenerId,
   ScreenerScenario,
+  TrackingData,
+  TrackingSignal,
 } from "./lib/types";
 
 const realOptions = realOptionsRaw as OptionCandidate[];
@@ -38,6 +42,8 @@ const realOptionsMeta = realOptionsMetaRaw as {
     error: string | null;
   };
 };
+const tracking = trackingRaw as unknown as TrackingData;
+type DashboardView = "screener" | "tracker" | "report";
 
 const sessionLabels: Record<string, string> = {
   pre_market: "Pre-market",
@@ -141,6 +147,232 @@ function SummaryMetric({
       <span>{label}</span>
       <strong>{value}</strong>
       <small>{subValue}</small>
+    </section>
+  );
+}
+
+function formatMaybePercent(value: number | null | undefined, digits = 1): string {
+  if (value === null || value === undefined || !Number.isFinite(value)) return "N/A";
+  return formatPercent(value, digits);
+}
+
+function formatMaybeNumber(value: number | null | undefined, digits = 1): string {
+  if (value === null || value === undefined || !Number.isFinite(value)) return "N/A";
+  return formatNumber(value, digits);
+}
+
+function formatShortDate(value: string | null | undefined): string {
+  if (!value) return "N/A";
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(new Date(value));
+}
+
+function strategyLabel(strategy: TrackingSignal["strategy"]): string {
+  return strategy === "weekly_csp" ? "Weekly CSP" : "LEAPS";
+}
+
+function outcomeTone(signal: TrackingSignal): string {
+  const status = signal.outcome.status;
+  if (status === "hit_80") return "strong";
+  if (status === "expired_no_80") return "weak";
+  return "watch";
+}
+
+function SignalTracker({ trackingData }: { trackingData: TrackingData }) {
+  const signals = trackingData.signals;
+  const summary = trackingData.summary ?? {};
+  const weeklySignals = signals.filter((signal) => signal.strategy === "weekly_csp");
+  const leapsSignals = signals.filter((signal) => signal.strategy === "leaps");
+  const rows = [...weeklySignals, ...leapsSignals];
+
+  return (
+    <section className="wideWorkspace">
+      <section className="sectionHead">
+        <div className="titleLine">
+          <Database size={19} />
+          <h2>Signal Tracker</h2>
+        </div>
+        <p>追蹤每次 screener 入選 contract 後續報價，用來驗證 Weekly CSP 的 80% premium capture 與 LEAPS 的 mark-to-market 表現。</p>
+      </section>
+
+      <section className="overview reportOverview">
+        <SummaryMetric
+          label="Signals"
+          value={String(summary.totalSignals ?? 0)}
+          subValue={`Updated ${formatShortDate(trackingData.generatedAt)}`}
+        />
+        <SummaryMetric
+          label="Open CSP"
+          value={String(summary.weeklyCspOpen ?? 0)}
+          subValue={`${summary.weeklyCspHit80 ?? 0} hit 80%`}
+        />
+        <SummaryMetric
+          label="CSP 5D Hit"
+          value={formatMaybePercent(summary.weeklyCspHitWithin5DRate, 1)}
+          subValue="80% premium capture"
+        />
+        <SummaryMetric
+          label="LEAPS Tracked"
+          value={String(summary.leapsTracked ?? 0)}
+          subValue={formatMaybePercent(summary.leapsAvgRelativeReturnPct, 1)}
+        />
+      </section>
+
+      <div className="tableWrap">
+        <table className="trackingTable">
+          <thead>
+            <tr>
+              <th>Signal</th>
+              <th>Contract</th>
+              <th>Entry</th>
+              <th>Latest</th>
+              <th>Outcome</th>
+              <th>Risk</th>
+              <th>Obs</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((signal) => {
+              const isWeekly = signal.strategy === "weekly_csp";
+              return (
+                <tr key={signal.id}>
+                  <td>
+                    <span className={`score ${outcomeTone(signal)}`}>#{signal.rank}</span>
+                    <small>
+                      {strategyLabel(signal.strategy)} · {formatShortDate(signal.signalAt)}
+                    </small>
+                  </td>
+                  <td>
+                    <strong>
+                      {signal.ticker} {signal.expiration} {signal.optionType.toUpperCase()} {formatCurrency(signal.strike, 0)}
+                    </strong>
+                    <small>Score {formatNumber(signal.score, 0)} · {signal.session}</small>
+                  </td>
+                  <td>
+                    {formatCurrency(signal.entry.mid)}
+                    <small>
+                      Bid/Ask {formatCurrency(signal.entry.bid)} / {formatCurrency(signal.entry.ask)}
+                    </small>
+                  </td>
+                  <td>
+                    {signal.latest ? formatCurrency(signal.latest.mid) : "N/A"}
+                    <small>{signal.latest ? formatShortDate(signal.latest.observedAt) : "No quote"}</small>
+                  </td>
+                  <td>
+                    {isWeekly
+                      ? formatMaybePercent(signal.outcome.bestProfitCapturePct as number | null, 1)
+                      : formatMaybePercent(signal.outcome.optionReturnPct as number | null, 1)}
+                    <small>
+                      {isWeekly
+                        ? `Target ask ${formatCurrency((signal.outcome.targetAsk as number | null) ?? 0)}`
+                        : `vs stock ${formatMaybePercent(signal.outcome.relativeReturnPct as number | null, 1)}`}
+                    </small>
+                  </td>
+                  <td>
+                    {isWeekly
+                      ? signal.outcome.wentItm
+                        ? "Went ITM"
+                        : "OTM so far"
+                      : `Delta ${formatMaybeNumber(signal.outcome.deltaChange as number | null, 2)}`}
+                    <small>
+                      {isWeekly
+                        ? `Low ${formatCurrency((signal.outcome.lowestUnderlying as number | null) ?? signal.entry.underlyingPrice)}`
+                        : `IV chg ${formatMaybePercent(signal.outcome.ivChange as number | null, 1)}`}
+                    </small>
+                  </td>
+                  <td>
+                    {signal.observations.count}
+                    <small>{signal.outcome.status ?? "tracking"}</small>
+                  </td>
+                </tr>
+              );
+            })}
+            {rows.length === 0 && (
+              <tr>
+                <td colSpan={7}>No tracking signals yet.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+}
+
+function StrategyReport({ trackingData }: { trackingData: TrackingData }) {
+  const summary = trackingData.summary ?? {};
+  const weekly = trackingData.signals.filter((signal) => signal.strategy === "weekly_csp");
+  const leaps = trackingData.signals.filter((signal) => signal.strategy === "leaps");
+  const recentWeekly = weekly.slice(0, 6);
+  const recentLeaps = leaps.slice(0, 6);
+
+  return (
+    <section className="wideWorkspace">
+      <section className="sectionHead">
+        <div className="titleLine">
+          <BarChart3 size={19} />
+          <h2>Strategy Report</h2>
+        </div>
+        <p>用已累積 signals 估計策略有效性；早期樣本少時，這裡比較像儀表板的黑盒子測試台。</p>
+      </section>
+
+      <section className="overview reportOverview">
+        <SummaryMetric
+          label="CSP 5D 80% Hit"
+          value={formatMaybePercent(summary.weeklyCspHitWithin5DRate, 1)}
+          subValue={`${summary.weeklyCspHit80Within5D ?? 0} / ${summary.weeklyCspSignals ?? 0} signals`}
+        />
+        <SummaryMetric
+          label="Avg Days to 80"
+          value={formatMaybeNumber(summary.weeklyCspAvgDaysTo80, 1)}
+          subValue={`${summary.weeklyCspOpen ?? 0} open CSP`}
+        />
+        <SummaryMetric
+          label="LEAPS Avg Return"
+          value={formatMaybePercent(summary.leapsAvgOptionReturnPct, 1)}
+          subValue={`${summary.leapsTracked ?? 0} tracked`}
+        />
+        <SummaryMetric
+          label="LEAPS vs Stock"
+          value={formatMaybePercent(summary.leapsAvgRelativeReturnPct, 1)}
+          subValue="relative return"
+        />
+      </section>
+
+      <section className="reportGrid">
+        <ReportList title="Recent Weekly CSP" signals={recentWeekly} />
+        <ReportList title="Recent LEAPS" signals={recentLeaps} />
+      </section>
+    </section>
+  );
+}
+
+function ReportList({ title, signals }: { title: string; signals: TrackingSignal[] }) {
+  return (
+    <section className="reportPanel">
+      <h3>{title}</h3>
+      <div className="signalList">
+        {signals.map((signal) => (
+          <div key={signal.id} className="signalItem">
+            <div>
+              <strong>
+                {signal.ticker} {signal.expiration} {signal.optionType.toUpperCase()} {formatCurrency(signal.strike, 0)}
+              </strong>
+              <span>{formatShortDate(signal.signalAt)} · {strategyLabel(signal.strategy)}</span>
+            </div>
+            <span className={`score ${outcomeTone(signal)}`}>
+              {signal.strategy === "weekly_csp"
+                ? formatMaybePercent(signal.outcome.bestProfitCapturePct as number | null, 0)
+                : formatMaybePercent(signal.outcome.optionReturnPct as number | null, 0)}
+            </span>
+          </div>
+        ))}
+        {signals.length === 0 && <p>No signals yet.</p>}
+      </div>
     </section>
   );
 }
@@ -400,6 +632,7 @@ function DetailPanel({ row, config }: { row?: ScoredCandidate; config: ScreenerC
 }
 
 export function App() {
+  const [activeView, setActiveView] = useState<DashboardView>("screener");
   const [activeScreenerId, setActiveScreenerId] = useState<ScreenerId>("leaps_deep_itm_call");
   const [showAll, setShowAll] = useState(false);
   const realDataSource: DataSourceMode = realOptions.length > 0 ? "moomoo" : "mock";
@@ -489,8 +722,30 @@ export function App() {
         </div>
       </header>
 
-      <section className="strategyTabs" aria-label="Screener strategies">
-        {screenerConfigs.map((config) => (
+      <section className="viewTabs" aria-label="Dashboard views">
+        {[
+          { id: "screener", label: "Today Screener", icon: Filter },
+          { id: "tracker", label: "Signal Tracker", icon: Database },
+          { id: "report", label: "Strategy Report", icon: BarChart3 },
+        ].map((view) => {
+          const Icon = view.icon;
+          return (
+            <button
+              key={view.id}
+              type="button"
+              className={view.id === activeView ? "active" : ""}
+              onClick={() => setActiveView(view.id as DashboardView)}
+            >
+              <Icon size={17} />
+              <span>{view.label}</span>
+            </button>
+          );
+        })}
+      </section>
+
+      {activeView === "screener" && (
+        <section className="strategyTabs" aria-label="Screener strategies">
+          {screenerConfigs.map((config) => (
           <button
             key={config.id}
             type="button"
@@ -503,9 +758,11 @@ export function App() {
             <TrendingUp size={17} />
             <span>{config.shortName}</span>
           </button>
-        ))}
-      </section>
+          ))}
+        </section>
+      )}
 
+      {activeView === "screener" && (
       <section className="overview">
         <SummaryMetric
           label="Best Case"
@@ -530,7 +787,11 @@ export function App() {
           subValue={telegramStatus}
         />
       </section>
+      )}
 
+      {activeView === "tracker" && <SignalTracker trackingData={tracking} />}
+      {activeView === "report" && <StrategyReport trackingData={tracking} />}
+      {activeView === "screener" && (
       <section className="workspace">
         <div className="primary">
           <section className="screenerHead">
@@ -579,6 +840,7 @@ export function App() {
 
         <DetailPanel row={selectedRow} config={activeConfig} />
       </section>
+      )}
     </main>
   );
 }

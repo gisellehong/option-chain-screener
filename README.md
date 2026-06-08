@@ -61,6 +61,7 @@ When enabled, successful non-`--skip-fetch` snapshot runs will commit and push o
 
 - `src/data/generated/realOptions.json`
 - `src/data/generated/realOptions.meta.json`
+- `src/data/generated/tracking.json`
 
 GitHub Actions then rebuilds and redeploys the GitHub Pages dashboard. Other local code or config edits are not included in those automatic data commits.
 
@@ -103,6 +104,7 @@ The snapshot runner:
 - Calls the moomoo fetcher unless `--skip-fetch` is passed.
 - Updates `src/data/generated/realOptions.json`.
 - Writes `src/data/generated/realOptions.meta.json` for the Dashboard.
+- Updates `src/data/generated/tracking.json` with compact screener signals and outcomes.
 - Archives a local snapshot under `data/snapshots/`.
 - Writes a Markdown session report under `data/reports/`.
 
@@ -157,6 +159,14 @@ npm run scheduler:uninstall
 ```
 
 Logs are written to `data/logs/`, and run state is stored under `data/scheduler/`.
+
+### Signal tracking
+
+Each scheduled snapshot records the top ranked matched contracts as compact signals in `src/data/generated/tracking.json`.
+
+- Weekly CSP outcome tracks whether the contract can be bought back at or below 20% of entry credit, which marks 80% premium capture within the next five days.
+- LEAPS outcome tracks mark-to-market option return, underlying return, relative return, delta drift, and IV change.
+- Full raw option-chain archives remain local under `data/snapshots/`; the publishable dashboard reads only the compact generated tracking file.
 
 目前 moomoo fetcher 會：
 

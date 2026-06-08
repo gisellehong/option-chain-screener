@@ -97,3 +97,64 @@ export interface ScoredCandidate extends OptionCandidate {
   leverageRatio: number;
   warnings: string[];
 }
+
+export type TrackingStrategy = "leaps" | "weekly_csp";
+
+export interface TrackingQuote {
+  mid: number;
+  bid: number;
+  ask: number;
+  underlyingPrice: number;
+  iv: number;
+  delta: number;
+  spread: number;
+  spreadPct: number;
+  observedAt?: string;
+}
+
+export interface TrackingSignal {
+  id: string;
+  signalAt: string;
+  session: string;
+  strategy: TrackingStrategy;
+  scenario: string;
+  rank: number;
+  score: number;
+  contractId: string;
+  ticker: string;
+  companyName: string;
+  optionType: OptionType;
+  expiration: string;
+  dte: number;
+  strike: number;
+  entry: TrackingQuote;
+  latest: TrackingQuote | null;
+  outcome: Record<string, number | string | boolean | null>;
+  observations: {
+    count: number;
+    firstObservedAt: string | null;
+    lastObservedAt: string | null;
+  };
+}
+
+export interface TrackingSummary {
+  totalSignals?: number;
+  weeklyCspSignals?: number;
+  weeklyCspOpen?: number;
+  weeklyCspHit80?: number;
+  weeklyCspHit80Within5D?: number;
+  weeklyCspHitRate?: number | null;
+  weeklyCspHitWithin5DRate?: number | null;
+  weeklyCspAvgDaysTo80?: number | null;
+  leapsSignals?: number;
+  leapsTracked?: number;
+  leapsAvgOptionReturnPct?: number | null;
+  leapsAvgRelativeReturnPct?: number | null;
+}
+
+export interface TrackingData {
+  schemaVersion: number;
+  generatedAt: string | null;
+  summary: TrackingSummary;
+  signals: TrackingSignal[];
+}

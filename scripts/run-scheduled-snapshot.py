@@ -19,9 +19,11 @@ ROOT = Path(__file__).resolve().parents[1]
 WATCHLIST_PATH = ROOT / "config/watchlists.json"
 REAL_OPTIONS_PATH = ROOT / "src/data/generated/realOptions.json"
 META_PATH = ROOT / "src/data/generated/realOptions.meta.json"
+TRACKING_PATH = ROOT / "src/data/generated/tracking.json"
 SNAPSHOT_ROOT = ROOT / "data/snapshots"
 REPORT_ROOT = ROOT / "data/reports"
 NY_TZ = ZoneInfo("America/New_York")
+TRACKING_SCHEMA_VERSION = 1
 
 SESSION_LABELS = {
     "pre_market": "開盤前 / Pre-market",
@@ -243,6 +245,260 @@ def scored_candidates(candidates: list[dict[str, Any]], strategy: str, allowed_t
     return sorted(scored, key=lambda item: item["score"], reverse=True)
 
 
+def parse_time(value: str) -> datetime:
+    return datetime.fromisoformat(value)
+
+
+def days_between(start: str, end: str) -> float:
+    return (parse_time(end) - parse_time(start)).total_seconds() / 86400
+
+
+def tracking_seed() -> dict[str, Any]:
+    return {
+        "schemaVersion": TRACKING_SCHEMA_VERSION,
+        "generatedAt": None,
+        "summary": {},
+        "signals": [],
+    }
+
+
+def signal_key(signal: dict[str, Any]) -> str:
+    return "|".join(
+        [
+            str(signal.get("signalAt")),
+            str(signal.get("session")),
+            str(signal.get("strategy")),
+            str(signal.get("scenario")),
+            str(signal.get("contractId")),
+        ]
+    )
+
+
+def compact_signal(
+    row: dict[str, Any],
+    strategy: str,
+    session: str,
+    generated_at: str,
+    rank: int,
+    scenario: str = "best",
+) -> dict[str, Any]:
+    mid = number(row.get("mid"))
+    signal = {
+        "id": f"{generated_at}|{strategy}|{scenario}|{rank}|{row.get('id')}",
+        "signalAt": generated_at,
+        "session": session,
+        "strategy": strategy,
+        "scenario": scenario,
+        "rank": rank,
+        "score": round(number(row.get("score")), 2),
+        "contractId": row.get("id"),
+        "ticker": row.get("ticker"),
+        "companyName": row.get("companyName"),
+        "optionType": row.get("optionType"),
+        "expiration": row.get("expiration"),
+        "dte": number(row.get("dte")),
+        "strike": number(row.get("strike")),
+        "entry": {
+            "mid": mid,
+            "bid": number(row.get("bid")),
+            "ask": number(row.get("ask")),
+            "underlyingPrice": number(row.get("underlyingPrice")),
+            "iv": number(row.get("iv")),
+            "delta": number(row.get("delta")),
+            "spread": number(row.get("spread")),
+            "spreadPct": number(row.get("spreadPct")),
+        },
+        "latest": None,
+        "outcome": {},
+        "observations": {
+            "count": 0,
+            "firstObservedAt": None,
+            "lastObservedAt": None,
+        },
+    }
+    if strategy == "weekly_csp":
+        signal["outcome"] = {
+            "status": "open",
+            "targetProfitPct": 80,
+            "targetAsk": round(mid * 0.2, 4) if mid > 0 else None,
+            "hit80At": None,
+            "daysTo80": None,
+            "hit80Within5D": False,
+            "bestProfitCapturePct": None,
+            "bestProfitCaptureAt": None,
+            "wentItm": False,
+            "lowestUnderlying": number(row.get("underlyingPrice")),
+            "expired": False,
+        }
+    else:
+        signal["outcome"] = {
+            "status": "tracking",
+            "optionReturnPct": 0,
+            "underlyingReturnPct": 0,
+            "relativeReturnPct": 0,
+            "realizedLeverage": None,
+            "deltaChange": 0,
+            "ivChange": 0,
+        }
+    return signal
+
+
+def latest_quote(row: dict[str, Any]) -> dict[str, Any]:
+    derived = derive(row)
+    return {
+        "mid": derived["mid"],
+        "bid": number(row.get("bid")),
+        "ask": number(row.get("ask")),
+        "underlyingPrice": number(row.get("underlyingPrice")),
+        "iv": number(row.get("iv")),
+        "delta": number(row.get("delta")),
+        "spread": derived["spread"],
+        "spreadPct": derived["spreadPct"],
+    }
+
+
+def update_signal_outcome(signal: dict[str, Any], quote: dict[str, Any], generated_at: str) -> None:
+    signal["latest"] = {
+        **quote,
+        "observedAt": generated_at,
+    }
+    observations = signal.setdefault("observations", {})
+    observations["count"] = int(observations.get("count") or 0) + 1
+    observations["firstObservedAt"] = observations.get("firstObservedAt") or generated_at
+    observations["lastObservedAt"] = generated_at
+
+    entry = signal.get("entry", {})
+    outcome = signal.setdefault("outcome", {})
+    if signal.get("strategy") == "weekly_csp":
+        entry_credit = number(entry.get("mid"))
+        current_ask = number(quote.get("ask"))
+        current_underlying = number(quote.get("underlyingPrice"))
+        strike = number(signal.get("strike"))
+        profit_capture = ((entry_credit - current_ask) / entry_credit) * 100 if entry_credit > 0 else 0
+        previous_best = outcome.get("bestProfitCapturePct")
+        if previous_best is None or profit_capture > number(previous_best):
+            outcome["bestProfitCapturePct"] = round(profit_capture, 2)
+            outcome["bestProfitCaptureAt"] = generated_at
+        if current_underlying > 0:
+            lowest = outcome.get("lowestUnderlying")
+            outcome["lowestUnderlying"] = current_underlying if lowest is None else min(number(lowest), current_underlying)
+            if current_underlying < strike:
+                outcome["wentItm"] = True
+        if entry_credit > 0 and current_ask <= entry_credit * 0.2 and not outcome.get("hit80At"):
+            outcome["hit80At"] = generated_at
+            outcome["daysTo80"] = round(days_between(str(signal.get("signalAt")), generated_at), 2)
+            outcome["hit80Within5D"] = outcome["daysTo80"] <= 5
+            outcome["status"] = "hit_80"
+        if generated_at[:10] > str(signal.get("expiration")):
+            outcome["expired"] = True
+            if not outcome.get("hit80At"):
+                outcome["status"] = "expired_no_80"
+        elif not outcome.get("hit80At"):
+            outcome["status"] = "open"
+        return
+
+    entry_mid = number(entry.get("mid"))
+    entry_underlying = number(entry.get("underlyingPrice"))
+    option_return = ((number(quote.get("mid")) - entry_mid) / entry_mid) * 100 if entry_mid > 0 else 0
+    underlying_return = (
+        ((number(quote.get("underlyingPrice")) - entry_underlying) / entry_underlying) * 100
+        if entry_underlying > 0
+        else 0
+    )
+    outcome["optionReturnPct"] = round(option_return, 2)
+    outcome["underlyingReturnPct"] = round(underlying_return, 2)
+    outcome["relativeReturnPct"] = round(option_return - underlying_return, 2)
+    outcome["realizedLeverage"] = round(option_return / underlying_return, 2) if underlying_return else None
+    outcome["deltaChange"] = round(number(quote.get("delta")) - number(entry.get("delta")), 4)
+    outcome["ivChange"] = round(number(quote.get("iv")) - number(entry.get("iv")), 2)
+
+
+def summarize_tracking(signals: list[dict[str, Any]]) -> dict[str, Any]:
+    weekly = [item for item in signals if item.get("strategy") == "weekly_csp"]
+    leaps = [item for item in signals if item.get("strategy") == "leaps"]
+    closed_weekly = [item for item in weekly if item.get("outcome", {}).get("hit80At") or item.get("outcome", {}).get("expired")]
+    hit_weekly = [item for item in weekly if item.get("outcome", {}).get("hit80At")]
+    hit_within_5d = [item for item in weekly if item.get("outcome", {}).get("hit80Within5D")]
+    leaps_with_latest = [item for item in leaps if item.get("latest")]
+    avg_days_to_80 = (
+        sum(number(item.get("outcome", {}).get("daysTo80")) for item in hit_weekly) / len(hit_weekly)
+        if hit_weekly
+        else None
+    )
+    avg_leaps_return = (
+        sum(number(item.get("outcome", {}).get("optionReturnPct")) for item in leaps_with_latest) / len(leaps_with_latest)
+        if leaps_with_latest
+        else None
+    )
+    avg_leaps_relative = (
+        sum(number(item.get("outcome", {}).get("relativeReturnPct")) for item in leaps_with_latest) / len(leaps_with_latest)
+        if leaps_with_latest
+        else None
+    )
+    return {
+        "totalSignals": len(signals),
+        "weeklyCspSignals": len(weekly),
+        "weeklyCspOpen": len([item for item in weekly if item.get("outcome", {}).get("status") == "open"]),
+        "weeklyCspHit80": len(hit_weekly),
+        "weeklyCspHit80Within5D": len(hit_within_5d),
+        "weeklyCspHitRate": round((len(hit_weekly) / len(closed_weekly)) * 100, 2) if closed_weekly else None,
+        "weeklyCspHitWithin5DRate": round((len(hit_within_5d) / len(weekly)) * 100, 2) if weekly else None,
+        "weeklyCspAvgDaysTo80": round(avg_days_to_80, 2) if avg_days_to_80 is not None else None,
+        "leapsSignals": len(leaps),
+        "leapsTracked": len(leaps_with_latest),
+        "leapsAvgOptionReturnPct": round(avg_leaps_return, 2) if avg_leaps_return is not None else None,
+        "leapsAvgRelativeReturnPct": round(avg_leaps_relative, 2) if avg_leaps_relative is not None else None,
+    }
+
+
+def update_tracking(
+    generated_at: str,
+    session: str,
+    watchlists: dict[str, list[str]],
+    candidates: list[dict[str, Any]],
+    top: int,
+) -> dict[str, Any]:
+    tracking = read_json(TRACKING_PATH, tracking_seed())
+    if not isinstance(tracking, dict) or tracking.get("schemaVersion") != TRACKING_SCHEMA_VERSION:
+        tracking = tracking_seed()
+    signals = list(tracking.get("signals", []))
+    by_key = {signal_key(signal): signal for signal in signals}
+    rows_by_id = {str(row.get("id")): row for row in candidates if row.get("id")}
+
+    for signal in signals:
+        row = rows_by_id.get(str(signal.get("contractId")))
+        if row:
+            update_signal_outcome(signal, latest_quote(row), generated_at)
+        elif signal.get("strategy") == "weekly_csp" and generated_at[:10] > str(signal.get("expiration")):
+            outcome = signal.setdefault("outcome", {})
+            outcome["expired"] = True
+            if not outcome.get("hit80At"):
+                outcome["status"] = "expired_no_80"
+
+    ranked_by_strategy = {
+        "leaps": scored_candidates(candidates, "leaps", watchlists["leaps"]),
+        "weekly_csp": scored_candidates(candidates, "weekly_csp", watchlists["weekly_csp"]),
+    }
+    for strategy, rows in ranked_by_strategy.items():
+        for rank, row in enumerate(rows[:top], start=1):
+            signal = compact_signal(row, strategy, session, generated_at, rank)
+            key = signal_key(signal)
+            if key not in by_key:
+                update_signal_outcome(signal, latest_quote(row), generated_at)
+                signals.append(signal)
+                by_key[key] = signal
+
+    tracking = {
+        "schemaVersion": TRACKING_SCHEMA_VERSION,
+        "generatedAt": generated_at,
+        "summary": summarize_tracking(signals),
+        "signals": sorted(signals, key=lambda item: str(item.get("signalAt")), reverse=True),
+    }
+    TRACKING_PATH.parent.mkdir(parents=True, exist_ok=True)
+    TRACKING_PATH.write_text(json.dumps(tracking, indent=2) + "\n", encoding="utf-8")
+    return tracking
+
+
 def fmt_money(value: Any) -> str:
     return f"${number(value):,.2f}"
 
@@ -410,6 +666,7 @@ def publish_generated_data(session: str, generated_at: str) -> dict[str, Any]:
     paths = [
         "src/data/generated/realOptions.json",
         "src/data/generated/realOptions.meta.json",
+        "src/data/generated/tracking.json",
     ]
     status = run_git(["status", "--porcelain", "--", *paths])
     if status.returncode != 0:
@@ -514,6 +771,7 @@ def main() -> int:
 
     candidates = read_json(args.output, [])
     generated_at = datetime.now().astimezone().isoformat(timespec="seconds")
+    tracking = update_tracking(generated_at, args.session, watchlists, candidates, args.top)
     report = build_report(args.session, generated_at, watchlists, candidates, args.top)
     telegram = send_telegram(report) if args.send_telegram else {"enabled": False, "sent": False, "error": None}
     should_publish = (args.publish or env_truthy("AUTO_PUBLISH_GITHUB")) and not args.no_publish
@@ -526,6 +784,7 @@ def main() -> int:
         "generatedAt": generated_at,
         "session": args.session,
         "candidateCount": len(candidates),
+        "trackingSignals": tracking.get("summary", {}).get("totalSignals"),
         "reportPath": metadata["reportPath"],
         "telegram": telegram,
         "publish": publish,
