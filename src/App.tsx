@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import {
   AlertTriangle,
   BarChart3,
@@ -182,12 +182,40 @@ function outcomeTone(signal: TrackingSignal): string {
   return "watch";
 }
 
+function statusLabel(status: unknown): string {
+  if (status === "hit_80") return "target hit";
+  if (status === "expired_no_80") return "expired";
+  if (typeof status === "string") return status.replace(/_/g, " ");
+  return "tracking";
+}
+
 function SignalTracker({ trackingData }: { trackingData: TrackingData }) {
   const signals = trackingData.signals;
   const summary = trackingData.summary ?? {};
   const weeklySignals = signals.filter((signal) => signal.strategy === "weekly_csp");
   const leapsSignals = signals.filter((signal) => signal.strategy === "leaps");
   const rows = [...weeklySignals, ...leapsSignals];
+  const groupedRows = useMemo(() => {
+    const groups = new Map<string, TrackingSignal[]>();
+
+    rows.forEach((signal) => {
+      const key = `${signal.signalAt}|${signal.session}|${signal.strategy}`;
+      const group = groups.get(key) ?? [];
+      group.push(signal);
+      groups.set(key, group);
+    });
+
+    return Array.from(groups.entries()).map(([key, group]) => {
+      const firstSignal = group[0];
+      return {
+        key,
+        label: `${formatShortDate(firstSignal.signalAt)} · ${sessionLabels[firstSignal.session] ?? firstSignal.session}`,
+        strategy: strategyLabel(firstSignal.strategy),
+        count: group.length,
+        signals: group,
+      };
+    });
+  }, [rows]);
 
   return (
     <section className="wideWorkspace">
@@ -226,71 +254,85 @@ function SignalTracker({ trackingData }: { trackingData: TrackingData }) {
         <table className="trackingTable">
           <thead>
             <tr>
-              <th>Signal</th>
+              <th>Batch / Rank</th>
               <th>Contract</th>
               <th>Entry</th>
               <th>Latest</th>
-              <th>Outcome</th>
+              <th>Progress</th>
               <th>Risk</th>
-              <th>Obs</th>
+              <th>Updates</th>
             </tr>
           </thead>
           <tbody>
-            {rows.map((signal) => {
-              const isWeekly = signal.strategy === "weekly_csp";
-              return (
-                <tr key={signal.id}>
-                  <td>
-                    <span className={`score ${outcomeTone(signal)}`}>#{signal.rank}</span>
-                    <small>
-                      {strategyLabel(signal.strategy)} · {formatShortDate(signal.signalAt)}
-                    </small>
-                  </td>
-                  <td>
-                    <strong>
-                      {signal.ticker} {signal.expiration} {signal.optionType.toUpperCase()} {formatCurrency(signal.strike, 0)}
-                    </strong>
-                    <small>Score {formatNumber(signal.score, 0)} · {signal.session}</small>
-                  </td>
-                  <td>
-                    {formatCurrency(signal.entry.mid)}
-                    <small>
-                      Bid/Ask {formatCurrency(signal.entry.bid)} / {formatCurrency(signal.entry.ask)}
-                    </small>
-                  </td>
-                  <td>
-                    {signal.latest ? formatCurrency(signal.latest.mid) : "N/A"}
-                    <small>{signal.latest ? formatShortDate(signal.latest.observedAt) : "No quote"}</small>
-                  </td>
-                  <td>
-                    {isWeekly
-                      ? formatMaybePercent(signal.outcome.bestProfitCapturePct as number | null, 1)
-                      : formatMaybePercent(signal.outcome.optionReturnPct as number | null, 1)}
-                    <small>
-                      {isWeekly
-                        ? `Target ask ${formatCurrency((signal.outcome.targetAsk as number | null) ?? 0)}`
-                        : `vs stock ${formatMaybePercent(signal.outcome.relativeReturnPct as number | null, 1)}`}
-                    </small>
-                  </td>
-                  <td>
-                    {isWeekly
-                      ? signal.outcome.wentItm
-                        ? "Went ITM"
-                        : "OTM so far"
-                      : `Delta ${formatMaybeNumber(signal.outcome.deltaChange as number | null, 2)}`}
-                    <small>
-                      {isWeekly
-                        ? `Low ${formatCurrency((signal.outcome.lowestUnderlying as number | null) ?? signal.entry.underlyingPrice)}`
-                        : `IV chg ${formatMaybePercent(signal.outcome.ivChange as number | null, 1)}`}
-                    </small>
-                  </td>
-                  <td>
-                    {signal.observations.count}
-                    <small>{signal.outcome.status ?? "tracking"}</small>
+            {groupedRows.map((group) => (
+              <Fragment key={group.key}>
+                <tr className="trackingGroupRow">
+                  <td colSpan={7}>
+                    <span className="strategyBadge">{group.strategy}</span>
+                    <strong>{group.label}</strong>
+                    <small>{group.count} ranked contracts in this screener run</small>
                   </td>
                 </tr>
-              );
-            })}
+                {group.signals.map((signal) => {
+                  const isWeekly = signal.strategy === "weekly_csp";
+                  const capturePct = signal.outcome.bestProfitCapturePct as number | null;
+                  const pointsToTarget = isWeekly && typeof capturePct === "number" ? Math.max(0, 80 - capturePct) : null;
+
+                  return (
+                    <tr key={signal.id}>
+                      <td>
+                        <span className={`score ${outcomeTone(signal)}`}>Rank #{signal.rank}</span>
+                        <small>{sessionLabels[signal.session] ?? signal.session}</small>
+                      </td>
+                      <td>
+                        <strong>
+                          {signal.ticker} {signal.expiration} {signal.optionType.toUpperCase()} {formatCurrency(signal.strike, 0)}
+                        </strong>
+                        <small>Score {formatNumber(signal.score, 0)} · {signal.scenario}</small>
+                      </td>
+                      <td>
+                        {formatCurrency(signal.entry.mid)}
+                        <small>
+                          Bid/Ask {formatCurrency(signal.entry.bid)} / {formatCurrency(signal.entry.ask)}
+                        </small>
+                      </td>
+                      <td>
+                        {signal.latest ? formatCurrency(signal.latest.mid) : "N/A"}
+                        <small>{signal.latest ? formatShortDate(signal.latest.observedAt) : "No quote"}</small>
+                      </td>
+                      <td>
+                        {isWeekly
+                          ? `${formatMaybePercent(capturePct, 1)} captured`
+                          : formatMaybePercent(signal.outcome.optionReturnPct as number | null, 1)}
+                        <small>
+                          {isWeekly
+                            ? pointsToTarget === null
+                              ? `Target ask ${formatCurrency((signal.outcome.targetAsk as number | null) ?? 0)}`
+                              : `${formatNumber(pointsToTarget, 1)} pts to 80%`
+                            : `vs stock ${formatMaybePercent(signal.outcome.relativeReturnPct as number | null, 1)}`}
+                        </small>
+                      </td>
+                      <td>
+                        {isWeekly
+                          ? signal.outcome.wentItm
+                            ? "Went ITM"
+                            : "OTM so far"
+                          : `Delta ${formatMaybeNumber(signal.outcome.deltaChange as number | null, 2)}`}
+                        <small>
+                          {isWeekly
+                            ? `Low ${formatCurrency((signal.outcome.lowestUnderlying as number | null) ?? signal.entry.underlyingPrice)}`
+                            : `IV chg ${formatMaybePercent(signal.outcome.ivChange as number | null, 1)}`}
+                        </small>
+                      </td>
+                      <td>
+                        {signal.observations.count} checks
+                        <small>{statusLabel(signal.outcome.status)}</small>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </Fragment>
+            ))}
             {rows.length === 0 && (
               <tr>
                 <td colSpan={7}>No tracking signals yet.</td>
