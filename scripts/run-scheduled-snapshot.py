@@ -29,6 +29,7 @@ SESSION_LABELS = {
     "pre_market": "開盤前 / Pre-market",
     "open_30m": "開盤後 30 分鐘 / Open +30m",
     "hourly": "盤中每小時 / Hourly",
+    "half_hourly": "盤中每半小時 / Half-hourly",
     "pre_close": "收盤前 / Pre-close",
     "manual": "手動測試 / Manual",
 }

@@ -21,21 +21,27 @@ NY_TZ = ZoneInfo("America/New_York")
 
 SCHEDULE = [
     {"session": "pre_market", "key": "pre_market", "time": clock_time(9, 0)},
-    {"session": "open_30m", "key": "open_30m", "time": clock_time(10, 0)},
-    {"session": "hourly", "key": "hourly_1030", "time": clock_time(10, 30)},
-    {"session": "hourly", "key": "hourly_1130", "time": clock_time(11, 30)},
-    {"session": "hourly", "key": "hourly_1230", "time": clock_time(12, 30)},
-    {"session": "hourly", "key": "hourly_1330", "time": clock_time(13, 30)},
-    {"session": "hourly", "key": "hourly_1430", "time": clock_time(14, 30)},
-    {"session": "pre_close", "key": "pre_close", "time": clock_time(15, 45)},
+    {"session": "half_hourly", "key": "half_hourly_0930", "time": clock_time(9, 30)},
+    {"session": "half_hourly", "key": "half_hourly_1000", "time": clock_time(10, 0)},
+    {"session": "half_hourly", "key": "half_hourly_1030", "time": clock_time(10, 30)},
+    {"session": "half_hourly", "key": "half_hourly_1100", "time": clock_time(11, 0)},
+    {"session": "half_hourly", "key": "half_hourly_1130", "time": clock_time(11, 30)},
+    {"session": "half_hourly", "key": "half_hourly_1200", "time": clock_time(12, 0)},
+    {"session": "half_hourly", "key": "half_hourly_1230", "time": clock_time(12, 30)},
+    {"session": "half_hourly", "key": "half_hourly_1300", "time": clock_time(13, 0)},
+    {"session": "half_hourly", "key": "half_hourly_1330", "time": clock_time(13, 30)},
+    {"session": "half_hourly", "key": "half_hourly_1400", "time": clock_time(14, 0)},
+    {"session": "half_hourly", "key": "half_hourly_1430", "time": clock_time(14, 30)},
+    {"session": "half_hourly", "key": "half_hourly_1500", "time": clock_time(15, 0)},
+    {"session": "pre_close", "key": "pre_close_1530", "time": clock_time(15, 30)},
 ]
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run a scheduled snapshot only when a market session is due.")
     parser.add_argument("--grace-minutes", type=int, default=10, help="Run if the target time was reached within this window.")
-    parser.add_argument("--force-session", choices=["pre_market", "open_30m", "hourly", "pre_close"])
-    parser.add_argument("--force-key", help="Optional unique key when forcing an hourly session.")
+    parser.add_argument("--force-session", choices=["pre_market", "open_30m", "hourly", "half_hourly", "pre_close"])
+    parser.add_argument("--force-key", help="Optional unique key when forcing a repeated session.")
     parser.add_argument("--no-telegram", action="store_true")
     parser.add_argument("--top", type=int, default=3)
     return parser.parse_args()

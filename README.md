@@ -32,6 +32,7 @@ npm run dev
 npm run build
 npm run fetch:moomoo -- AAPL AMD NVDA TSLA MSFT SMH
 npm run snapshot -- --session pre_market
+npm run snapshot -- --session half_hourly
 npm run report:telegram -- --session pre_market
 ```
 
@@ -93,8 +94,7 @@ Run a session snapshot manually:
 
 ```bash
 npm run snapshot -- --session pre_market
-npm run snapshot -- --session open_30m
-npm run snapshot -- --session hourly
+npm run snapshot -- --session half_hourly
 npm run snapshot -- --session pre_close
 ```
 
@@ -136,9 +136,8 @@ The scheduler is installed as a user LaunchAgent. Launchd wakes it every 5 minut
 Configured session times:
 
 - `pre_market`: 09:00 ET.
-- `open_30m`: 10:00 ET.
-- `hourly`: 10:30, 11:30, 12:30, 13:30, 14:30 ET.
-- `pre_close`: 15:45 ET.
+- `half_hourly`: every 30 minutes from 09:30 through 15:00 ET.
+- `pre_close`: 15:30 ET.
 
 Install or update the scheduler:
 

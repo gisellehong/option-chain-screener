@@ -49,6 +49,7 @@ const sessionLabels: Record<string, string> = {
   pre_market: "Pre-market",
   open_30m: "Open +30m",
   hourly: "Hourly",
+  half_hourly: "Half-hourly",
   pre_close: "Pre-close",
   manual: "Manual",
   none: "No snapshot",
