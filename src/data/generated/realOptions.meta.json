@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-08T08:25:17+08:00",
-  "session": "manual",
+  "generatedAt": "2026-06-08T21:10:29+08:00",
+  "session": "pre_market",
   "watchlists": {
     "leaps": [
       "AAPL",
@@ -53,18 +53,19 @@
       "QCOM"
     ]
   },
-  "candidateCount": 5202,
-  "snapshotPath": "data/snapshots/2026-06-08/manual-20260608T082517_0800.json",
-  "reportPath": "data/reports/2026-06-08/manual-20260608T082517_0800.md",
+  "candidateCount": 6366,
+  "snapshotPath": "data/snapshots/2026-06-08/pre_market-20260608T211029_0800.json",
+  "reportPath": "data/reports/2026-06-08/pre_market-20260608T211029_0800.md",
   "telegram": {
-    "enabled": false,
-    "sent": false,
-    "error": null
+    "enabled": true,
+    "sent": true,
+    "error": null,
+    "response": "{\"ok\":true,\"result\":{\"message_id\":10,\"sender_chat\":{\"id\":-1003779067259,\"title\":\"Options bro\",\"type\":\"channel\"},\"chat\":{\"id\":-1003779067259,\"title\":\"Options bro\",\"type\":\"channel\"},\"date\":1780924230,\"text\":\"Option Snapshot\\n\\u958b\\u76e4\\u524d / Pre-market | 2026-06-08 21:10 UTC+08:00 / 09:10 EDT\\nMatched 12 / Raw 6366 | Universe 16\\nDashboard: https://gisellehong.github.io/option-chain-screener/\\n\\nLEAPS Call - \\u6df1\\u5ea6 ITM \\u66ff\\u4ee3\\u6b63\\u80a1\\n1. QQQ 2028-01-21 CALL $550.00 - Score 73, Delta 0.83, IV 31.7%, Intr 72%, Mid $214.50\\n2. AAPL 2027-12-17 CALL $235.00 - Score 73, Delta 0.84, IV 32.7%, Intr 74%, Mid $97.70\\n3. AAPL 2028-01-21 CALL $240.00 - Score 73, Delta 0.83, IV 32.3%, Intr 71%, Mid $95.47\\n\\nWeekly CSP - \\u9ad8 IV \\u73fe\\u91d1\\u64d4\\u4fdd Put\\n1. SMH 2026-06-12 PUT $500.00 - Score 69, AnnROI 51%, OTM 12.2%, Delta -0.10, Mid $2.80\\n2. AMD 2026-06-12 PUT $405.00 - Score 67, AnnROI 56%, OTM 13.2%, Delta -0.10, Mid $2.48\\n3. AMD 2026-06-12 PUT $410.00 - Score 66, AnnROI 67%, OTM 12.1%, Delta -0.11, Mid $3.02\",\"entities\":[{\"offset\":0,\"length\":15,\"type\":\"bold\"},{\"offset\":121,\"length\":52,\"type\":\"url\"},{\"offset\":175,\"length\":24,\"type\":\"bold\"},{\"offset\":462,\"length\":26,\"type\":\"bold\"}],\"link_preview_options\":{\"is_disabled\":true}}}"
   },
   "fetch": {
-    "exitCode": null,
-    "stdout": "",
+    "exitCode": 0,
+    "stdout": "2026-06-08 21:04:50,188 | 86962 | 8338857600 | [open_context_base.py:409] _init_connect_sync: New connect ready: conn=7469736196310933968(1) context=<moomoo.quote.open_quote_context.OpenQuoteContext object at 0x109227b50>\n2026-06-08 21:10:29,676 | 86962 | 6193639424 | [open_context_base.py:516] on_disconnect: Disconnected: conn=0(1) reason=CallClose\n{\n  \"outputPath\": \"/Users/patrick_giselle/Documents/option_chain_screener/src/data/generated/realOptions.json\",\n  \"summaries\": [\n    {\n      \"ticker\": \"AAPL\",\n      \"underlyingPrice\": 307.34,\n      \"expirations\": 8,\n      \"optionCodes\": 312,\n      \"candidates\": 301\n    },\n    {\n      \"ticker\": \"MSFT\",\n      \"underlyingPrice\": 416.67,\n      \"expirations\": 8,\n      \"optionCodes\": 293,\n      \"candidates\": 268\n    },\n    {\n      \"ticker\": \"NVDA\",\n      \"underlyingPrice\": 205.1,\n      \"expirations\": 8,\n      \"optionCodes\": 361,\n      \"candidates\": 358\n    },\n    {\n      \"ticker\": \"AMD\",\n      \"underlyingPrice\": 466.38,\n      \"expirations\": 5,\n      \"optionCodes\": 282,\n      \"candidates\": 282\n    },\n    {\n      \"ticker\": \"SMH\",\n      \"underlyingPrice\": 569.69,\n      \"expirations\": 5,\n      \"optionCodes\": 518,\n      \"candidates\": 517\n    },\n    {\n      \"ticker\": \"QQQ\",\n      \"underlyingPrice\": 705.06,\n      \"expirations\": 11,\n      \"optionCodes\": 1307,\n      \"candidates\": 1194\n    },\n    {\n      \"ticker\": \"GOOGL\",\n      \"underlyingPrice\": 368.53,\n      \"expirations\": 8,\n      \"optionCodes\": 365,\n      \"candidates\": 355\n    },\n    {\n      \"ticker\": \"AMZN\",\n      \"underlyingPrice\": 246.03,\n      \"expirations\": 8,\n      \"optionCodes\": 243,\n      \"candidates\": 238\n    },\n    {\n      \"ticker\": \"AVGO\",\n      \"underlyingPrice\": 385.73,\n      \"expirations\": 8,\n      \"optionCodes\": 379,\n      \"candidates\": 371\n    },\n    {\n      \"ticker\": \"META\",\n      \"underlyingPrice\": 593.0,\n      \"expirations\": 8,\n      \"optionCodes\": 415,\n      \"candidates\": 390\n    },\n    {\n      \"ticker\": \"TSLA\",\n      \"underlyingPrice\": 391.0,\n      \"expirations\": 8,\n      \"optionCodes\": 343,\n      \"candidates\": 343\n    },\n    {\n      \"ticker\": \"BRK.B\",\n      \"underlyingPrice\": 488.13,\n      \"expirations\": 3,\n      \"optionCodes\": 158,\n      \"candidates\": 124\n    },\n    {\n      \"ticker\": \"SOXL\",\n      \"underlyingPrice\": 182.54,\n      \"expirations\": 3,\n      \"optionCodes\": 318,\n      \"candidates\": 318\n    },\n    {\n      \"ticker\": \"MU\",\n      \"underlyingPrice\": 864.01,\n      \"expirations\": 5,\n      \"optionCodes\": 518,\n      \"candidates\": 518\n    },\n    {\n      \"ticker\": \"SNDK\",\n      \"underlyingPrice\": 1559.32,\n      \"expirations\": 4,\n      \"optionCodes\": 656,\n      \"candidates\": 656\n    },\n    {\n      \"ticker\": \"QCOM\",\n      \"underlyingPrice\": 215.94,\n      \"expirations\": 3,\n      \"optionCodes\": 146,\n      \"candidates\": 133\n    }\n  ],\n  \"totalCandidates\": 6366\n}\n",
     "stderr": "",
-    "command": null
+    "command": "/Library/Developer/CommandLineTools/usr/bin/python3 scripts/fetch-moomoo-data.py --output /Users/patrick_giselle/Documents/option_chain_screener/src/data/generated/realOptions.json AAPL MSFT NVDA AMD SMH QQQ GOOGL AMZN AVGO META TSLA BRK.B SOXL MU SNDK QCOM"
   }
 }
