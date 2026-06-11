@@ -540,6 +540,10 @@ function pnlTone(value: number | null): string {
   return "watch";
 }
 
+function entryReferenceQuote(trade: YouTuberTrade): YouTuberTradeQuote {
+  return trade.validation.nearestAfterSnapshot;
+}
+
 function YouTuberTracker({
   tradesData,
   generatedAt,
@@ -598,6 +602,7 @@ function YouTuberTracker({
               <th>Current</th>
               <th>Open P&L</th>
               <th>Premium Capture</th>
+              <th>IV / Delta</th>
               <th>Risk</th>
             </tr>
           </thead>
@@ -650,6 +655,10 @@ function YouTuberTracker({
                     </small>
                   </td>
                   <td>
+                    {current ? formatPercent(current.iv, 1) : "N/A"}
+                    <small>{current ? `Delta ${formatNumber(current.delta, 3)}` : "No current Greeks"}</small>
+                  </td>
+                  <td>
                     <span className={`score ${tradeStatusTone(status)}`}>{status}</span>
                     <small>
                       {current
@@ -665,44 +674,57 @@ function YouTuberTracker({
       </div>
 
       <section className="tradeDetailGrid">
-        {rows.map(({ trade, current, capture, pnl, returnOnCollateral, status }) => (
-          <article key={`${trade.id}-detail`} className="tradeDetail">
-            <div className="detailHead">
-              <div>
-                <span>{trade.companyName}</span>
-                <h3>
-                  {trade.ticker} {trade.strike} {trade.optionType.toUpperCase()}
-                </h3>
+        {rows.map(({ trade, current, capture, pnl, returnOnCollateral, status }) => {
+          const entryQuote = entryReferenceQuote(trade);
+
+          return (
+            <article key={`${trade.id}-detail`} className="tradeDetail">
+              <div className="detailHead">
+                <div>
+                  <span>{trade.companyName}</span>
+                  <h3>
+                    {trade.ticker} {trade.strike} {trade.optionType.toUpperCase()}
+                  </h3>
+                </div>
+                <span className={`score ${pnlTone(pnl)}`}>{pnl === null ? "N/A" : formatCurrency(pnl, 0)}</span>
               </div>
-              <span className={`score ${pnlTone(pnl)}`}>{pnl === null ? "N/A" : formatCurrency(pnl, 0)}</span>
-            </div>
-            <dl>
-              <div>
-                <dt>Entry credit</dt>
-                <dd>{formatCurrency(trade.fillPrice)}</dd>
-              </div>
-              <div>
-                <dt>Current ask</dt>
-                <dd>{current ? formatCurrency(current.ask) : "N/A"}</dd>
-              </div>
-              <div>
-                <dt>Premium capture</dt>
-                <dd>{capture === null ? "N/A" : formatPercent(capture, 1)}</dd>
-              </div>
-              <div>
-                <dt>Risk status</dt>
-                <dd>{status}</dd>
-              </div>
-              <div>
-                <dt>Initial ROC</dt>
-                <dd>{returnOnCollateral === null ? "N/A" : formatPercent(returnOnCollateral, 2)}</dd>
-              </div>
-            </dl>
-            <p>
-              Open P&L uses the latest ask as the buyback cost. It is an unrealized estimate before any closing commission.
-            </p>
-          </article>
-        ))}
+              <dl>
+                <div>
+                  <dt>Entry credit</dt>
+                  <dd>{formatCurrency(trade.fillPrice)}</dd>
+                </div>
+                <div>
+                  <dt>Current ask</dt>
+                  <dd>{current ? formatCurrency(current.ask) : "N/A"}</dd>
+                </div>
+                <div>
+                  <dt>Premium capture</dt>
+                  <dd>{capture === null ? "N/A" : formatPercent(capture, 1)}</dd>
+                </div>
+                <div>
+                  <dt>Current IV / delta</dt>
+                  <dd>{current ? `${formatPercent(current.iv, 1)} / ${formatNumber(current.delta, 3)}` : "N/A"}</dd>
+                </div>
+                <div>
+                  <dt>Entry approx IV / delta</dt>
+                  <dd>{`${formatPercent(entryQuote.iv, 1)} / ${formatNumber(entryQuote.delta, 3)}`}</dd>
+                </div>
+                <div>
+                  <dt>Risk status</dt>
+                  <dd>{status}</dd>
+                </div>
+                <div>
+                  <dt>Initial ROC</dt>
+                  <dd>{returnOnCollateral === null ? "N/A" : formatPercent(returnOnCollateral, 2)}</dd>
+                </div>
+              </dl>
+              <p>
+                Open P&L uses the latest ask as the buyback cost. It is an unrealized estimate before any closing
+                commission.
+              </p>
+            </article>
+          );
+        })}
       </section>
     </section>
   );
