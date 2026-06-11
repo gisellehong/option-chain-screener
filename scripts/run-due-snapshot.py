@@ -34,13 +34,14 @@ SCHEDULE = [
     {"session": "half_hourly", "key": "half_hourly_1430", "time": clock_time(14, 30)},
     {"session": "half_hourly", "key": "half_hourly_1500", "time": clock_time(15, 0)},
     {"session": "pre_close", "key": "pre_close_1530", "time": clock_time(15, 30)},
+    {"session": "close", "key": "close_1600", "time": clock_time(16, 0)},
 ]
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run a scheduled snapshot only when a market session is due.")
     parser.add_argument("--grace-minutes", type=int, default=10, help="Run if the target time was reached within this window.")
-    parser.add_argument("--force-session", choices=["pre_market", "open_30m", "hourly", "half_hourly", "pre_close"])
+    parser.add_argument("--force-session", choices=["pre_market", "open_30m", "hourly", "half_hourly", "pre_close", "close"])
     parser.add_argument("--force-key", help="Optional unique key when forcing a repeated session.")
     parser.add_argument("--no-telegram", action="store_true")
     parser.add_argument("--top", type=int, default=3)

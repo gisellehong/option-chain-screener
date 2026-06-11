@@ -51,6 +51,7 @@ const sessionLabels: Record<string, string> = {
   hourly: "Hourly",
   half_hourly: "Half-hourly",
   pre_close: "Pre-close",
+  close: "Close",
   manual: "Manual",
   none: "No snapshot",
 };

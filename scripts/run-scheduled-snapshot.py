@@ -31,6 +31,7 @@ SESSION_LABELS = {
     "hourly": "盤中每小時 / Hourly",
     "half_hourly": "盤中每半小時 / Half-hourly",
     "pre_close": "收盤前 / Pre-close",
+    "close": "收盤 / Close",
     "manual": "手動測試 / Manual",
 }
 

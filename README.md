@@ -96,6 +96,7 @@ Run a session snapshot manually:
 npm run snapshot -- --session pre_market
 npm run snapshot -- --session half_hourly
 npm run snapshot -- --session pre_close
+npm run snapshot -- --session close
 ```
 
 The snapshot runner:
@@ -138,6 +139,7 @@ Configured session times:
 - `pre_market`: 09:00 ET.
 - `half_hourly`: every 30 minutes from 09:30 through 15:00 ET.
 - `pre_close`: 15:30 ET.
+- `close`: 16:00 ET.
 
 Install or update the scheduler:
 
