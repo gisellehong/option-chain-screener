@@ -496,19 +496,6 @@ function ReportList({ title, signals }: { title: string; signals: TrackingSignal
   );
 }
 
-function validationTone(status: TradeValidationStatus): string {
-  if (status === "supported") return "strong";
-  if (status === "plausible") return "watch";
-  return "weak";
-}
-
-function validationLabel(status: TradeValidationStatus): string {
-  if (status === "supported") return "Supported";
-  if (status === "plausible") return "Plausible";
-  if (status === "questionable") return "Questionable";
-  return "Unsupported";
-}
-
 function findCurrentContract(trade: YouTuberTrade): OptionCandidate | undefined {
   return realOptions.find(
     (row) =>
@@ -541,6 +528,18 @@ function tradeStatusTone(status: string): string {
   return "watch";
 }
 
+function openPnl(trade: YouTuberTrade, currentAsk: number | null): number | null {
+  if (!currentAsk || trade.action !== "sell") return null;
+  return (trade.fillPrice - currentAsk) * trade.quantity * 100;
+}
+
+function pnlTone(value: number | null): string {
+  if (value === null) return "watch";
+  if (value > 0) return "strong";
+  if (value < 0) return "weak";
+  return "watch";
+}
+
 function YouTuberTracker({
   tradesData,
   generatedAt,
@@ -551,14 +550,16 @@ function YouTuberTracker({
   const rows = tradesData.trades.map((trade) => {
     const current = findCurrentContract(trade);
     const capture = profitCapturePct(trade, current?.ask ?? null);
+    const pnl = openPnl(trade, current?.ask ?? null);
     const collateral = trade.optionType === "put" ? trade.strike * trade.quantity * 100 : null;
     const returnOnCollateral = collateral ? (trade.grossPremium / collateral) * 100 : null;
-    return { trade, current, capture, collateral, returnOnCollateral, status: tradeStatus(trade, current) };
+    return { trade, current, capture, pnl, collateral, returnOnCollateral, status: tradeStatus(trade, current) };
   });
   const totalPremium = rows.reduce((sum, row) => sum + row.trade.grossPremium, 0);
   const totalCommission = rows.reduce((sum, row) => sum + row.trade.commission, 0);
-  const supportedCount = rows.filter((row) => row.trade.validation.status === "supported").length;
-  const plausibleCount = rows.filter((row) => row.trade.validation.status === "plausible").length;
+  const openPnlRows = rows.filter((row) => row.pnl !== null);
+  const totalOpenPnl =
+    openPnlRows.length > 0 ? openPnlRows.reduce((sum, row) => sum + (row.pnl ?? 0), 0) : null;
   const avgCaptureRows = rows.filter((row) => row.capture !== null);
   const avgCapture =
     avgCaptureRows.length > 0
@@ -573,14 +574,18 @@ function YouTuberTracker({
             <ClipboardList size={19} />
             <h2>AAG Tracker</h2>
           </div>
-          <p>從 IBKR 截圖建立的外部交易紀錄，對照 archived option chain 與最新 snapshot，追蹤權利金收割與成交合理性。</p>
+          <p>從 IBKR 截圖建立的外部交易紀錄，對照最新 snapshot，追蹤目前未實現損益、權利金收割與 ITM/OTM 風險。</p>
         </div>
       </section>
 
       <section className="overview reportOverview">
         <SummaryMetric label="Trades" value={String(rows.length)} subValue="Jun 9, 2026 screenshot" />
         <SummaryMetric label="Gross Premium" value={formatCurrency(totalPremium, 0)} subValue={`${formatCurrency(totalCommission)} commission`} />
-        <SummaryMetric label="Validation" value={`${supportedCount}/${rows.length}`} subValue={`${plausibleCount} plausible`} />
+        <SummaryMetric
+          label="Open P&L"
+          value={totalOpenPnl === null ? "N/A" : formatCurrency(totalOpenPnl, 0)}
+          subValue="uses current ask to buy back"
+        />
         <SummaryMetric label="Avg Capture" value={avgCapture === null ? "N/A" : formatPercent(avgCapture, 1)} subValue={`Latest ${formatShortDate(generatedAt)}`} />
       </section>
 
@@ -591,13 +596,13 @@ function YouTuberTracker({
               <th>Trade</th>
               <th>Entry</th>
               <th>Current</th>
+              <th>Open P&L</th>
               <th>Premium Capture</th>
               <th>Risk</th>
-              <th>Validation</th>
             </tr>
           </thead>
           <tbody>
-            {rows.map(({ trade, current, capture, collateral, returnOnCollateral, status }) => {
+            {rows.map(({ trade, current, capture, pnl, collateral, returnOnCollateral, status }) => {
               const latestAsk = current?.ask ?? null;
               const latestBid = current?.bid ?? null;
               const latestMid = current && Number.isFinite(current.bid) && Number.isFinite(current.ask)
@@ -629,6 +634,14 @@ function YouTuberTracker({
                     </small>
                   </td>
                   <td>
+                    <span className={`score ${pnlTone(pnl)}`}>{pnl === null ? "N/A" : formatCurrency(pnl, 0)}</span>
+                    <small>
+                      {pnl === null
+                        ? "No matching latest quote"
+                        : `${pnl >= 0 ? "Profit" : "Loss"} if bought back at ask`}
+                    </small>
+                  </td>
+                  <td>
                     {capture === null ? "N/A" : formatPercent(capture, 1)}
                     <small>
                       {returnOnCollateral === null
@@ -644,16 +657,6 @@ function YouTuberTracker({
                         : "Waiting for next matching snapshot"}
                     </small>
                   </td>
-                  <td>
-                    <span className={`score ${validationTone(trade.validation.status)}`}>
-                      {validationLabel(trade.validation.status)}
-                    </span>
-                    <small>
-                      Pre-fill quote {formatCurrency(trade.validation.nearestBeforeSnapshot.bid)} / {formatCurrency(trade.validation.nearestBeforeSnapshot.ask)}
-                      {" · "}
-                      Post-fill quote {formatCurrency(trade.validation.nearestAfterSnapshot.bid)} / {formatCurrency(trade.validation.nearestAfterSnapshot.ask)}
-                    </small>
-                  </td>
                 </tr>
               );
             })}
@@ -662,7 +665,7 @@ function YouTuberTracker({
       </div>
 
       <section className="tradeDetailGrid">
-        {rows.map(({ trade, current }) => (
+        {rows.map(({ trade, current, capture, pnl, returnOnCollateral, status }) => (
           <article key={`${trade.id}-detail`} className="tradeDetail">
             <div className="detailHead">
               <div>
@@ -671,37 +674,33 @@ function YouTuberTracker({
                   {trade.ticker} {trade.strike} {trade.optionType.toUpperCase()}
                 </h3>
               </div>
-              <span className={`score ${validationTone(trade.validation.status)}`}>{validationLabel(trade.validation.status)}</span>
+              <span className={`score ${pnlTone(pnl)}`}>{pnl === null ? "N/A" : formatCurrency(pnl, 0)}</span>
             </div>
             <dl>
               <div>
-                <dt>Pre-fill market</dt>
-                <dd>
-                  {formatCurrency(trade.validation.nearestBeforeSnapshot.bid)} / {formatCurrency(trade.validation.nearestBeforeSnapshot.ask)}
-                </dd>
+                <dt>Entry credit</dt>
+                <dd>{formatCurrency(trade.fillPrice)}</dd>
               </div>
               <div>
-                <dt>Post-fill market</dt>
-                <dd>
-                  {formatCurrency(trade.validation.nearestAfterSnapshot.bid)} / {formatCurrency(trade.validation.nearestAfterSnapshot.ask)}
-                </dd>
+                <dt>Current ask</dt>
+                <dd>{current ? formatCurrency(current.ask) : "N/A"}</dd>
               </div>
               <div>
-                <dt>Pre / post time</dt>
-                <dd>
-                  {formatShortTime(trade.validation.nearestBeforeSnapshot.generatedAt)} / {formatShortTime(trade.validation.nearestAfterSnapshot.generatedAt)}
-                </dd>
+                <dt>Premium capture</dt>
+                <dd>{capture === null ? "N/A" : formatPercent(capture, 1)}</dd>
               </div>
               <div>
-                <dt>Latest bid / ask</dt>
-                <dd>{current ? `${formatCurrency(current.bid)} / ${formatCurrency(current.ask)}` : "N/A"}</dd>
+                <dt>Risk status</dt>
+                <dd>{status}</dd>
               </div>
               <div>
-                <dt>Open interest</dt>
-                <dd>{current ? compactNumber(current.openInterest) : compactNumber(trade.validation.nearestAfterSnapshot.openInterest)}</dd>
+                <dt>Initial ROC</dt>
+                <dd>{returnOnCollateral === null ? "N/A" : formatPercent(returnOnCollateral, 2)}</dd>
               </div>
             </dl>
-            <p>{trade.validation.assessment}</p>
+            <p>
+              Open P&L uses the latest ask as the buyback cost. It is an unrealized estimate before any closing commission.
+            </p>
           </article>
         ))}
       </section>
