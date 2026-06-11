@@ -4,6 +4,7 @@ import {
   BarChart3,
   Bell,
   CheckCircle2,
+  ClipboardList,
   Database,
   Download,
   Filter,
@@ -15,6 +16,7 @@ import { mockOptions } from "./data/mockOptions";
 import realOptionsRaw from "./data/generated/realOptions.json";
 import realOptionsMetaRaw from "./data/generated/realOptions.meta.json";
 import trackingRaw from "./data/generated/tracking.json";
+import youtuberTradesRaw from "../data/youtuber-trades/trades.json";
 import { screenerConfigs } from "./data/screenerConfigs";
 import { compactNumber, formatCurrency, formatNumber, formatPercent } from "./lib/format";
 import { scoreCandidates } from "./lib/scoring";
@@ -43,7 +45,66 @@ const realOptionsMeta = realOptionsMetaRaw as {
   };
 };
 const tracking = trackingRaw as unknown as TrackingData;
-type DashboardView = "screener" | "tracker" | "report";
+type DashboardView = "screener" | "tracker" | "youtuber" | "report";
+
+type TradeValidationStatus = "supported" | "plausible" | "questionable" | "unsupported";
+
+interface YouTuberTradeQuote {
+  path: string;
+  generatedAt: string;
+  minutesFromTrade: number;
+  bid: number;
+  ask: number;
+  mid: number;
+  underlyingPrice: number;
+  iv: number;
+  delta: number;
+  volume: number;
+  openInterest: number;
+}
+
+interface YouTuberTrade {
+  id: string;
+  tradeDate: string;
+  tradeTimeEt: string;
+  observedAtSgt: string;
+  broker: string;
+  executionVenue: string;
+  accountLabel?: string;
+  ticker: string;
+  companyName: string;
+  action: "sell" | "buy";
+  quantity: number;
+  optionType: "put" | "call";
+  expiration: string;
+  strike: number;
+  fillPrice: number;
+  limitPrice: number;
+  grossPremium: number;
+  commission: number;
+  realizedPnl: number;
+  validation: {
+    status: TradeValidationStatus;
+    nearestBeforeSnapshot: YouTuberTradeQuote;
+    nearestAfterSnapshot: YouTuberTradeQuote;
+    assessment: string;
+  };
+}
+
+interface YouTuberTradesData {
+  schemaVersion: number;
+  updatedAt: string;
+  source: {
+    type: string;
+    path: string;
+    visibleTradeCount: number;
+    screenTradeCount: number;
+    note: string;
+  };
+  trades: YouTuberTrade[];
+}
+
+const youtuberTrades = youtuberTradesRaw as unknown as YouTuberTradesData;
 
 const sessionLabels: Record<string, string> = {
   pre_market: "Pre-market",
@@ -170,6 +231,16 @@ function formatShortDate(value: string | null | undefined): string {
     day: "numeric",
     hour: "2-digit",
     minute: "2-digit",
+  }).format(new Date(value));
+}
+
+function formatShortTime(value: string | null | undefined, timeZone = "America/New_York"): string {
+  if (!value) return "N/A";
+  return new Intl.DateTimeFormat("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone,
+    timeZoneName: "short",
   }).format(new Date(value));
 }
 
@@ -421,6 +492,219 @@ function ReportList({ title, signals }: { title: string; signals: TrackingSignal
         ))}
         {signals.length === 0 && <p>No signals yet.</p>}
       </div>
+    </section>
+  );
+}
+
+function validationTone(status: TradeValidationStatus): string {
+  if (status === "supported") return "strong";
+  if (status === "plausible") return "watch";
+  return "weak";
+}
+
+function validationLabel(status: TradeValidationStatus): string {
+  if (status === "supported") return "Supported";
+  if (status === "plausible") return "Plausible";
+  if (status === "questionable") return "Questionable";
+  return "Unsupported";
+}
+
+function findCurrentContract(trade: YouTuberTrade): OptionCandidate | undefined {
+  return realOptions.find(
+    (row) =>
+      row.ticker === trade.ticker &&
+      row.expiration === trade.expiration &&
+      row.optionType === trade.optionType &&
+      Math.abs(row.strike - trade.strike) < 0.001,
+  );
+}
+
+function profitCapturePct(trade: YouTuberTrade, currentAsk: number | null): number | null {
+  if (!currentAsk || trade.fillPrice <= 0) return null;
+  return ((trade.fillPrice - currentAsk) / trade.fillPrice) * 100;
+}
+
+function tradeStatus(trade: YouTuberTrade, current: OptionCandidate | undefined): string {
+  if (!current) return "No current quote";
+  if (trade.optionType === "put" && current.underlyingPrice < trade.strike) return "ITM risk";
+  if (trade.optionType === "call" && current.underlyingPrice > trade.strike) return "ITM risk";
+  const capture = profitCapturePct(trade, current.ask);
+  if (capture !== null && capture >= 80) return "Hit 80%";
+  if (capture !== null && capture >= 50) return "Hit 50%";
+  if (capture !== null && capture < 0) return "Premium up";
+  return "Open OTM";
+}
+
+function tradeStatusTone(status: string): string {
+  if (status === "ITM risk" || status === "Premium up") return "weak";
+  if (status.includes("Hit")) return "strong";
+  return "watch";
+}
+
+function YouTuberTracker({
+  tradesData,
+  generatedAt,
+}: {
+  tradesData: YouTuberTradesData;
+  generatedAt: string | null;
+}) {
+  const rows = tradesData.trades.map((trade) => {
+    const current = findCurrentContract(trade);
+    const capture = profitCapturePct(trade, current?.ask ?? null);
+    const collateral = trade.optionType === "put" ? trade.strike * trade.quantity * 100 : null;
+    const returnOnCollateral = collateral ? (trade.grossPremium / collateral) * 100 : null;
+    return { trade, current, capture, collateral, returnOnCollateral, status: tradeStatus(trade, current) };
+  });
+  const totalPremium = rows.reduce((sum, row) => sum + row.trade.grossPremium, 0);
+  const totalCommission = rows.reduce((sum, row) => sum + row.trade.commission, 0);
+  const supportedCount = rows.filter((row) => row.trade.validation.status === "supported").length;
+  const plausibleCount = rows.filter((row) => row.trade.validation.status === "plausible").length;
+  const avgCaptureRows = rows.filter((row) => row.capture !== null);
+  const avgCapture =
+    avgCaptureRows.length > 0
+      ? avgCaptureRows.reduce((sum, row) => sum + (row.capture ?? 0), 0) / avgCaptureRows.length
+      : null;
+
+  return (
+    <section className="wideWorkspace">
+      <section className="sectionHead">
+        <div>
+          <div className="titleLine">
+            <ClipboardList size={19} />
+            <h2>AAG Tracker</h2>
+          </div>
+          <p>從 IBKR 截圖建立的外部交易紀錄，對照 archived option chain 與最新 snapshot，追蹤權利金收割與成交合理性。</p>
+        </div>
+      </section>
+
+      <section className="overview reportOverview">
+        <SummaryMetric label="Trades" value={String(rows.length)} subValue="Jun 9, 2026 screenshot" />
+        <SummaryMetric label="Gross Premium" value={formatCurrency(totalPremium, 0)} subValue={`${formatCurrency(totalCommission)} commission`} />
+        <SummaryMetric label="Validation" value={`${supportedCount}/${rows.length}`} subValue={`${plausibleCount} plausible`} />
+        <SummaryMetric label="Avg Capture" value={avgCapture === null ? "N/A" : formatPercent(avgCapture, 1)} subValue={`Latest ${formatShortDate(generatedAt)}`} />
+      </section>
+
+      <div className="tableWrap">
+        <table className="youtuberTable">
+          <thead>
+            <tr>
+              <th>Trade</th>
+              <th>Entry</th>
+              <th>Current</th>
+              <th>Premium Capture</th>
+              <th>Risk</th>
+              <th>Validation</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map(({ trade, current, capture, collateral, returnOnCollateral, status }) => {
+              const latestAsk = current?.ask ?? null;
+              const latestBid = current?.bid ?? null;
+              const latestMid = current && Number.isFinite(current.bid) && Number.isFinite(current.ask)
+                ? (current.bid + current.ask) / 2
+                : null;
+
+              return (
+                <tr key={trade.id}>
+                  <td>
+                    <strong>
+                      {trade.ticker} {trade.expiration} {trade.strike} {trade.optionType.toUpperCase()}
+                    </strong>
+                    <small>
+                      {trade.action.toUpperCase()} {trade.quantity} · {trade.tradeTimeEt} ET · {trade.executionVenue}
+                    </small>
+                  </td>
+                  <td>
+                    {formatCurrency(trade.fillPrice)}
+                    <small>
+                      Gross {formatCurrency(trade.grossPremium, 0)} · Limit {formatCurrency(trade.limitPrice)}
+                    </small>
+                  </td>
+                  <td>
+                    {latestAsk === null ? "N/A" : formatCurrency(latestAsk)}
+                    <small>
+                      {latestBid === null || latestMid === null
+                        ? "No matching latest quote"
+                        : `Bid/Mid ${formatCurrency(latestBid)} / ${formatCurrency(latestMid)}`}
+                    </small>
+                  </td>
+                  <td>
+                    {capture === null ? "N/A" : formatPercent(capture, 1)}
+                    <small>
+                      {returnOnCollateral === null
+                        ? "Return on collateral N/A"
+                        : `${formatPercent(returnOnCollateral, 2)} initial ROC`}
+                    </small>
+                  </td>
+                  <td>
+                    <span className={`score ${tradeStatusTone(status)}`}>{status}</span>
+                    <small>
+                      {current
+                        ? `${formatPutStrikeDistance(current.underlyingPrice, trade.strike)} · Stock ${formatCurrency(current.underlyingPrice)}`
+                        : "Waiting for next matching snapshot"}
+                    </small>
+                  </td>
+                  <td>
+                    <span className={`score ${validationTone(trade.validation.status)}`}>
+                      {validationLabel(trade.validation.status)}
+                    </span>
+                    <small>
+                      Pre-fill quote {formatCurrency(trade.validation.nearestBeforeSnapshot.bid)} / {formatCurrency(trade.validation.nearestBeforeSnapshot.ask)}
+                      {" · "}
+                      Post-fill quote {formatCurrency(trade.validation.nearestAfterSnapshot.bid)} / {formatCurrency(trade.validation.nearestAfterSnapshot.ask)}
+                    </small>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      <section className="tradeDetailGrid">
+        {rows.map(({ trade, current }) => (
+          <article key={`${trade.id}-detail`} className="tradeDetail">
+            <div className="detailHead">
+              <div>
+                <span>{trade.companyName}</span>
+                <h3>
+                  {trade.ticker} {trade.strike} {trade.optionType.toUpperCase()}
+                </h3>
+              </div>
+              <span className={`score ${validationTone(trade.validation.status)}`}>{validationLabel(trade.validation.status)}</span>
+            </div>
+            <dl>
+              <div>
+                <dt>Pre-fill market</dt>
+                <dd>
+                  {formatCurrency(trade.validation.nearestBeforeSnapshot.bid)} / {formatCurrency(trade.validation.nearestBeforeSnapshot.ask)}
+                </dd>
+              </div>
+              <div>
+                <dt>Post-fill market</dt>
+                <dd>
+                  {formatCurrency(trade.validation.nearestAfterSnapshot.bid)} / {formatCurrency(trade.validation.nearestAfterSnapshot.ask)}
+                </dd>
+              </div>
+              <div>
+                <dt>Pre / post time</dt>
+                <dd>
+                  {formatShortTime(trade.validation.nearestBeforeSnapshot.generatedAt)} / {formatShortTime(trade.validation.nearestAfterSnapshot.generatedAt)}
+                </dd>
+              </div>
+              <div>
+                <dt>Latest bid / ask</dt>
+                <dd>{current ? `${formatCurrency(current.bid)} / ${formatCurrency(current.ask)}` : "N/A"}</dd>
+              </div>
+              <div>
+                <dt>Open interest</dt>
+                <dd>{current ? compactNumber(current.openInterest) : compactNumber(trade.validation.nearestAfterSnapshot.openInterest)}</dd>
+              </div>
+            </dl>
+            <p>{trade.validation.assessment}</p>
+          </article>
+        ))}
+      </section>
     </section>
   );
 }
@@ -774,6 +1058,7 @@ export function App() {
         {[
           { id: "screener", label: "Today Screener", icon: Filter },
           { id: "tracker", label: "Signal Tracker", icon: Database },
+          { id: "youtuber", label: "AAG Tracker", icon: ClipboardList },
           { id: "report", label: "Strategy Report", icon: BarChart3 },
         ].map((view) => {
           const Icon = view.icon;
@@ -838,6 +1123,9 @@ export function App() {
       )}
 
       {activeView === "tracker" && <SignalTracker trackingData={tracking} />}
+      {activeView === "youtuber" && (
+        <YouTuberTracker tradesData={youtuberTrades} generatedAt={realOptionsMeta.generatedAt} />
+      )}
       {activeView === "report" && <StrategyReport trackingData={tracking} />}
       {activeView === "screener" && (
       <section className="workspace">

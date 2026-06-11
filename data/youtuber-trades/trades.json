@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-06-11T21:52:00+08:00",
+  "source": {
+    "type": "ibkr_screenshot",
+    "path": "/Users/patrick_giselle/Downloads/Screenshot_20260609_095652.jpg",
+    "visibleTradeCount": 3,
+    "screenTradeCount": 5,
+    "note": "Screenshot shows 3 fully visible trades out of 5 listed for Jun 9, 2026."
+  },
+  "trades": [
+    {
+      "id": "ibkr-20260609-095639-amd-20260618-422.5-put-sell-3",
+      "tradeDate": "2026-06-09",
+      "tradeTimeEt": "09:56:39",
+      "observedAtSgt": "2026-06-09T21:56:39+08:00",
+      "broker": "IBKR",
+      "executionVenue": "ISE",
+      "ticker": "AMD",
+      "companyName": "Advanced Micro Devices",
+      "action": "sell",
+      "quantity": 3,
+      "optionType": "put",
+      "expiration": "2026-06-18",
+      "strike": 422.5,
+      "fillPrice": 3.32,
+      "limitPrice": 3.32,
+      "grossPremium": 996,
+      "commission": 2.13,
+      "realizedPnl": 0,
+      "validation": {
+        "status": "plausible",
+        "nearestBeforeSnapshot": {
+          "path": "data/snapshots/2026-06-09/half_hourly-20260609T213717_0800.json",
+          "generatedAt": "2026-06-09T21:37:17+08:00",
+          "minutesFromTrade": -19.37,
+          "bid": 2.69,
+          "ask": 3.3,
+          "mid": 2.995,
+          "underlyingPrice": 499.3139,
+          "iv": 82.001,
+          "delta": -0.092856833,
+          "volume": 0,
+          "openInterest": 627
+        },
+        "nearestAfterSnapshot": {
+          "path": "data/snapshots/2026-06-09/half_hourly-20260609T220809_0800.json",
+          "generatedAt": "2026-06-09T22:08:09+08:00",
+          "minutesFromTrade": 11.5,
+          "bid": 3.05,
+          "ask": 3.45,
+          "mid": 3.25,
+          "underlyingPrice": 494.65,
+          "iv": 79.961,
+          "delta": -0.10527795,
+          "volume": 35,
+          "openInterest": 627
+        },
+        "assessment": "Fill price was slightly above the earlier ask by 0.02, but inside the later bid/ask spread. Given the trade timestamp sits between the two snapshots, the reported 3.32 credit is plausible."
+      }
+    },
+    {
+      "id": "ibkr-20260609-095558-googl-20260618-345-put-sell-3",
+      "tradeDate": "2026-06-09",
+      "tradeTimeEt": "09:55:58",
+      "observedAtSgt": "2026-06-09T21:55:58+08:00",
+      "broker": "IBKR",
+      "executionVenue": "MERCURY",
+      "ticker": "GOOGL",
+      "companyName": "Alphabet Inc Class A",
+      "action": "sell",
+      "quantity": 3,
+      "optionType": "put",
+      "expiration": "2026-06-18",
+      "strike": 345,
+      "fillPrice": 1.07,
+      "limitPrice": 1.07,
+      "grossPremium": 321,
+      "commission": 2.11,
+      "realizedPnl": 0,
+      "validation": {
+        "status": "supported",
+        "nearestBeforeSnapshot": {
+          "path": "data/snapshots/2026-06-09/half_hourly-20260609T213717_0800.json",
+          "generatedAt": "2026-06-09T21:37:17+08:00",
+          "minutesFromTrade": -18.68,
+          "bid": 0.9,
+          "ask": 1.13,
+          "mid": 1.015,
+          "underlyingPrice": 371.18,
+          "iv": 36.732,
+          "delta": -0.112842349,
+          "volume": 10,
+          "openInterest": 8711
+        },
+        "nearestAfterSnapshot": {
+          "path": "data/snapshots/2026-06-09/half_hourly-20260609T220809_0800.json",
+          "generatedAt": "2026-06-09T22:08:09+08:00",
+          "minutesFromTrade": 12.18,
+          "bid": 1,
+          "ask": 1.08,
+          "mid": 1.04,
+          "underlyingPrice": 370.03,
+          "iv": 36.24,
+          "delta": -0.100250401,
+          "volume": 40,
+          "openInterest": 8711
+        },
+        "assessment": "Fill price was inside both nearby bid/ask spreads, so the reported 1.07 credit is well supported by archived option-chain data."
+      }
+    },
+    {
+      "id": "ibkr-20260609-095557-amzn-20260618-230-put-sell-3",
+      "tradeDate": "2026-06-09",
+      "tradeTimeEt": "09:55:57",
+      "observedAtSgt": "2026-06-09T21:55:57+08:00",
+      "broker": "IBKR",
+      "executionVenue": "SAPPHIRE",
+      "ticker": "AMZN",
+      "companyName": "Amazon.com Inc",
+      "action": "sell",
+      "quantity": 3,
+      "optionType": "put",
+      "expiration": "2026-06-18",
+      "strike": 230,
+      "fillPrice": 0.75,
+      "limitPrice": 0.75,
+      "grossPremium": 225,
+      "commission": 1.27,
+      "realizedPnl": 0,
+      "validation": {
+        "status": "supported",
+        "nearestBeforeSnapshot": {
+          "path": "data/snapshots/2026-06-09/half_hourly-20260609T213717_0800.json",
+          "generatedAt": "2026-06-09T21:37:17+08:00",
+          "minutesFromTrade": -18.67,
+          "bid": 0.71,
+          "ask": 0.76,
+          "mid": 0.735,
+          "underlyingPrice": 248.98,
+          "iv": 39.58,
+          "delta": -0.098590529,
+          "volume": 12,
+          "openInterest": 18296
+        },
+        "nearestAfterSnapshot": {
+          "path": "data/snapshots/2026-06-09/half_hourly-20260609T220809_0800.json",
+          "generatedAt": "2026-06-09T22:08:09+08:00",
+          "minutesFromTrade": 12.2,
+          "bid": 0.73,
+          "ask": 0.77,
+          "mid": 0.75,
+          "underlyingPrice": 248.465,
+          "iv": 39.163,
+          "delta": -0.098549047,
+          "volume": 62,
+          "openInterest": 18296
+        },
+        "assessment": "Fill price was inside both nearby bid/ask spreads and exactly matched the later mid, so the reported 0.75 credit is strongly supported."
+      }
+    }
+  ]
+}

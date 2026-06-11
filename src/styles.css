@@ -421,6 +421,10 @@ table {
   min-width: 1040px;
 }
 
+.youtuberTable {
+  min-width: 1080px;
+}
+
 .trackingGroupRow td {
   padding: 11px 14px;
   border-top: 1px solid #d8d1c5;
@@ -744,6 +748,35 @@ dd {
   font-size: 12px;
 }
 
+.tradeDetailGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.tradeDetail {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid #d8d1c5;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.tradeDetail .detailHead {
+  padding-bottom: 12px;
+}
+
+.tradeDetail dl {
+  padding-top: 12px;
+}
+
+.tradeDetail p {
+  margin: 14px 0 0;
+  color: #5f5a52;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
 @media (max-width: 1040px) {
   .overview {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -754,6 +787,10 @@ dd {
   }
 
   .reportGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .tradeDetailGrid {
     grid-template-columns: 1fr;
   }
 }
