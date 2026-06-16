@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-06-11T21:52:00+08:00",
+  "updatedAt": "2026-06-16T22:41:36+08:00",
   "source": {
     "type": "ibkr_screenshot",
     "path": "/Users/patrick_giselle/Downloads/Screenshot_20260609_095652.jpg",
@@ -8,7 +8,73 @@
     "screenTradeCount": 5,
     "note": "Screenshot shows 3 fully visible trades out of 5 listed for Jun 9, 2026."
   },
+  "sources": [
+    {
+      "type": "ibkr_screenshot",
+      "path": "/Users/patrick_giselle/Downloads/Screenshot_20260609_095652.jpg",
+      "visibleTradeCount": 3,
+      "screenTradeCount": 5,
+      "note": "Screenshot shows 3 fully visible trades out of 5 listed for Jun 9, 2026."
+    },
+    {
+      "type": "ibkr_screenshot",
+      "path": "/var/folders/rs/x39vq8_s68qf_l14bhpy97qw0000gn/T/codex-clipboard-b277eafa-341f-4b69-a7a4-20a73af3efc9.png",
+      "visibleTradeCount": 1,
+      "screenTradeCount": 1,
+      "note": "Screenshot shows 1 fully visible AMD short put trade for Jun 16, 2026."
+    }
+  ],
   "trades": [
+    {
+      "id": "ibkr-20260616-094847-amd-20260626-462.5-put-sell-7",
+      "tradeDate": "2026-06-16",
+      "tradeTimeEt": "09:48:47",
+      "observedAtSgt": "2026-06-16T21:48:47+08:00",
+      "broker": "IBKR",
+      "executionVenue": "NASDAQOM",
+      "ticker": "AMD",
+      "companyName": "Advanced Micro Devices",
+      "action": "sell",
+      "quantity": 7,
+      "optionType": "put",
+      "expiration": "2026-06-26",
+      "strike": 462.5,
+      "fillPrice": 3.63,
+      "limitPrice": 3.63,
+      "grossPremium": 2541,
+      "commission": 3.56,
+      "realizedPnl": 0,
+      "validation": {
+        "status": "supported",
+        "nearestBeforeSnapshot": {
+          "path": "data/snapshots/2026-06-16/half_hourly-20260616T214243_0800.json",
+          "generatedAt": "2026-06-16T21:42:43+08:00",
+          "minutesFromTrade": -6.07,
+          "bid": 3.55,
+          "ask": 4.3,
+          "mid": 3.925,
+          "underlyingPrice": 544.905,
+          "iv": 82.637,
+          "delta": -0.10679666,
+          "volume": 0,
+          "openInterest": 66
+        },
+        "nearestAfterSnapshot": {
+          "path": "data/snapshots/2026-06-16/half_hourly-20260616T221149_0800.json",
+          "generatedAt": "2026-06-16T22:11:49+08:00",
+          "minutesFromTrade": 23.03,
+          "bid": 3.35,
+          "ask": 3.65,
+          "mid": 3.5,
+          "underlyingPrice": 541.215,
+          "iv": 76.927,
+          "delta": -0.100394149,
+          "volume": 20,
+          "openInterest": 66
+        },
+        "assessment": "Fill price was inside both nearby bid/ask spreads, so the reported 3.63 credit is supported by archived option-chain data."
+      }
+    },
     {
       "id": "ibkr-20260609-095639-amd-20260618-422.5-put-sell-3",
       "tradeDate": "2026-06-09",
