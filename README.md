@@ -30,6 +30,7 @@ Dashboard 每個 scenario 都有 `Adjust filters` 區塊，可以直接在 UI �
 npm install
 npm run dev
 npm run build
+npm run fetch:watchlist-news
 npm run fetch:moomoo -- AAPL AMD NVDA TSLA MSFT SMH
 npm run snapshot -- --session pre_market
 npm run snapshot -- --session half_hourly
@@ -106,6 +107,7 @@ The snapshot runner:
 - Updates `src/data/generated/realOptions.json`.
 - Writes `src/data/generated/realOptions.meta.json` for the Dashboard.
 - Updates `src/data/generated/tracking.json` with compact screener signals and outcomes.
+- Refreshes `src/data/generated/watchlistNews.json` from English Yahoo Finance RSS unless `--skip-news` is passed.
 - Archives a local snapshot under `data/snapshots/`.
 - Writes a Markdown session report under `data/reports/`.
 
@@ -113,6 +115,12 @@ Send the latest generated data to Telegram:
 
 ```bash
 npm run report:telegram -- --session pre_market
+```
+
+Refresh only the Watchlist news feed:
+
+```bash
+npm run fetch:watchlist-news
 ```
 
 Telegram requires `.env` values:

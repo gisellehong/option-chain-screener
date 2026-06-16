@@ -8,6 +8,7 @@ import {
   Database,
   Download,
   Filter,
+  Newspaper,
   RefreshCw,
   SlidersHorizontal,
   TrendingUp,
@@ -16,8 +17,10 @@ import { mockOptions } from "./data/mockOptions";
 import realOptionsRaw from "./data/generated/realOptions.json";
 import realOptionsMetaRaw from "./data/generated/realOptions.meta.json";
 import trackingRaw from "./data/generated/tracking.json";
+import watchlistNewsRaw from "./data/generated/watchlistNews.json";
 import youtuberTradesRaw from "../data/youtuber-trades/trades.json";
 import { screenerConfigs } from "./data/screenerConfigs";
+import { watchlistMetadata } from "./data/watchlistMetadata";
 import { compactNumber, formatCurrency, formatNumber, formatPercent } from "./lib/format";
 import { scoreCandidates } from "./lib/scoring";
 import type {
@@ -31,6 +34,7 @@ import type {
   TrackingData,
   TrackingSignal,
 } from "./lib/types";
+import type { WatchlistCategory, WatchlistNewsItem } from "./data/watchlistMetadata";
 
 const realOptions = realOptionsRaw as OptionCandidate[];
 const realOptionsMeta = realOptionsMetaRaw as {
@@ -45,7 +49,20 @@ const realOptionsMeta = realOptionsMetaRaw as {
   };
 };
 const tracking = trackingRaw as unknown as TrackingData;
-type DashboardView = "screener" | "tracker" | "youtuber" | "report";
+const watchlistNews = watchlistNewsRaw as {
+  schemaVersion: number;
+  generatedAt: string | null;
+  source: {
+    name: string;
+    region: string;
+    language: string;
+    sourceUrls: Record<string, string>;
+    excludedDomains: string[];
+  };
+  byTicker: Record<string, WatchlistNewsItem[]>;
+  errors: Record<string, string>;
+};
+type DashboardView = "screener" | "watchlist" | "tracker" | "youtuber" | "report";
 
 type TradeValidationStatus = "supported" | "plausible" | "questionable" | "unsupported";
 
@@ -730,6 +747,194 @@ function YouTuberTracker({
   );
 }
 
+interface WatchlistRow {
+  ticker: string;
+  companyName: string;
+  category: WatchlistCategory;
+  strategyTags: string[];
+  monitorReason: string;
+  news: WatchlistNewsItem[];
+  quote?: OptionCandidate;
+  leapsBest?: ScoredCandidate;
+  cspBest?: ScoredCandidate;
+}
+
+function bestByTicker(rows: ScoredCandidate[], ticker: string): ScoredCandidate | undefined {
+  return rows
+    .filter((row) => row.ticker === ticker)
+    .sort((a, b) => b.score - a.score)[0];
+}
+
+function optionSetupLabel(row: WatchlistRow): string {
+  if (row.leapsBest && row.cspBest) return "LEAPS + CSP";
+  if (row.leapsBest) return "LEAPS";
+  if (row.cspBest) return "Weekly CSP";
+  return "No setup";
+}
+
+function optionSetupTone(row: WatchlistRow): string {
+  if (row.leapsBest && row.cspBest) return "strong";
+  if (row.leapsBest || row.cspBest) return "watch";
+  return "weak";
+}
+
+function Watchlist({
+  dataSet,
+  generatedAt,
+}: {
+  dataSet: OptionCandidate[];
+  generatedAt: string | null;
+}) {
+  const [activeCategory, setActiveCategory] = useState<WatchlistCategory | "All">("All");
+  const categories = useMemo(
+    () => ["All", ...Array.from(new Set(watchlistMetadata.map((item) => item.category)))] as Array<WatchlistCategory | "All">,
+    [],
+  );
+  const rows = useMemo<WatchlistRow[]>(() => {
+    const latestByTicker = new Map<string, OptionCandidate>();
+    dataSet.forEach((candidate) => {
+      const current = latestByTicker.get(candidate.ticker);
+      if (!current || candidate.marketCapB > current.marketCapB) {
+        latestByTicker.set(candidate.ticker, candidate);
+      }
+    });
+
+    const leapsConfig = screenerConfigs.find((config) => config.id === "leaps_deep_itm_call") ?? screenerConfigs[0];
+    const cspConfig = screenerConfigs.find((config) => config.id === "weekly_cash_secured_put") ?? screenerConfigs[1];
+    const leapsRows = leapsConfig.scenarios.flatMap((scenario) =>
+      scoreCandidates(leapsConfig, scenario.filters, dataSet, false),
+    );
+    const cspRows = cspConfig.scenarios.flatMap((scenario) => scoreCandidates(cspConfig, scenario.filters, dataSet, false));
+
+    return watchlistMetadata.map((item) => ({
+      ...item,
+      news: watchlistNews.byTicker[item.ticker]?.length ? watchlistNews.byTicker[item.ticker] : item.news,
+      quote: latestByTicker.get(item.ticker),
+      leapsBest: bestByTicker(leapsRows, item.ticker),
+      cspBest: bestByTicker(cspRows, item.ticker),
+    }));
+  }, [dataSet]);
+  const visibleRows = activeCategory === "All" ? rows : rows.filter((row) => row.category === activeCategory);
+  const setupRows = rows.filter((row) => row.leapsBest || row.cspBest);
+  const eventRiskRows = rows.filter((row) => row.strategyTags.includes("Event risk"));
+
+  return (
+    <section className="wideWorkspace">
+      <section className="sectionHead">
+        <div>
+          <div className="titleLine">
+            <Newspaper size={19} />
+            <h2>Watchlist</h2>
+          </div>
+          <p>把核心監控股票、分類、市值、目前 option setup 與重大新聞放在同一頁；新聞列可展開查看 catalyst impact。</p>
+        </div>
+      </section>
+
+      <section className="overview reportOverview">
+        <SummaryMetric label="Names" value={String(rows.length)} subValue="core monitor list" />
+        <SummaryMetric label="With Setup" value={String(setupRows.length)} subValue="matched LEAPS or CSP filters" />
+        <SummaryMetric label="Event Risk" value={String(eventRiskRows.length)} subValue="needs catalyst sizing" />
+        <SummaryMetric label="Market Snapshot" value={formatShortDate(generatedAt)} subValue="option data timestamp" />
+        <SummaryMetric
+          label="News Feed"
+          value={formatShortDate(watchlistNews.generatedAt)}
+          subValue={`${watchlistNews.source.name} · ${watchlistNews.source.language}`}
+        />
+      </section>
+
+      <section className="categoryFilters" aria-label="Watchlist categories">
+        {categories.map((category) => (
+          <button
+            key={category}
+            type="button"
+            className={category === activeCategory ? "active" : ""}
+            onClick={() => setActiveCategory(category)}
+          >
+            {category}
+          </button>
+        ))}
+      </section>
+
+      <div className="tableWrap">
+        <table className="watchlistTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Market</th>
+              <th>Option Setup</th>
+              <th>IV / Earnings</th>
+              <th>Monitor Reason</th>
+              <th>Major News</th>
+            </tr>
+          </thead>
+          <tbody>
+            {visibleRows.map((row) => {
+              const quote = row.quote;
+              const primaryNews = row.news[0];
+
+              return (
+                <tr key={row.ticker}>
+                  <td>
+                    <strong>{row.ticker}</strong>
+                    <small>{row.companyName}</small>
+                  </td>
+                  <td>
+                    {row.category}
+                    <small>{row.strategyTags.join(" · ")}</small>
+                  </td>
+                  <td>
+                    {quote ? `${formatCurrency(quote.underlyingPrice)} stock` : "N/A"}
+                    <small>{quote ? `${formatCurrency(quote.marketCapB, 0)}B market cap` : "No snapshot quote"}</small>
+                  </td>
+                  <td>
+                    <span className={`score ${optionSetupTone(row)}`}>{optionSetupLabel(row)}</span>
+                    <small>
+                      {row.leapsBest ? `LEAPS ${formatNumber(row.leapsBest.score, 0)}` : "LEAPS -"} ·{" "}
+                      {row.cspBest ? `CSP ${formatNumber(row.cspBest.score, 0)}` : "CSP -"}
+                    </small>
+                  </td>
+                  <td>
+                    {quote ? formatPercent(quote.ivPercentile, 0) : "N/A"}
+                    <small>{quote?.earningsDate ? `Earnings ${quote.earningsDate}` : "Earnings date N/A"}</small>
+                  </td>
+                  <td className="watchReason">{row.monitorReason}</td>
+                  <td>
+                    <details className="newsDisclosure">
+                      <summary>
+                        <span>{primaryNews?.headline ?? "No major news note"}</span>
+                      </summary>
+                      <div className="newsItems">
+                        {row.news.map((item) => (
+                          <article key={`${row.ticker}-${item.date}-${item.tag}`}>
+                            <strong>{item.tag}</strong>
+                            <span>{item.source ? `${item.source} · ${item.date}` : item.date}</span>
+                            <p>
+                              {item.url ? (
+                                <a href={item.url} target="_blank" rel="noreferrer">
+                                  {item.headline}
+                                </a>
+                              ) : (
+                                item.headline
+                              )}
+                            </p>
+                            {item.summary && <small>{item.summary}</small>}
+                            <small>{item.impact}</small>
+                          </article>
+                        ))}
+                      </div>
+                    </details>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+}
+
 function CandidateTable({
   config,
   scenario,
@@ -1078,6 +1283,7 @@ export function App() {
       <section className="viewTabs" aria-label="Dashboard views">
         {[
           { id: "screener", label: "Today Screener", icon: Filter },
+          { id: "watchlist", label: "Watchlist", icon: Newspaper },
           { id: "tracker", label: "Signal Tracker", icon: Database },
           { id: "youtuber", label: "AAG Tracker", icon: ClipboardList },
           { id: "report", label: "Strategy Report", icon: BarChart3 },
@@ -1144,6 +1350,7 @@ export function App() {
       )}
 
       {activeView === "tracker" && <SignalTracker trackingData={tracking} />}
+      {activeView === "watchlist" && <Watchlist dataSet={dataSet} generatedAt={realOptionsMeta.generatedAt} />}
       {activeView === "youtuber" && (
         <YouTuberTracker tradesData={youtuberTrades} generatedAt={realOptionsMeta.generatedAt} />
       )}

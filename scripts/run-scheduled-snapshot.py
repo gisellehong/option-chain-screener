@@ -20,6 +20,7 @@ WATCHLIST_PATH = ROOT / "config/watchlists.json"
 REAL_OPTIONS_PATH = ROOT / "src/data/generated/realOptions.json"
 META_PATH = ROOT / "src/data/generated/realOptions.meta.json"
 TRACKING_PATH = ROOT / "src/data/generated/tracking.json"
+NEWS_PATH = ROOT / "src/data/generated/watchlistNews.json"
 SNAPSHOT_ROOT = ROOT / "data/snapshots"
 REPORT_ROOT = ROOT / "data/reports"
 NY_TZ = ZoneInfo("America/New_York")
@@ -80,6 +81,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output", type=Path, default=REAL_OPTIONS_PATH)
     parser.add_argument("--meta-output", type=Path, default=META_PATH)
     parser.add_argument("--skip-fetch", action="store_true", help="Use the current output JSON instead of calling moomoo.")
+    parser.add_argument("--skip-news", action="store_true", help="Skip watchlist news refresh.")
     parser.add_argument("--send-telegram", action="store_true", help="Send the generated report to Telegram.")
     parser.add_argument("--publish", action="store_true", help="Commit and push generated data after a successful fetch.")
     parser.add_argument("--no-publish", action="store_true", help="Disable AUTO_PUBLISH_GITHUB for this run.")
@@ -128,6 +130,17 @@ def load_watchlists(path: Path) -> dict[str, list[str]]:
 
 def run_fetch(tickers: list[str], output: Path) -> dict[str, Any]:
     cmd = [sys.executable, "scripts/fetch-moomoo-data.py", "--output", str(output), *tickers]
+    completed = subprocess.run(cmd, cwd=ROOT, text=True, capture_output=True, check=False)
+    return {
+        "exitCode": completed.returncode,
+        "stdout": completed.stdout,
+        "stderr": completed.stderr,
+        "command": " ".join(cmd),
+    }
+
+
+def run_news_fetch(tickers: list[str], output: Path) -> dict[str, Any]:
+    cmd = [sys.executable, "scripts/fetch-watchlist-news.py", "--output", str(output), *tickers]
     completed = subprocess.run(cmd, cwd=ROOT, text=True, capture_output=True, check=False)
     return {
         "exitCode": completed.returncode,
@@ -669,6 +682,7 @@ def publish_generated_data(session: str, generated_at: str) -> dict[str, Any]:
         "src/data/generated/realOptions.json",
         "src/data/generated/realOptions.meta.json",
         "src/data/generated/tracking.json",
+        "src/data/generated/watchlistNews.json",
     ]
     status = run_git(["status", "--porcelain", "--", *paths])
     if status.returncode != 0:
@@ -713,6 +727,7 @@ def write_outputs(
     fetch_result: dict[str, Any],
     report: str,
     telegram: dict[str, Any],
+    news_result: dict[str, Any],
 ) -> dict[str, Any]:
     stamp = generated_at.replace(":", "").replace("-", "").replace("+", "_").replace(".", "_")
     date_part = generated_at[:10]
@@ -741,6 +756,7 @@ def write_outputs(
         "reportPath": str(report_path.relative_to(ROOT)),
         "telegram": telegram,
         "fetch": fetch_result,
+        "news": news_result,
     }
     args.meta_output.write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
     return metadata
@@ -755,10 +771,13 @@ def main() -> int:
         return 1
 
     fetch_result = {"exitCode": None, "stdout": "", "stderr": "", "command": None}
+    news_result = {"exitCode": None, "stdout": "", "stderr": "", "command": None}
     if not args.skip_fetch:
         fetch_result = run_fetch(watchlists["combined"], args.output)
         if fetch_result["exitCode"] != 0:
             generated_at = datetime.now().astimezone().isoformat(timespec="seconds")
+            if not args.skip_news:
+                news_result = run_news_fetch(watchlists["combined"], NEWS_PATH)
             write_outputs(
                 args,
                 generated_at,
@@ -767,18 +786,21 @@ def main() -> int:
                 fetch_result,
                 "Fetch failed.\n",
                 {"enabled": args.send_telegram, "sent": False, "error": None},
+                news_result,
             )
             print(fetch_result["stderr"], file=sys.stderr)
             return int(fetch_result["exitCode"])
 
     candidates = read_json(args.output, [])
     generated_at = datetime.now().astimezone().isoformat(timespec="seconds")
+    if not args.skip_news:
+        news_result = run_news_fetch(watchlists["combined"], NEWS_PATH)
     tracking = update_tracking(generated_at, args.session, watchlists, candidates, args.top)
     report = build_report(args.session, generated_at, watchlists, candidates, args.top)
     telegram = send_telegram(report) if args.send_telegram else {"enabled": False, "sent": False, "error": None}
     should_publish = (args.publish or env_truthy("AUTO_PUBLISH_GITHUB")) and not args.no_publish
     publish = {"enabled": should_publish, "published": False, "error": None, "commit": None}
-    metadata = write_outputs(args, generated_at, watchlists, candidates, fetch_result, report, telegram)
+    metadata = write_outputs(args, generated_at, watchlists, candidates, fetch_result, report, telegram, news_result)
     if should_publish and not args.skip_fetch:
         publish = publish_generated_data(args.session, generated_at)
 
@@ -789,6 +811,7 @@ def main() -> int:
         "trackingSignals": tracking.get("summary", {}).get("totalSignals"),
         "reportPath": metadata["reportPath"],
         "telegram": telegram,
+        "news": news_result,
         "publish": publish,
     }, indent=2))
     print("\n" + report)

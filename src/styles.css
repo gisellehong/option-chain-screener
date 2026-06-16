@@ -425,6 +425,103 @@ table {
   min-width: 1220px;
 }
 
+.watchlistTable {
+  min-width: 1280px;
+}
+
+.categoryFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid #ded8ce;
+  border-radius: 8px;
+  background: #fffdfa;
+}
+
+.categoryFilters button {
+  min-height: 34px;
+  padding: 0 11px;
+  border: 1px solid #d6cec1;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #403d38;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.categoryFilters button.active {
+  border-color: #202225;
+  background: #202225;
+  color: #ffffff;
+}
+
+.watchReason {
+  max-width: 260px;
+  color: #494540;
+  line-height: 1.45;
+}
+
+.newsDisclosure {
+  max-width: 360px;
+}
+
+.newsDisclosure summary {
+  color: #2b2d30;
+  font-weight: 760;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.newsDisclosure summary span {
+  display: inline;
+}
+
+.newsItems {
+  display: grid;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.newsItems article {
+  padding: 10px;
+  border: 1px solid #ece7dd;
+  border-radius: 8px;
+  background: #fbfaf7;
+}
+
+.newsItems article strong,
+.newsItems article span {
+  display: inline-flex;
+  margin-right: 8px;
+  color: #5f5a52;
+  font-size: 12px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.newsItems article p {
+  margin: 6px 0 4px;
+  color: #2b2d30;
+  line-height: 1.45;
+}
+
+.newsItems article a {
+  color: #1f5f95;
+  text-decoration: none;
+}
+
+.newsItems article a:hover {
+  text-decoration: underline;
+}
+
+.newsItems article small {
+  display: block;
+  margin-top: 4px;
+  color: #6f675d;
+  line-height: 1.45;
+}
+
 .trackingGroupRow td {
   padding: 11px 14px;
   border-top: 1px solid #d8d1c5;
