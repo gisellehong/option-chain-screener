@@ -1,21 +1,237 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-03T22:40:40+08:00",
+  "generatedAt": "2026-07-03T23:08:30+08:00",
   "summary": {
-    "totalSignals": 964,
-    "weeklyCspSignals": 833,
-    "weeklyCspOpen": 94,
+    "totalSignals": 968,
+    "weeklyCspSignals": 836,
+    "weeklyCspOpen": 97,
     "weeklyCspHit80": 387,
     "weeklyCspHit80Within5D": 289,
     "weeklyCspHitRate": 52.37,
-    "weeklyCspHitWithin5DRate": 34.69,
+    "weeklyCspHitWithin5DRate": 34.57,
     "weeklyCspAvgDaysTo80": 3.73,
-    "leapsSignals": 131,
-    "leapsTracked": 131,
-    "leapsAvgOptionReturnPct": -2.89,
-    "leapsAvgRelativeReturnPct": -1.5
+    "leapsSignals": 132,
+    "leapsTracked": 132,
+    "leapsAvgOptionReturnPct": -2.87,
+    "leapsAvgRelativeReturnPct": -1.49
   },
   "signals": [
+    {
+      "id": "2026-07-03T23:08:30+08:00|leaps|best|1|US.AAPL280121C240000",
+      "signalAt": "2026-07-03T23:08:30+08:00",
+      "session": "half_hourly",
+      "strategy": "leaps",
+      "scenario": "best",
+      "rank": 1,
+      "score": 73.18,
+      "contractId": "US.AAPL280121C240000",
+      "ticker": "AAPL",
+      "companyName": "Apple",
+      "optionType": "call",
+      "expiration": "2028-01-21",
+      "dte": 567.0,
+      "strike": 240.0,
+      "entry": {
+        "mid": 95.525,
+        "bid": 94.2,
+        "ask": 96.85,
+        "underlyingPrice": 308.63,
+        "iv": 32.418,
+        "delta": 0.833045531,
+        "spread": 2.6499999999999915,
+        "spreadPct": 2.7741428945302187
+      },
+      "latest": {
+        "mid": 95.525,
+        "bid": 94.2,
+        "ask": 96.85,
+        "underlyingPrice": 308.63,
+        "iv": 32.418,
+        "delta": 0.833045531,
+        "spread": 2.6499999999999915,
+        "spreadPct": 2.7741428945302187,
+        "observedAt": "2026-07-03T23:08:30+08:00"
+      },
+      "outcome": {
+        "status": "tracking",
+        "optionReturnPct": 0.0,
+        "underlyingReturnPct": 0.0,
+        "relativeReturnPct": 0.0,
+        "realizedLeverage": null,
+        "deltaChange": 0.0,
+        "ivChange": 0.0
+      },
+      "observations": {
+        "count": 1,
+        "firstObservedAt": "2026-07-03T23:08:30+08:00",
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
+      }
+    },
+    {
+      "id": "2026-07-03T23:08:30+08:00|weekly_csp|best|1|US.MU260710P800000",
+      "signalAt": "2026-07-03T23:08:30+08:00",
+      "session": "half_hourly",
+      "strategy": "weekly_csp",
+      "scenario": "best",
+      "rank": 1,
+      "score": 74.03,
+      "contractId": "US.MU260710P800000",
+      "ticker": "MU",
+      "companyName": "Micron Technology",
+      "optionType": "put",
+      "expiration": "2026-07-10",
+      "dte": 7.0,
+      "strike": 800.0,
+      "entry": {
+        "mid": 11.0,
+        "bid": 10.85,
+        "ask": 11.15,
+        "underlyingPrice": 975.56,
+        "iv": 128.725,
+        "delta": -0.117266121,
+        "spread": 0.3000000000000007,
+        "spreadPct": 2.7272727272727337
+      },
+      "latest": {
+        "mid": 11.0,
+        "bid": 10.85,
+        "ask": 11.15,
+        "underlyingPrice": 975.56,
+        "iv": 128.725,
+        "delta": -0.117266121,
+        "spread": 0.3000000000000007,
+        "spreadPct": 2.7272727272727337,
+        "observedAt": "2026-07-03T23:08:30+08:00"
+      },
+      "outcome": {
+        "status": "open",
+        "targetProfitPct": 80,
+        "targetAsk": 2.2,
+        "hit80At": null,
+        "daysTo80": null,
+        "hit80Within5D": false,
+        "bestProfitCapturePct": -1.36,
+        "bestProfitCaptureAt": "2026-07-03T23:08:30+08:00",
+        "wentItm": false,
+        "lowestUnderlying": 975.56,
+        "expired": false
+      },
+      "observations": {
+        "count": 1,
+        "firstObservedAt": "2026-07-03T23:08:30+08:00",
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
+      }
+    },
+    {
+      "id": "2026-07-03T23:08:30+08:00|weekly_csp|best|2|US.MU260710P750000",
+      "signalAt": "2026-07-03T23:08:30+08:00",
+      "session": "half_hourly",
+      "strategy": "weekly_csp",
+      "scenario": "best",
+      "rank": 2,
+      "score": 69.57,
+      "contractId": "US.MU260710P750000",
+      "ticker": "MU",
+      "companyName": "Micron Technology",
+      "optionType": "put",
+      "expiration": "2026-07-10",
+      "dte": 7.0,
+      "strike": 750.0,
+      "entry": {
+        "mid": 6.325,
+        "bid": 6.15,
+        "ask": 6.5,
+        "underlyingPrice": 975.56,
+        "iv": 136.094,
+        "delta": -0.070623451,
+        "spread": 0.34999999999999964,
+        "spreadPct": 5.533596837944659
+      },
+      "latest": {
+        "mid": 6.325,
+        "bid": 6.15,
+        "ask": 6.5,
+        "underlyingPrice": 975.56,
+        "iv": 136.094,
+        "delta": -0.070623451,
+        "spread": 0.34999999999999964,
+        "spreadPct": 5.533596837944659,
+        "observedAt": "2026-07-03T23:08:30+08:00"
+      },
+      "outcome": {
+        "status": "open",
+        "targetProfitPct": 80,
+        "targetAsk": 1.265,
+        "hit80At": null,
+        "daysTo80": null,
+        "hit80Within5D": false,
+        "bestProfitCapturePct": -2.77,
+        "bestProfitCaptureAt": "2026-07-03T23:08:30+08:00",
+        "wentItm": false,
+        "lowestUnderlying": 975.56,
+        "expired": false
+      },
+      "observations": {
+        "count": 1,
+        "firstObservedAt": "2026-07-03T23:08:30+08:00",
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
+      }
+    },
+    {
+      "id": "2026-07-03T23:08:30+08:00|weekly_csp|best|3|US.MU260710P700000",
+      "signalAt": "2026-07-03T23:08:30+08:00",
+      "session": "half_hourly",
+      "strategy": "weekly_csp",
+      "scenario": "best",
+      "rank": 3,
+      "score": 68.49,
+      "contractId": "US.MU260710P700000",
+      "ticker": "MU",
+      "companyName": "Micron Technology",
+      "optionType": "put",
+      "expiration": "2026-07-10",
+      "dte": 7.0,
+      "strike": 700.0,
+      "entry": {
+        "mid": 3.525,
+        "bid": 3.4,
+        "ask": 3.65,
+        "underlyingPrice": 975.56,
+        "iv": 143.966,
+        "delta": -0.040778061,
+        "spread": 0.25,
+        "spreadPct": 7.092198581560284
+      },
+      "latest": {
+        "mid": 3.525,
+        "bid": 3.4,
+        "ask": 3.65,
+        "underlyingPrice": 975.56,
+        "iv": 143.966,
+        "delta": -0.040778061,
+        "spread": 0.25,
+        "spreadPct": 7.092198581560284,
+        "observedAt": "2026-07-03T23:08:30+08:00"
+      },
+      "outcome": {
+        "status": "open",
+        "targetProfitPct": 80,
+        "targetAsk": 0.705,
+        "hit80At": null,
+        "daysTo80": null,
+        "hit80Within5D": false,
+        "bestProfitCapturePct": -3.55,
+        "bestProfitCaptureAt": "2026-07-03T23:08:30+08:00",
+        "wentItm": false,
+        "lowestUnderlying": 975.56,
+        "expired": false
+      },
+      "observations": {
+        "count": 1,
+        "firstObservedAt": "2026-07-03T23:08:30+08:00",
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
+      }
+    },
     {
       "id": "2026-07-03T22:40:40+08:00|leaps|best|1|US.AAPL280121C240000",
       "signalAt": "2026-07-03T22:40:40+08:00",
@@ -50,7 +266,7 @@
         "delta": 0.833045531,
         "spread": 2.6499999999999915,
         "spreadPct": 2.7741428945302187,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -62,9 +278,9 @@
         "ivChange": 0.0
       },
       "observations": {
-        "count": 1,
+        "count": 2,
         "firstObservedAt": "2026-07-03T22:40:40+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -101,7 +317,7 @@
         "delta": -0.117266121,
         "spread": 0.3000000000000007,
         "spreadPct": 2.7272727272727337,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -117,9 +333,9 @@
         "expired": false
       },
       "observations": {
-        "count": 1,
+        "count": 2,
         "firstObservedAt": "2026-07-03T22:40:40+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -156,7 +372,7 @@
         "delta": -0.070623451,
         "spread": 0.34999999999999964,
         "spreadPct": 5.533596837944659,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -166,15 +382,15 @@
         "daysTo80": null,
         "hit80Within5D": false,
         "bestProfitCapturePct": -2.77,
-        "bestProfitCaptureAt": "2026-07-03T22:40:40+08:00",
+        "bestProfitCaptureAt": "2026-07-03T23:08:30+08:00",
         "wentItm": false,
         "lowestUnderlying": 975.56,
         "expired": false
       },
       "observations": {
-        "count": 1,
+        "count": 2,
         "firstObservedAt": "2026-07-03T22:40:40+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -211,7 +427,7 @@
         "delta": -0.040778061,
         "spread": 0.25,
         "spreadPct": 7.092198581560284,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -221,15 +437,15 @@
         "daysTo80": null,
         "hit80Within5D": false,
         "bestProfitCapturePct": -3.55,
-        "bestProfitCaptureAt": "2026-07-03T22:40:40+08:00",
+        "bestProfitCaptureAt": "2026-07-03T23:08:30+08:00",
         "wentItm": false,
         "lowestUnderlying": 975.56,
         "expired": false
       },
       "observations": {
-        "count": 1,
+        "count": 2,
         "firstObservedAt": "2026-07-03T22:40:40+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -266,7 +482,7 @@
         "delta": 0.833045531,
         "spread": 2.6499999999999915,
         "spreadPct": 2.7741428945302187,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -278,9 +494,9 @@
         "ivChange": 0.0
       },
       "observations": {
-        "count": 2,
+        "count": 3,
         "firstObservedAt": "2026-07-03T22:07:48+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -317,7 +533,7 @@
         "delta": -0.117266121,
         "spread": 0.3000000000000007,
         "spreadPct": 2.7272727272727337,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -333,9 +549,9 @@
         "expired": false
       },
       "observations": {
-        "count": 2,
+        "count": 3,
         "firstObservedAt": "2026-07-03T22:07:48+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -372,7 +588,7 @@
         "delta": -0.070623451,
         "spread": 0.34999999999999964,
         "spreadPct": 5.533596837944659,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -382,15 +598,15 @@
         "daysTo80": null,
         "hit80Within5D": false,
         "bestProfitCapturePct": -2.77,
-        "bestProfitCaptureAt": "2026-07-03T22:40:40+08:00",
+        "bestProfitCaptureAt": "2026-07-03T23:08:30+08:00",
         "wentItm": false,
         "lowestUnderlying": 975.56,
         "expired": false
       },
       "observations": {
-        "count": 2,
+        "count": 3,
         "firstObservedAt": "2026-07-03T22:07:48+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -427,7 +643,7 @@
         "delta": -0.040778061,
         "spread": 0.25,
         "spreadPct": 7.092198581560284,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -437,15 +653,15 @@
         "daysTo80": null,
         "hit80Within5D": false,
         "bestProfitCapturePct": -3.55,
-        "bestProfitCaptureAt": "2026-07-03T22:40:40+08:00",
+        "bestProfitCaptureAt": "2026-07-03T23:08:30+08:00",
         "wentItm": false,
         "lowestUnderlying": 975.56,
         "expired": false
       },
       "observations": {
-        "count": 2,
+        "count": 3,
         "firstObservedAt": "2026-07-03T22:07:48+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -482,7 +698,7 @@
         "delta": 0.833045531,
         "spread": 2.6499999999999915,
         "spreadPct": 2.7741428945302187,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -494,9 +710,9 @@
         "ivChange": 0.0
       },
       "observations": {
-        "count": 3,
+        "count": 4,
         "firstObservedAt": "2026-07-03T21:39:57+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -533,7 +749,7 @@
         "delta": -0.117266121,
         "spread": 0.3000000000000007,
         "spreadPct": 2.7272727272727337,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -549,9 +765,9 @@
         "expired": false
       },
       "observations": {
-        "count": 3,
+        "count": 4,
         "firstObservedAt": "2026-07-03T21:39:57+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -588,7 +804,7 @@
         "delta": -0.070623451,
         "spread": 0.34999999999999964,
         "spreadPct": 5.533596837944659,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -598,15 +814,15 @@
         "daysTo80": null,
         "hit80Within5D": false,
         "bestProfitCapturePct": -2.77,
-        "bestProfitCaptureAt": "2026-07-03T22:40:40+08:00",
+        "bestProfitCaptureAt": "2026-07-03T23:08:30+08:00",
         "wentItm": false,
         "lowestUnderlying": 975.56,
         "expired": false
       },
       "observations": {
-        "count": 3,
+        "count": 4,
         "firstObservedAt": "2026-07-03T21:39:57+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -643,7 +859,7 @@
         "delta": -0.040778061,
         "spread": 0.25,
         "spreadPct": 7.092198581560284,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -653,15 +869,15 @@
         "daysTo80": null,
         "hit80Within5D": false,
         "bestProfitCapturePct": -3.55,
-        "bestProfitCaptureAt": "2026-07-03T22:40:40+08:00",
+        "bestProfitCaptureAt": "2026-07-03T23:08:30+08:00",
         "wentItm": false,
         "lowestUnderlying": 975.56,
         "expired": false
       },
       "observations": {
-        "count": 3,
+        "count": 4,
         "firstObservedAt": "2026-07-03T21:39:57+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -698,7 +914,7 @@
         "delta": 0.833045531,
         "spread": 2.6499999999999915,
         "spreadPct": 2.7741428945302187,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -710,9 +926,9 @@
         "ivChange": 0.0
       },
       "observations": {
-        "count": 4,
+        "count": 5,
         "firstObservedAt": "2026-07-03T21:12:06+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -749,7 +965,7 @@
         "delta": -0.117266121,
         "spread": 0.3000000000000007,
         "spreadPct": 2.7272727272727337,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -765,9 +981,9 @@
         "expired": false
       },
       "observations": {
-        "count": 4,
+        "count": 5,
         "firstObservedAt": "2026-07-03T21:12:06+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -804,7 +1020,7 @@
         "delta": -0.070623451,
         "spread": 0.34999999999999964,
         "spreadPct": 5.533596837944659,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -814,15 +1030,15 @@
         "daysTo80": null,
         "hit80Within5D": false,
         "bestProfitCapturePct": -2.77,
-        "bestProfitCaptureAt": "2026-07-03T22:40:40+08:00",
+        "bestProfitCaptureAt": "2026-07-03T23:08:30+08:00",
         "wentItm": false,
         "lowestUnderlying": 975.56,
         "expired": false
       },
       "observations": {
-        "count": 4,
+        "count": 5,
         "firstObservedAt": "2026-07-03T21:12:06+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -859,7 +1075,7 @@
         "delta": -0.040778061,
         "spread": 0.25,
         "spreadPct": 7.092198581560284,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -869,15 +1085,15 @@
         "daysTo80": null,
         "hit80Within5D": false,
         "bestProfitCapturePct": -3.55,
-        "bestProfitCaptureAt": "2026-07-03T22:40:40+08:00",
+        "bestProfitCaptureAt": "2026-07-03T23:08:30+08:00",
         "wentItm": false,
         "lowestUnderlying": 975.56,
         "expired": false
       },
       "observations": {
-        "count": 4,
+        "count": 5,
         "firstObservedAt": "2026-07-03T21:12:06+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -914,7 +1130,7 @@
         "delta": 0.833045531,
         "spread": 2.6499999999999915,
         "spreadPct": 2.7741428945302187,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -926,9 +1142,9 @@
         "ivChange": 0.03
       },
       "observations": {
-        "count": 5,
+        "count": 6,
         "firstObservedAt": "2026-07-03T04:08:11+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -965,7 +1181,7 @@
         "delta": -0.117266121,
         "spread": 0.3000000000000007,
         "spreadPct": 2.7272727272727337,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -981,9 +1197,9 @@
         "expired": false
       },
       "observations": {
-        "count": 5,
+        "count": 6,
         "firstObservedAt": "2026-07-03T04:08:11+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -1020,7 +1236,7 @@
         "delta": -0.070623451,
         "spread": 0.34999999999999964,
         "spreadPct": 5.533596837944659,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1030,15 +1246,15 @@
         "daysTo80": null,
         "hit80Within5D": false,
         "bestProfitCapturePct": -2.77,
-        "bestProfitCaptureAt": "2026-07-03T22:40:40+08:00",
+        "bestProfitCaptureAt": "2026-07-03T23:08:30+08:00",
         "wentItm": false,
         "lowestUnderlying": 975.56,
         "expired": false
       },
       "observations": {
-        "count": 5,
+        "count": 6,
         "firstObservedAt": "2026-07-03T04:08:11+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -1075,7 +1291,7 @@
         "delta": -0.040778061,
         "spread": 0.25,
         "spreadPct": 7.092198581560284,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1085,15 +1301,15 @@
         "daysTo80": null,
         "hit80Within5D": false,
         "bestProfitCapturePct": -3.55,
-        "bestProfitCaptureAt": "2026-07-03T22:40:40+08:00",
+        "bestProfitCaptureAt": "2026-07-03T23:08:30+08:00",
         "wentItm": false,
         "lowestUnderlying": 975.56,
         "expired": false
       },
       "observations": {
-        "count": 5,
+        "count": 6,
         "firstObservedAt": "2026-07-03T04:08:11+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -1130,7 +1346,7 @@
         "delta": 0.833045531,
         "spread": 2.6499999999999915,
         "spreadPct": 2.7741428945302187,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -1142,9 +1358,9 @@
         "ivChange": -0.09
       },
       "observations": {
-        "count": 6,
+        "count": 7,
         "firstObservedAt": "2026-07-03T03:40:17+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -1181,7 +1397,7 @@
         "delta": -0.040778061,
         "spread": 0.25,
         "spreadPct": 7.092198581560284,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1191,15 +1407,15 @@
         "daysTo80": null,
         "hit80Within5D": false,
         "bestProfitCapturePct": 16.57,
-        "bestProfitCaptureAt": "2026-07-03T22:40:40+08:00",
+        "bestProfitCaptureAt": "2026-07-03T23:08:30+08:00",
         "wentItm": false,
         "lowestUnderlying": 957.25,
         "expired": false
       },
       "observations": {
-        "count": 6,
+        "count": 7,
         "firstObservedAt": "2026-07-03T03:40:17+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -1236,7 +1452,7 @@
         "delta": -0.070623451,
         "spread": 0.34999999999999964,
         "spreadPct": 5.533596837944659,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1252,9 +1468,9 @@
         "expired": false
       },
       "observations": {
-        "count": 6,
+        "count": 7,
         "firstObservedAt": "2026-07-03T03:40:17+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -1291,7 +1507,7 @@
         "delta": -0.071900254,
         "spread": 0.1499999999999999,
         "spreadPct": 6.896551724137928,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1307,9 +1523,9 @@
         "expired": false
       },
       "observations": {
-        "count": 6,
+        "count": 7,
         "firstObservedAt": "2026-07-03T03:40:17+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -1346,7 +1562,7 @@
         "delta": 0.833045531,
         "spread": 2.6499999999999915,
         "spreadPct": 2.7741428945302187,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -1358,9 +1574,9 @@
         "ivChange": 0.09
       },
       "observations": {
-        "count": 7,
+        "count": 8,
         "firstObservedAt": "2026-07-03T03:12:26+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -1397,7 +1613,7 @@
         "delta": -0.070623451,
         "spread": 0.34999999999999964,
         "spreadPct": 5.533596837944659,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1413,9 +1629,9 @@
         "expired": false
       },
       "observations": {
-        "count": 7,
+        "count": 8,
         "firstObservedAt": "2026-07-03T03:12:26+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -1452,7 +1668,7 @@
         "delta": -0.040778061,
         "spread": 0.25,
         "spreadPct": 7.092198581560284,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1462,15 +1678,15 @@
         "daysTo80": null,
         "hit80Within5D": false,
         "bestProfitCapturePct": 16.57,
-        "bestProfitCaptureAt": "2026-07-03T22:40:40+08:00",
+        "bestProfitCaptureAt": "2026-07-03T23:08:30+08:00",
         "wentItm": false,
         "lowestUnderlying": 957.25,
         "expired": false
       },
       "observations": {
-        "count": 7,
+        "count": 8,
         "firstObservedAt": "2026-07-03T03:12:26+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -1507,7 +1723,7 @@
         "delta": -0.075373064,
         "spread": 0.23999999999999977,
         "spreadPct": 11.009174311926596,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1523,9 +1739,9 @@
         "expired": false
       },
       "observations": {
-        "count": 7,
+        "count": 8,
         "firstObservedAt": "2026-07-03T03:12:26+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -1562,7 +1778,7 @@
         "delta": 0.833045531,
         "spread": 2.6499999999999915,
         "spreadPct": 2.7741428945302187,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -1574,9 +1790,9 @@
         "ivChange": -0.16
       },
       "observations": {
-        "count": 8,
+        "count": 9,
         "firstObservedAt": "2026-07-03T02:39:34+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -1613,7 +1829,7 @@
         "delta": -0.070623451,
         "spread": 0.34999999999999964,
         "spreadPct": 5.533596837944659,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1629,9 +1845,9 @@
         "expired": false
       },
       "observations": {
-        "count": 8,
+        "count": 9,
         "firstObservedAt": "2026-07-03T02:39:34+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -1668,7 +1884,7 @@
         "delta": -0.100649847,
         "spread": 0.07000000000000028,
         "spreadPct": 3.2332563510392744,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1684,9 +1900,9 @@
         "expired": false
       },
       "observations": {
-        "count": 8,
+        "count": 9,
         "firstObservedAt": "2026-07-03T02:39:34+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -1723,7 +1939,7 @@
         "delta": -0.063724221,
         "spread": 1.0499999999999998,
         "spreadPct": 18.5022026431718,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1739,9 +1955,9 @@
         "expired": false
       },
       "observations": {
-        "count": 8,
+        "count": 9,
         "firstObservedAt": "2026-07-03T02:39:34+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -1778,7 +1994,7 @@
         "delta": 0.833045531,
         "spread": 2.6499999999999915,
         "spreadPct": 2.7741428945302187,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -1790,9 +2006,9 @@
         "ivChange": 0.16
       },
       "observations": {
-        "count": 9,
+        "count": 10,
         "firstObservedAt": "2026-07-03T02:11:41+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -1829,7 +2045,7 @@
         "delta": -0.070623451,
         "spread": 0.34999999999999964,
         "spreadPct": 5.533596837944659,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1839,15 +2055,15 @@
         "daysTo80": null,
         "hit80Within5D": false,
         "bestProfitCapturePct": 19.25,
-        "bestProfitCaptureAt": "2026-07-03T22:40:40+08:00",
+        "bestProfitCaptureAt": "2026-07-03T23:08:30+08:00",
         "wentItm": false,
         "lowestUnderlying": 957.25,
         "expired": false
       },
       "observations": {
-        "count": 9,
+        "count": 10,
         "firstObservedAt": "2026-07-03T02:11:41+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -1884,7 +2100,7 @@
         "delta": -0.040778061,
         "spread": 0.25,
         "spreadPct": 7.092198581560284,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1894,15 +2110,15 @@
         "daysTo80": null,
         "hit80Within5D": false,
         "bestProfitCapturePct": 21.08,
-        "bestProfitCaptureAt": "2026-07-03T22:40:40+08:00",
+        "bestProfitCaptureAt": "2026-07-03T23:08:30+08:00",
         "wentItm": false,
         "lowestUnderlying": 957.25,
         "expired": false
       },
       "observations": {
-        "count": 9,
+        "count": 10,
         "firstObservedAt": "2026-07-03T02:11:41+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -1939,7 +2155,7 @@
         "delta": -0.052368567,
         "spread": 0.7000000000000002,
         "spreadPct": 15.053763440860218,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1955,9 +2171,9 @@
         "expired": false
       },
       "observations": {
-        "count": 9,
+        "count": 10,
         "firstObservedAt": "2026-07-03T02:11:41+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -1994,7 +2210,7 @@
         "delta": 0.833045531,
         "spread": 2.6499999999999915,
         "spreadPct": 2.7741428945302187,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -2006,9 +2222,9 @@
         "ivChange": -0.04
       },
       "observations": {
-        "count": 10,
+        "count": 11,
         "firstObservedAt": "2026-07-03T01:38:51+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -2045,7 +2261,7 @@
         "delta": -0.071900254,
         "spread": 0.1499999999999999,
         "spreadPct": 6.896551724137928,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -2055,15 +2271,15 @@
         "daysTo80": null,
         "hit80Within5D": false,
         "bestProfitCapturePct": 33.33,
-        "bestProfitCaptureAt": "2026-07-03T22:40:40+08:00",
+        "bestProfitCaptureAt": "2026-07-03T23:08:30+08:00",
         "wentItm": false,
         "lowestUnderlying": 171.6146,
         "expired": false
       },
       "observations": {
-        "count": 10,
+        "count": 11,
         "firstObservedAt": "2026-07-03T01:38:51+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -2100,7 +2316,7 @@
         "delta": -0.112571078,
         "spread": 0.9500000000000011,
         "spreadPct": 8.983451536643036,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -2110,15 +2326,15 @@
         "daysTo80": null,
         "hit80Within5D": false,
         "bestProfitCapturePct": 7.72,
-        "bestProfitCaptureAt": "2026-07-03T22:40:40+08:00",
+        "bestProfitCaptureAt": "2026-07-03T23:08:30+08:00",
         "wentItm": false,
         "lowestUnderlying": 957.25,
         "expired": false
       },
       "observations": {
-        "count": 10,
+        "count": 11,
         "firstObservedAt": "2026-07-03T01:38:51+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -2210,7 +2426,7 @@
         "delta": -0.040778061,
         "spread": 0.25,
         "spreadPct": 7.092198581560284,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -2226,9 +2442,9 @@
         "expired": false
       },
       "observations": {
-        "count": 11,
+        "count": 12,
         "firstObservedAt": "2026-07-03T01:10:59+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -2265,7 +2481,7 @@
         "delta": -0.075373064,
         "spread": 0.23999999999999977,
         "spreadPct": 11.009174311926596,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -2281,9 +2497,9 @@
         "expired": false
       },
       "observations": {
-        "count": 11,
+        "count": 12,
         "firstObservedAt": "2026-07-03T01:10:59+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -2375,7 +2591,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -2387,9 +2603,9 @@
         "ivChange": 0.6
       },
       "observations": {
-        "count": 12,
+        "count": 13,
         "firstObservedAt": "2026-07-03T00:38:06+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -2426,7 +2642,7 @@
         "delta": -0.040778061,
         "spread": 0.25,
         "spreadPct": 7.092198581560284,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -2436,15 +2652,15 @@
         "daysTo80": null,
         "hit80Within5D": false,
         "bestProfitCapturePct": 16.57,
-        "bestProfitCaptureAt": "2026-07-03T22:40:40+08:00",
+        "bestProfitCaptureAt": "2026-07-03T23:08:30+08:00",
         "wentItm": false,
         "lowestUnderlying": 957.25,
         "expired": false
       },
       "observations": {
-        "count": 12,
+        "count": 13,
         "firstObservedAt": "2026-07-03T00:38:06+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -2481,7 +2697,7 @@
         "delta": -0.022365798,
         "spread": 0.5499999999999998,
         "spreadPct": 29.33333333333332,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -2491,15 +2707,15 @@
         "daysTo80": null,
         "hit80Within5D": false,
         "bestProfitCapturePct": 11.7,
-        "bestProfitCaptureAt": "2026-07-03T22:40:40+08:00",
+        "bestProfitCaptureAt": "2026-07-03T23:08:30+08:00",
         "wentItm": false,
         "lowestUnderlying": 957.25,
         "expired": false
       },
       "observations": {
-        "count": 12,
+        "count": 13,
         "firstObservedAt": "2026-07-03T00:38:06+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -2536,7 +2752,7 @@
         "delta": -0.052368567,
         "spread": 0.7000000000000002,
         "spreadPct": 15.053763440860218,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -2546,15 +2762,15 @@
         "daysTo80": null,
         "hit80Within5D": false,
         "bestProfitCapturePct": 4.76,
-        "bestProfitCaptureAt": "2026-07-03T22:40:40+08:00",
+        "bestProfitCaptureAt": "2026-07-03T23:08:30+08:00",
         "wentItm": false,
         "lowestUnderlying": 957.25,
         "expired": false
       },
       "observations": {
-        "count": 12,
+        "count": 13,
         "firstObservedAt": "2026-07-03T00:38:06+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -2591,7 +2807,7 @@
         "delta": -0.117266121,
         "spread": 0.3000000000000007,
         "spreadPct": 2.7272727272727337,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -2607,9 +2823,9 @@
         "expired": false
       },
       "observations": {
-        "count": 13,
+        "count": 14,
         "firstObservedAt": "2026-07-03T00:10:10+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -2646,7 +2862,7 @@
         "delta": -0.110761844,
         "spread": 0.5,
         "spreadPct": 13.698630136986301,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -2662,9 +2878,9 @@
         "expired": false
       },
       "observations": {
-        "count": 13,
+        "count": 14,
         "firstObservedAt": "2026-07-03T00:10:10+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -2701,7 +2917,7 @@
         "delta": -0.087119424,
         "spread": 0.3500000000000001,
         "spreadPct": 13.084112149532714,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -2717,9 +2933,9 @@
         "expired": false
       },
       "observations": {
-        "count": 13,
+        "count": 14,
         "firstObservedAt": "2026-07-03T00:10:10+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -2756,7 +2972,7 @@
         "delta": -0.117266121,
         "spread": 0.3000000000000007,
         "spreadPct": 2.7272727272727337,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -2772,9 +2988,9 @@
         "expired": false
       },
       "observations": {
-        "count": 14,
+        "count": 15,
         "firstObservedAt": "2026-07-02T23:37:17+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -2811,7 +3027,7 @@
         "delta": -0.040778061,
         "spread": 0.25,
         "spreadPct": 7.092198581560284,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -2827,9 +3043,9 @@
         "expired": false
       },
       "observations": {
-        "count": 14,
+        "count": 15,
         "firstObservedAt": "2026-07-02T23:37:17+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -2866,7 +3082,7 @@
         "delta": -0.110761844,
         "spread": 0.5,
         "spreadPct": 13.698630136986301,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -2882,9 +3098,9 @@
         "expired": false
       },
       "observations": {
-        "count": 14,
+        "count": 15,
         "firstObservedAt": "2026-07-02T23:37:17+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -2921,7 +3137,7 @@
         "delta": -0.110761844,
         "spread": 0.5,
         "spreadPct": 13.698630136986301,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -2937,9 +3153,9 @@
         "expired": false
       },
       "observations": {
-        "count": 15,
+        "count": 16,
         "firstObservedAt": "2026-07-02T23:09:57+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -2976,7 +3192,7 @@
         "delta": -0.070623451,
         "spread": 0.34999999999999964,
         "spreadPct": 5.533596837944659,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -2992,9 +3208,9 @@
         "expired": false
       },
       "observations": {
-        "count": 15,
+        "count": 16,
         "firstObservedAt": "2026-07-02T23:09:57+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -3031,7 +3247,7 @@
         "delta": -0.040778061,
         "spread": 0.25,
         "spreadPct": 7.092198581560284,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -3047,9 +3263,9 @@
         "expired": false
       },
       "observations": {
-        "count": 15,
+        "count": 16,
         "firstObservedAt": "2026-07-02T23:09:57+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -3086,7 +3302,7 @@
         "delta": -0.117266121,
         "spread": 0.3000000000000007,
         "spreadPct": 2.7272727272727337,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -3102,9 +3318,9 @@
         "expired": false
       },
       "observations": {
-        "count": 16,
+        "count": 17,
         "firstObservedAt": "2026-07-02T22:37:37+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -3141,7 +3357,7 @@
         "delta": -0.143873526,
         "spread": 1.0499999999999998,
         "spreadPct": 23.204419889502756,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -3157,9 +3373,9 @@
         "expired": false
       },
       "observations": {
-        "count": 16,
+        "count": 17,
         "firstObservedAt": "2026-07-02T22:37:37+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -3196,7 +3412,7 @@
         "delta": -0.117266121,
         "spread": 0.3000000000000007,
         "spreadPct": 2.7272727272727337,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -3212,9 +3428,9 @@
         "expired": false
       },
       "observations": {
-        "count": 17,
+        "count": 18,
         "firstObservedAt": "2026-07-02T22:10:17+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -3251,7 +3467,7 @@
         "delta": -0.270837063,
         "spread": 0.5,
         "spreadPct": 4.878048780487805,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -3267,9 +3483,9 @@
         "expired": false
       },
       "observations": {
-        "count": 17,
+        "count": 18,
         "firstObservedAt": "2026-07-02T22:10:17+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -3306,7 +3522,7 @@
         "delta": -0.206982641,
         "spread": 0.39999999999999947,
         "spreadPct": 5.405405405405398,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -3322,9 +3538,9 @@
         "expired": false
       },
       "observations": {
-        "count": 17,
+        "count": 18,
         "firstObservedAt": "2026-07-02T22:10:17+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -3361,7 +3577,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -3373,9 +3589,9 @@
         "ivChange": -0.21
       },
       "observations": {
-        "count": 19,
+        "count": 20,
         "firstObservedAt": "2026-07-02T21:10:35+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -3412,7 +3628,7 @@
         "delta": -0.206982641,
         "spread": 0.39999999999999947,
         "spreadPct": 5.405405405405398,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -3428,9 +3644,9 @@
         "expired": false
       },
       "observations": {
-        "count": 19,
+        "count": 20,
         "firstObservedAt": "2026-07-02T21:10:35+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -3467,7 +3683,7 @@
         "delta": -0.258835731,
         "spread": 0.34999999999999964,
         "spreadPct": 5.533596837944659,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -3483,9 +3699,9 @@
         "expired": false
       },
       "observations": {
-        "count": 19,
+        "count": 20,
         "firstObservedAt": "2026-07-02T21:10:35+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -3522,7 +3738,7 @@
         "delta": -0.170490568,
         "spread": 0.39999999999999947,
         "spreadPct": 7.407407407407398,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -3538,9 +3754,9 @@
         "expired": false
       },
       "observations": {
-        "count": 19,
+        "count": 20,
         "firstObservedAt": "2026-07-02T21:10:35+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -3577,7 +3793,7 @@
         "delta": -0.206982641,
         "spread": 0.39999999999999947,
         "spreadPct": 5.405405405405398,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -3593,9 +3809,9 @@
         "expired": false
       },
       "observations": {
-        "count": 20,
+        "count": 21,
         "firstObservedAt": "2026-07-02T04:07:13+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -3632,7 +3848,7 @@
         "delta": -0.258835731,
         "spread": 0.34999999999999964,
         "spreadPct": 5.533596837944659,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -3648,9 +3864,9 @@
         "expired": false
       },
       "observations": {
-        "count": 20,
+        "count": 21,
         "firstObservedAt": "2026-07-02T04:07:13+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -3687,7 +3903,7 @@
         "delta": -0.170490568,
         "spread": 0.39999999999999947,
         "spreadPct": 7.407407407407398,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -3703,9 +3919,9 @@
         "expired": false
       },
       "observations": {
-        "count": 20,
+        "count": 21,
         "firstObservedAt": "2026-07-02T04:07:13+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -3742,7 +3958,7 @@
         "delta": -0.270837063,
         "spread": 0.5,
         "spreadPct": 4.878048780487805,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -3758,9 +3974,9 @@
         "expired": false
       },
       "observations": {
-        "count": 21,
+        "count": 22,
         "firstObservedAt": "2026-07-02T03:39:51+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -3797,7 +4013,7 @@
         "delta": -0.040778061,
         "spread": 0.25,
         "spreadPct": 7.092198581560284,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -3813,9 +4029,9 @@
         "expired": false
       },
       "observations": {
-        "count": 21,
+        "count": 22,
         "firstObservedAt": "2026-07-02T03:39:51+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -3852,7 +4068,7 @@
         "delta": -0.143372069,
         "spread": 2.900000000000002,
         "spreadPct": 8.7218045112782,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -3868,9 +4084,9 @@
         "expired": false
       },
       "observations": {
-        "count": 21,
+        "count": 22,
         "firstObservedAt": "2026-07-02T03:39:51+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -3907,7 +4123,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -3919,9 +4135,9 @@
         "ivChange": -0.31
       },
       "observations": {
-        "count": 22,
+        "count": 23,
         "firstObservedAt": "2026-07-02T03:07:30+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -3958,7 +4174,7 @@
         "delta": -0.188606267,
         "spread": 1.1499999999999986,
         "spreadPct": 6.0130718954248294,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -3974,9 +4190,9 @@
         "expired": false
       },
       "observations": {
-        "count": 22,
+        "count": 23,
         "firstObservedAt": "2026-07-02T03:07:30+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -4013,7 +4229,7 @@
         "delta": -0.206982641,
         "spread": 0.39999999999999947,
         "spreadPct": 5.405405405405398,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -4029,9 +4245,9 @@
         "expired": false
       },
       "observations": {
-        "count": 22,
+        "count": 23,
         "firstObservedAt": "2026-07-02T03:07:30+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -4068,7 +4284,7 @@
         "delta": -0.244910781,
         "spread": 1.75,
         "spreadPct": 19.17808219178082,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -4084,9 +4300,9 @@
         "expired": false
       },
       "observations": {
-        "count": 22,
+        "count": 23,
         "firstObservedAt": "2026-07-02T03:07:30+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -4123,7 +4339,7 @@
         "delta": -0.117266121,
         "spread": 0.3000000000000007,
         "spreadPct": 2.7272727272727337,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -4139,9 +4355,9 @@
         "expired": false
       },
       "observations": {
-        "count": 23,
+        "count": 24,
         "firstObservedAt": "2026-07-02T02:40:09+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -4178,7 +4394,7 @@
         "delta": -0.30231098,
         "spread": 0.4500000000000002,
         "spreadPct": 6.02006688963211,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -4194,9 +4410,9 @@
         "expired": false
       },
       "observations": {
-        "count": 23,
+        "count": 24,
         "firstObservedAt": "2026-07-02T02:40:09+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -4233,7 +4449,7 @@
         "delta": -0.233342991,
         "spread": 1.4000000000000004,
         "spreadPct": 16.09195402298851,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -4249,9 +4465,9 @@
         "expired": false
       },
       "observations": {
-        "count": 23,
+        "count": 24,
         "firstObservedAt": "2026-07-02T02:40:09+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -4288,7 +4504,7 @@
         "delta": -0.210913604,
         "spread": 3.200000000000003,
         "spreadPct": 6.274509803921574,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -4304,9 +4520,9 @@
         "expired": false
       },
       "observations": {
-        "count": 24,
+        "count": 25,
         "firstObservedAt": "2026-07-02T02:07:47+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -4343,7 +4559,7 @@
         "delta": -0.117266121,
         "spread": 0.3000000000000007,
         "spreadPct": 2.7272727272727337,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -4359,9 +4575,9 @@
         "expired": false
       },
       "observations": {
-        "count": 24,
+        "count": 25,
         "firstObservedAt": "2026-07-02T02:07:47+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -4398,7 +4614,7 @@
         "delta": -0.30231098,
         "spread": 0.4500000000000002,
         "spreadPct": 6.02006688963211,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -4414,9 +4630,9 @@
         "expired": false
       },
       "observations": {
-        "count": 24,
+        "count": 25,
         "firstObservedAt": "2026-07-02T02:07:47+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -4453,7 +4669,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -4465,9 +4681,9 @@
         "ivChange": 0.02
       },
       "observations": {
-        "count": 25,
+        "count": 26,
         "firstObservedAt": "2026-07-02T01:40:26+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -4504,7 +4720,7 @@
         "delta": -0.117266121,
         "spread": 0.3000000000000007,
         "spreadPct": 2.7272727272727337,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -4520,9 +4736,9 @@
         "expired": false
       },
       "observations": {
-        "count": 25,
+        "count": 26,
         "firstObservedAt": "2026-07-02T01:40:26+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -4559,7 +4775,7 @@
         "delta": -0.206982641,
         "spread": 0.39999999999999947,
         "spreadPct": 5.405405405405398,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -4575,9 +4791,9 @@
         "expired": false
       },
       "observations": {
-        "count": 25,
+        "count": 26,
         "firstObservedAt": "2026-07-02T01:40:26+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -4614,7 +4830,7 @@
         "delta": -0.270837063,
         "spread": 0.5,
         "spreadPct": 4.878048780487805,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -4630,9 +4846,9 @@
         "expired": false
       },
       "observations": {
-        "count": 25,
+        "count": 26,
         "firstObservedAt": "2026-07-02T01:40:26+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -4669,7 +4885,7 @@
         "delta": -0.117266121,
         "spread": 0.3000000000000007,
         "spreadPct": 2.7272727272727337,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -4685,9 +4901,9 @@
         "expired": false
       },
       "observations": {
-        "count": 26,
+        "count": 27,
         "firstObservedAt": "2026-07-02T01:08:04+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -4724,7 +4940,7 @@
         "delta": -0.206982641,
         "spread": 0.39999999999999947,
         "spreadPct": 5.405405405405398,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -4740,9 +4956,9 @@
         "expired": false
       },
       "observations": {
-        "count": 26,
+        "count": 27,
         "firstObservedAt": "2026-07-02T01:08:04+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -4779,7 +4995,7 @@
         "delta": -0.270837063,
         "spread": 0.5,
         "spreadPct": 4.878048780487805,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -4795,9 +5011,9 @@
         "expired": false
       },
       "observations": {
-        "count": 26,
+        "count": 27,
         "firstObservedAt": "2026-07-02T01:08:04+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -4834,7 +5050,7 @@
         "delta": -0.117266121,
         "spread": 0.3000000000000007,
         "spreadPct": 2.7272727272727337,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -4850,9 +5066,9 @@
         "expired": false
       },
       "observations": {
-        "count": 27,
+        "count": 28,
         "firstObservedAt": "2026-07-02T00:40:43+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -4889,7 +5105,7 @@
         "delta": -0.116888778,
         "spread": 3.0,
         "spreadPct": 11.235955056179774,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -4905,9 +5121,9 @@
         "expired": false
       },
       "observations": {
-        "count": 27,
+        "count": 28,
         "firstObservedAt": "2026-07-02T00:40:43+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -4944,7 +5160,7 @@
         "delta": -0.206982641,
         "spread": 0.39999999999999947,
         "spreadPct": 5.405405405405398,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -4960,9 +5176,9 @@
         "expired": false
       },
       "observations": {
-        "count": 27,
+        "count": 28,
         "firstObservedAt": "2026-07-02T00:40:43+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -4999,7 +5215,7 @@
         "delta": -0.188606267,
         "spread": 1.1499999999999986,
         "spreadPct": 6.0130718954248294,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -5015,9 +5231,9 @@
         "expired": false
       },
       "observations": {
-        "count": 28,
+        "count": 29,
         "firstObservedAt": "2026-07-02T00:08:20+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -5054,7 +5270,7 @@
         "delta": -0.117266121,
         "spread": 0.3000000000000007,
         "spreadPct": 2.7272727272727337,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -5070,9 +5286,9 @@
         "expired": false
       },
       "observations": {
-        "count": 28,
+        "count": 29,
         "firstObservedAt": "2026-07-02T00:08:20+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -5109,7 +5325,7 @@
         "delta": -0.236041655,
         "spread": 1.75,
         "spreadPct": 20.527859237536656,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -5125,9 +5341,9 @@
         "expired": false
       },
       "observations": {
-        "count": 28,
+        "count": 29,
         "firstObservedAt": "2026-07-02T00:08:20+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -5219,7 +5435,7 @@
         "delta": -0.270837063,
         "spread": 0.5,
         "spreadPct": 4.878048780487805,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -5235,9 +5451,9 @@
         "expired": false
       },
       "observations": {
-        "count": 29,
+        "count": 30,
         "firstObservedAt": "2026-07-01T23:40:57+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -5384,7 +5600,7 @@
         "delta": -0.188606267,
         "spread": 1.1499999999999986,
         "spreadPct": 6.0130718954248294,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -5400,9 +5616,9 @@
         "expired": false
       },
       "observations": {
-        "count": 30,
+        "count": 31,
         "firstObservedAt": "2026-07-01T23:11:57+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -5549,7 +5765,7 @@
         "delta": -0.117266121,
         "spread": 0.3000000000000007,
         "spreadPct": 2.7272727272727337,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -5565,9 +5781,9 @@
         "expired": false
       },
       "observations": {
-        "count": 31,
+        "count": 32,
         "firstObservedAt": "2026-07-01T22:42:57+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -5604,7 +5820,7 @@
         "delta": -0.188606267,
         "spread": 1.1499999999999986,
         "spreadPct": 6.0130718954248294,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -5620,9 +5836,9 @@
         "expired": false
       },
       "observations": {
-        "count": 31,
+        "count": 32,
         "firstObservedAt": "2026-07-01T22:42:57+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -5714,7 +5930,7 @@
         "delta": -0.342892379,
         "spread": 0.5500000000000007,
         "spreadPct": 4.007285974499094,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -5730,9 +5946,9 @@
         "expired": false
       },
       "observations": {
-        "count": 32,
+        "count": 33,
         "firstObservedAt": "2026-07-01T22:08:57+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -5824,7 +6040,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -5836,9 +6052,9 @@
         "ivChange": 0.77
       },
       "observations": {
-        "count": 34,
+        "count": 35,
         "firstObservedAt": "2026-07-01T21:11:17+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -5985,7 +6201,7 @@
         "delta": -0.117266121,
         "spread": 0.3000000000000007,
         "spreadPct": 2.7272727272727337,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -6001,9 +6217,9 @@
         "expired": false
       },
       "observations": {
-        "count": 34,
+        "count": 35,
         "firstObservedAt": "2026-07-01T21:11:17+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -6040,7 +6256,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -6052,9 +6268,9 @@
         "ivChange": 0.8
       },
       "observations": {
-        "count": 35,
+        "count": 36,
         "firstObservedAt": "2026-07-01T04:11:21+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -6201,7 +6417,7 @@
         "delta": -0.117266121,
         "spread": 0.3000000000000007,
         "spreadPct": 2.7272727272727337,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -6217,9 +6433,9 @@
         "expired": false
       },
       "observations": {
-        "count": 35,
+        "count": 36,
         "firstObservedAt": "2026-07-01T04:11:21+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -6256,7 +6472,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -6268,9 +6484,9 @@
         "ivChange": 0.53
       },
       "observations": {
-        "count": 36,
+        "count": 37,
         "firstObservedAt": "2026-07-01T03:42:25+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -6417,7 +6633,7 @@
         "delta": -0.401122661,
         "spread": 3.799999999999997,
         "spreadPct": 7.755102040816321,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -6433,9 +6649,9 @@
         "expired": false
       },
       "observations": {
-        "count": 36,
+        "count": 37,
         "firstObservedAt": "2026-07-01T03:42:25+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -6472,7 +6688,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -6484,9 +6700,9 @@
         "ivChange": 0.71
       },
       "observations": {
-        "count": 37,
+        "count": 38,
         "firstObservedAt": "2026-07-01T03:13:28+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -6688,7 +6904,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -6700,9 +6916,9 @@
         "ivChange": 0.4
       },
       "observations": {
-        "count": 38,
+        "count": 39,
         "firstObservedAt": "2026-07-01T02:39:33+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -6904,7 +7120,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -6916,9 +7132,9 @@
         "ivChange": 0.68
       },
       "observations": {
-        "count": 39,
+        "count": 40,
         "firstObservedAt": "2026-07-01T02:10:36+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -7120,7 +7336,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -7132,9 +7348,9 @@
         "ivChange": 0.39
       },
       "observations": {
-        "count": 40,
+        "count": 41,
         "firstObservedAt": "2026-07-01T01:41:39+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -7281,7 +7497,7 @@
         "delta": -0.283209076,
         "spread": 2.25,
         "spreadPct": 7.228915662650602,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -7297,9 +7513,9 @@
         "expired": false
       },
       "observations": {
-        "count": 40,
+        "count": 41,
         "firstObservedAt": "2026-07-01T01:41:39+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -7336,7 +7552,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -7348,9 +7564,9 @@
         "ivChange": 0.92
       },
       "observations": {
-        "count": 41,
+        "count": 42,
         "firstObservedAt": "2026-07-01T01:12:42+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -7552,7 +7768,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -7564,9 +7780,9 @@
         "ivChange": 0.16
       },
       "observations": {
-        "count": 42,
+        "count": 43,
         "firstObservedAt": "2026-07-01T00:38:44+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -7768,7 +7984,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -7780,9 +7996,9 @@
         "ivChange": 0.75
       },
       "observations": {
-        "count": 43,
+        "count": 44,
         "firstObservedAt": "2026-07-01T00:09:47+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -7929,7 +8145,7 @@
         "delta": -0.283209076,
         "spread": 2.25,
         "spreadPct": 7.228915662650602,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -7945,9 +8161,9 @@
         "expired": false
       },
       "observations": {
-        "count": 43,
+        "count": 44,
         "firstObservedAt": "2026-07-01T00:09:47+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -7984,7 +8200,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -7996,9 +8212,9 @@
         "ivChange": 1.16
       },
       "observations": {
-        "count": 44,
+        "count": 45,
         "firstObservedAt": "2026-06-30T23:40:51+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -8200,7 +8416,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -8212,9 +8428,9 @@
         "ivChange": 1.72
       },
       "observations": {
-        "count": 45,
+        "count": 46,
         "firstObservedAt": "2026-06-30T23:11:19+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -8361,7 +8577,7 @@
         "delta": -0.283209076,
         "spread": 2.25,
         "spreadPct": 7.228915662650602,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -8377,9 +8593,9 @@
         "expired": false
       },
       "observations": {
-        "count": 45,
+        "count": 46,
         "firstObservedAt": "2026-06-30T23:11:19+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -8416,7 +8632,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -8428,9 +8644,9 @@
         "ivChange": 1.47
       },
       "observations": {
-        "count": 46,
+        "count": 47,
         "firstObservedAt": "2026-06-30T22:41:47+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -8577,7 +8793,7 @@
         "delta": -0.283209076,
         "spread": 2.25,
         "spreadPct": 7.228915662650602,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -8593,9 +8809,9 @@
         "expired": false
       },
       "observations": {
-        "count": 46,
+        "count": 47,
         "firstObservedAt": "2026-06-30T22:41:47+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -8632,7 +8848,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -8644,9 +8860,9 @@
         "ivChange": 1.58
       },
       "observations": {
-        "count": 47,
+        "count": 48,
         "firstObservedAt": "2026-06-30T22:12:15+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -9068,7 +9284,7 @@
         "delta": -0.117266121,
         "spread": 0.3000000000000007,
         "spreadPct": 2.7272727272727337,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -9084,9 +9300,9 @@
         "expired": false
       },
       "observations": {
-        "count": 49,
+        "count": 50,
         "firstObservedAt": "2026-06-30T21:13:11+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -10388,7 +10604,7 @@
         "delta": -0.283209076,
         "spread": 2.25,
         "spreadPct": 7.228915662650602,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "open",
@@ -10404,9 +10620,9 @@
         "expired": false
       },
       "observations": {
-        "count": 57,
+        "count": 58,
         "firstObservedAt": "2026-06-30T00:40:52+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -30934,7 +31150,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -30946,9 +31162,9 @@
         "ivChange": 1.55
       },
       "observations": {
-        "count": 184,
+        "count": 185,
         "firstObservedAt": "2026-06-17T21:11:45+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -31150,7 +31366,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -31162,9 +31378,9 @@
         "ivChange": 1.59
       },
       "observations": {
-        "count": 185,
+        "count": 186,
         "firstObservedAt": "2026-06-17T04:11:42+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -31366,7 +31582,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -31378,9 +31594,9 @@
         "ivChange": 1.77
       },
       "observations": {
-        "count": 186,
+        "count": 187,
         "firstObservedAt": "2026-06-17T03:42:24+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -31582,7 +31798,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -31594,9 +31810,9 @@
         "ivChange": 0.88
       },
       "observations": {
-        "count": 187,
+        "count": 188,
         "firstObservedAt": "2026-06-17T03:13:06+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -31798,7 +32014,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -31810,9 +32026,9 @@
         "ivChange": 1.63
       },
       "observations": {
-        "count": 188,
+        "count": 189,
         "firstObservedAt": "2026-06-17T02:38:48+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -32014,7 +32230,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -32026,9 +32242,9 @@
         "ivChange": 1.88
       },
       "observations": {
-        "count": 189,
+        "count": 190,
         "firstObservedAt": "2026-06-17T02:09:31+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -32230,7 +32446,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -32242,9 +32458,9 @@
         "ivChange": 1.9
       },
       "observations": {
-        "count": 190,
+        "count": 191,
         "firstObservedAt": "2026-06-17T01:40:13+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -32446,7 +32662,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -32458,9 +32674,9 @@
         "ivChange": 1.77
       },
       "observations": {
-        "count": 191,
+        "count": 192,
         "firstObservedAt": "2026-06-17T01:10:55+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -32662,7 +32878,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -32674,9 +32890,9 @@
         "ivChange": 1.68
       },
       "observations": {
-        "count": 192,
+        "count": 193,
         "firstObservedAt": "2026-06-17T00:41:39+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -32878,7 +33094,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -32890,9 +33106,9 @@
         "ivChange": 2.31
       },
       "observations": {
-        "count": 193,
+        "count": 194,
         "firstObservedAt": "2026-06-17T00:12:49+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -33094,7 +33310,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -33106,9 +33322,9 @@
         "ivChange": 1.29
       },
       "observations": {
-        "count": 194,
+        "count": 195,
         "firstObservedAt": "2026-06-16T23:44:00+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -33310,7 +33526,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -33322,9 +33538,9 @@
         "ivChange": 1.75
       },
       "observations": {
-        "count": 195,
+        "count": 196,
         "firstObservedAt": "2026-06-16T23:09:46+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -33526,7 +33742,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -33538,9 +33754,9 @@
         "ivChange": 1.55
       },
       "observations": {
-        "count": 196,
+        "count": 197,
         "firstObservedAt": "2026-06-16T23:02:42+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -33742,7 +33958,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -33754,9 +33970,9 @@
         "ivChange": 1.55
       },
       "observations": {
-        "count": 197,
+        "count": 198,
         "firstObservedAt": "2026-06-16T22:40:42+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -33958,7 +34174,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -33970,9 +34186,9 @@
         "ivChange": 1.81
       },
       "observations": {
-        "count": 198,
+        "count": 199,
         "firstObservedAt": "2026-06-16T22:11:49+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -34339,7 +34555,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -34351,9 +34567,9 @@
         "ivChange": 1.74
       },
       "observations": {
-        "count": 200,
+        "count": 201,
         "firstObservedAt": "2026-06-16T21:13:51+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -34441,7 +34657,7 @@
         "delta": 0.857629547,
         "spread": 1.4000000000000057,
         "spreadPct": 1.365853658536591,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -34453,9 +34669,9 @@
         "ivChange": 0.55
       },
       "observations": {
-        "count": 200,
+        "count": 201,
         "firstObservedAt": "2026-06-16T21:13:51+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -34657,7 +34873,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -34669,9 +34885,9 @@
         "ivChange": 1.77
       },
       "observations": {
-        "count": 201,
+        "count": 202,
         "firstObservedAt": "2026-06-16T04:13:31+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -34759,7 +34975,7 @@
         "delta": 0.857629547,
         "spread": 1.4000000000000057,
         "spreadPct": 1.365853658536591,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -34771,9 +34987,9 @@
         "ivChange": 0.58
       },
       "observations": {
-        "count": 201,
+        "count": 202,
         "firstObservedAt": "2026-06-16T04:13:31+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -34975,7 +35191,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -34987,9 +35203,9 @@
         "ivChange": 1.63
       },
       "observations": {
-        "count": 202,
+        "count": 203,
         "firstObservedAt": "2026-06-16T03:39:28+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -35077,7 +35293,7 @@
         "delta": 0.857629547,
         "spread": 1.4000000000000057,
         "spreadPct": 1.365853658536591,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -35089,9 +35305,9 @@
         "ivChange": 0.68
       },
       "observations": {
-        "count": 202,
+        "count": 203,
         "firstObservedAt": "2026-06-16T03:39:28+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -35293,7 +35509,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -35305,9 +35521,9 @@
         "ivChange": 1.76
       },
       "observations": {
-        "count": 203,
+        "count": 204,
         "firstObservedAt": "2026-06-16T03:10:25+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -35395,7 +35611,7 @@
         "delta": 0.857629547,
         "spread": 1.4000000000000057,
         "spreadPct": 1.365853658536591,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -35407,9 +35623,9 @@
         "ivChange": 0.64
       },
       "observations": {
-        "count": 203,
+        "count": 204,
         "firstObservedAt": "2026-06-16T03:10:25+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -35611,7 +35827,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -35623,9 +35839,9 @@
         "ivChange": 1.33
       },
       "observations": {
-        "count": 204,
+        "count": 205,
         "firstObservedAt": "2026-06-16T02:41:22+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -35878,7 +36094,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -35890,9 +36106,9 @@
         "ivChange": 1.67
       },
       "observations": {
-        "count": 205,
+        "count": 206,
         "firstObservedAt": "2026-06-16T02:12:19+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -37936,7 +38152,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -37948,9 +38164,9 @@
         "ivChange": 1.68
       },
       "observations": {
-        "count": 215,
+        "count": 216,
         "firstObservedAt": "2026-06-15T21:28:47+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -38203,7 +38419,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -38215,9 +38431,9 @@
         "ivChange": 1.81
       },
       "observations": {
-        "count": 216,
+        "count": 217,
         "firstObservedAt": "2026-06-13T04:10:59+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -40556,7 +40772,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -40568,9 +40784,9 @@
         "ivChange": 1.76
       },
       "observations": {
-        "count": 230,
+        "count": 231,
         "firstObservedAt": "2026-06-12T21:09:09+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -40874,7 +41090,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -40886,9 +41102,9 @@
         "ivChange": 1.79
       },
       "observations": {
-        "count": 231,
+        "count": 232,
         "firstObservedAt": "2026-06-12T04:07:10+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -43788,7 +44004,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -43800,9 +44016,9 @@
         "ivChange": 1.51
       },
       "observations": {
-        "count": 245,
+        "count": 246,
         "firstObservedAt": "2026-06-11T21:08:38+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -44004,7 +44220,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -44016,9 +44232,9 @@
         "ivChange": 1.86
       },
       "observations": {
-        "count": 246,
+        "count": 247,
         "firstObservedAt": "2026-06-11T03:40:53+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -44220,7 +44436,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -44232,9 +44448,9 @@
         "ivChange": 1.6
       },
       "observations": {
-        "count": 247,
+        "count": 248,
         "firstObservedAt": "2026-06-11T03:08:36+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -44436,7 +44652,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -44448,9 +44664,9 @@
         "ivChange": 1.73
       },
       "observations": {
-        "count": 248,
+        "count": 249,
         "firstObservedAt": "2026-06-11T02:41:19+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -44652,7 +44868,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -44664,9 +44880,9 @@
         "ivChange": 1.93
       },
       "observations": {
-        "count": 249,
+        "count": 250,
         "firstObservedAt": "2026-06-11T02:09:03+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -44868,7 +45084,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -44880,9 +45096,9 @@
         "ivChange": 1.38
       },
       "observations": {
-        "count": 250,
+        "count": 251,
         "firstObservedAt": "2026-06-11T01:41:47+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -45084,7 +45300,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -45096,9 +45312,9 @@
         "ivChange": 1.78
       },
       "observations": {
-        "count": 251,
+        "count": 252,
         "firstObservedAt": "2026-06-11T01:09:30+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -45300,7 +45516,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -45312,9 +45528,9 @@
         "ivChange": 1.82
       },
       "observations": {
-        "count": 252,
+        "count": 253,
         "firstObservedAt": "2026-06-11T00:37:13+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -45516,7 +45732,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -45528,9 +45744,9 @@
         "ivChange": 2.1
       },
       "observations": {
-        "count": 253,
+        "count": 254,
         "firstObservedAt": "2026-06-11T00:09:56+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -45732,7 +45948,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -45744,9 +45960,9 @@
         "ivChange": 1.82
       },
       "observations": {
-        "count": 254,
+        "count": 255,
         "firstObservedAt": "2026-06-10T23:37:39+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -46443,7 +46659,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -46455,9 +46671,9 @@
         "ivChange": 1.95
       },
       "observations": {
-        "count": 259,
+        "count": 260,
         "firstObservedAt": "2026-06-10T21:11:05+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -46494,7 +46710,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -46506,9 +46722,9 @@
         "ivChange": 0.85
       },
       "observations": {
-        "count": 259,
+        "count": 260,
         "firstObservedAt": "2026-06-10T21:11:05+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -46710,7 +46926,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -46722,9 +46938,9 @@
         "ivChange": 1.97
       },
       "observations": {
-        "count": 260,
+        "count": 261,
         "firstObservedAt": "2026-06-10T10:24:42+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -46761,7 +46977,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -46773,9 +46989,9 @@
         "ivChange": 0.87
       },
       "observations": {
-        "count": 260,
+        "count": 261,
         "firstObservedAt": "2026-06-10T10:24:42+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -46977,7 +47193,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -46989,9 +47205,9 @@
         "ivChange": 1.79
       },
       "observations": {
-        "count": 261,
+        "count": 262,
         "firstObservedAt": "2026-06-10T03:38:13+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -47028,7 +47244,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -47040,9 +47256,9 @@
         "ivChange": 1.04
       },
       "observations": {
-        "count": 261,
+        "count": 262,
         "firstObservedAt": "2026-06-10T03:38:13+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -47244,7 +47460,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -47256,9 +47472,9 @@
         "ivChange": 2.16
       },
       "observations": {
-        "count": 262,
+        "count": 263,
         "firstObservedAt": "2026-06-10T03:07:53+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -47295,7 +47511,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -47307,9 +47523,9 @@
         "ivChange": 1.16
       },
       "observations": {
-        "count": 262,
+        "count": 263,
         "firstObservedAt": "2026-06-10T03:07:53+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -47511,7 +47727,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -47523,9 +47739,9 @@
         "ivChange": 2.24
       },
       "observations": {
-        "count": 263,
+        "count": 264,
         "firstObservedAt": "2026-06-10T02:37:33+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -47562,7 +47778,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -47574,9 +47790,9 @@
         "ivChange": 0.9
       },
       "observations": {
-        "count": 263,
+        "count": 264,
         "firstObservedAt": "2026-06-10T02:37:33+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -47778,7 +47994,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -47790,9 +48006,9 @@
         "ivChange": 2.13
       },
       "observations": {
-        "count": 264,
+        "count": 265,
         "firstObservedAt": "2026-06-10T02:07:14+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -47829,7 +48045,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -47841,9 +48057,9 @@
         "ivChange": 0.55
       },
       "observations": {
-        "count": 264,
+        "count": 265,
         "firstObservedAt": "2026-06-10T02:07:14+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -48045,7 +48261,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -48057,9 +48273,9 @@
         "ivChange": 2.38
       },
       "observations": {
-        "count": 265,
+        "count": 266,
         "firstObservedAt": "2026-06-10T01:36:55+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -48096,7 +48312,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -48108,9 +48324,9 @@
         "ivChange": 0.6
       },
       "observations": {
-        "count": 265,
+        "count": 266,
         "firstObservedAt": "2026-06-10T01:36:55+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -48312,7 +48528,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -48324,9 +48540,9 @@
         "ivChange": 1.65
       },
       "observations": {
-        "count": 266,
+        "count": 267,
         "firstObservedAt": "2026-06-10T01:06:36+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -48363,7 +48579,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -48375,9 +48591,9 @@
         "ivChange": 0.83
       },
       "observations": {
-        "count": 266,
+        "count": 267,
         "firstObservedAt": "2026-06-10T01:06:36+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -48579,7 +48795,7 @@
         "delta": 0.820114293,
         "spread": 2.75,
         "spreadPct": 2.1141649048625797,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -48591,9 +48807,9 @@
         "ivChange": 1.86
       },
       "observations": {
-        "count": 267,
+        "count": 268,
         "firstObservedAt": "2026-06-10T00:36:17+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -48630,7 +48846,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -48642,9 +48858,9 @@
         "ivChange": 0.75
       },
       "observations": {
-        "count": 267,
+        "count": 268,
         "firstObservedAt": "2026-06-10T00:36:17+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -48846,7 +49062,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -48858,9 +49074,9 @@
         "ivChange": 0.73
       },
       "observations": {
-        "count": 268,
+        "count": 269,
         "firstObservedAt": "2026-06-10T00:05:59+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -49062,7 +49278,7 @@
         "delta": 0.874919907,
         "spread": 2.549999999999997,
         "spreadPct": 2.303002935199817,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -49074,9 +49290,9 @@
         "ivChange": 0.66
       },
       "observations": {
-        "count": 269,
+        "count": 270,
         "firstObservedAt": "2026-06-09T23:40:41+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -49278,7 +49494,7 @@
         "delta": 0.857629547,
         "spread": 1.4000000000000057,
         "spreadPct": 1.365853658536591,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -49290,9 +49506,9 @@
         "ivChange": 0.25
       },
       "observations": {
-        "count": 270,
+        "count": 271,
         "firstObservedAt": "2026-06-09T23:09:52+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -50539,7 +50755,7 @@
         "delta": 0.833045531,
         "spread": 2.6499999999999915,
         "spreadPct": 2.7741428945302187,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -50551,9 +50767,9 @@
         "ivChange": 0.32
       },
       "observations": {
-        "count": 278,
+        "count": 279,
         "firstObservedAt": "2026-06-09T02:07:29+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -51910,7 +52126,7 @@
         "delta": 0.837813019,
         "spread": 3.8700000000000045,
         "spreadPct": 1.7310401896540175,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -51922,9 +52138,9 @@
         "ivChange": 0.76
       },
       "observations": {
-        "count": 286,
+        "count": 287,
         "firstObservedAt": "2026-06-08T21:10:29+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -52012,7 +52228,7 @@
         "delta": 0.833045531,
         "spread": 2.6499999999999915,
         "spreadPct": 2.7741428945302187,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -52024,9 +52240,9 @@
         "ivChange": 0.07
       },
       "observations": {
-        "count": 286,
+        "count": 287,
         "firstObservedAt": "2026-06-08T21:10:29+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -52228,7 +52444,7 @@
         "delta": 0.837813019,
         "spread": 3.8700000000000045,
         "spreadPct": 1.7310401896540175,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -52240,9 +52456,9 @@
         "ivChange": 0.68
       },
       "observations": {
-        "count": 287,
+        "count": 288,
         "firstObservedAt": "2026-06-08T08:25:17+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
@@ -52330,7 +52546,7 @@
         "delta": 0.833045531,
         "spread": 2.6499999999999915,
         "spreadPct": 2.7741428945302187,
-        "observedAt": "2026-07-03T22:40:40+08:00"
+        "observedAt": "2026-07-03T23:08:30+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -52342,9 +52558,9 @@
         "ivChange": -0.0
       },
       "observations": {
-        "count": 287,
+        "count": 288,
         "firstObservedAt": "2026-06-08T08:25:17+08:00",
-        "lastObservedAt": "2026-07-03T22:40:40+08:00"
+        "lastObservedAt": "2026-07-03T23:08:30+08:00"
       }
     },
     {
