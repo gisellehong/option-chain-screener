@@ -1,21 +1,237 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-10T04:08:52+08:00",
+  "generatedAt": "2026-07-10T21:08:36+08:00",
   "summary": {
-    "totalSignals": 1192,
-    "weeklyCspSignals": 1041,
-    "weeklyCspOpen": 104,
+    "totalSignals": 1196,
+    "weeklyCspSignals": 1044,
+    "weeklyCspOpen": 107,
     "weeklyCspHit80": 585,
     "weeklyCspHit80Within5D": 409,
     "weeklyCspHitRate": 62.43,
-    "weeklyCspHitWithin5DRate": 39.29,
+    "weeklyCspHitWithin5DRate": 39.18,
     "weeklyCspAvgDaysTo80": 3.87,
-    "leapsSignals": 151,
-    "leapsTracked": 151,
-    "leapsAvgOptionReturnPct": -1.16,
+    "leapsSignals": 152,
+    "leapsTracked": 152,
+    "leapsAvgOptionReturnPct": -1.15,
     "leapsAvgRelativeReturnPct": -0.44
   },
   "signals": [
+    {
+      "id": "2026-07-10T21:08:36+08:00|leaps|best|1|US.AAPL280121C250000",
+      "signalAt": "2026-07-10T21:08:36+08:00",
+      "session": "pre_market",
+      "strategy": "leaps",
+      "scenario": "best",
+      "rank": 1,
+      "score": 72.63,
+      "contractId": "US.AAPL280121C250000",
+      "ticker": "AAPL",
+      "companyName": "Apple",
+      "optionType": "call",
+      "expiration": "2028-01-21",
+      "dte": 560.0,
+      "strike": 250.0,
+      "entry": {
+        "mid": 94.425,
+        "bid": 93.25,
+        "ask": 95.6,
+        "underlyingPrice": 316.22,
+        "iv": 31.644,
+        "delta": 0.827846798,
+        "spread": 2.3499999999999943,
+        "spreadPct": 2.488747683346565
+      },
+      "latest": {
+        "mid": 94.425,
+        "bid": 93.25,
+        "ask": 95.6,
+        "underlyingPrice": 316.22,
+        "iv": 31.644,
+        "delta": 0.827846798,
+        "spread": 2.3499999999999943,
+        "spreadPct": 2.488747683346565,
+        "observedAt": "2026-07-10T21:08:36+08:00"
+      },
+      "outcome": {
+        "status": "tracking",
+        "optionReturnPct": 0.0,
+        "underlyingReturnPct": 0.0,
+        "relativeReturnPct": 0.0,
+        "realizedLeverage": null,
+        "deltaChange": 0.0,
+        "ivChange": 0.0
+      },
+      "observations": {
+        "count": 1,
+        "firstObservedAt": "2026-07-10T21:08:36+08:00",
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
+      }
+    },
+    {
+      "id": "2026-07-10T21:08:36+08:00|weekly_csp|best|1|US.MU260717P800000",
+      "signalAt": "2026-07-10T21:08:36+08:00",
+      "session": "pre_market",
+      "strategy": "weekly_csp",
+      "scenario": "best",
+      "rank": 1,
+      "score": 73.33,
+      "contractId": "US.MU260717P800000",
+      "ticker": "MU",
+      "companyName": "Micron Technology",
+      "optionType": "put",
+      "expiration": "2026-07-17",
+      "dte": 7.0,
+      "strike": 800.0,
+      "entry": {
+        "mid": 8.925,
+        "bid": 8.8,
+        "ask": 9.05,
+        "underlyingPrice": 991.64,
+        "iv": 126.682,
+        "delta": -0.098428479,
+        "spread": 0.25,
+        "spreadPct": 2.8011204481792715
+      },
+      "latest": {
+        "mid": 8.925,
+        "bid": 8.8,
+        "ask": 9.05,
+        "underlyingPrice": 991.64,
+        "iv": 126.682,
+        "delta": -0.098428479,
+        "spread": 0.25,
+        "spreadPct": 2.8011204481792715,
+        "observedAt": "2026-07-10T21:08:36+08:00"
+      },
+      "outcome": {
+        "status": "open",
+        "targetProfitPct": 80,
+        "targetAsk": 1.785,
+        "hit80At": null,
+        "daysTo80": null,
+        "hit80Within5D": false,
+        "bestProfitCapturePct": -1.4,
+        "bestProfitCaptureAt": "2026-07-10T21:08:36+08:00",
+        "wentItm": false,
+        "lowestUnderlying": 991.64,
+        "expired": false
+      },
+      "observations": {
+        "count": 1,
+        "firstObservedAt": "2026-07-10T21:08:36+08:00",
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
+      }
+    },
+    {
+      "id": "2026-07-10T21:08:36+08:00|weekly_csp|best|2|US.MU260717P790000",
+      "signalAt": "2026-07-10T21:08:36+08:00",
+      "session": "pre_market",
+      "strategy": "weekly_csp",
+      "scenario": "best",
+      "rank": 2,
+      "score": 70.44,
+      "contractId": "US.MU260717P790000",
+      "ticker": "MU",
+      "companyName": "Micron Technology",
+      "optionType": "put",
+      "expiration": "2026-07-17",
+      "dte": 7.0,
+      "strike": 790.0,
+      "entry": {
+        "mid": 8.05,
+        "bid": 7.85,
+        "ask": 8.25,
+        "underlyingPrice": 991.64,
+        "iv": 128.39,
+        "delta": -0.089319719,
+        "spread": 0.40000000000000036,
+        "spreadPct": 4.968944099378886
+      },
+      "latest": {
+        "mid": 8.05,
+        "bid": 7.85,
+        "ask": 8.25,
+        "underlyingPrice": 991.64,
+        "iv": 128.39,
+        "delta": -0.089319719,
+        "spread": 0.40000000000000036,
+        "spreadPct": 4.968944099378886,
+        "observedAt": "2026-07-10T21:08:36+08:00"
+      },
+      "outcome": {
+        "status": "open",
+        "targetProfitPct": 80,
+        "targetAsk": 1.61,
+        "hit80At": null,
+        "daysTo80": null,
+        "hit80Within5D": false,
+        "bestProfitCapturePct": -2.48,
+        "bestProfitCaptureAt": "2026-07-10T21:08:36+08:00",
+        "wentItm": false,
+        "lowestUnderlying": 991.64,
+        "expired": false
+      },
+      "observations": {
+        "count": 1,
+        "firstObservedAt": "2026-07-10T21:08:36+08:00",
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
+      }
+    },
+    {
+      "id": "2026-07-10T21:08:36+08:00|weekly_csp|best|3|US.MU260717P750000",
+      "signalAt": "2026-07-10T21:08:36+08:00",
+      "session": "pre_market",
+      "strategy": "weekly_csp",
+      "scenario": "best",
+      "rank": 3,
+      "score": 69.19,
+      "contractId": "US.MU260717P750000",
+      "ticker": "MU",
+      "companyName": "Micron Technology",
+      "optionType": "put",
+      "expiration": "2026-07-17",
+      "dte": 7.0,
+      "strike": 750.0,
+      "entry": {
+        "mid": 5.050000000000001,
+        "bid": 4.9,
+        "ask": 5.2,
+        "underlyingPrice": 991.64,
+        "iv": 133.956,
+        "delta": -0.058136879,
+        "spread": 0.2999999999999998,
+        "spreadPct": 5.940594059405936
+      },
+      "latest": {
+        "mid": 5.050000000000001,
+        "bid": 4.9,
+        "ask": 5.2,
+        "underlyingPrice": 991.64,
+        "iv": 133.956,
+        "delta": -0.058136879,
+        "spread": 0.2999999999999998,
+        "spreadPct": 5.940594059405936,
+        "observedAt": "2026-07-10T21:08:36+08:00"
+      },
+      "outcome": {
+        "status": "open",
+        "targetProfitPct": 80,
+        "targetAsk": 1.01,
+        "hit80At": null,
+        "daysTo80": null,
+        "hit80Within5D": false,
+        "bestProfitCapturePct": -2.97,
+        "bestProfitCaptureAt": "2026-07-10T21:08:36+08:00",
+        "wentItm": false,
+        "lowestUnderlying": 991.64,
+        "expired": false
+      },
+      "observations": {
+        "count": 1,
+        "firstObservedAt": "2026-07-10T21:08:36+08:00",
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
+      }
+    },
     {
       "id": "2026-07-10T04:08:52+08:00|leaps|best|1|US.AAPL280121C250000",
       "signalAt": "2026-07-10T04:08:52+08:00",
@@ -46,11 +262,11 @@
         "bid": 93.25,
         "ask": 95.6,
         "underlyingPrice": 316.22,
-        "iv": 31.661,
-        "delta": 0.827606965,
+        "iv": 31.644,
+        "delta": 0.827846798,
         "spread": 2.3499999999999943,
         "spreadPct": 2.488747683346565,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -58,13 +274,13 @@
         "underlyingReturnPct": 0.0,
         "relativeReturnPct": 0.0,
         "realizedLeverage": null,
-        "deltaChange": 0.0,
-        "ivChange": 0.0
+        "deltaChange": 0.0002,
+        "ivChange": -0.02
       },
       "observations": {
-        "count": 1,
+        "count": 2,
         "firstObservedAt": "2026-07-10T04:08:52+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -97,11 +313,11 @@
         "bid": 8.8,
         "ask": 9.05,
         "underlyingPrice": 991.64,
-        "iv": 121.248,
-        "delta": -0.098407486,
+        "iv": 126.682,
+        "delta": -0.098428479,
         "spread": 0.25,
         "spreadPct": 2.8011204481792715,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -117,9 +333,9 @@
         "expired": false
       },
       "observations": {
-        "count": 1,
+        "count": 2,
         "firstObservedAt": "2026-07-10T04:08:52+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -152,11 +368,11 @@
         "bid": 7.85,
         "ask": 8.25,
         "underlyingPrice": 991.64,
-        "iv": 122.881,
-        "delta": -0.089301246,
+        "iv": 128.39,
+        "delta": -0.089319719,
         "spread": 0.40000000000000036,
         "spreadPct": 4.968944099378886,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -172,9 +388,9 @@
         "expired": false
       },
       "observations": {
-        "count": 1,
+        "count": 2,
         "firstObservedAt": "2026-07-10T04:08:52+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -207,11 +423,11 @@
         "bid": 4.9,
         "ask": 5.2,
         "underlyingPrice": 991.64,
-        "iv": 128.205,
-        "delta": -0.058126032,
+        "iv": 133.956,
+        "delta": -0.058136879,
         "spread": 0.2999999999999998,
         "spreadPct": 5.940594059405936,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -227,9 +443,9 @@
         "expired": false
       },
       "observations": {
-        "count": 1,
+        "count": 2,
         "firstObservedAt": "2026-07-10T04:08:52+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -262,11 +478,11 @@
         "bid": 10.25,
         "ask": 11.2,
         "underlyingPrice": 991.64,
-        "iv": 119.958,
-        "delta": -0.115453,
+        "iv": 125.333,
+        "delta": -0.115478516,
         "spread": 0.9499999999999993,
         "spreadPct": 8.857808857808852,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -282,9 +498,9 @@
         "expired": false
       },
       "observations": {
-        "count": 2,
+        "count": 3,
         "firstObservedAt": "2026-07-10T03:40:12+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -317,11 +533,11 @@
         "bid": 8.8,
         "ask": 9.05,
         "underlyingPrice": 991.64,
-        "iv": 121.248,
-        "delta": -0.098407486,
+        "iv": 126.682,
+        "delta": -0.098428479,
         "spread": 0.25,
         "spreadPct": 2.8011204481792715,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -337,9 +553,9 @@
         "expired": false
       },
       "observations": {
-        "count": 2,
+        "count": 3,
         "firstObservedAt": "2026-07-10T03:40:12+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -372,11 +588,11 @@
         "bid": 9.6,
         "ask": 10.45,
         "underlyingPrice": 991.64,
-        "iv": 120.133,
-        "delta": -0.109133934,
+        "iv": 125.516,
+        "delta": -0.109157776,
         "spread": 0.8499999999999996,
         "spreadPct": 8.478802992518702,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -392,9 +608,9 @@
         "expired": false
       },
       "observations": {
-        "count": 2,
+        "count": 3,
         "firstObservedAt": "2026-07-10T03:40:12+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -427,11 +643,11 @@
         "bid": 8.8,
         "ask": 9.05,
         "underlyingPrice": 991.64,
-        "iv": 121.248,
-        "delta": -0.098407486,
+        "iv": 126.682,
+        "delta": -0.098428479,
         "spread": 0.25,
         "spreadPct": 2.8011204481792715,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -447,9 +663,9 @@
         "expired": false
       },
       "observations": {
-        "count": 3,
+        "count": 4,
         "firstObservedAt": "2026-07-10T03:11:32+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -482,11 +698,11 @@
         "bid": 11.65,
         "ask": 12.45,
         "underlyingPrice": 991.64,
-        "iv": 119.001,
-        "delta": -0.127767275,
+        "iv": 124.332,
+        "delta": -0.127796412,
         "spread": 0.7999999999999989,
         "spreadPct": 6.639004149377584,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -502,9 +718,9 @@
         "expired": false
       },
       "observations": {
-        "count": 3,
+        "count": 4,
         "firstObservedAt": "2026-07-10T03:11:32+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -533,15 +749,15 @@
         "spreadPct": 12.949640287769778
       },
       "latest": {
-        "mid": 3.025,
-        "bid": 2.9,
+        "mid": 2.8499999999999996,
+        "bid": 2.55,
         "ask": 3.15,
         "underlyingPrice": 192.45,
-        "iv": 224.397,
-        "delta": -0.088661173,
-        "spread": 0.25,
-        "spreadPct": 8.264462809917356,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "iv": 232.913,
+        "delta": -0.084480829,
+        "spread": 0.6000000000000001,
+        "spreadPct": 21.052631578947373,
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -557,9 +773,9 @@
         "expired": false
       },
       "observations": {
-        "count": 3,
+        "count": 4,
         "firstObservedAt": "2026-07-10T03:11:32+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -592,11 +808,11 @@
         "bid": 10.25,
         "ask": 11.2,
         "underlyingPrice": 991.64,
-        "iv": 119.958,
-        "delta": -0.115453,
+        "iv": 125.333,
+        "delta": -0.115478516,
         "spread": 0.9499999999999993,
         "spreadPct": 8.857808857808852,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -612,9 +828,9 @@
         "expired": false
       },
       "observations": {
-        "count": 4,
+        "count": 5,
         "firstObservedAt": "2026-07-10T02:42:51+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -647,11 +863,11 @@
         "bid": 8.8,
         "ask": 9.05,
         "underlyingPrice": 991.64,
-        "iv": 121.248,
-        "delta": -0.098407486,
+        "iv": 126.682,
+        "delta": -0.098428479,
         "spread": 0.25,
         "spreadPct": 2.8011204481792715,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -667,9 +883,9 @@
         "expired": false
       },
       "observations": {
-        "count": 4,
+        "count": 5,
         "firstObservedAt": "2026-07-10T02:42:51+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -702,11 +918,11 @@
         "bid": 6.95,
         "ask": 7.45,
         "underlyingPrice": 991.64,
-        "iv": 124.28,
-        "delta": -0.080572452,
+        "iv": 129.852,
+        "delta": -0.080588643,
         "spread": 0.5,
         "spreadPct": 6.944444444444445,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -722,9 +938,9 @@
         "expired": false
       },
       "observations": {
-        "count": 4,
+        "count": 5,
         "firstObservedAt": "2026-07-10T02:42:51+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -757,11 +973,11 @@
         "bid": 8.8,
         "ask": 9.05,
         "underlyingPrice": 991.64,
-        "iv": 121.248,
-        "delta": -0.098407486,
+        "iv": 126.682,
+        "delta": -0.098428479,
         "spread": 0.25,
         "spreadPct": 2.8011204481792715,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -777,9 +993,9 @@
         "expired": false
       },
       "observations": {
-        "count": 5,
+        "count": 6,
         "firstObservedAt": "2026-07-10T02:09:12+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -812,11 +1028,11 @@
         "bid": 10.25,
         "ask": 11.2,
         "underlyingPrice": 991.64,
-        "iv": 119.958,
-        "delta": -0.115453,
+        "iv": 125.333,
+        "delta": -0.115478516,
         "spread": 0.9499999999999993,
         "spreadPct": 8.857808857808852,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -832,9 +1048,9 @@
         "expired": false
       },
       "observations": {
-        "count": 5,
+        "count": 6,
         "firstObservedAt": "2026-07-10T02:09:12+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -867,11 +1083,11 @@
         "bid": 7.85,
         "ask": 8.25,
         "underlyingPrice": 991.64,
-        "iv": 122.881,
-        "delta": -0.089301246,
+        "iv": 128.39,
+        "delta": -0.089319719,
         "spread": 0.40000000000000036,
         "spreadPct": 4.968944099378886,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -887,9 +1103,9 @@
         "expired": false
       },
       "observations": {
-        "count": 5,
+        "count": 6,
         "firstObservedAt": "2026-07-10T02:09:12+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -922,11 +1138,11 @@
         "bid": 8.8,
         "ask": 9.05,
         "underlyingPrice": 991.64,
-        "iv": 121.248,
-        "delta": -0.098407486,
+        "iv": 126.682,
+        "delta": -0.098428479,
         "spread": 0.25,
         "spreadPct": 2.8011204481792715,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -942,9 +1158,9 @@
         "expired": false
       },
       "observations": {
-        "count": 6,
+        "count": 7,
         "firstObservedAt": "2026-07-10T01:40:32+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -977,11 +1193,11 @@
         "bid": 4.0,
         "ask": 4.45,
         "underlyingPrice": 192.45,
-        "iv": 213.613,
-        "delta": -0.121729984,
+        "iv": 225.979,
+        "delta": -0.119708481,
         "spread": 0.4500000000000002,
         "spreadPct": 10.650887573964502,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -997,9 +1213,9 @@
         "expired": false
       },
       "observations": {
-        "count": 6,
+        "count": 7,
         "firstObservedAt": "2026-07-10T01:40:32+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -1032,11 +1248,11 @@
         "bid": 10.25,
         "ask": 11.2,
         "underlyingPrice": 991.64,
-        "iv": 119.958,
-        "delta": -0.115453,
+        "iv": 125.333,
+        "delta": -0.115478516,
         "spread": 0.9499999999999993,
         "spreadPct": 8.857808857808852,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1052,9 +1268,9 @@
         "expired": false
       },
       "observations": {
-        "count": 6,
+        "count": 7,
         "firstObservedAt": "2026-07-10T01:40:32+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -1087,11 +1303,11 @@
         "bid": 8.8,
         "ask": 9.05,
         "underlyingPrice": 991.64,
-        "iv": 121.248,
-        "delta": -0.098407486,
+        "iv": 126.682,
+        "delta": -0.098428479,
         "spread": 0.25,
         "spreadPct": 2.8011204481792715,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1107,9 +1323,9 @@
         "expired": false
       },
       "observations": {
-        "count": 7,
+        "count": 8,
         "firstObservedAt": "2026-07-10T01:11:52+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -1142,11 +1358,11 @@
         "bid": 4.0,
         "ask": 4.45,
         "underlyingPrice": 192.45,
-        "iv": 213.613,
-        "delta": -0.121729984,
+        "iv": 225.979,
+        "delta": -0.119708481,
         "spread": 0.4500000000000002,
         "spreadPct": 10.650887573964502,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1162,9 +1378,9 @@
         "expired": false
       },
       "observations": {
-        "count": 7,
+        "count": 8,
         "firstObservedAt": "2026-07-10T01:11:52+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -1197,11 +1413,11 @@
         "bid": 7.85,
         "ask": 8.25,
         "underlyingPrice": 991.64,
-        "iv": 122.881,
-        "delta": -0.089301246,
+        "iv": 128.39,
+        "delta": -0.089319719,
         "spread": 0.40000000000000036,
         "spreadPct": 4.968944099378886,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1217,9 +1433,9 @@
         "expired": false
       },
       "observations": {
-        "count": 7,
+        "count": 8,
         "firstObservedAt": "2026-07-10T01:11:52+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -1252,11 +1468,11 @@
         "bid": 4.0,
         "ask": 4.45,
         "underlyingPrice": 192.45,
-        "iv": 213.613,
-        "delta": -0.121729984,
+        "iv": 225.979,
+        "delta": -0.119708481,
         "spread": 0.4500000000000002,
         "spreadPct": 10.650887573964502,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1272,9 +1488,9 @@
         "expired": false
       },
       "observations": {
-        "count": 8,
+        "count": 9,
         "firstObservedAt": "2026-07-10T00:43:11+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -1307,11 +1523,11 @@
         "bid": 8.8,
         "ask": 9.05,
         "underlyingPrice": 991.64,
-        "iv": 121.248,
-        "delta": -0.098407486,
+        "iv": 126.682,
+        "delta": -0.098428479,
         "spread": 0.25,
         "spreadPct": 2.8011204481792715,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1327,9 +1543,9 @@
         "expired": false
       },
       "observations": {
-        "count": 8,
+        "count": 9,
         "firstObservedAt": "2026-07-10T00:43:11+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -1362,11 +1578,11 @@
         "bid": 4.9,
         "ask": 5.2,
         "underlyingPrice": 991.64,
-        "iv": 128.205,
-        "delta": -0.058126032,
+        "iv": 133.956,
+        "delta": -0.058136879,
         "spread": 0.2999999999999998,
         "spreadPct": 5.940594059405936,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1382,9 +1598,9 @@
         "expired": false
       },
       "observations": {
-        "count": 8,
+        "count": 9,
         "firstObservedAt": "2026-07-10T00:43:11+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -1417,11 +1633,11 @@
         "bid": 8.8,
         "ask": 9.05,
         "underlyingPrice": 991.64,
-        "iv": 121.248,
-        "delta": -0.098407486,
+        "iv": 126.682,
+        "delta": -0.098428479,
         "spread": 0.25,
         "spreadPct": 2.8011204481792715,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1437,9 +1653,9 @@
         "expired": false
       },
       "observations": {
-        "count": 9,
+        "count": 10,
         "firstObservedAt": "2026-07-10T00:09:30+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -1472,11 +1688,11 @@
         "bid": 4.0,
         "ask": 4.45,
         "underlyingPrice": 192.45,
-        "iv": 213.613,
-        "delta": -0.121729984,
+        "iv": 225.979,
+        "delta": -0.119708481,
         "spread": 0.4500000000000002,
         "spreadPct": 10.650887573964502,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1492,9 +1708,9 @@
         "expired": false
       },
       "observations": {
-        "count": 9,
+        "count": 10,
         "firstObservedAt": "2026-07-10T00:09:30+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -1527,11 +1743,11 @@
         "bid": 13.7,
         "ask": 14.6,
         "underlyingPrice": 991.64,
-        "iv": 117.174,
-        "delta": -0.147287602,
+        "iv": 122.421,
+        "delta": -0.147322563,
         "spread": 0.9000000000000004,
         "spreadPct": 6.360424028268555,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1547,9 +1763,9 @@
         "expired": false
       },
       "observations": {
-        "count": 9,
+        "count": 10,
         "firstObservedAt": "2026-07-10T00:09:30+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -1582,11 +1798,11 @@
         "bid": 8.8,
         "ask": 9.05,
         "underlyingPrice": 991.64,
-        "iv": 121.248,
-        "delta": -0.098407486,
+        "iv": 126.682,
+        "delta": -0.098428479,
         "spread": 0.25,
         "spreadPct": 2.8011204481792715,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1602,9 +1818,9 @@
         "expired": false
       },
       "observations": {
-        "count": 10,
+        "count": 11,
         "firstObservedAt": "2026-07-09T23:40:50+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -1637,11 +1853,11 @@
         "bid": 4.0,
         "ask": 4.45,
         "underlyingPrice": 192.45,
-        "iv": 213.613,
-        "delta": -0.121729984,
+        "iv": 225.979,
+        "delta": -0.119708481,
         "spread": 0.4500000000000002,
         "spreadPct": 10.650887573964502,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1657,9 +1873,9 @@
         "expired": false
       },
       "observations": {
-        "count": 10,
+        "count": 11,
         "firstObservedAt": "2026-07-09T23:40:50+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -1802,11 +2018,11 @@
         "bid": 19.3,
         "ask": 20.8,
         "underlyingPrice": 1858.27,
-        "iv": 157.092,
-        "delta": -0.090545121,
+        "iv": 164.136,
+        "delta": -0.090560467,
         "spread": 1.5,
         "spreadPct": 7.4812967581047385,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1822,9 +2038,9 @@
         "expired": false
       },
       "observations": {
-        "count": 11,
+        "count": 12,
         "firstObservedAt": "2026-07-09T23:11:20+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -1857,11 +2073,11 @@
         "bid": 8.8,
         "ask": 9.05,
         "underlyingPrice": 991.64,
-        "iv": 121.248,
-        "delta": -0.098407486,
+        "iv": 126.682,
+        "delta": -0.098428479,
         "spread": 0.25,
         "spreadPct": 2.8011204481792715,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1877,9 +2093,9 @@
         "expired": false
       },
       "observations": {
-        "count": 11,
+        "count": 12,
         "firstObservedAt": "2026-07-09T23:11:20+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -1967,11 +2183,11 @@
         "bid": 2.73,
         "ask": 3.0,
         "underlyingPrice": 991.64,
-        "iv": 136.485,
-        "delta": -0.033719099,
+        "iv": 142.613,
+        "delta": -0.033724767,
         "spread": 0.27,
         "spreadPct": 9.424083769633508,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -1987,9 +2203,9 @@
         "expired": false
       },
       "observations": {
-        "count": 12,
+        "count": 13,
         "firstObservedAt": "2026-07-09T22:41:51+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -2077,11 +2293,11 @@
         "bid": 8.8,
         "ask": 9.05,
         "underlyingPrice": 991.64,
-        "iv": 121.248,
-        "delta": -0.098407486,
+        "iv": 126.682,
+        "delta": -0.098428479,
         "spread": 0.25,
         "spreadPct": 2.8011204481792715,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -2097,9 +2313,9 @@
         "expired": false
       },
       "observations": {
-        "count": 13,
+        "count": 14,
         "firstObservedAt": "2026-07-09T22:12:22+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -2187,11 +2403,11 @@
         "bid": 4.9,
         "ask": 5.2,
         "underlyingPrice": 991.64,
-        "iv": 128.205,
-        "delta": -0.058126032,
+        "iv": 133.956,
+        "delta": -0.058136879,
         "spread": 0.2999999999999998,
         "spreadPct": 5.940594059405936,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -2207,9 +2423,9 @@
         "expired": false
       },
       "observations": {
-        "count": 13,
+        "count": 14,
         "firstObservedAt": "2026-07-09T22:12:22+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -2352,11 +2568,11 @@
         "bid": 2.98,
         "ask": 3.25,
         "underlyingPrice": 991.64,
-        "iv": 133.957,
-        "delta": -0.036892118,
+        "iv": 139.971,
+        "delta": -0.036898485,
         "spread": 0.27,
         "spreadPct": 8.667736757624397,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -2372,9 +2588,9 @@
         "expired": false
       },
       "observations": {
-        "count": 14,
+        "count": 15,
         "firstObservedAt": "2026-07-09T21:42:55+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -2462,11 +2678,11 @@
         "bid": 2.73,
         "ask": 3.0,
         "underlyingPrice": 991.64,
-        "iv": 136.485,
-        "delta": -0.033719099,
+        "iv": 142.613,
+        "delta": -0.033724767,
         "spread": 0.27,
         "spreadPct": 9.424083769633508,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -2482,9 +2698,9 @@
         "expired": false
       },
       "observations": {
-        "count": 15,
+        "count": 16,
         "firstObservedAt": "2026-07-09T21:13:26+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -2627,11 +2843,11 @@
         "bid": 2.73,
         "ask": 3.0,
         "underlyingPrice": 991.64,
-        "iv": 136.485,
-        "delta": -0.033719099,
+        "iv": 142.613,
+        "delta": -0.033724767,
         "spread": 0.27,
         "spreadPct": 9.424083769633508,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -2647,9 +2863,9 @@
         "expired": false
       },
       "observations": {
-        "count": 16,
+        "count": 17,
         "firstObservedAt": "2026-07-09T04:12:56+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -2737,11 +2953,11 @@
         "bid": 2.73,
         "ask": 3.0,
         "underlyingPrice": 991.64,
-        "iv": 136.485,
-        "delta": -0.033719099,
+        "iv": 142.613,
+        "delta": -0.033724767,
         "spread": 0.27,
         "spreadPct": 9.424083769633508,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -2757,9 +2973,9 @@
         "expired": false
       },
       "observations": {
-        "count": 17,
+        "count": 18,
         "firstObservedAt": "2026-07-09T03:43:31+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -2902,11 +3118,11 @@
         "bid": 3.85,
         "ask": 4.45,
         "underlyingPrice": 991.64,
-        "iv": 132.245,
-        "delta": -0.047791164,
+        "iv": 138.18,
+        "delta": -0.047799614,
         "spread": 0.6000000000000001,
         "spreadPct": 14.457831325301207,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -2922,9 +3138,9 @@
         "expired": false
       },
       "observations": {
-        "count": 18,
+        "count": 19,
         "firstObservedAt": "2026-07-09T03:09:05+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -3287,11 +3503,11 @@
         "bid": 3.85,
         "ask": 4.45,
         "underlyingPrice": 991.64,
-        "iv": 132.245,
-        "delta": -0.047791164,
+        "iv": 138.18,
+        "delta": -0.047799614,
         "spread": 0.6000000000000001,
         "spreadPct": 14.457831325301207,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -3307,9 +3523,9 @@
         "expired": false
       },
       "observations": {
-        "count": 20,
+        "count": 21,
         "firstObservedAt": "2026-07-09T02:10:16+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -3342,11 +3558,11 @@
         "bid": 2.73,
         "ask": 3.0,
         "underlyingPrice": 991.64,
-        "iv": 136.485,
-        "delta": -0.033719099,
+        "iv": 142.613,
+        "delta": -0.033724767,
         "spread": 0.27,
         "spreadPct": 9.424083769633508,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -3362,9 +3578,9 @@
         "expired": false
       },
       "observations": {
-        "count": 20,
+        "count": 21,
         "firstObservedAt": "2026-07-09T02:10:16+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -3507,11 +3723,11 @@
         "bid": 3.85,
         "ask": 4.45,
         "underlyingPrice": 991.64,
-        "iv": 132.245,
-        "delta": -0.047791164,
+        "iv": 138.18,
+        "delta": -0.047799614,
         "spread": 0.6000000000000001,
         "spreadPct": 14.457831325301207,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -3527,9 +3743,9 @@
         "expired": false
       },
       "observations": {
-        "count": 21,
+        "count": 22,
         "firstObservedAt": "2026-07-09T01:40:51+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -3617,11 +3833,11 @@
         "bid": 4.9,
         "ask": 5.2,
         "underlyingPrice": 991.64,
-        "iv": 128.205,
-        "delta": -0.058126032,
+        "iv": 133.956,
+        "delta": -0.058136879,
         "spread": 0.2999999999999998,
         "spreadPct": 5.940594059405936,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -3637,9 +3853,9 @@
         "expired": false
       },
       "observations": {
-        "count": 22,
+        "count": 23,
         "firstObservedAt": "2026-07-09T01:11:27+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -4002,11 +4218,11 @@
         "bid": 2.73,
         "ask": 3.0,
         "underlyingPrice": 991.64,
-        "iv": 136.485,
-        "delta": -0.033719099,
+        "iv": 142.613,
+        "delta": -0.033724767,
         "spread": 0.27,
         "spreadPct": 9.424083769633508,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -4022,9 +4238,9 @@
         "expired": false
       },
       "observations": {
-        "count": 24,
+        "count": 25,
         "firstObservedAt": "2026-07-09T00:12:36+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -4658,29 +4874,29 @@
         "spreadPct": 2.0431328036322363
       },
       "latest": {
-        "mid": 231.0,
-        "bid": 228.5,
-        "ask": 233.5,
+        "mid": 231.5,
+        "bid": 229.0,
+        "ask": 234.0,
         "underlyingPrice": 723.28,
-        "iv": 31.792,
-        "delta": 0.851170007,
+        "iv": 31.762,
+        "delta": 0.85171958,
         "spread": 5.0,
-        "spreadPct": 2.1645021645021645,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "spreadPct": 2.159827213822894,
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
-        "optionReturnPct": 4.88,
+        "optionReturnPct": 5.11,
         "underlyingReturnPct": 1.95,
-        "relativeReturnPct": 2.93,
-        "realizedLeverage": 2.5,
-        "deltaChange": 0.0146,
-        "ivChange": -0.43
+        "relativeReturnPct": 3.16,
+        "realizedLeverage": 2.62,
+        "deltaChange": 0.0151,
+        "ivChange": -0.46
       },
       "observations": {
-        "count": 30,
+        "count": 31,
         "firstObservedAt": "2026-07-08T21:10:43+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -4768,11 +4984,11 @@
         "bid": 2.43,
         "ask": 2.8,
         "underlyingPrice": 991.64,
-        "iv": 138.832,
-        "delta": -0.030652817,
+        "iv": 145.065,
+        "delta": -0.030657872,
         "spread": 0.36999999999999966,
         "spreadPct": 14.149139579349889,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -4788,9 +5004,9 @@
         "expired": false
       },
       "observations": {
-        "count": 30,
+        "count": 31,
         "firstObservedAt": "2026-07-08T21:10:43+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -4874,29 +5090,29 @@
         "spreadPct": 2.2675736961451247
       },
       "latest": {
-        "mid": 231.0,
-        "bid": 228.5,
-        "ask": 233.5,
+        "mid": 231.5,
+        "bid": 229.0,
+        "ask": 234.0,
         "underlyingPrice": 723.28,
-        "iv": 31.792,
-        "delta": 0.851170007,
+        "iv": 31.762,
+        "delta": 0.85171958,
         "spread": 5.0,
-        "spreadPct": 2.1645021645021645,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "spreadPct": 2.159827213822894,
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
-        "optionReturnPct": 4.76,
+        "optionReturnPct": 4.99,
         "underlyingReturnPct": 1.95,
-        "relativeReturnPct": 2.81,
-        "realizedLeverage": 2.44,
-        "deltaChange": 0.0164,
-        "ivChange": -0.73
+        "relativeReturnPct": 3.04,
+        "realizedLeverage": 2.56,
+        "deltaChange": 0.017,
+        "ivChange": -0.76
       },
       "observations": {
-        "count": 31,
+        "count": 32,
         "firstObservedAt": "2026-07-08T04:13:52+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -4984,11 +5200,11 @@
         "bid": 2.43,
         "ask": 2.8,
         "underlyingPrice": 991.64,
-        "iv": 138.832,
-        "delta": -0.030652817,
+        "iv": 145.065,
+        "delta": -0.030657872,
         "spread": 0.36999999999999966,
         "spreadPct": 14.149139579349889,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -5004,9 +5220,9 @@
         "expired": false
       },
       "observations": {
-        "count": 31,
+        "count": 32,
         "firstObservedAt": "2026-07-08T04:13:52+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -5479,11 +5695,11 @@
         "bid": 2.43,
         "ask": 2.8,
         "underlyingPrice": 991.64,
-        "iv": 138.832,
-        "delta": -0.030652817,
+        "iv": 145.065,
+        "delta": -0.030657872,
         "spread": 0.36999999999999966,
         "spreadPct": 14.149139579349889,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -5499,9 +5715,9 @@
         "expired": false
       },
       "observations": {
-        "count": 34,
+        "count": 35,
         "firstObservedAt": "2026-07-08T02:40:54+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -5534,11 +5750,11 @@
         "bid": 2.73,
         "ask": 3.0,
         "underlyingPrice": 991.64,
-        "iv": 136.485,
-        "delta": -0.033719099,
+        "iv": 142.613,
+        "delta": -0.033724767,
         "spread": 0.27,
         "spreadPct": 9.424083769633508,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -5554,9 +5770,9 @@
         "expired": false
       },
       "observations": {
-        "count": 34,
+        "count": 35,
         "firstObservedAt": "2026-07-08T02:40:54+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -5589,11 +5805,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -5601,13 +5817,13 @@
         "underlyingReturnPct": -2.23,
         "relativeReturnPct": -3.97,
         "realizedLeverage": 2.78,
-        "deltaChange": -0.0094,
-        "ivChange": -0.59
+        "deltaChange": -0.0095,
+        "ivChange": -0.56
       },
       "observations": {
-        "count": 35,
+        "count": 36,
         "firstObservedAt": "2026-07-08T02:11:34+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -5695,11 +5911,11 @@
         "bid": 3.85,
         "ask": 4.45,
         "underlyingPrice": 991.64,
-        "iv": 132.245,
-        "delta": -0.047791164,
+        "iv": 138.18,
+        "delta": -0.047799614,
         "spread": 0.6000000000000001,
         "spreadPct": 14.457831325301207,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -5715,9 +5931,9 @@
         "expired": false
       },
       "observations": {
-        "count": 35,
+        "count": 36,
         "firstObservedAt": "2026-07-08T02:11:34+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -5750,11 +5966,11 @@
         "bid": 2.43,
         "ask": 2.8,
         "underlyingPrice": 991.64,
-        "iv": 138.832,
-        "delta": -0.030652817,
+        "iv": 145.065,
+        "delta": -0.030657872,
         "spread": 0.36999999999999966,
         "spreadPct": 14.149139579349889,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -5770,9 +5986,9 @@
         "expired": false
       },
       "observations": {
-        "count": 35,
+        "count": 36,
         "firstObservedAt": "2026-07-08T02:11:34+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -5805,11 +6021,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -5817,13 +6033,13 @@
         "underlyingReturnPct": -2.18,
         "relativeReturnPct": -3.91,
         "realizedLeverage": 2.79,
-        "deltaChange": -0.0078,
-        "ivChange": -1.11
+        "deltaChange": -0.0079,
+        "ivChange": -1.08
       },
       "observations": {
-        "count": 36,
+        "count": 37,
         "firstObservedAt": "2026-07-08T01:42:14+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -5911,11 +6127,11 @@
         "bid": 2.73,
         "ask": 3.0,
         "underlyingPrice": 991.64,
-        "iv": 136.485,
-        "delta": -0.033719099,
+        "iv": 142.613,
+        "delta": -0.033724767,
         "spread": 0.27,
         "spreadPct": 9.424083769633508,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -5931,9 +6147,9 @@
         "expired": false
       },
       "observations": {
-        "count": 36,
+        "count": 37,
         "firstObservedAt": "2026-07-08T01:42:14+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -5966,11 +6182,11 @@
         "bid": 4.9,
         "ask": 5.2,
         "underlyingPrice": 991.64,
-        "iv": 128.205,
-        "delta": -0.058126032,
+        "iv": 133.956,
+        "delta": -0.058136879,
         "spread": 0.2999999999999998,
         "spreadPct": 5.940594059405936,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -5986,9 +6202,9 @@
         "expired": false
       },
       "observations": {
-        "count": 36,
+        "count": 37,
         "firstObservedAt": "2026-07-08T01:42:14+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -6021,11 +6237,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -6034,12 +6250,12 @@
         "relativeReturnPct": -4.03,
         "realizedLeverage": 2.6,
         "deltaChange": -0.0106,
-        "ivChange": -0.72
+        "ivChange": -0.69
       },
       "observations": {
-        "count": 37,
+        "count": 38,
         "firstObservedAt": "2026-07-08T01:12:54+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -6182,11 +6398,11 @@
         "bid": 3.85,
         "ask": 4.45,
         "underlyingPrice": 991.64,
-        "iv": 132.245,
-        "delta": -0.047791164,
+        "iv": 138.18,
+        "delta": -0.047799614,
         "spread": 0.6000000000000001,
         "spreadPct": 14.457831325301207,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -6202,9 +6418,9 @@
         "expired": false
       },
       "observations": {
-        "count": 37,
+        "count": 38,
         "firstObservedAt": "2026-07-08T01:12:54+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -6237,11 +6453,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -6249,13 +6465,13 @@
         "underlyingReturnPct": -2.41,
         "relativeReturnPct": -3.91,
         "realizedLeverage": 2.62,
-        "deltaChange": -0.0099,
-        "ivChange": -0.75
+        "deltaChange": -0.01,
+        "ivChange": -0.72
       },
       "observations": {
-        "count": 38,
+        "count": 39,
         "firstObservedAt": "2026-07-08T00:43:32+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -6398,11 +6614,11 @@
         "bid": 2.43,
         "ask": 2.8,
         "underlyingPrice": 991.64,
-        "iv": 138.832,
-        "delta": -0.030652817,
+        "iv": 145.065,
+        "delta": -0.030657872,
         "spread": 0.36999999999999966,
         "spreadPct": 14.149139579349889,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -6418,9 +6634,9 @@
         "expired": false
       },
       "observations": {
-        "count": 38,
+        "count": 39,
         "firstObservedAt": "2026-07-08T00:43:32+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -6453,11 +6669,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -6465,13 +6681,13 @@
         "underlyingReturnPct": -2.41,
         "relativeReturnPct": -4.03,
         "realizedLeverage": 2.67,
-        "deltaChange": -0.0094,
-        "ivChange": -0.9
+        "deltaChange": -0.0095,
+        "ivChange": -0.87
       },
       "observations": {
-        "count": 39,
+        "count": 40,
         "firstObservedAt": "2026-07-08T00:09:12+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -6559,11 +6775,11 @@
         "bid": 3.85,
         "ask": 4.45,
         "underlyingPrice": 991.64,
-        "iv": 132.245,
-        "delta": -0.047791164,
+        "iv": 138.18,
+        "delta": -0.047799614,
         "spread": 0.6000000000000001,
         "spreadPct": 14.457831325301207,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -6579,9 +6795,9 @@
         "expired": false
       },
       "observations": {
-        "count": 39,
+        "count": 40,
         "firstObservedAt": "2026-07-08T00:09:12+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -6614,11 +6830,11 @@
         "bid": 2.73,
         "ask": 3.0,
         "underlyingPrice": 991.64,
-        "iv": 136.485,
-        "delta": -0.033719099,
+        "iv": 142.613,
+        "delta": -0.033724767,
         "spread": 0.27,
         "spreadPct": 9.424083769633508,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -6634,9 +6850,9 @@
         "expired": false
       },
       "observations": {
-        "count": 39,
+        "count": 40,
         "firstObservedAt": "2026-07-08T00:09:12+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -6724,11 +6940,11 @@
         "bid": 3.85,
         "ask": 4.45,
         "underlyingPrice": 991.64,
-        "iv": 132.245,
-        "delta": -0.047791164,
+        "iv": 138.18,
+        "delta": -0.047799614,
         "spread": 0.6000000000000001,
         "spreadPct": 14.457831325301207,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -6744,9 +6960,9 @@
         "expired": false
       },
       "observations": {
-        "count": 40,
+        "count": 41,
         "firstObservedAt": "2026-07-07T23:43:43+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -6779,11 +6995,11 @@
         "bid": 2.43,
         "ask": 2.8,
         "underlyingPrice": 991.64,
-        "iv": 138.832,
-        "delta": -0.030652817,
+        "iv": 145.065,
+        "delta": -0.030657872,
         "spread": 0.36999999999999966,
         "spreadPct": 14.149139579349889,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -6799,9 +7015,9 @@
         "expired": false
       },
       "observations": {
-        "count": 40,
+        "count": 41,
         "firstObservedAt": "2026-07-07T23:43:43+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -7109,11 +7325,11 @@
         "bid": 2.73,
         "ask": 3.0,
         "underlyingPrice": 991.64,
-        "iv": 136.485,
-        "delta": -0.033719099,
+        "iv": 142.613,
+        "delta": -0.033724767,
         "spread": 0.27,
         "spreadPct": 9.424083769633508,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -7129,9 +7345,9 @@
         "expired": false
       },
       "observations": {
-        "count": 42,
+        "count": 43,
         "firstObservedAt": "2026-07-07T22:43:56+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -7879,11 +8095,11 @@
         "bid": 3.85,
         "ask": 4.45,
         "underlyingPrice": 991.64,
-        "iv": 132.245,
-        "delta": -0.047791164,
+        "iv": 138.18,
+        "delta": -0.047799614,
         "spread": 0.6000000000000001,
         "spreadPct": 14.457831325301207,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -7899,9 +8115,9 @@
         "expired": false
       },
       "observations": {
-        "count": 47,
+        "count": 48,
         "firstObservedAt": "2026-07-07T03:42:16+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -8319,11 +8535,11 @@
         "bid": 3.85,
         "ask": 4.45,
         "underlyingPrice": 991.64,
-        "iv": 132.245,
-        "delta": -0.047791164,
+        "iv": 138.18,
+        "delta": -0.047799614,
         "spread": 0.6000000000000001,
         "spreadPct": 14.457831325301207,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -8339,9 +8555,9 @@
         "expired": false
       },
       "observations": {
-        "count": 50,
+        "count": 51,
         "firstObservedAt": "2026-07-07T02:11:24+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -9034,11 +9250,11 @@
         "bid": 3.85,
         "ask": 4.45,
         "underlyingPrice": 991.64,
-        "iv": 132.245,
-        "delta": -0.047791164,
+        "iv": 138.18,
+        "delta": -0.047799614,
         "spread": 0.6000000000000001,
         "spreadPct": 14.457831325301207,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "open",
@@ -9054,9 +9270,9 @@
         "expired": false
       },
       "observations": {
-        "count": 54,
+        "count": 55,
         "firstObservedAt": "2026-07-07T00:11:49+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -9914,11 +10130,11 @@
         "bid": 101.3,
         "ask": 103.05,
         "underlyingPrice": 316.22,
-        "iv": 32.646,
-        "delta": 0.848294256,
+        "iv": 32.624,
+        "delta": 0.848548554,
         "spread": 1.75,
         "spreadPct": 1.712747736726205,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -9926,13 +10142,13 @@
         "underlyingReturnPct": 2.46,
         "relativeReturnPct": 4.5,
         "realizedLeverage": 2.83,
-        "deltaChange": 0.0156,
-        "ivChange": 0.09
+        "deltaChange": 0.0159,
+        "ivChange": 0.07
       },
       "observations": {
-        "count": 60,
+        "count": 61,
         "firstObservedAt": "2026-07-06T21:08:54+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -10130,11 +10346,11 @@
         "bid": 101.3,
         "ask": 103.05,
         "underlyingPrice": 316.22,
-        "iv": 32.646,
-        "delta": 0.848294256,
+        "iv": 32.624,
+        "delta": 0.848548554,
         "spread": 1.75,
         "spreadPct": 1.712747736726205,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -10142,13 +10358,13 @@
         "underlyingReturnPct": 2.46,
         "relativeReturnPct": 4.5,
         "realizedLeverage": 2.83,
-        "deltaChange": 0.0153,
-        "ivChange": 0.22
+        "deltaChange": 0.0155,
+        "ivChange": 0.2
       },
       "observations": {
-        "count": 61,
+        "count": 62,
         "firstObservedAt": "2026-07-04T04:08:13+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -10346,11 +10562,11 @@
         "bid": 101.3,
         "ask": 103.05,
         "underlyingPrice": 316.22,
-        "iv": 32.646,
-        "delta": 0.848294256,
+        "iv": 32.624,
+        "delta": 0.848548554,
         "spread": 1.75,
         "spreadPct": 1.712747736726205,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -10358,13 +10574,13 @@
         "underlyingReturnPct": 2.46,
         "relativeReturnPct": 4.5,
         "realizedLeverage": 2.83,
-        "deltaChange": 0.0153,
-        "ivChange": 0.22
+        "deltaChange": 0.0155,
+        "ivChange": 0.2
       },
       "observations": {
-        "count": 62,
+        "count": 63,
         "firstObservedAt": "2026-07-04T03:40:13+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -10562,11 +10778,11 @@
         "bid": 101.3,
         "ask": 103.05,
         "underlyingPrice": 316.22,
-        "iv": 32.646,
-        "delta": 0.848294256,
+        "iv": 32.624,
+        "delta": 0.848548554,
         "spread": 1.75,
         "spreadPct": 1.712747736726205,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -10574,13 +10790,13 @@
         "underlyingReturnPct": 2.46,
         "relativeReturnPct": 4.5,
         "realizedLeverage": 2.83,
-        "deltaChange": 0.0153,
-        "ivChange": 0.22
+        "deltaChange": 0.0155,
+        "ivChange": 0.2
       },
       "observations": {
-        "count": 63,
+        "count": 64,
         "firstObservedAt": "2026-07-04T03:12:13+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -10778,11 +10994,11 @@
         "bid": 101.3,
         "ask": 103.05,
         "underlyingPrice": 316.22,
-        "iv": 32.646,
-        "delta": 0.848294256,
+        "iv": 32.624,
+        "delta": 0.848548554,
         "spread": 1.75,
         "spreadPct": 1.712747736726205,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -10790,13 +11006,13 @@
         "underlyingReturnPct": 2.46,
         "relativeReturnPct": 4.5,
         "realizedLeverage": 2.83,
-        "deltaChange": 0.0153,
-        "ivChange": 0.22
+        "deltaChange": 0.0155,
+        "ivChange": 0.2
       },
       "observations": {
-        "count": 64,
+        "count": 65,
         "firstObservedAt": "2026-07-04T02:39:13+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -10994,11 +11210,11 @@
         "bid": 101.3,
         "ask": 103.05,
         "underlyingPrice": 316.22,
-        "iv": 32.646,
-        "delta": 0.848294256,
+        "iv": 32.624,
+        "delta": 0.848548554,
         "spread": 1.75,
         "spreadPct": 1.712747736726205,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -11006,13 +11222,13 @@
         "underlyingReturnPct": 2.46,
         "relativeReturnPct": 4.5,
         "realizedLeverage": 2.83,
-        "deltaChange": 0.0153,
-        "ivChange": 0.22
+        "deltaChange": 0.0155,
+        "ivChange": 0.2
       },
       "observations": {
-        "count": 65,
+        "count": 66,
         "firstObservedAt": "2026-07-04T02:11:17+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -11210,11 +11426,11 @@
         "bid": 101.3,
         "ask": 103.05,
         "underlyingPrice": 316.22,
-        "iv": 32.646,
-        "delta": 0.848294256,
+        "iv": 32.624,
+        "delta": 0.848548554,
         "spread": 1.75,
         "spreadPct": 1.712747736726205,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -11222,13 +11438,13 @@
         "underlyingReturnPct": 2.46,
         "relativeReturnPct": 4.5,
         "realizedLeverage": 2.83,
-        "deltaChange": 0.0153,
-        "ivChange": 0.22
+        "deltaChange": 0.0155,
+        "ivChange": 0.2
       },
       "observations": {
-        "count": 66,
+        "count": 67,
         "firstObservedAt": "2026-07-04T01:38:18+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -11426,11 +11642,11 @@
         "bid": 101.3,
         "ask": 103.05,
         "underlyingPrice": 316.22,
-        "iv": 32.646,
-        "delta": 0.848294256,
+        "iv": 32.624,
+        "delta": 0.848548554,
         "spread": 1.75,
         "spreadPct": 1.712747736726205,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -11438,13 +11654,13 @@
         "underlyingReturnPct": 2.46,
         "relativeReturnPct": 4.5,
         "realizedLeverage": 2.83,
-        "deltaChange": 0.0153,
-        "ivChange": 0.22
+        "deltaChange": 0.0155,
+        "ivChange": 0.2
       },
       "observations": {
-        "count": 67,
+        "count": 68,
         "firstObservedAt": "2026-07-04T01:10:19+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -11642,11 +11858,11 @@
         "bid": 101.3,
         "ask": 103.05,
         "underlyingPrice": 316.22,
-        "iv": 32.646,
-        "delta": 0.848294256,
+        "iv": 32.624,
+        "delta": 0.848548554,
         "spread": 1.75,
         "spreadPct": 1.712747736726205,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -11654,13 +11870,13 @@
         "underlyingReturnPct": 2.46,
         "relativeReturnPct": 4.5,
         "realizedLeverage": 2.83,
-        "deltaChange": 0.0153,
-        "ivChange": 0.22
+        "deltaChange": 0.0155,
+        "ivChange": 0.2
       },
       "observations": {
-        "count": 68,
+        "count": 69,
         "firstObservedAt": "2026-07-04T00:42:20+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -11858,11 +12074,11 @@
         "bid": 101.3,
         "ask": 103.05,
         "underlyingPrice": 316.22,
-        "iv": 32.646,
-        "delta": 0.848294256,
+        "iv": 32.624,
+        "delta": 0.848548554,
         "spread": 1.75,
         "spreadPct": 1.712747736726205,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -11870,13 +12086,13 @@
         "underlyingReturnPct": 2.46,
         "relativeReturnPct": 4.5,
         "realizedLeverage": 2.83,
-        "deltaChange": 0.0153,
-        "ivChange": 0.23
+        "deltaChange": 0.0155,
+        "ivChange": 0.2
       },
       "observations": {
-        "count": 69,
+        "count": 70,
         "firstObservedAt": "2026-07-04T00:09:21+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -12074,11 +12290,11 @@
         "bid": 101.3,
         "ask": 103.05,
         "underlyingPrice": 316.22,
-        "iv": 32.646,
-        "delta": 0.848294256,
+        "iv": 32.624,
+        "delta": 0.848548554,
         "spread": 1.75,
         "spreadPct": 1.712747736726205,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -12086,13 +12302,13 @@
         "underlyingReturnPct": 2.46,
         "relativeReturnPct": 4.5,
         "realizedLeverage": 2.83,
-        "deltaChange": 0.0153,
-        "ivChange": 0.23
+        "deltaChange": 0.0155,
+        "ivChange": 0.2
       },
       "observations": {
-        "count": 70,
+        "count": 71,
         "firstObservedAt": "2026-07-03T23:41:21+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -12290,11 +12506,11 @@
         "bid": 101.3,
         "ask": 103.05,
         "underlyingPrice": 316.22,
-        "iv": 32.646,
-        "delta": 0.848294256,
+        "iv": 32.624,
+        "delta": 0.848548554,
         "spread": 1.75,
         "spreadPct": 1.712747736726205,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -12302,13 +12518,13 @@
         "underlyingReturnPct": 2.46,
         "relativeReturnPct": 4.5,
         "realizedLeverage": 2.83,
-        "deltaChange": 0.0152,
-        "ivChange": 0.23
+        "deltaChange": 0.0155,
+        "ivChange": 0.21
       },
       "observations": {
-        "count": 71,
+        "count": 72,
         "firstObservedAt": "2026-07-03T23:08:30+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -12506,11 +12722,11 @@
         "bid": 101.3,
         "ask": 103.05,
         "underlyingPrice": 316.22,
-        "iv": 32.646,
-        "delta": 0.848294256,
+        "iv": 32.624,
+        "delta": 0.848548554,
         "spread": 1.75,
         "spreadPct": 1.712747736726205,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -12518,13 +12734,13 @@
         "underlyingReturnPct": 2.46,
         "relativeReturnPct": 4.5,
         "realizedLeverage": 2.83,
-        "deltaChange": 0.0152,
-        "ivChange": 0.23
+        "deltaChange": 0.0155,
+        "ivChange": 0.21
       },
       "observations": {
-        "count": 72,
+        "count": 73,
         "firstObservedAt": "2026-07-03T22:40:40+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -12722,11 +12938,11 @@
         "bid": 101.3,
         "ask": 103.05,
         "underlyingPrice": 316.22,
-        "iv": 32.646,
-        "delta": 0.848294256,
+        "iv": 32.624,
+        "delta": 0.848548554,
         "spread": 1.75,
         "spreadPct": 1.712747736726205,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -12734,13 +12950,13 @@
         "underlyingReturnPct": 2.46,
         "relativeReturnPct": 4.5,
         "realizedLeverage": 2.83,
-        "deltaChange": 0.0152,
-        "ivChange": 0.23
+        "deltaChange": 0.0155,
+        "ivChange": 0.21
       },
       "observations": {
-        "count": 73,
+        "count": 74,
         "firstObservedAt": "2026-07-03T22:07:48+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -12938,11 +13154,11 @@
         "bid": 101.3,
         "ask": 103.05,
         "underlyingPrice": 316.22,
-        "iv": 32.646,
-        "delta": 0.848294256,
+        "iv": 32.624,
+        "delta": 0.848548554,
         "spread": 1.75,
         "spreadPct": 1.712747736726205,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -12950,13 +13166,13 @@
         "underlyingReturnPct": 2.46,
         "relativeReturnPct": 4.5,
         "realizedLeverage": 2.83,
-        "deltaChange": 0.0152,
-        "ivChange": 0.23
+        "deltaChange": 0.0155,
+        "ivChange": 0.21
       },
       "observations": {
-        "count": 74,
+        "count": 75,
         "firstObservedAt": "2026-07-03T21:39:57+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -13154,11 +13370,11 @@
         "bid": 101.3,
         "ask": 103.05,
         "underlyingPrice": 316.22,
-        "iv": 32.646,
-        "delta": 0.848294256,
+        "iv": 32.624,
+        "delta": 0.848548554,
         "spread": 1.75,
         "spreadPct": 1.712747736726205,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -13166,13 +13382,13 @@
         "underlyingReturnPct": 2.46,
         "relativeReturnPct": 4.5,
         "realizedLeverage": 2.83,
-        "deltaChange": 0.0152,
-        "ivChange": 0.23
+        "deltaChange": 0.0155,
+        "ivChange": 0.21
       },
       "observations": {
-        "count": 75,
+        "count": 76,
         "firstObservedAt": "2026-07-03T21:12:06+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -13370,11 +13586,11 @@
         "bid": 101.3,
         "ask": 103.05,
         "underlyingPrice": 316.22,
-        "iv": 32.646,
-        "delta": 0.848294256,
+        "iv": 32.624,
+        "delta": 0.848548554,
         "spread": 1.75,
         "spreadPct": 1.712747736726205,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -13382,13 +13598,13 @@
         "underlyingReturnPct": 2.46,
         "relativeReturnPct": 4.5,
         "realizedLeverage": 2.83,
-        "deltaChange": 0.0151,
-        "ivChange": 0.26
+        "deltaChange": 0.0154,
+        "ivChange": 0.24
       },
       "observations": {
-        "count": 76,
+        "count": 77,
         "firstObservedAt": "2026-07-03T04:08:11+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -13586,11 +13802,11 @@
         "bid": 101.3,
         "ask": 103.05,
         "underlyingPrice": 316.22,
-        "iv": 32.646,
-        "delta": 0.848294256,
+        "iv": 32.624,
+        "delta": 0.848548554,
         "spread": 1.75,
         "spreadPct": 1.712747736726205,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -13598,13 +13814,13 @@
         "underlyingReturnPct": 2.71,
         "relativeReturnPct": 4.9,
         "realizedLeverage": 2.81,
-        "deltaChange": 0.0173,
-        "ivChange": 0.14
+        "deltaChange": 0.0176,
+        "ivChange": 0.12
       },
       "observations": {
-        "count": 77,
+        "count": 78,
         "firstObservedAt": "2026-07-03T03:40:17+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -13802,11 +14018,11 @@
         "bid": 101.3,
         "ask": 103.05,
         "underlyingPrice": 316.22,
-        "iv": 32.646,
-        "delta": 0.848294256,
+        "iv": 32.624,
+        "delta": 0.848548554,
         "spread": 1.75,
         "spreadPct": 1.712747736726205,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -13814,13 +14030,13 @@
         "underlyingReturnPct": 2.87,
         "relativeReturnPct": 4.8,
         "realizedLeverage": 2.67,
-        "deltaChange": 0.0163,
-        "ivChange": 0.32
+        "deltaChange": 0.0166,
+        "ivChange": 0.29
       },
       "observations": {
-        "count": 78,
+        "count": 79,
         "firstObservedAt": "2026-07-03T03:12:26+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -14018,11 +14234,11 @@
         "bid": 101.3,
         "ask": 103.05,
         "underlyingPrice": 316.22,
-        "iv": 32.646,
-        "delta": 0.848294256,
+        "iv": 32.624,
+        "delta": 0.848548554,
         "spread": 1.75,
         "spreadPct": 1.712747736726205,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -14030,13 +14246,13 @@
         "underlyingReturnPct": 2.75,
         "relativeReturnPct": 5.2,
         "realizedLeverage": 2.89,
-        "deltaChange": 0.0186,
-        "ivChange": 0.07
+        "deltaChange": 0.0188,
+        "ivChange": 0.05
       },
       "observations": {
-        "count": 79,
+        "count": 80,
         "firstObservedAt": "2026-07-03T02:39:34+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -14234,11 +14450,11 @@
         "bid": 101.3,
         "ask": 103.05,
         "underlyingPrice": 316.22,
-        "iv": 32.646,
-        "delta": 0.848294256,
+        "iv": 32.624,
+        "delta": 0.848548554,
         "spread": 1.75,
         "spreadPct": 1.712747736726205,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -14246,13 +14462,13 @@
         "underlyingReturnPct": 2.79,
         "relativeReturnPct": 5.39,
         "realizedLeverage": 2.93,
-        "deltaChange": 0.0169,
-        "ivChange": 0.39
+        "deltaChange": 0.0172,
+        "ivChange": 0.37
       },
       "observations": {
-        "count": 80,
+        "count": 81,
         "firstObservedAt": "2026-07-03T02:11:41+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -14450,11 +14666,11 @@
         "bid": 101.3,
         "ask": 103.05,
         "underlyingPrice": 316.22,
-        "iv": 32.646,
-        "delta": 0.848294256,
+        "iv": 32.624,
+        "delta": 0.848548554,
         "spread": 1.75,
         "spreadPct": 1.712747736726205,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -14462,13 +14678,13 @@
         "underlyingReturnPct": 2.71,
         "relativeReturnPct": 4.84,
         "realizedLeverage": 2.78,
-        "deltaChange": 0.0171,
-        "ivChange": 0.19
+        "deltaChange": 0.0173,
+        "ivChange": 0.16
       },
       "observations": {
-        "count": 81,
+        "count": 82,
         "firstObservedAt": "2026-07-03T01:38:51+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -14831,11 +15047,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -14843,13 +15059,13 @@
         "underlyingReturnPct": -1.68,
         "relativeReturnPct": -2.64,
         "realizedLeverage": 2.57,
-        "deltaChange": -0.0075,
-        "ivChange": -0.16
+        "deltaChange": -0.0076,
+        "ivChange": -0.13
       },
       "observations": {
-        "count": 83,
+        "count": 84,
         "firstObservedAt": "2026-07-03T00:38:06+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -15817,11 +16033,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -15829,13 +16045,13 @@
         "underlyingReturnPct": 7.42,
         "relativeReturnPct": 11.77,
         "realizedLeverage": 2.59,
-        "deltaChange": 0.038,
-        "ivChange": -0.09
+        "deltaChange": 0.0383,
+        "ivChange": -0.13
       },
       "observations": {
-        "count": 90,
+        "count": 91,
         "firstObservedAt": "2026-07-02T21:10:35+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -16363,11 +16579,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -16375,13 +16591,13 @@
         "underlyingReturnPct": 7.26,
         "relativeReturnPct": 11.44,
         "realizedLeverage": 2.58,
-        "deltaChange": 0.0379,
-        "ivChange": -0.2
+        "deltaChange": 0.0382,
+        "ivChange": -0.23
       },
       "observations": {
-        "count": 93,
+        "count": 94,
         "firstObservedAt": "2026-07-02T03:07:30+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -16909,11 +17125,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -16921,13 +17137,13 @@
         "underlyingReturnPct": 7.54,
         "relativeReturnPct": 12.16,
         "realizedLeverage": 2.61,
-        "deltaChange": 0.0377,
-        "ivChange": 0.13
+        "deltaChange": 0.038,
+        "ivChange": 0.1
       },
       "observations": {
-        "count": 96,
+        "count": 97,
         "firstObservedAt": "2026-07-02T01:40:26+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -18280,11 +18496,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -18292,13 +18508,13 @@
         "underlyingReturnPct": 9.28,
         "relativeReturnPct": 16.33,
         "realizedLeverage": 2.76,
-        "deltaChange": 0.0437,
-        "ivChange": 0.88
+        "deltaChange": 0.044,
+        "ivChange": 0.85
       },
       "observations": {
-        "count": 105,
+        "count": 106,
         "firstObservedAt": "2026-07-01T21:11:17+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -18496,11 +18712,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -18508,13 +18724,13 @@
         "underlyingReturnPct": 9.28,
         "relativeReturnPct": 16.33,
         "realizedLeverage": 2.76,
-        "deltaChange": 0.0436,
-        "ivChange": 0.91
+        "deltaChange": 0.0439,
+        "ivChange": 0.88
       },
       "observations": {
-        "count": 106,
+        "count": 107,
         "firstObservedAt": "2026-07-01T04:11:21+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -18712,11 +18928,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -18724,13 +18940,13 @@
         "underlyingReturnPct": 9.87,
         "relativeReturnPct": 17.17,
         "realizedLeverage": 2.74,
-        "deltaChange": 0.0478,
-        "ivChange": 0.64
+        "deltaChange": 0.0481,
+        "ivChange": 0.61
       },
       "observations": {
-        "count": 107,
+        "count": 108,
         "firstObservedAt": "2026-07-01T03:42:25+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -18928,11 +19144,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -18940,13 +19156,13 @@
         "underlyingReturnPct": 10.02,
         "relativeReturnPct": 17.75,
         "realizedLeverage": 2.77,
-        "deltaChange": 0.0479,
-        "ivChange": 0.83
+        "deltaChange": 0.0482,
+        "ivChange": 0.8
       },
       "observations": {
-        "count": 108,
+        "count": 109,
         "firstObservedAt": "2026-07-01T03:13:28+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -19144,11 +19360,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -19156,13 +19372,13 @@
         "underlyingReturnPct": 9.83,
         "relativeReturnPct": 16.77,
         "realizedLeverage": 2.71,
-        "deltaChange": 0.0478,
-        "ivChange": 0.52
+        "deltaChange": 0.0481,
+        "ivChange": 0.48
       },
       "observations": {
-        "count": 109,
+        "count": 110,
         "firstObservedAt": "2026-07-01T02:39:33+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -19360,11 +19576,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -19372,13 +19588,13 @@
         "underlyingReturnPct": 9.61,
         "relativeReturnPct": 16.99,
         "realizedLeverage": 2.77,
-        "deltaChange": 0.0461,
-        "ivChange": 0.8
+        "deltaChange": 0.0464,
+        "ivChange": 0.76
       },
       "observations": {
-        "count": 110,
+        "count": 111,
         "firstObservedAt": "2026-07-01T02:10:36+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -19576,11 +19792,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -19588,13 +19804,13 @@
         "underlyingReturnPct": 9.69,
         "relativeReturnPct": 16.39,
         "realizedLeverage": 2.69,
-        "deltaChange": 0.047,
-        "ivChange": 0.51
+        "deltaChange": 0.0473,
+        "ivChange": 0.47
       },
       "observations": {
-        "count": 111,
+        "count": 112,
         "firstObservedAt": "2026-07-01T01:41:39+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -19792,11 +20008,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -19804,13 +20020,13 @@
         "underlyingReturnPct": 9.18,
         "relativeReturnPct": 16.3,
         "realizedLeverage": 2.78,
-        "deltaChange": 0.0433,
-        "ivChange": 1.03
+        "deltaChange": 0.0436,
+        "ivChange": 1.0
       },
       "observations": {
-        "count": 112,
+        "count": 113,
         "firstObservedAt": "2026-07-01T01:12:42+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -20008,11 +20224,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -20020,13 +20236,13 @@
         "underlyingReturnPct": 9.71,
         "relativeReturnPct": 16.61,
         "realizedLeverage": 2.71,
-        "deltaChange": 0.0489,
-        "ivChange": 0.28
+        "deltaChange": 0.0492,
+        "ivChange": 0.25
       },
       "observations": {
-        "count": 113,
+        "count": 114,
         "firstObservedAt": "2026-07-01T00:38:44+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -20224,11 +20440,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -20236,13 +20452,13 @@
         "underlyingReturnPct": 9.42,
         "relativeReturnPct": 16.63,
         "realizedLeverage": 2.77,
-        "deltaChange": 0.0447,
-        "ivChange": 0.87
+        "deltaChange": 0.045,
+        "ivChange": 0.83
       },
       "observations": {
-        "count": 114,
+        "count": 115,
         "firstObservedAt": "2026-07-01T00:09:47+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -20440,11 +20656,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -20452,13 +20668,13 @@
         "underlyingReturnPct": 9.59,
         "relativeReturnPct": 17.66,
         "realizedLeverage": 2.84,
-        "deltaChange": 0.0442,
-        "ivChange": 1.28
+        "deltaChange": 0.0445,
+        "ivChange": 1.24
       },
       "observations": {
-        "count": 115,
+        "count": 116,
         "firstObservedAt": "2026-06-30T23:40:51+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -20656,11 +20872,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -20668,13 +20884,13 @@
         "underlyingReturnPct": 10.18,
         "relativeReturnPct": 18.77,
         "realizedLeverage": 2.84,
-        "deltaChange": 0.0445,
-        "ivChange": 1.84
+        "deltaChange": 0.0448,
+        "ivChange": 1.8
       },
       "observations": {
-        "count": 116,
+        "count": 117,
         "firstObservedAt": "2026-06-30T23:11:19+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -20872,11 +21088,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -20884,13 +21100,13 @@
         "underlyingReturnPct": 10.51,
         "relativeReturnPct": 19.73,
         "realizedLeverage": 2.88,
-        "deltaChange": 0.0474,
-        "ivChange": 1.58
+        "deltaChange": 0.0477,
+        "ivChange": 1.55
       },
       "observations": {
-        "count": 117,
+        "count": 118,
         "firstObservedAt": "2026-06-30T22:41:47+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -21088,11 +21304,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -21100,13 +21316,13 @@
         "underlyingReturnPct": 10.6,
         "relativeReturnPct": 19.64,
         "realizedLeverage": 2.85,
-        "deltaChange": 0.0479,
-        "ivChange": 1.7
+        "deltaChange": 0.0482,
+        "ivChange": 1.66
       },
       "observations": {
-        "count": 118,
+        "count": 119,
         "firstObservedAt": "2026-06-30T22:12:15+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -43390,11 +43606,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -43402,13 +43618,13 @@
         "underlyingReturnPct": -2.4,
         "relativeReturnPct": -3.42,
         "realizedLeverage": 2.42,
-        "deltaChange": -0.014,
-        "ivChange": 0.8
+        "deltaChange": -0.0141,
+        "ivChange": 0.83
       },
       "observations": {
-        "count": 255,
+        "count": 256,
         "firstObservedAt": "2026-06-17T21:11:45+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -43606,11 +43822,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -43618,13 +43834,13 @@
         "underlyingReturnPct": -2.4,
         "relativeReturnPct": -3.42,
         "realizedLeverage": 2.42,
-        "deltaChange": -0.0141,
-        "ivChange": 0.83
+        "deltaChange": -0.0142,
+        "ivChange": 0.86
       },
       "observations": {
-        "count": 256,
+        "count": 257,
         "firstObservedAt": "2026-06-17T04:11:42+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -43822,11 +44038,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -43835,12 +44051,12 @@
         "relativeReturnPct": -3.14,
         "realizedLeverage": 2.35,
         "deltaChange": -0.0143,
-        "ivChange": 1.01
+        "ivChange": 1.04
       },
       "observations": {
-        "count": 257,
+        "count": 258,
         "firstObservedAt": "2026-06-17T03:42:24+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -44038,11 +44254,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -44050,13 +44266,13 @@
         "underlyingReturnPct": -2.11,
         "relativeReturnPct": -3.68,
         "realizedLeverage": 2.74,
-        "deltaChange": -0.0101,
-        "ivChange": 0.12
+        "deltaChange": -0.0102,
+        "ivChange": 0.16
       },
       "observations": {
-        "count": 258,
+        "count": 259,
         "firstObservedAt": "2026-06-17T03:13:06+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -44254,11 +44470,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -44266,13 +44482,13 @@
         "underlyingReturnPct": -1.98,
         "relativeReturnPct": -2.81,
         "realizedLeverage": 2.42,
-        "deltaChange": -0.0119,
-        "ivChange": 0.87
+        "deltaChange": -0.012,
+        "ivChange": 0.9
       },
       "observations": {
-        "count": 259,
+        "count": 260,
         "firstObservedAt": "2026-06-17T02:38:48+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -44470,11 +44686,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -44483,12 +44699,12 @@
         "relativeReturnPct": -2.28,
         "realizedLeverage": 2.3,
         "deltaChange": -0.0116,
-        "ivChange": 1.13
+        "ivChange": 1.16
       },
       "observations": {
-        "count": 260,
+        "count": 261,
         "firstObservedAt": "2026-06-17T02:09:31+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -44686,11 +44902,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -44698,13 +44914,13 @@
         "underlyingReturnPct": -1.78,
         "relativeReturnPct": -2.72,
         "realizedLeverage": 2.53,
-        "deltaChange": -0.0119,
-        "ivChange": 1.14
+        "deltaChange": -0.012,
+        "ivChange": 1.17
       },
       "observations": {
-        "count": 261,
+        "count": 262,
         "firstObservedAt": "2026-06-17T01:40:13+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -44902,11 +45118,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -44914,13 +45130,13 @@
         "underlyingReturnPct": -1.95,
         "relativeReturnPct": -2.57,
         "realizedLeverage": 2.32,
-        "deltaChange": -0.012,
-        "ivChange": 1.01
+        "deltaChange": -0.0121,
+        "ivChange": 1.05
       },
       "observations": {
-        "count": 262,
+        "count": 263,
         "firstObservedAt": "2026-06-17T01:10:55+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -45118,11 +45334,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -45131,12 +45347,12 @@
         "relativeReturnPct": -2.76,
         "realizedLeverage": 2.46,
         "deltaChange": -0.0119,
-        "ivChange": 0.92
+        "ivChange": 0.96
       },
       "observations": {
-        "count": 263,
+        "count": 264,
         "firstObservedAt": "2026-06-17T00:41:39+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -45334,11 +45550,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -45346,13 +45562,13 @@
         "underlyingReturnPct": -2.13,
         "relativeReturnPct": -2.44,
         "realizedLeverage": 2.14,
-        "deltaChange": -0.0152,
-        "ivChange": 1.55
+        "deltaChange": -0.0153,
+        "ivChange": 1.59
       },
       "observations": {
-        "count": 264,
+        "count": 265,
         "firstObservedAt": "2026-06-17T00:12:49+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -45550,11 +45766,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -45562,13 +45778,13 @@
         "underlyingReturnPct": -2.29,
         "relativeReturnPct": -3.41,
         "realizedLeverage": 2.49,
-        "deltaChange": -0.0121,
-        "ivChange": 0.53
+        "deltaChange": -0.0122,
+        "ivChange": 0.56
       },
       "observations": {
-        "count": 265,
+        "count": 266,
         "firstObservedAt": "2026-06-16T23:44:00+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -45766,11 +45982,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -45778,13 +45994,13 @@
         "underlyingReturnPct": -2.38,
         "relativeReturnPct": -3.23,
         "realizedLeverage": 2.36,
-        "deltaChange": -0.0145,
-        "ivChange": 1.0
+        "deltaChange": -0.0146,
+        "ivChange": 1.03
       },
       "observations": {
-        "count": 266,
+        "count": 267,
         "firstObservedAt": "2026-06-16T23:09:46+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -45982,11 +46198,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -45994,13 +46210,13 @@
         "underlyingReturnPct": -2.28,
         "relativeReturnPct": -3.06,
         "realizedLeverage": 2.34,
-        "deltaChange": -0.0127,
-        "ivChange": 0.79
+        "deltaChange": -0.0128,
+        "ivChange": 0.82
       },
       "observations": {
-        "count": 267,
+        "count": 268,
         "firstObservedAt": "2026-06-16T23:02:42+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -46198,11 +46414,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -46210,13 +46426,13 @@
         "underlyingReturnPct": -2.28,
         "relativeReturnPct": -3.06,
         "realizedLeverage": 2.34,
-        "deltaChange": -0.0127,
-        "ivChange": 0.79
+        "deltaChange": -0.0128,
+        "ivChange": 0.82
       },
       "observations": {
-        "count": 268,
+        "count": 269,
         "firstObservedAt": "2026-06-16T22:40:42+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -46414,11 +46630,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -46426,13 +46642,13 @@
         "underlyingReturnPct": -2.52,
         "relativeReturnPct": -3.71,
         "realizedLeverage": 2.47,
-        "deltaChange": -0.0169,
-        "ivChange": 1.05
+        "deltaChange": -0.017,
+        "ivChange": 1.09
       },
       "observations": {
-        "count": 269,
+        "count": 270,
         "firstObservedAt": "2026-06-16T22:11:49+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -46795,11 +47011,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -46808,12 +47024,12 @@
         "relativeReturnPct": -5.26,
         "realizedLeverage": 2.37,
         "deltaChange": -0.0228,
-        "ivChange": 0.98
+        "ivChange": 1.01
       },
       "observations": {
-        "count": 271,
+        "count": 272,
         "firstObservedAt": "2026-06-16T21:13:51+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -46897,11 +47113,11 @@
         "bid": 108.25,
         "ask": 110.95,
         "underlyingPrice": 316.22,
-        "iv": 33.069,
-        "delta": 0.869705229,
+        "iv": 33.041,
+        "delta": 0.869983972,
         "spread": 2.700000000000003,
         "spreadPct": 2.4635036496350393,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -46909,13 +47125,13 @@
         "underlyingReturnPct": 6.68,
         "relativeReturnPct": 11.97,
         "realizedLeverage": 2.79,
-        "deltaChange": 0.0343,
-        "ivChange": 1.11
+        "deltaChange": 0.0346,
+        "ivChange": 1.08
       },
       "observations": {
-        "count": 271,
+        "count": 272,
         "firstObservedAt": "2026-06-16T21:13:51+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -47113,11 +47329,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -47125,13 +47341,13 @@
         "underlyingReturnPct": -3.85,
         "relativeReturnPct": -5.26,
         "realizedLeverage": 2.37,
-        "deltaChange": -0.0228,
-        "ivChange": 1.01
+        "deltaChange": -0.0229,
+        "ivChange": 1.04
       },
       "observations": {
-        "count": 272,
+        "count": 273,
         "firstObservedAt": "2026-06-16T04:13:31+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -47215,11 +47431,11 @@
         "bid": 108.25,
         "ask": 110.95,
         "underlyingPrice": 316.22,
-        "iv": 33.069,
-        "delta": 0.869705229,
+        "iv": 33.041,
+        "delta": 0.869983972,
         "spread": 2.700000000000003,
         "spreadPct": 2.4635036496350393,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -47227,13 +47443,13 @@
         "underlyingReturnPct": 6.68,
         "relativeReturnPct": 11.97,
         "realizedLeverage": 2.79,
-        "deltaChange": 0.0342,
-        "ivChange": 1.14
+        "deltaChange": 0.0345,
+        "ivChange": 1.11
       },
       "observations": {
-        "count": 272,
+        "count": 273,
         "firstObservedAt": "2026-06-16T04:13:31+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -47431,11 +47647,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -47444,12 +47660,12 @@
         "relativeReturnPct": -4.9,
         "realizedLeverage": 2.36,
         "deltaChange": -0.0206,
-        "ivChange": 0.87
+        "ivChange": 0.91
       },
       "observations": {
-        "count": 273,
+        "count": 274,
         "firstObservedAt": "2026-06-16T03:39:28+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -47533,11 +47749,11 @@
         "bid": 108.25,
         "ask": 110.95,
         "underlyingPrice": 316.22,
-        "iv": 33.069,
-        "delta": 0.869705229,
+        "iv": 33.041,
+        "delta": 0.869983972,
         "spread": 2.700000000000003,
         "spreadPct": 2.4635036496350393,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -47545,13 +47761,13 @@
         "underlyingReturnPct": 6.63,
         "relativeReturnPct": 12.01,
         "realizedLeverage": 2.81,
-        "deltaChange": 0.0336,
-        "ivChange": 1.24
+        "deltaChange": 0.0339,
+        "ivChange": 1.21
       },
       "observations": {
-        "count": 273,
+        "count": 274,
         "firstObservedAt": "2026-06-16T03:39:28+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -47749,11 +47965,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -47762,12 +47978,12 @@
         "relativeReturnPct": -4.91,
         "realizedLeverage": 2.37,
         "deltaChange": -0.0213,
-        "ivChange": 1.0
+        "ivChange": 1.03
       },
       "observations": {
-        "count": 274,
+        "count": 275,
         "firstObservedAt": "2026-06-16T03:10:25+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -47851,11 +48067,11 @@
         "bid": 108.25,
         "ask": 110.95,
         "underlyingPrice": 316.22,
-        "iv": 33.069,
-        "delta": 0.869705229,
+        "iv": 33.041,
+        "delta": 0.869983972,
         "spread": 2.700000000000003,
         "spreadPct": 2.4635036496350393,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -47863,13 +48079,13 @@
         "underlyingReturnPct": 6.72,
         "relativeReturnPct": 12.02,
         "realizedLeverage": 2.79,
-        "deltaChange": 0.034,
-        "ivChange": 1.2
+        "deltaChange": 0.0343,
+        "ivChange": 1.17
       },
       "observations": {
-        "count": 274,
+        "count": 275,
         "firstObservedAt": "2026-06-16T03:10:25+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -48067,11 +48283,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -48079,13 +48295,13 @@
         "underlyingReturnPct": -3.61,
         "relativeReturnPct": -5.22,
         "realizedLeverage": 2.45,
-        "deltaChange": -0.0197,
-        "ivChange": 0.57
+        "deltaChange": -0.0198,
+        "ivChange": 0.61
       },
       "observations": {
-        "count": 275,
+        "count": 276,
         "firstObservedAt": "2026-06-16T02:41:22+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -48334,11 +48550,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -48346,13 +48562,13 @@
         "underlyingReturnPct": -3.67,
         "relativeReturnPct": -5.16,
         "realizedLeverage": 2.4,
-        "deltaChange": -0.0216,
-        "ivChange": 0.92
+        "deltaChange": -0.0217,
+        "ivChange": 0.95
       },
       "observations": {
-        "count": 276,
+        "count": 277,
         "firstObservedAt": "2026-06-16T02:12:19+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -50392,11 +50608,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -50405,12 +50621,12 @@
         "relativeReturnPct": -2.29,
         "realizedLeverage": 2.41,
         "deltaChange": -0.01,
-        "ivChange": 0.92
+        "ivChange": 0.96
       },
       "observations": {
-        "count": 286,
+        "count": 287,
         "firstObservedAt": "2026-06-15T21:28:47+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -50659,11 +50875,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -50672,12 +50888,12 @@
         "relativeReturnPct": -2.29,
         "realizedLeverage": 2.41,
         "deltaChange": -0.0103,
-        "ivChange": 1.05
+        "ivChange": 1.08
       },
       "observations": {
-        "count": 287,
+        "count": 288,
         "firstObservedAt": "2026-06-13T04:10:59+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -53012,11 +53228,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -53024,13 +53240,13 @@
         "underlyingReturnPct": -1.53,
         "relativeReturnPct": -2.21,
         "realizedLeverage": 2.44,
-        "deltaChange": -0.0095,
-        "ivChange": 1.0
+        "deltaChange": -0.0096,
+        "ivChange": 1.03
       },
       "observations": {
-        "count": 301,
+        "count": 302,
         "firstObservedAt": "2026-06-12T21:09:09+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -53330,11 +53546,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -53342,13 +53558,13 @@
         "underlyingReturnPct": -1.53,
         "relativeReturnPct": -2.21,
         "realizedLeverage": 2.44,
-        "deltaChange": -0.0096,
-        "ivChange": 1.03
+        "deltaChange": -0.0097,
+        "ivChange": 1.06
       },
       "observations": {
-        "count": 302,
+        "count": 303,
         "firstObservedAt": "2026-06-12T04:07:10+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -56244,11 +56460,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -56256,13 +56472,13 @@
         "underlyingReturnPct": -3.27,
         "relativeReturnPct": -4.88,
         "realizedLeverage": 2.49,
-        "deltaChange": -0.0184,
-        "ivChange": 0.75
+        "deltaChange": -0.0185,
+        "ivChange": 0.78
       },
       "observations": {
-        "count": 316,
+        "count": 317,
         "firstObservedAt": "2026-06-11T21:08:38+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -56460,11 +56676,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -56472,13 +56688,13 @@
         "underlyingReturnPct": -3.57,
         "relativeReturnPct": -5.26,
         "realizedLeverage": 2.48,
-        "deltaChange": -0.0209,
-        "ivChange": 1.11
+        "deltaChange": -0.021,
+        "ivChange": 1.14
       },
       "observations": {
-        "count": 317,
+        "count": 318,
         "firstObservedAt": "2026-06-11T03:40:53+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -56676,11 +56892,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -56688,13 +56904,13 @@
         "underlyingReturnPct": -3.88,
         "relativeReturnPct": -5.68,
         "realizedLeverage": 2.46,
-        "deltaChange": -0.0222,
-        "ivChange": 0.84
+        "deltaChange": -0.0223,
+        "ivChange": 0.87
       },
       "observations": {
-        "count": 318,
+        "count": 319,
         "firstObservedAt": "2026-06-11T03:08:36+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -56892,11 +57108,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -56904,13 +57120,13 @@
         "underlyingReturnPct": -4.11,
         "relativeReturnPct": -5.82,
         "realizedLeverage": 2.42,
-        "deltaChange": -0.0238,
-        "ivChange": 0.98
+        "deltaChange": -0.0239,
+        "ivChange": 1.01
       },
       "observations": {
-        "count": 319,
+        "count": 320,
         "firstObservedAt": "2026-06-11T02:41:19+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -57108,11 +57324,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -57121,12 +57337,12 @@
         "relativeReturnPct": -6.01,
         "realizedLeverage": 2.38,
         "deltaChange": -0.0259,
-        "ivChange": 1.17
+        "ivChange": 1.2
       },
       "observations": {
-        "count": 320,
+        "count": 321,
         "firstObservedAt": "2026-06-11T02:09:03+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -57324,11 +57540,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -57336,13 +57552,13 @@
         "underlyingReturnPct": -4.09,
         "relativeReturnPct": -6.1,
         "realizedLeverage": 2.49,
-        "deltaChange": -0.0229,
-        "ivChange": 0.62
+        "deltaChange": -0.023,
+        "ivChange": 0.66
       },
       "observations": {
-        "count": 321,
+        "count": 322,
         "firstObservedAt": "2026-06-11T01:41:47+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -57540,11 +57756,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -57552,13 +57768,13 @@
         "underlyingReturnPct": -4.7,
         "relativeReturnPct": -6.38,
         "realizedLeverage": 2.36,
-        "deltaChange": -0.0269,
-        "ivChange": 1.02
+        "deltaChange": -0.027,
+        "ivChange": 1.05
       },
       "observations": {
-        "count": 322,
+        "count": 323,
         "firstObservedAt": "2026-06-11T01:09:30+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -57756,11 +57972,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -57768,13 +57984,13 @@
         "underlyingReturnPct": -4.5,
         "relativeReturnPct": -6.33,
         "realizedLeverage": 2.41,
-        "deltaChange": -0.0265,
-        "ivChange": 1.06
+        "deltaChange": -0.0266,
+        "ivChange": 1.1
       },
       "observations": {
-        "count": 323,
+        "count": 324,
         "firstObservedAt": "2026-06-11T00:37:13+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -57972,11 +58188,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -57984,13 +58200,13 @@
         "underlyingReturnPct": -4.5,
         "relativeReturnPct": -6.02,
         "realizedLeverage": 2.34,
-        "deltaChange": -0.0273,
-        "ivChange": 1.34
+        "deltaChange": -0.0274,
+        "ivChange": 1.37
       },
       "observations": {
-        "count": 324,
+        "count": 325,
         "firstObservedAt": "2026-06-11T00:09:56+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -58188,11 +58404,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -58201,12 +58417,12 @@
         "relativeReturnPct": -6.12,
         "realizedLeverage": 2.4,
         "deltaChange": -0.0257,
-        "ivChange": 1.06
+        "ivChange": 1.1
       },
       "observations": {
-        "count": 325,
+        "count": 326,
         "firstObservedAt": "2026-06-10T23:37:39+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -58899,11 +59115,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -58911,13 +59127,13 @@
         "underlyingReturnPct": -4.72,
         "relativeReturnPct": -6.44,
         "realizedLeverage": 2.36,
-        "deltaChange": -0.028,
-        "ivChange": 1.19
+        "deltaChange": -0.0281,
+        "ivChange": 1.23
       },
       "observations": {
-        "count": 330,
+        "count": 331,
         "firstObservedAt": "2026-06-10T21:11:05+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -58950,11 +59166,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -58962,13 +59178,13 @@
         "underlyingReturnPct": 8.83,
         "relativeReturnPct": 14.44,
         "realizedLeverage": 2.63,
-        "deltaChange": 0.0423,
-        "ivChange": 0.96
+        "deltaChange": 0.0426,
+        "ivChange": 0.93
       },
       "observations": {
-        "count": 330,
+        "count": 331,
         "firstObservedAt": "2026-06-10T21:11:05+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -59166,11 +59382,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -59179,12 +59395,12 @@
         "relativeReturnPct": -6.44,
         "realizedLeverage": 2.36,
         "deltaChange": -0.0281,
-        "ivChange": 1.21
+        "ivChange": 1.25
       },
       "observations": {
-        "count": 331,
+        "count": 332,
         "firstObservedAt": "2026-06-10T10:24:42+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -59217,11 +59433,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -59229,13 +59445,13 @@
         "underlyingReturnPct": 8.83,
         "relativeReturnPct": 14.44,
         "realizedLeverage": 2.63,
-        "deltaChange": 0.0423,
-        "ivChange": 0.98
+        "deltaChange": 0.0426,
+        "ivChange": 0.95
       },
       "observations": {
-        "count": 331,
+        "count": 332,
         "firstObservedAt": "2026-06-10T10:24:42+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -59433,11 +59649,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -59445,13 +59661,13 @@
         "underlyingReturnPct": -4.46,
         "relativeReturnPct": -5.96,
         "realizedLeverage": 2.34,
-        "deltaChange": -0.026,
-        "ivChange": 1.03
+        "deltaChange": -0.0261,
+        "ivChange": 1.06
       },
       "observations": {
-        "count": 332,
+        "count": 333,
         "firstObservedAt": "2026-06-10T03:38:13+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -59484,11 +59700,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -59496,13 +59712,13 @@
         "underlyingReturnPct": 8.63,
         "relativeReturnPct": 14.29,
         "realizedLeverage": 2.66,
-        "deltaChange": 0.0406,
-        "ivChange": 1.15
+        "deltaChange": 0.0409,
+        "ivChange": 1.12
       },
       "observations": {
-        "count": 332,
+        "count": 333,
         "firstObservedAt": "2026-06-10T03:38:13+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -59700,11 +59916,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -59712,13 +59928,13 @@
         "underlyingReturnPct": -4.85,
         "relativeReturnPct": -6.41,
         "realizedLeverage": 2.32,
-        "deltaChange": -0.0293,
-        "ivChange": 1.41
+        "deltaChange": -0.0294,
+        "ivChange": 1.44
       },
       "observations": {
-        "count": 333,
+        "count": 334,
         "firstObservedAt": "2026-06-10T03:07:53+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -59751,11 +59967,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -59763,13 +59979,13 @@
         "underlyingReturnPct": 8.51,
         "relativeReturnPct": 14.28,
         "realizedLeverage": 2.68,
-        "deltaChange": 0.0396,
-        "ivChange": 1.28
+        "deltaChange": 0.0399,
+        "ivChange": 1.24
       },
       "observations": {
-        "count": 333,
+        "count": 334,
         "firstObservedAt": "2026-06-10T03:07:53+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -59967,11 +60183,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -59979,13 +60195,13 @@
         "underlyingReturnPct": -4.73,
         "relativeReturnPct": -6.47,
         "realizedLeverage": 2.37,
-        "deltaChange": -0.0296,
-        "ivChange": 1.48
+        "deltaChange": -0.0297,
+        "ivChange": 1.51
       },
       "observations": {
-        "count": 334,
+        "count": 335,
         "firstObservedAt": "2026-06-10T02:37:33+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -60018,11 +60234,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -60030,13 +60246,13 @@
         "underlyingReturnPct": 8.55,
         "relativeReturnPct": 13.89,
         "realizedLeverage": 2.62,
-        "deltaChange": 0.0414,
-        "ivChange": 1.02
+        "deltaChange": 0.0417,
+        "ivChange": 0.98
       },
       "observations": {
-        "count": 334,
+        "count": 335,
         "firstObservedAt": "2026-06-10T02:37:33+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -60234,11 +60450,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -60247,12 +60463,12 @@
         "relativeReturnPct": -6.29,
         "realizedLeverage": 2.34,
         "deltaChange": -0.0285,
-        "ivChange": 1.38
+        "ivChange": 1.41
       },
       "observations": {
-        "count": 335,
+        "count": 336,
         "firstObservedAt": "2026-06-10T02:07:14+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -60285,11 +60501,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -60297,13 +60513,13 @@
         "underlyingReturnPct": 9.18,
         "relativeReturnPct": 14.75,
         "realizedLeverage": 2.61,
-        "deltaChange": 0.0455,
-        "ivChange": 0.67
+        "deltaChange": 0.0458,
+        "ivChange": 0.63
       },
       "observations": {
-        "count": 335,
+        "count": 336,
         "firstObservedAt": "2026-06-10T02:07:14+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -60501,11 +60717,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -60513,13 +60729,13 @@
         "underlyingReturnPct": -4.41,
         "relativeReturnPct": -5.72,
         "realizedLeverage": 2.3,
-        "deltaChange": -0.0278,
-        "ivChange": 1.62
+        "deltaChange": -0.0279,
+        "ivChange": 1.65
       },
       "observations": {
-        "count": 336,
+        "count": 337,
         "firstObservedAt": "2026-06-10T01:36:55+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -60552,11 +60768,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -60564,13 +60780,13 @@
         "underlyingReturnPct": 9.01,
         "relativeReturnPct": 14.69,
         "realizedLeverage": 2.63,
-        "deltaChange": 0.0436,
-        "ivChange": 0.71
+        "deltaChange": 0.0439,
+        "ivChange": 0.68
       },
       "observations": {
-        "count": 336,
+        "count": 337,
         "firstObservedAt": "2026-06-10T01:36:55+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -60768,11 +60984,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -60780,13 +60996,13 @@
         "underlyingReturnPct": -4.02,
         "relativeReturnPct": -5.79,
         "realizedLeverage": 2.44,
-        "deltaChange": -0.0229,
-        "ivChange": 0.89
+        "deltaChange": -0.023,
+        "ivChange": 0.92
       },
       "observations": {
-        "count": 337,
+        "count": 338,
         "firstObservedAt": "2026-06-10T01:06:36+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -60819,11 +61035,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -60831,13 +61047,13 @@
         "underlyingReturnPct": 9.29,
         "relativeReturnPct": 15.3,
         "realizedLeverage": 2.65,
-        "deltaChange": 0.0449,
-        "ivChange": 0.95
+        "deltaChange": 0.0452,
+        "ivChange": 0.91
       },
       "observations": {
-        "count": 337,
+        "count": 338,
         "firstObservedAt": "2026-06-10T01:06:36+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -61035,11 +61251,11 @@
         "bid": 122.65,
         "ask": 125.65,
         "underlyingPrice": 384.36,
-        "iv": 37.121,
-        "delta": 0.815078941,
+        "iv": 37.154,
+        "delta": 0.815004612,
         "spread": 3.0,
         "spreadPct": 2.4164317358034633,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -61048,12 +61264,12 @@
         "relativeReturnPct": -5.74,
         "realizedLeverage": 2.36,
         "deltaChange": -0.0245,
-        "ivChange": 1.1
+        "ivChange": 1.13
       },
       "observations": {
-        "count": 338,
+        "count": 339,
         "firstObservedAt": "2026-06-10T00:36:17+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -61086,11 +61302,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -61098,13 +61314,13 @@
         "underlyingReturnPct": 9.32,
         "relativeReturnPct": 15.07,
         "realizedLeverage": 2.62,
-        "deltaChange": 0.045,
-        "ivChange": 0.86
+        "deltaChange": 0.0453,
+        "ivChange": 0.83
       },
       "observations": {
-        "count": 338,
+        "count": 339,
         "firstObservedAt": "2026-06-10T00:36:17+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -61302,11 +61518,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -61314,13 +61530,13 @@
         "underlyingReturnPct": 8.63,
         "relativeReturnPct": 13.75,
         "realizedLeverage": 2.59,
-        "deltaChange": 0.0416,
-        "ivChange": 0.84
+        "deltaChange": 0.0419,
+        "ivChange": 0.81
       },
       "observations": {
-        "count": 339,
+        "count": 340,
         "firstObservedAt": "2026-06-10T00:05:59+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -61518,11 +61734,11 @@
         "bid": 116.8,
         "ask": 118.35,
         "underlyingPrice": 316.22,
-        "iv": 33.923,
-        "delta": 0.887399544,
+        "iv": 33.889,
+        "delta": 0.887695479,
         "spread": 1.5499999999999972,
         "spreadPct": 1.3183074633212821,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -61530,13 +61746,13 @@
         "underlyingReturnPct": 8.5,
         "relativeReturnPct": 13.63,
         "realizedLeverage": 2.6,
-        "deltaChange": 0.0416,
-        "ivChange": 0.78
+        "deltaChange": 0.0419,
+        "ivChange": 0.74
       },
       "observations": {
-        "count": 340,
+        "count": 341,
         "firstObservedAt": "2026-06-09T23:40:41+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -61734,11 +61950,11 @@
         "bid": 108.25,
         "ask": 110.95,
         "underlyingPrice": 316.22,
-        "iv": 33.069,
-        "delta": 0.869705229,
+        "iv": 33.041,
+        "delta": 0.869983972,
         "spread": 2.700000000000003,
         "spreadPct": 2.4635036496350393,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -61746,13 +61962,13 @@
         "underlyingReturnPct": 7.87,
         "relativeReturnPct": 13.61,
         "realizedLeverage": 2.73,
-        "deltaChange": 0.0428,
-        "ivChange": 0.81
+        "deltaChange": 0.0431,
+        "ivChange": 0.79
       },
       "observations": {
-        "count": 341,
+        "count": 342,
         "firstObservedAt": "2026-06-09T23:09:52+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -62995,11 +63211,11 @@
         "bid": 101.3,
         "ask": 103.05,
         "underlyingPrice": 316.22,
-        "iv": 32.646,
-        "delta": 0.848294256,
+        "iv": 32.624,
+        "delta": 0.848548554,
         "spread": 1.75,
         "spreadPct": 1.712747736726205,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -63007,13 +63223,13 @@
         "underlyingReturnPct": 2.54,
         "relativeReturnPct": 3.48,
         "realizedLeverage": 2.37,
-        "deltaChange": 0.0151,
-        "ivChange": 0.55
+        "deltaChange": 0.0154,
+        "ivChange": 0.53
       },
       "observations": {
-        "count": 349,
+        "count": 350,
         "firstObservedAt": "2026-06-09T02:07:29+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -64362,29 +64578,29 @@
         "spreadPct": 2.331002331002331
       },
       "latest": {
-        "mid": 231.0,
-        "bid": 228.5,
-        "ask": 233.5,
+        "mid": 231.5,
+        "bid": 229.0,
+        "ask": 234.0,
         "underlyingPrice": 723.28,
-        "iv": 31.792,
-        "delta": 0.851170007,
+        "iv": 31.762,
+        "delta": 0.85171958,
         "spread": 5.0,
-        "spreadPct": 2.1645021645021645,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "spreadPct": 2.159827213822894,
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
-        "optionReturnPct": 7.69,
+        "optionReturnPct": 7.93,
         "underlyingReturnPct": 2.58,
-        "relativeReturnPct": 5.11,
-        "realizedLeverage": 2.98,
-        "deltaChange": 0.0219,
-        "ivChange": 0.12
+        "relativeReturnPct": 5.34,
+        "realizedLeverage": 3.07,
+        "deltaChange": 0.0224,
+        "ivChange": 0.09
       },
       "observations": {
-        "count": 357,
+        "count": 358,
         "firstObservedAt": "2026-06-08T21:10:29+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -64468,11 +64684,11 @@
         "bid": 101.3,
         "ask": 103.05,
         "underlyingPrice": 316.22,
-        "iv": 32.646,
-        "delta": 0.848294256,
+        "iv": 32.624,
+        "delta": 0.848548554,
         "spread": 1.75,
         "spreadPct": 1.712747736726205,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -64480,13 +64696,13 @@
         "underlyingReturnPct": 2.89,
         "relativeReturnPct": 4.13,
         "realizedLeverage": 2.43,
-        "deltaChange": 0.019,
-        "ivChange": 0.3
+        "deltaChange": 0.0192,
+        "ivChange": 0.28
       },
       "observations": {
-        "count": 357,
+        "count": 358,
         "firstObservedAt": "2026-06-08T21:10:29+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -64680,29 +64896,29 @@
         "spreadPct": 2.331002331002331
       },
       "latest": {
-        "mid": 231.0,
-        "bid": 228.5,
-        "ask": 233.5,
+        "mid": 231.5,
+        "bid": 229.0,
+        "ask": 234.0,
         "underlyingPrice": 723.28,
-        "iv": 31.792,
-        "delta": 0.851170007,
+        "iv": 31.762,
+        "delta": 0.85171958,
         "spread": 5.0,
-        "spreadPct": 2.1645021645021645,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "spreadPct": 2.159827213822894,
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
-        "optionReturnPct": 7.69,
+        "optionReturnPct": 7.93,
         "underlyingReturnPct": 2.58,
-        "relativeReturnPct": 5.11,
-        "realizedLeverage": 2.98,
-        "deltaChange": 0.0227,
-        "ivChange": 0.05
+        "relativeReturnPct": 5.34,
+        "realizedLeverage": 3.07,
+        "deltaChange": 0.0232,
+        "ivChange": 0.02
       },
       "observations": {
-        "count": 358,
+        "count": 359,
         "firstObservedAt": "2026-06-08T08:25:17+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
@@ -64786,11 +65002,11 @@
         "bid": 101.3,
         "ask": 103.05,
         "underlyingPrice": 316.22,
-        "iv": 32.646,
-        "delta": 0.848294256,
+        "iv": 32.624,
+        "delta": 0.848548554,
         "spread": 1.75,
         "spreadPct": 1.712747736726205,
-        "observedAt": "2026-07-10T04:08:52+08:00"
+        "observedAt": "2026-07-10T21:08:36+08:00"
       },
       "outcome": {
         "status": "tracking",
@@ -64798,13 +65014,13 @@
         "underlyingReturnPct": 2.89,
         "relativeReturnPct": 4.13,
         "realizedLeverage": 2.43,
-        "deltaChange": 0.0197,
-        "ivChange": 0.23
+        "deltaChange": 0.02,
+        "ivChange": 0.2
       },
       "observations": {
-        "count": 358,
+        "count": 359,
         "firstObservedAt": "2026-06-08T08:25:17+08:00",
-        "lastObservedAt": "2026-07-10T04:08:52+08:00"
+        "lastObservedAt": "2026-07-10T21:08:36+08:00"
       }
     },
     {
