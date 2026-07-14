@@ -19,6 +19,7 @@ import realOptionsMetaRaw from "./data/generated/realOptions.meta.json";
 import trackingRaw from "./data/generated/tracking.json";
 import watchlistNewsRaw from "./data/generated/watchlistNews.json";
 import youtuberTradesRaw from "../data/youtuber-trades/trades.json";
+import youtuberLifecycleRaw from "../data/youtuber-trades/lifecycle.json";
 import { screenerConfigs } from "./data/screenerConfigs";
 import { watchlistMetadata } from "./data/watchlistMetadata";
 import { compactNumber, formatCurrency, formatNumber, formatPercent } from "./lib/format";
@@ -121,7 +122,39 @@ interface YouTuberTradesData {
   trades: YouTuberTrade[];
 }
 
+interface YouTuberTradeLifecycle {
+  tradeId: string;
+  entryQuote: {
+    generatedAt: string;
+    underlyingPrice: number;
+    iv: number;
+    delta: number;
+  };
+  historical: {
+    quoteCount: number;
+    maxLoss: number | null;
+    worstQuote: {
+      generatedAt: string;
+      ask: number;
+      underlyingPrice: number;
+    } | null;
+  };
+  expiry: {
+    generatedAt: string;
+    underlyingPrice: number;
+    autoExpired: boolean;
+    outcome: "auto_expired_assumed" | "assignment_or_close_unknown";
+    premiumCollected: number | null;
+  } | null;
+}
+
+interface YouTuberLifecycleData {
+  generatedAt: string;
+  trades: YouTuberTradeLifecycle[];
+}
+
 const youtuberTrades = youtuberTradesRaw as unknown as YouTuberTradesData;
+const youtuberLifecycle = youtuberLifecycleRaw as unknown as YouTuberLifecycleData;
 
 const sessionLabels: Record<string, string> = {
   pre_market: "Pre-market",
@@ -249,6 +282,15 @@ function formatShortDate(value: string | null | undefined): string {
     hour: "2-digit",
     minute: "2-digit",
   }).format(new Date(value));
+}
+
+function formatTradeDate(value: string): string {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${value}T00:00:00Z`));
 }
 
 function formatShortTime(value: string | null | undefined, timeZone = "America/New_York"): string {
@@ -557,10 +599,6 @@ function pnlTone(value: number | null): string {
   return "watch";
 }
 
-function entryReferenceQuote(trade: YouTuberTrade): YouTuberTradeQuote {
-  return trade.validation.nearestAfterSnapshot;
-}
-
 function YouTuberTracker({
   tradesData,
   generatedAt,
@@ -568,20 +606,29 @@ function YouTuberTracker({
   tradesData: YouTuberTradesData;
   generatedAt: string | null;
 }) {
-  const rows = tradesData.trades.map((trade) => {
+  const lifecycleByTrade = new Map(youtuberLifecycle.trades.map((lifecycle) => [lifecycle.tradeId, lifecycle]));
+  const rows = tradesData.trades.flatMap((trade) => {
+    const lifecycle = lifecycleByTrade.get(trade.id);
+    if (!lifecycle) return [];
+
     const current = findCurrentContract(trade);
     const capture = profitCapturePct(trade, current?.ask ?? null);
     const pnl = openPnl(trade, current?.ask ?? null);
     const collateral = trade.optionType === "put" ? trade.strike * trade.quantity * 100 : null;
     const returnOnCollateral = collateral ? (trade.grossPremium / collateral) * 100 : null;
-    return { trade, current, capture, pnl, collateral, returnOnCollateral, status: tradeStatus(trade, current) };
+    const maxLoss = [lifecycle.historical.maxLoss, pnl]
+      .filter((value): value is number => value !== null)
+      .reduce<number | null>((worst, value) => (worst === null ? value : Math.min(worst, value)), null);
+    return [{ trade, lifecycle, current, capture, pnl, maxLoss, collateral, returnOnCollateral, status: tradeStatus(trade, current) }];
   });
+  const openRows = rows.filter((row) => row.lifecycle.expiry === null);
+  const closedRows = rows.filter((row) => row.lifecycle.expiry !== null);
   const totalPremium = rows.reduce((sum, row) => sum + row.trade.grossPremium, 0);
   const totalCommission = rows.reduce((sum, row) => sum + row.trade.commission, 0);
-  const openPnlRows = rows.filter((row) => row.pnl !== null);
+  const openPnlRows = openRows.filter((row) => row.pnl !== null);
   const totalOpenPnl =
     openPnlRows.length > 0 ? openPnlRows.reduce((sum, row) => sum + (row.pnl ?? 0), 0) : null;
-  const avgCaptureRows = rows.filter((row) => row.capture !== null);
+  const avgCaptureRows = openRows.filter((row) => row.capture !== null);
   const avgCapture =
     avgCaptureRows.length > 0
       ? avgCaptureRows.reduce((sum, row) => sum + (row.capture ?? 0), 0) / avgCaptureRows.length
@@ -595,36 +642,50 @@ function YouTuberTracker({
             <ClipboardList size={19} />
             <h2>AAG Tracker</h2>
           </div>
-          <p>從 IBKR 截圖建立的外部交易紀錄，對照最新 snapshot，追蹤目前未實現損益、權利金收割與 ITM/OTM 風險。</p>
+          <p>從 IBKR 截圖建立的外部交易紀錄。Open Trades 對照最新 snapshot；Closed Trades 以到期日收盤標的價格判定是否可合理假設為 Auto-expired。</p>
         </div>
       </section>
 
       <section className="overview reportOverview">
-        <SummaryMetric label="Trades" value={String(rows.length)} subValue="Jun 9, 2026 screenshot" />
-        <SummaryMetric label="Gross Premium" value={formatCurrency(totalPremium, 0)} subValue={`${formatCurrency(totalCommission)} commission`} />
+        <SummaryMetric label="Open Trades" value={String(openRows.length)} subValue="live option quotes" />
+        <SummaryMetric label="Closed Trades" value={String(closedRows.length)} subValue="expiry outcome recorded" />
+        <SummaryMetric
+          label="Maximum Premium"
+          value={formatCurrency(totalPremium, 0)}
+          subValue={`${formatCurrency(totalCommission)} commission`}
+        />
         <SummaryMetric
           label="Open P&L"
           value={totalOpenPnl === null ? "N/A" : formatCurrency(totalOpenPnl, 0)}
           subValue="uses current ask to buy back"
         />
-        <SummaryMetric label="Avg Capture" value={avgCapture === null ? "N/A" : formatPercent(avgCapture, 1)} subValue={`Latest ${formatShortDate(generatedAt)}`} />
       </section>
 
-      <div className="tableWrap">
-        <table className="youtuberTable">
+      <section className="tradeGroup">
+        <div className="tradeGroupHead">
+          <div>
+            <h3>Open Trades</h3>
+            <p>持續以最新 ask 估算買回成本與未實現損益。</p>
+          </div>
+          <span className="score watch">{openRows.length} live</span>
+        </div>
+        <div className="tableWrap">
+          <table className="youtuberTable openTradesTable">
           <thead>
             <tr>
               <th>Trade</th>
               <th>Entry</th>
+              <th>Max Premium / Collateral</th>
               <th>Current</th>
               <th>Open P&L</th>
+              <th>Max Loss to Date</th>
               <th>Premium Capture</th>
               <th>IV / Delta</th>
               <th>Risk</th>
             </tr>
           </thead>
           <tbody>
-            {rows.map(({ trade, current, capture, pnl, collateral, returnOnCollateral, status }) => {
+            {openRows.map(({ trade, lifecycle, current, capture, pnl, maxLoss, collateral, returnOnCollateral, status }) => {
               const latestAsk = current?.ask ?? null;
               const latestBid = current?.bid ?? null;
               const latestMid = current && Number.isFinite(current.bid) && Number.isFinite(current.ask)
@@ -638,13 +699,22 @@ function YouTuberTracker({
                       {trade.ticker} {trade.expiration} {trade.strike} {trade.optionType.toUpperCase()}
                     </strong>
                     <small>
-                      {trade.action.toUpperCase()} {trade.quantity} · {trade.tradeTimeEt} ET · {trade.executionVenue}
+                      {trade.action.toUpperCase()} {trade.quantity} · {trade.executionVenue}
                     </small>
                   </td>
                   <td>
-                    {formatCurrency(trade.fillPrice)}
+                    {formatCurrency(trade.fillPrice)} credit
                     <small>
-                      Gross {formatCurrency(trade.grossPremium, 0)} · Limit {formatCurrency(trade.limitPrice)}
+                      Entered {formatTradeDate(trade.tradeDate)} · {trade.tradeTimeEt} ET
+                    </small>
+                    <small>
+                      Limit {formatCurrency(trade.limitPrice)}
+                    </small>
+                  </td>
+                  <td>
+                    {formatCurrency(trade.grossPremium, 0)}
+                    <small>
+                      Collateral {collateral === null ? "N/A" : formatCurrency(collateral, 0)}
                     </small>
                   </td>
                   <td>
@@ -661,6 +731,14 @@ function YouTuberTracker({
                       {pnl === null
                         ? "No matching latest quote"
                         : `${pnl >= 0 ? "Profit" : "Loss"} if bought back at ask`}
+                    </small>
+                  </td>
+                  <td>
+                    <span className={`score ${pnlTone(maxLoss)}`}>{maxLoss === null ? "N/A" : formatCurrency(maxLoss, 0)}</span>
+                    <small>
+                      {lifecycle.historical.worstQuote
+                        ? `Ask ${formatCurrency(lifecycle.historical.worstQuote.ask)} · ${formatShortDate(lifecycle.historical.worstQuote.generatedAt)}`
+                        : "No archived quote"}
                     </small>
                   </td>
                   <td>
@@ -687,62 +765,75 @@ function YouTuberTracker({
               );
             })}
           </tbody>
-        </table>
-      </div>
-
-      <section className="tradeDetailGrid">
-        {rows.map(({ trade, current, capture, pnl, returnOnCollateral, status }) => {
-          const entryQuote = entryReferenceQuote(trade);
-
-          return (
-            <article key={`${trade.id}-detail`} className="tradeDetail">
-              <div className="detailHead">
-                <div>
-                  <span>{trade.companyName}</span>
-                  <h3>
-                    {trade.ticker} {trade.strike} {trade.optionType.toUpperCase()}
-                  </h3>
-                </div>
-                <span className={`score ${pnlTone(pnl)}`}>{pnl === null ? "N/A" : formatCurrency(pnl, 0)}</span>
-              </div>
-              <dl>
-                <div>
-                  <dt>Entry credit</dt>
-                  <dd>{formatCurrency(trade.fillPrice)}</dd>
-                </div>
-                <div>
-                  <dt>Current ask</dt>
-                  <dd>{current ? formatCurrency(current.ask) : "N/A"}</dd>
-                </div>
-                <div>
-                  <dt>Premium capture</dt>
-                  <dd>{capture === null ? "N/A" : formatPercent(capture, 1)}</dd>
-                </div>
-                <div>
-                  <dt>Current IV / delta</dt>
-                  <dd>{current ? `${formatPercent(current.iv, 1)} / ${formatNumber(current.delta, 3)}` : "N/A"}</dd>
-                </div>
-                <div>
-                  <dt>Entry approx IV / delta</dt>
-                  <dd>{`${formatPercent(entryQuote.iv, 1)} / ${formatNumber(entryQuote.delta, 3)}`}</dd>
-                </div>
-                <div>
-                  <dt>Risk status</dt>
-                  <dd>{status}</dd>
-                </div>
-                <div>
-                  <dt>Initial ROC</dt>
-                  <dd>{returnOnCollateral === null ? "N/A" : formatPercent(returnOnCollateral, 2)}</dd>
-                </div>
-              </dl>
-              <p>
-                Open P&L uses the latest ask as the buyback cost. It is an unrealized estimate before any closing
-                commission.
-              </p>
-            </article>
-          );
-        })}
+          </table>
+        </div>
       </section>
+
+      <section className="tradeGroup">
+        <div className="tradeGroupHead">
+          <div>
+            <h3>Closed Trades</h3>
+            <p>以到期日 close snapshot 的標的價格判定最終狀態；未提供實際成交回補單時，結果標記為 assumed。</p>
+          </div>
+          <span className="score strong">{closedRows.length} expired</span>
+        </div>
+        <div className="tableWrap">
+          <table className="youtuberTable closedTradesTable">
+            <thead>
+              <tr>
+                <th>Trade</th>
+                <th>Entry Snapshot</th>
+                <th>Max Premium / Collateral</th>
+                <th>Max Loss</th>
+                <th>Expiry Stock</th>
+                <th>Outcome</th>
+                <th>Collected Premium</th>
+              </tr>
+            </thead>
+            <tbody>
+              {closedRows.map(({ trade, lifecycle, collateral, maxLoss, returnOnCollateral }) => {
+                const expiry = lifecycle.expiry;
+                if (!expiry) return null;
+
+                return (
+                  <tr key={trade.id}>
+                    <td>
+                      <strong>{trade.ticker} {trade.expiration} {trade.strike} {trade.optionType.toUpperCase()}</strong>
+                      <small>{trade.action.toUpperCase()} {trade.quantity} · {trade.executionVenue}</small>
+                    </td>
+                    <td>
+                      {formatCurrency(trade.fillPrice)} credit
+                      <small>Entered {formatTradeDate(trade.tradeDate)} · {trade.tradeTimeEt} ET</small>
+                      <small>IV {formatPercent(lifecycle.entryQuote.iv, 1)} · Delta {formatNumber(lifecycle.entryQuote.delta, 3)}</small>
+                    </td>
+                    <td>
+                      {formatCurrency(trade.grossPremium, 0)}
+                      <small>Collateral {collateral === null ? "N/A" : formatCurrency(collateral, 0)} · {returnOnCollateral === null ? "N/A" : `${formatPercent(returnOnCollateral, 2)} ROC`}</small>
+                    </td>
+                    <td>
+                      <span className={`score ${pnlTone(maxLoss)}`}>{maxLoss === null ? "N/A" : formatCurrency(maxLoss, 0)}</span>
+                      <small>{lifecycle.historical.worstQuote ? `Ask ${formatCurrency(lifecycle.historical.worstQuote.ask)} · ${formatShortDate(lifecycle.historical.worstQuote.generatedAt)}` : "No archived quote"}</small>
+                    </td>
+                    <td>
+                      {formatCurrency(expiry.underlyingPrice)}
+                      <small>Close snapshot · Strike {formatCurrency(trade.strike)}</small>
+                    </td>
+                    <td>
+                      <span className={`score ${expiry.autoExpired ? "strong" : "weak"}`}>{expiry.autoExpired ? "Auto-expired (assumed)" : "Close / assignment unknown"}</span>
+                      <small>{expiry.autoExpired ? "OTM at expiry close" : "Needs broker closing record"}</small>
+                    </td>
+                    <td>
+                      <span className={`score ${expiry.autoExpired ? "strong" : "watch"}`}>{expiry.premiumCollected === null ? "N/A" : formatCurrency(expiry.premiumCollected, 0)}</span>
+                      <small>{expiry.autoExpired ? "Full premium assumed collected" : "Not inferred"}</small>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
     </section>
   );
 }

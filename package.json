@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
+    "build:youtuber-lifecycle": "node scripts/build-youtuber-trade-lifecycle.mjs",
     "build": "tsc -b && vite build",
     "preview": "vite preview --host 127.0.0.1",
     "fetch:watchlist-news": "python3 scripts/fetch-watchlist-news.py",
