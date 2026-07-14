@@ -458,6 +458,35 @@ table {
   line-height: 1.45;
 }
 
+.tradeGroupSummary {
+  display: grid;
+  flex: 0 0 auto;
+  justify-items: end;
+  gap: 2px;
+  text-align: right;
+}
+
+.tradeGroupSummary span,
+.tradeGroupSummary small {
+  color: #706961;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.tradeGroupSummary strong {
+  color: #303236;
+  font-size: 22px;
+  line-height: 1.15;
+}
+
+.tradeGroupSummary strong.strong {
+  color: #12623f;
+}
+
+.tradeGroupSummary strong.weak {
+  color: #9d2e2e;
+}
+
 .watchlistTable {
   min-width: 1280px;
 }
@@ -940,6 +969,15 @@ dd {
   .screenerHead {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .tradeGroupHead {
+    flex-direction: column;
+  }
+
+  .tradeGroupSummary {
+    justify-items: start;
+    text-align: left;
   }
 
   .screenerControls {

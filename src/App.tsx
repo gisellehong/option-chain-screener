@@ -599,13 +599,7 @@ function pnlTone(value: number | null): string {
   return "watch";
 }
 
-function YouTuberTracker({
-  tradesData,
-  generatedAt,
-}: {
-  tradesData: YouTuberTradesData;
-  generatedAt: string | null;
-}) {
+function YouTuberTracker({ tradesData }: { tradesData: YouTuberTradesData }) {
   const lifecycleByTrade = new Map(youtuberLifecycle.trades.map((lifecycle) => [lifecycle.tradeId, lifecycle]));
   const rows = tradesData.trades.flatMap((trade) => {
     const lifecycle = lifecycleByTrade.get(trade.id);
@@ -623,16 +617,13 @@ function YouTuberTracker({
   });
   const openRows = rows.filter((row) => row.lifecycle.expiry === null);
   const closedRows = rows.filter((row) => row.lifecycle.expiry !== null);
-  const totalPremium = rows.reduce((sum, row) => sum + row.trade.grossPremium, 0);
-  const totalCommission = rows.reduce((sum, row) => sum + row.trade.commission, 0);
   const openPnlRows = openRows.filter((row) => row.pnl !== null);
   const totalOpenPnl =
     openPnlRows.length > 0 ? openPnlRows.reduce((sum, row) => sum + (row.pnl ?? 0), 0) : null;
-  const avgCaptureRows = openRows.filter((row) => row.capture !== null);
-  const avgCapture =
-    avgCaptureRows.length > 0
-      ? avgCaptureRows.reduce((sum, row) => sum + (row.capture ?? 0), 0) / avgCaptureRows.length
-      : null;
+  const totalCollectedPremium = closedRows.reduce(
+    (sum, row) => sum + (row.lifecycle.expiry?.premiumCollected ?? 0),
+    0,
+  );
 
   return (
     <section className="wideWorkspace">
@@ -646,28 +637,17 @@ function YouTuberTracker({
         </div>
       </section>
 
-      <section className="overview reportOverview">
-        <SummaryMetric label="Open Trades" value={String(openRows.length)} subValue="live option quotes" />
-        <SummaryMetric label="Closed Trades" value={String(closedRows.length)} subValue="expiry outcome recorded" />
-        <SummaryMetric
-          label="Maximum Premium"
-          value={formatCurrency(totalPremium, 0)}
-          subValue={`${formatCurrency(totalCommission)} commission`}
-        />
-        <SummaryMetric
-          label="Open P&L"
-          value={totalOpenPnl === null ? "N/A" : formatCurrency(totalOpenPnl, 0)}
-          subValue="uses current ask to buy back"
-        />
-      </section>
-
       <section className="tradeGroup">
         <div className="tradeGroupHead">
           <div>
             <h3>Open Trades</h3>
             <p>持續以最新 ask 估算買回成本與未實現損益。</p>
           </div>
-          <span className="score watch">{openRows.length} live</span>
+          <div className="tradeGroupSummary">
+            <span>Open P&amp;L</span>
+            <strong className={pnlTone(totalOpenPnl)}>{totalOpenPnl === null ? "N/A" : formatCurrency(totalOpenPnl, 0)}</strong>
+            <small>{openRows.length} live trades · latest ask-to-close</small>
+          </div>
         </div>
         <div className="tableWrap">
           <table className="youtuberTable openTradesTable">
@@ -775,7 +755,11 @@ function YouTuberTracker({
             <h3>Closed Trades</h3>
             <p>以到期日 close snapshot 的標的價格判定最終狀態；未提供實際成交回補單時，結果標記為 assumed。</p>
           </div>
-          <span className="score strong">{closedRows.length} expired</span>
+          <div className="tradeGroupSummary">
+            <span>Premium Collected</span>
+            <strong className="strong">{formatCurrency(totalCollectedPremium, 0)}</strong>
+            <small>{closedRows.length} closed trades · assumed when OTM</small>
+          </div>
         </div>
         <div className="tableWrap">
           <table className="youtuberTable closedTradesTable">
@@ -1443,7 +1427,7 @@ export function App() {
       {activeView === "tracker" && <SignalTracker trackingData={tracking} />}
       {activeView === "watchlist" && <Watchlist dataSet={dataSet} generatedAt={realOptionsMeta.generatedAt} />}
       {activeView === "youtuber" && (
-        <YouTuberTracker tradesData={youtuberTrades} generatedAt={realOptionsMeta.generatedAt} />
+        <YouTuberTracker tradesData={youtuberTrades} />
       )}
       {activeView === "report" && <StrategyReport trackingData={tracking} />}
       {activeView === "screener" && (
