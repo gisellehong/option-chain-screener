@@ -599,7 +599,13 @@ function pnlTone(value: number | null): string {
   return "watch";
 }
 
-function YouTuberTracker({ tradesData }: { tradesData: YouTuberTradesData }) {
+function YouTuberTracker({
+  tradesData,
+  generatedAt,
+}: {
+  tradesData: YouTuberTradesData;
+  generatedAt: string | null;
+}) {
   const lifecycleByTrade = new Map(youtuberLifecycle.trades.map((lifecycle) => [lifecycle.tradeId, lifecycle]));
   const rows = tradesData.trades.flatMap((trade) => {
     const lifecycle = lifecycleByTrade.get(trade.id);
@@ -610,10 +616,26 @@ function YouTuberTracker({ tradesData }: { tradesData: YouTuberTradesData }) {
     const pnl = openPnl(trade, current?.ask ?? null);
     const collateral = trade.optionType === "put" ? trade.strike * trade.quantity * 100 : null;
     const returnOnCollateral = collateral ? (trade.grossPremium / collateral) * 100 : null;
-    const maxLoss = [lifecycle.historical.maxLoss, pnl]
-      .filter((value): value is number => value !== null)
-      .reduce<number | null>((worst, value) => (worst === null ? value : Math.min(worst, value)), null);
-    return [{ trade, lifecycle, current, capture, pnl, maxLoss, collateral, returnOnCollateral, status: tradeStatus(trade, current) }];
+    const liveQuoteSetsMaxLoss =
+      pnl !== null &&
+      (lifecycle.historical.maxLoss === null || pnl < lifecycle.historical.maxLoss);
+    const maxLoss = liveQuoteSetsMaxLoss ? pnl : lifecycle.historical.maxLoss;
+    const maxLossQuote =
+      liveQuoteSetsMaxLoss && current
+        ? { ask: current.ask, generatedAt }
+        : lifecycle.historical.worstQuote;
+    return [{
+      trade,
+      lifecycle,
+      current,
+      capture,
+      pnl,
+      maxLoss,
+      maxLossQuote,
+      collateral,
+      returnOnCollateral,
+      status: tradeStatus(trade, current),
+    }];
   });
   const openRows = rows.filter((row) => row.lifecycle.expiry === null);
   const closedRows = rows.filter((row) => row.lifecycle.expiry !== null);
@@ -646,7 +668,7 @@ function YouTuberTracker({ tradesData }: { tradesData: YouTuberTradesData }) {
           <div className="tradeGroupSummary">
             <span>Open P&amp;L</span>
             <strong className={pnlTone(totalOpenPnl)}>{totalOpenPnl === null ? "N/A" : formatCurrency(totalOpenPnl, 0)}</strong>
-            <small>{openRows.length} live trades · latest ask-to-close</small>
+            <small>{openRows.length} live trades · Updated {formatShortDate(generatedAt)}</small>
           </div>
         </div>
         <div className="tableWrap">
@@ -665,7 +687,7 @@ function YouTuberTracker({ tradesData }: { tradesData: YouTuberTradesData }) {
             </tr>
           </thead>
           <tbody>
-            {openRows.map(({ trade, lifecycle, current, capture, pnl, maxLoss, collateral, returnOnCollateral, status }) => {
+            {openRows.map(({ trade, current, capture, pnl, maxLoss, maxLossQuote, collateral, returnOnCollateral, status }) => {
               const latestAsk = current?.ask ?? null;
               const latestBid = current?.bid ?? null;
               const latestMid = current && Number.isFinite(current.bid) && Number.isFinite(current.ask)
@@ -716,8 +738,8 @@ function YouTuberTracker({ tradesData }: { tradesData: YouTuberTradesData }) {
                   <td>
                     <span className={`score ${pnlTone(maxLoss)}`}>{maxLoss === null ? "N/A" : formatCurrency(maxLoss, 0)}</span>
                     <small>
-                      {lifecycle.historical.worstQuote
-                        ? `Ask ${formatCurrency(lifecycle.historical.worstQuote.ask)} · ${formatShortDate(lifecycle.historical.worstQuote.generatedAt)}`
+                      {maxLossQuote
+                        ? `Ask ${formatCurrency(maxLossQuote.ask)} · ${formatShortDate(maxLossQuote.generatedAt)}`
                         : "No archived quote"}
                     </small>
                   </td>
@@ -1427,7 +1449,7 @@ export function App() {
       {activeView === "tracker" && <SignalTracker trackingData={tracking} />}
       {activeView === "watchlist" && <Watchlist dataSet={dataSet} generatedAt={realOptionsMeta.generatedAt} />}
       {activeView === "youtuber" && (
-        <YouTuberTracker tradesData={youtuberTrades} />
+        <YouTuberTracker tradesData={youtuberTrades} generatedAt={realOptionsMeta.generatedAt} />
       )}
       {activeView === "report" && <StrategyReport trackingData={tracking} />}
       {activeView === "screener" && (

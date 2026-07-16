@@ -21,6 +21,8 @@ REAL_OPTIONS_PATH = ROOT / "src/data/generated/realOptions.json"
 META_PATH = ROOT / "src/data/generated/realOptions.meta.json"
 TRACKING_PATH = ROOT / "src/data/generated/tracking.json"
 NEWS_PATH = ROOT / "src/data/generated/watchlistNews.json"
+YOUTUBER_LIFECYCLE_PATH = ROOT / "data/youtuber-trades/lifecycle.json"
+YOUTUBER_LIFECYCLE_SCRIPT = ROOT / "scripts/build-youtuber-trade-lifecycle.mjs"
 SNAPSHOT_ROOT = ROOT / "data/snapshots"
 REPORT_ROOT = ROOT / "data/reports"
 NY_TZ = ZoneInfo("America/New_York")
@@ -141,6 +143,17 @@ def run_fetch(tickers: list[str], output: Path) -> dict[str, Any]:
 
 def run_news_fetch(tickers: list[str], output: Path) -> dict[str, Any]:
     cmd = [sys.executable, "scripts/fetch-watchlist-news.py", "--output", str(output), *tickers]
+    completed = subprocess.run(cmd, cwd=ROOT, text=True, capture_output=True, check=False)
+    return {
+        "exitCode": completed.returncode,
+        "stdout": completed.stdout,
+        "stderr": completed.stderr,
+        "command": " ".join(cmd),
+    }
+
+
+def run_youtuber_lifecycle() -> dict[str, Any]:
+    cmd = ["node", str(YOUTUBER_LIFECYCLE_SCRIPT.relative_to(ROOT))]
     completed = subprocess.run(cmd, cwd=ROOT, text=True, capture_output=True, check=False)
     return {
         "exitCode": completed.returncode,
@@ -683,6 +696,7 @@ def publish_generated_data(session: str, generated_at: str) -> dict[str, Any]:
         "src/data/generated/realOptions.meta.json",
         "src/data/generated/tracking.json",
         "src/data/generated/watchlistNews.json",
+        str(YOUTUBER_LIFECYCLE_PATH.relative_to(ROOT)),
     ]
     status = run_git(["status", "--porcelain", "--", *paths])
     if status.returncode != 0:
@@ -801,6 +815,7 @@ def main() -> int:
     should_publish = (args.publish or env_truthy("AUTO_PUBLISH_GITHUB")) and not args.no_publish
     publish = {"enabled": should_publish, "published": False, "error": None, "commit": None}
     metadata = write_outputs(args, generated_at, watchlists, candidates, fetch_result, report, telegram, news_result)
+    lifecycle_result = run_youtuber_lifecycle()
     if should_publish and not args.skip_fetch:
         publish = publish_generated_data(args.session, generated_at)
 
@@ -812,10 +827,11 @@ def main() -> int:
         "reportPath": metadata["reportPath"],
         "telegram": telegram,
         "news": news_result,
+        "youtuberLifecycle": lifecycle_result,
         "publish": publish,
     }, indent=2))
     print("\n" + report)
-    return 0 if not telegram.get("error") else 1
+    return 0 if not telegram.get("error") and lifecycle_result["exitCode"] == 0 else 1
 
 
 if __name__ == "__main__":
