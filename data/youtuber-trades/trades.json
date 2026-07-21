@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-14T22:32:58+08:00",
+  "updatedAt": "2026-07-21T22:02:34+08:00",
   "source": {
     "type": "ibkr_screenshot",
     "path": "/Users/patrick_giselle/Downloads/Screenshot_20260609_095652.jpg",
@@ -43,9 +43,66 @@
       "visibleTradeCount": 1,
       "screenTradeCount": 2,
       "note": "Discord screenshot from Rich.TW shows 1 fully visible AMD short put trade out of 2 listed for Jul 14, 2026."
+    },
+    {
+      "type": "ibkr_discord_screenshot",
+      "path": "/tmp/codex-remote-attachments/019eb6f0-0bf0-7580-9ffc-30467c789a37/5D4E3D6C-D9B2-4433-90CB-22D77EE65607/1-Photo-1.jpg",
+      "visibleTradeCount": 1,
+      "screenTradeCount": 1,
+      "note": "Discord screenshot shows 1 fully visible AMD short put trade for Jul 21, 2026."
     }
   ],
   "trades": [
+    {
+      "id": "ibkr-20260721-095257-amd-20260731-440-put-sell-8",
+      "tradeDate": "2026-07-21",
+      "tradeTimeEt": "09:52:57",
+      "observedAtSgt": "2026-07-21T21:52:57+08:00",
+      "broker": "IBKR",
+      "executionVenue": "NASDAQOM",
+      "ticker": "AMD",
+      "companyName": "Advanced Micro Devices",
+      "action": "sell",
+      "quantity": 8,
+      "optionType": "put",
+      "expiration": "2026-07-31",
+      "strike": 440,
+      "fillPrice": 5.08,
+      "limitPrice": 5.08,
+      "grossPremium": 4064,
+      "commission": 4.07,
+      "realizedPnl": 0,
+      "validation": {
+        "status": "plausible",
+        "nearestBeforeSnapshot": {
+          "path": "data/snapshots/2026-07-21/half_hourly-20260721T214351_0800.json",
+          "generatedAt": "2026-07-21T21:43:51+08:00",
+          "minutesFromTrade": -9.1,
+          "bid": 5.6,
+          "ask": 6.25,
+          "mid": 5.925,
+          "underlyingPrice": 526.1512,
+          "iv": 102.153,
+          "delta": -0.122654001,
+          "volume": 13,
+          "openInterest": 1257
+        },
+        "nearestAfterSnapshot": {
+          "path": "live://moomoo/AMD/2026-07-21T22:02:34+08:00",
+          "generatedAt": "2026-07-21T22:02:34+08:00",
+          "minutesFromTrade": 9.62,
+          "bid": 5.4,
+          "ask": 5.85,
+          "mid": 5.625,
+          "underlyingPrice": 527.45,
+          "iv": 99.978,
+          "delta": -0.120547668,
+          "volume": 55,
+          "openInterest": 1257
+        },
+        "assessment": "The reported 5.08 fill was below the bid in both nearby snapshots, but the screenshots and quotes span a fast-moving 18.72-minute interval. The execution is recorded as plausible, with entry Greeks taken from the first post-fill live quote."
+      }
+    },
     {
       "id": "ibkr-20260714-093653-amd-20260724-462.5-put-sell-7",
       "tradeDate": "2026-07-14",
