@@ -9,6 +9,8 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview --host 127.0.0.1",
     "fetch:watchlist-news": "python3 scripts/fetch-watchlist-news.py",
+    "fetch:gex": "python3 scripts/fetch-gex-data.py",
+    "gex:update": "python3 scripts/run-gex-update.py",
     "fetch:moomoo": "python3 scripts/fetch-moomoo-data.py",
     "snapshot": "python3 scripts/run-scheduled-snapshot.py",
     "report:telegram": "python3 scripts/run-scheduled-snapshot.py --skip-fetch --send-telegram",

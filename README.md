@@ -31,6 +31,7 @@ npm install
 npm run dev
 npm run build
 npm run fetch:watchlist-news
+npm run fetch:gex -- SPX
 npm run fetch:moomoo -- AAPL AMD NVDA TSLA MSFT SMH
 npm run snapshot -- --session pre_market
 npm run snapshot -- --session half_hourly
@@ -91,6 +92,17 @@ Watchlists live in `config/watchlists.json` and are split by strategy:
 - `leaps`: long-term deep ITM call universe.
 - `weekly_csp`: short-dated cash-secured put universe.
 
+SPX GEX data is refreshed from InsiderFinance during scheduled snapshots and written to
+`src/data/generated/gex.json`, with timestamped local archives under `data/gex/`.
+SOXL GEX data is written to `src/data/generated/gex-SOXL.json`.
+You can refresh them manually:
+
+```bash
+npm run fetch:gex -- SPX
+npm run gex:update -- SPX --send-telegram
+npm run gex:update -- SOXL --send-telegram
+```
+
 Run a session snapshot manually:
 
 ```bash
@@ -107,7 +119,10 @@ The snapshot runner:
 - Updates `src/data/generated/realOptions.json`.
 - Writes `src/data/generated/realOptions.meta.json` for the Dashboard.
 - Updates `src/data/generated/tracking.json` with compact screener signals and outcomes.
+- Refreshes `src/data/generated/gex.json` from InsiderFinance unless `--skip-gex` is passed.
 - Refreshes `src/data/generated/watchlistNews.json` from English Yahoo Finance RSS unless `--skip-news` is passed.
+- Sends SPX GEX Telegram updates from the scheduler every 30 minutes during regular trading hours and every 60 minutes during SPX's near-24x5 week.
+- Sends SOXL GEX Telegram updates at 09:00 ET, every 30 minutes from 09:30 through 15:30 ET, and once at 16:00 ET.
 - Archives a local snapshot under `data/snapshots/`.
 - Writes a Markdown session report under `data/reports/`.
 
@@ -128,9 +143,14 @@ Telegram requires `.env` values:
 ```bash
 TELEGRAM_BOT_TOKEN=...
 TELEGRAM_CHAT_ID=...
+GEX_TELEGRAM_BOT_TOKEN=...
+GEX_TELEGRAM_CHAT_ID=...
+GEX_TICKER=SPX
 DASHBOARD_URL=https://gisellehong.github.io/option-chain-screener/
 AUTO_PUBLISH_GITHUB=true
 ```
+
+`GEX_TELEGRAM_*` is optional. When it is blank, GEX updates reuse the existing `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID`, so the same Option Pro channel receives both option snapshots and GEX messages. Add a separate GEX bot/channel later by filling those two variables.
 
 For dry runs without calling OpenD:
 

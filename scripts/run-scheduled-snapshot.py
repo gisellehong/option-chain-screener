@@ -20,6 +20,7 @@ WATCHLIST_PATH = ROOT / "config/watchlists.json"
 REAL_OPTIONS_PATH = ROOT / "src/data/generated/realOptions.json"
 META_PATH = ROOT / "src/data/generated/realOptions.meta.json"
 TRACKING_PATH = ROOT / "src/data/generated/tracking.json"
+GEX_PATH = ROOT / "src/data/generated/gex.json"
 NEWS_PATH = ROOT / "src/data/generated/watchlistNews.json"
 YOUTUBER_LIFECYCLE_PATH = ROOT / "data/youtuber-trades/lifecycle.json"
 YOUTUBER_LIFECYCLE_SCRIPT = ROOT / "scripts/build-youtuber-trade-lifecycle.mjs"
@@ -83,7 +84,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output", type=Path, default=REAL_OPTIONS_PATH)
     parser.add_argument("--meta-output", type=Path, default=META_PATH)
     parser.add_argument("--skip-fetch", action="store_true", help="Use the current output JSON instead of calling moomoo.")
+    parser.add_argument("--skip-gex", action="store_true", help="Skip InsiderFinance GEX refresh.")
     parser.add_argument("--skip-news", action="store_true", help="Skip watchlist news refresh.")
+    parser.add_argument("--gex-ticker", default="SPX", help="Ticker to refresh from InsiderFinance GEX.")
+    parser.add_argument("--gex-output", type=Path, default=GEX_PATH)
     parser.add_argument("--send-telegram", action="store_true", help="Send the generated report to Telegram.")
     parser.add_argument("--publish", action="store_true", help="Commit and push generated data after a successful fetch.")
     parser.add_argument("--no-publish", action="store_true", help="Disable AUTO_PUBLISH_GITHUB for this run.")
@@ -132,6 +136,17 @@ def load_watchlists(path: Path) -> dict[str, list[str]]:
 
 def run_fetch(tickers: list[str], output: Path) -> dict[str, Any]:
     cmd = [sys.executable, "scripts/fetch-moomoo-data.py", "--output", str(output), *tickers]
+    completed = subprocess.run(cmd, cwd=ROOT, text=True, capture_output=True, check=False)
+    return {
+        "exitCode": completed.returncode,
+        "stdout": completed.stdout,
+        "stderr": completed.stderr,
+        "command": " ".join(cmd),
+    }
+
+
+def run_gex_fetch(ticker: str, output: Path) -> dict[str, Any]:
+    cmd = [sys.executable, "scripts/fetch-gex-data.py", ticker, "--output", str(output)]
     completed = subprocess.run(cmd, cwd=ROOT, text=True, capture_output=True, check=False)
     return {
         "exitCode": completed.returncode,
@@ -695,6 +710,8 @@ def publish_generated_data(session: str, generated_at: str) -> dict[str, Any]:
         "src/data/generated/realOptions.json",
         "src/data/generated/realOptions.meta.json",
         "src/data/generated/tracking.json",
+        "src/data/generated/gex.json",
+        "src/data/generated/gex-SOXL.json",
         "src/data/generated/watchlistNews.json",
         str(YOUTUBER_LIFECYCLE_PATH.relative_to(ROOT)),
     ]
@@ -741,6 +758,7 @@ def write_outputs(
     fetch_result: dict[str, Any],
     report: str,
     telegram: dict[str, Any],
+    gex_result: dict[str, Any],
     news_result: dict[str, Any],
 ) -> dict[str, Any]:
     stamp = generated_at.replace(":", "").replace("-", "").replace("+", "_").replace(".", "_")
@@ -770,6 +788,7 @@ def write_outputs(
         "reportPath": str(report_path.relative_to(ROOT)),
         "telegram": telegram,
         "fetch": fetch_result,
+        "gex": gex_result,
         "news": news_result,
     }
     args.meta_output.write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
@@ -790,6 +809,9 @@ def main() -> int:
         fetch_result = run_fetch(watchlists["combined"], args.output)
         if fetch_result["exitCode"] != 0:
             generated_at = datetime.now().astimezone().isoformat(timespec="seconds")
+            gex_result = {"exitCode": None, "stdout": "", "stderr": "", "command": None}
+            if not args.skip_gex:
+                gex_result = run_gex_fetch(args.gex_ticker, args.gex_output)
             if not args.skip_news:
                 news_result = run_news_fetch(watchlists["combined"], NEWS_PATH)
             write_outputs(
@@ -800,6 +822,7 @@ def main() -> int:
                 fetch_result,
                 "Fetch failed.\n",
                 {"enabled": args.send_telegram, "sent": False, "error": None},
+                gex_result,
                 news_result,
             )
             print(fetch_result["stderr"], file=sys.stderr)
@@ -807,6 +830,9 @@ def main() -> int:
 
     candidates = read_json(args.output, [])
     generated_at = datetime.now().astimezone().isoformat(timespec="seconds")
+    gex_result = {"exitCode": None, "stdout": "", "stderr": "", "command": None}
+    if not args.skip_gex:
+        gex_result = run_gex_fetch(args.gex_ticker, args.gex_output)
     if not args.skip_news:
         news_result = run_news_fetch(watchlists["combined"], NEWS_PATH)
     tracking = update_tracking(generated_at, args.session, watchlists, candidates, args.top)
@@ -814,7 +840,7 @@ def main() -> int:
     telegram = send_telegram(report) if args.send_telegram else {"enabled": False, "sent": False, "error": None}
     should_publish = (args.publish or env_truthy("AUTO_PUBLISH_GITHUB")) and not args.no_publish
     publish = {"enabled": should_publish, "published": False, "error": None, "commit": None}
-    metadata = write_outputs(args, generated_at, watchlists, candidates, fetch_result, report, telegram, news_result)
+    metadata = write_outputs(args, generated_at, watchlists, candidates, fetch_result, report, telegram, gex_result, news_result)
     lifecycle_result = run_youtuber_lifecycle()
     if should_publish and not args.skip_fetch:
         publish = publish_generated_data(args.session, generated_at)
@@ -826,6 +852,7 @@ def main() -> int:
         "trackingSignals": tracking.get("summary", {}).get("totalSignals"),
         "reportPath": metadata["reportPath"],
         "telegram": telegram,
+        "gex": gex_result,
         "news": news_result,
         "youtuberLifecycle": lifecycle_result,
         "publish": publish,
