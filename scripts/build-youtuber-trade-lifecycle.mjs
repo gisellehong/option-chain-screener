@@ -41,7 +41,8 @@ for (const date of fs.readdirSync(snapshotsRoot).sort()) {
 }
 
 const lifecycle = trades.map((trade) => {
-  const entryAt = trade.validation.nearestAfterSnapshot.generatedAt;
+  const entrySnapshot = trade.validation?.nearestAfterSnapshot ?? null;
+  const entryAt = entrySnapshot?.generatedAt ?? trade.observedAtSgt;
   const quoteHistory = snapshots
     .map(({ date, filename, filePath, snapshot }) => {
       const contract = contractFor(trade, snapshot);
@@ -51,19 +52,30 @@ const lifecycle = trades.map((trade) => {
         filename,
         path: path.relative(root, filePath),
         generatedAt: snapshot.generatedAt,
+        bid: contract.bid,
         ask: contract.ask,
+        mark: trade.action === "buy" ? contract.bid : contract.ask,
         underlyingPrice: contract.underlyingPrice,
       };
     })
     .filter(Boolean)
     .sort((a, b) => a.generatedAt.localeCompare(b.generatedAt));
 
-  const worstQuote = quoteHistory.reduce(
-    (worst, quote) => (worst === null || quote.ask > worst.ask ? quote : worst),
-    null,
-  );
-  const worstPnl = worstQuote
-    ? Math.min(0, (trade.fillPrice - worstQuote.ask) * trade.quantity * 100)
+  const worstQuote = quoteHistory.reduce((worst, quote) => {
+    if (worst === null) return quote;
+    return trade.action === "buy"
+      ? (quote.mark < worst.mark ? quote : worst)
+      : (quote.mark > worst.mark ? quote : worst);
+  }, null);
+  const worstPnl = worstQuote && trade.fillPrice !== null && trade.quantity !== null
+    ? Math.min(
+        0,
+        (trade.action === "buy"
+          ? worstQuote.mark - trade.fillPrice
+          : trade.fillPrice - worstQuote.mark) *
+          trade.quantity *
+          100,
+      )
     : null;
 
   const expiryClose = snapshots
@@ -86,9 +98,9 @@ const lifecycle = trades.map((trade) => {
     tradeId: trade.id,
     entryQuote: {
       generatedAt: entryAt,
-      underlyingPrice: trade.validation.nearestAfterSnapshot.underlyingPrice,
-      iv: trade.validation.nearestAfterSnapshot.iv,
-      delta: trade.validation.nearestAfterSnapshot.delta,
+      underlyingPrice: entrySnapshot?.underlyingPrice ?? null,
+      iv: entrySnapshot?.iv ?? null,
+      delta: entrySnapshot?.delta ?? null,
     },
     historical: {
       quoteCount: quoteHistory.length,
@@ -100,7 +112,7 @@ const lifecycle = trades.map((trade) => {
           ...expiryClose,
           autoExpired,
           outcome: autoExpired ? "auto_expired_assumed" : "assignment_or_close_unknown",
-          premiumCollected: autoExpired ? trade.grossPremium : null,
+          premiumCollected: autoExpired && trade.grossPremium !== null ? trade.grossPremium : null,
         }
       : null,
   };

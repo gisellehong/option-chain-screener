@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-29T22:31:57+08:00",
+  "updatedAt": "2026-07-31T13:47:25+08:00",
   "source": {
     "type": "ibkr_screenshot",
     "path": "/Users/patrick_giselle/Downloads/Screenshot_20260609_095652.jpg",
@@ -64,9 +64,108 @@
       "visibleTradeCount": 1,
       "screenTradeCount": 4,
       "note": "Discord screenshot from Rich.TW shows 1 fully visible GOOGL short put trade out of 4 listed for Jul 28, 2026."
+    },
+    {
+      "type": "ibkr_discord_screenshot",
+      "path": "/tmp/codex-remote-attachments/019fb68a-2ab6-75d2-9fb5-5ca2c77d6c78/AF9F35D5-9BFE-49F4-9F70-692655771139/1-Photo-1.jpg",
+      "visibleTradeCount": 1,
+      "screenTradeCount": 3,
+      "note": "Discord screenshot from Rich.TW shows a fully visible GOOGL Jan 21 2028 400 Call purchase on Jul 28, 2026."
+    },
+    {
+      "type": "moomoo_discord_screenshot",
+      "path": "/tmp/codex-remote-attachments/019fb68a-2ab6-75d2-9fb5-5ca2c77d6c78/83E093E2-F764-42F5-85E5-3AF0F82B9D4B/1-Photo-1.jpg",
+      "visibleTradeCount": 1,
+      "screenTradeCount": 2,
+      "note": "Discord screenshot from 老 K shows the MSFT Sep 17 2027 275 Call contract, but does not show quantity or fill price."
+    },
+    {
+      "type": "moomoo_discord_screenshot",
+      "path": "/tmp/codex-remote-attachments/019fb68a-2ab6-75d2-9fb5-5ca2c77d6c78/83E093E2-F764-42F5-85E5-3AF0F82B9D4B/2-Photo-2.jpg",
+      "visibleTradeCount": 1,
+      "screenTradeCount": 1,
+      "note": "Discord screenshot from 老 K shows the GOOGL Dec 17 2027 200 Call contract, but does not show quantity or fill price."
     }
   ],
   "trades": [
+    {
+      "id": "observed-20260731-msft-20270917-275-call",
+      "tradeDate": null,
+      "tradeTimeEt": null,
+      "observedAtSgt": "2026-07-31T13:47:25+08:00",
+      "broker": "Moomoo",
+      "executionVenue": null,
+      "accountLabel": "老 K",
+      "positionKind": "observed_position",
+      "ticker": "MSFT",
+      "companyName": "Microsoft Corp",
+      "action": "buy",
+      "quantity": null,
+      "optionType": "call",
+      "expiration": "2027-09-17",
+      "strike": 275,
+      "fillPrice": null,
+      "limitPrice": null,
+      "grossPremium": null,
+      "commission": null,
+      "realizedPnl": null,
+      "validation": {
+        "status": "screenshot_only",
+        "assessment": "The contract is visible in the 老 K screenshot. Quantity, fill price, and original trade date are not shown, so the tracker records it as an observed position without estimating cost basis or P&L. The matching contract was verified in the Jul 31 Moomoo OpenD snapshot."
+      }
+    },
+    {
+      "id": "observed-20260731-googl-20271217-200-call",
+      "tradeDate": null,
+      "tradeTimeEt": null,
+      "observedAtSgt": "2026-07-31T13:47:25+08:00",
+      "broker": "Moomoo",
+      "executionVenue": null,
+      "accountLabel": "老 K",
+      "positionKind": "observed_position",
+      "ticker": "GOOGL",
+      "companyName": "Alphabet Inc Class A",
+      "action": "buy",
+      "quantity": null,
+      "optionType": "call",
+      "expiration": "2027-12-17",
+      "strike": 200,
+      "fillPrice": null,
+      "limitPrice": null,
+      "grossPremium": null,
+      "commission": null,
+      "realizedPnl": null,
+      "validation": {
+        "status": "screenshot_only",
+        "assessment": "The contract is visible in the 老 K screenshot. Quantity, fill price, and original trade date are not shown, so the tracker records it as an observed position without estimating cost basis or P&L. The matching contract was verified in the Jul 31 Moomoo OpenD snapshot."
+      }
+    },
+    {
+      "id": "ibkr-20260728-132213-googl-20280121-400-call-buy-2",
+      "tradeDate": "2026-07-28",
+      "tradeTimeEt": "13:22:13",
+      "observedAtSgt": "2026-07-29T01:22:13+08:00",
+      "broker": "IBKR",
+      "executionVenue": "BATS",
+      "accountLabel": "Rich.TW",
+      "positionKind": "executed_trade",
+      "ticker": "GOOGL",
+      "companyName": "Alphabet Inc Class A",
+      "action": "buy",
+      "quantity": 2,
+      "optionType": "call",
+      "expiration": "2028-01-21",
+      "strike": 400,
+      "fillPrice": 43.33,
+      "limitPrice": 43.33,
+      "grossPremium": 8666,
+      "commission": 0.86,
+      "realizedPnl": 0,
+      "validation": {
+        "status": "screenshot_only",
+        "assessment": "The fill, quantity, venue, and commission are visible in the Rich.TW screenshot. The contract was outside the prior deep-ITM snapshot strike range, so no archived before/after option quote is available for execution validation."
+      }
+    },
     {
       "id": "ibkr-20260728-132807-googl-20260807-312.5-put-sell-3",
       "tradeDate": "2026-07-28",

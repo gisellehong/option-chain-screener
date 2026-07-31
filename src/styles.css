@@ -343,6 +343,38 @@ h3 {
   cursor: pointer;
 }
 
+.dtePresets {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px 12px;
+}
+
+.dtePresets > span {
+  margin-right: 2px;
+  color: #6b645b;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.dtePresets button {
+  min-height: 32px;
+  padding: 0 10px;
+  border: 1px solid #cfc7b8;
+  border-radius: 999px;
+  background: #fffdfa;
+  color: #403d38;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.dtePresets button:hover,
+.dtePresets button:focus-visible {
+  border-color: #4f7fbd;
+  background: #eef4fb;
+}
+
 .filterGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
@@ -427,6 +459,10 @@ table {
 
 .openTradesTable {
   min-width: 1580px;
+}
+
+.leapsTradesTable {
+  min-width: 1540px;
 }
 
 .closedTradesTable {

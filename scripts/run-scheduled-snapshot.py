@@ -44,7 +44,7 @@ SCREENER_CONFIGS = {
         "title": "LEAPS Call - 深度 ITM 替代正股",
         "option_type": "call",
         "filters": [
-            ("dte", "between", 540, 900),
+            ("dte", "between", 365, 600),
             ("marketCapB", "gte", 10, None),
             ("delta", "between", 0.75, 0.85),
             ("openInterest", "gte", 500, None),

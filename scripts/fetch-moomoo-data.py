@@ -20,6 +20,7 @@ from typing import Any, Iterable
 
 DEFAULT_UNIVERSE = ["AAPL", "AMD", "NVDA", "TSLA", "MSFT", "SMH"]
 DEFAULT_OUTPUT_PATH = Path("src/data/generated/realOptions.json")
+DEFAULT_TRACKED_TRADES_PATH = Path("data/youtuber-trades/trades.json")
 OPTION_CHAIN_DELAY_SECONDS = 3.1
 SNAPSHOT_DELAY_SECONDS = 0.55
 SNAPSHOT_BATCH_SIZE = 400
@@ -42,9 +43,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT_PATH)
     parser.add_argument("--weekly-min-dte", type=int, default=1)
     parser.add_argument("--weekly-max-dte", type=int, default=10)
-    parser.add_argument("--leaps-min-dte", type=int, default=540)
+    parser.add_argument("--leaps-min-dte", type=int, default=365)
     parser.add_argument("--leaps-max-dte", type=int, default=900)
     parser.add_argument("--max-expirations-per-ticker", type=int, default=24)
+    parser.add_argument(
+        "--tracked-trades",
+        type=Path,
+        default=DEFAULT_TRACKED_TRADES_PATH,
+        help="Optional AAG trades JSON. Active contracts are included even when outside screener strike ranges.",
+    )
     return parser.parse_args()
 
 
@@ -115,6 +122,34 @@ def chunked(values: list[str], size: int) -> Iterable[list[str]]:
         yield values[index : index + size]
 
 
+def load_active_tracked_contracts(path: Path) -> dict[str, list[dict[str, Any]]]:
+    if not path.exists():
+        return {}
+
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise RuntimeError(f"Unable to read tracked trades from {path}: {exc}") from exc
+
+    tracked: dict[str, list[dict[str, Any]]] = {}
+    today = date.today().isoformat()
+    for trade in payload.get("trades", []):
+        ticker = str(trade.get("ticker", "")).strip().upper()
+        expiration = str(trade.get("expiration", ""))
+        option_type = option_type_value(trade.get("optionType"))
+        strike = to_float(trade.get("strike"))
+        if not ticker or not expiration or expiration < today or option_type is None or strike <= 0:
+            continue
+        tracked.setdefault(normalize_code(ticker), []).append(
+            {
+                "expiration": expiration,
+                "optionType": option_type,
+                "strike": strike,
+            }
+        )
+    return tracked
+
+
 def get_snapshot_map(quote_ctx: OpenQuoteContext, codes: list[str]) -> dict[str, dict[str, Any]]:
     snapshots: dict[str, dict[str, Any]] = {}
     batches = list(chunked(codes, SNAPSHOT_BATCH_SIZE))
@@ -163,9 +198,18 @@ def collect_chain_codes(
     expirations: list[str],
     underlying_price: float,
     max_expirations: int,
+    tracked_contracts: list[dict[str, Any]],
 ) -> list[str]:
     option_codes: set[str] = set()
     selected_expirations = expirations[:max_expirations]
+    tracked_keys = {
+        (
+            str(contract.get("expiration")),
+            str(contract.get("optionType")),
+            round(to_float(contract.get("strike")), 4),
+        )
+        for contract in tracked_contracts
+    }
     for expiration in selected_expirations:
         data = call_or_raise(
             f"get_option_chain {code} {expiration}",
@@ -179,6 +223,9 @@ def collect_chain_codes(
             strike = to_float(row.get("strike_price"))
             opt_type = option_type_value(row.get("option_type"))
             if not option_code or not strike or opt_type is None:
+                continue
+            if (expiration, opt_type, round(strike, 4)) in tracked_keys:
+                option_codes.add(str(option_code))
                 continue
             if opt_type == "call" and underlying_price * 0.45 <= strike <= underlying_price * 0.9:
                 option_codes.add(str(option_code))
@@ -246,7 +293,12 @@ def map_snapshot(row: dict[str, Any], underlying: dict[str, Any]) -> dict[str, A
     }
 
 
-def fetch_ticker_candidates(quote_ctx: OpenQuoteContext, code: str, args: argparse.Namespace) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+def fetch_ticker_candidates(
+    quote_ctx: OpenQuoteContext,
+    code: str,
+    args: argparse.Namespace,
+    tracked_contracts: list[dict[str, Any]],
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     underlying = get_snapshot_map(quote_ctx, [code]).get(code)
     if not underlying:
         raise RuntimeError(f"No underlying snapshot returned for {code}")
@@ -269,13 +321,19 @@ def fetch_ticker_candidates(quote_ctx: OpenQuoteContext, code: str, args: argpar
         args.leaps_max_dte,
         args.max_expirations_per_ticker,
     )
-    all_expirations = sorted(set(weekly_expirations + leaps_expirations))
+    tracked_expirations = [
+        str(contract["expiration"])
+        for contract in tracked_contracts
+        if days_to_expiration(str(contract["expiration"])) >= 0
+    ]
+    all_expirations = sorted(set(weekly_expirations + leaps_expirations + tracked_expirations))
     option_codes = collect_chain_codes(
         quote_ctx,
         code,
         all_expirations,
         underlying_price,
         args.max_expirations_per_ticker,
+        tracked_contracts,
     )
     option_snapshots = get_snapshot_map(quote_ctx, option_codes) if option_codes else {}
     candidates = [
@@ -288,6 +346,7 @@ def fetch_ticker_candidates(quote_ctx: OpenQuoteContext, code: str, args: argpar
         "ticker": display_ticker(code),
         "underlyingPrice": underlying_price,
         "expirations": len(all_expirations),
+        "trackedContracts": len(tracked_contracts),
         "optionCodes": len(option_codes),
         "candidates": len(candidates),
     }
@@ -296,6 +355,7 @@ def fetch_ticker_candidates(quote_ctx: OpenQuoteContext, code: str, args: argpar
 def main() -> int:
     args = parse_args()
     codes = [normalize_code(ticker) for ticker in (args.tickers or DEFAULT_UNIVERSE)]
+    tracked_contracts_by_code = load_active_tracked_contracts(args.tracked_trades)
     all_candidates: list[dict[str, Any]] = []
     summaries: list[dict[str, Any]] = []
 
@@ -303,7 +363,12 @@ def main() -> int:
     quote_ctx = OpenQuoteContext(host=args.host, port=args.port)
     try:
         for code in codes:
-            candidates, summary = fetch_ticker_candidates(quote_ctx, code, args)
+            candidates, summary = fetch_ticker_candidates(
+                quote_ctx,
+                code,
+                args,
+                tracked_contracts_by_code.get(code, []),
+            )
             all_candidates.extend(candidates)
             summaries.append(summary)
             if code != codes[-1]:

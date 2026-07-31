@@ -15,7 +15,7 @@ export const screenerConfigs: ScreenerConfig[] = [
         shortName: "Best",
         intent: "理想 LEAPS 替代正股條件：Delta 穩、深度價內、OI 和成交量都足夠，IV proxy 不偏高。",
         filters: [
-          { field: "dte", label: "Days to Expiration", operator: "between", min: 540, max: 900, unit: "D" },
+          { field: "dte", label: "Days to Expiration", operator: "between", min: 365, max: 600, unit: "D" },
           { field: "marketCapB", label: "Market Cap", operator: "gte", min: 10, unit: "B" },
           { field: "delta", label: "Delta", operator: "between", min: 0.75, max: 0.85 },
           { field: "openInterest", label: "Contract OI", operator: "gte", min: 500 },
@@ -34,7 +34,7 @@ export const screenerConfigs: ScreenerConfig[] = [
         shortName: "Middle",
         intent: "次要但可研究條件：放寬 Delta、流動性與 IV proxy，用來找接近理想區間的替代候選。",
         filters: [
-          { field: "dte", label: "Days to Expiration", operator: "between", min: 450, max: 1000, unit: "D" },
+          { field: "dte", label: "Days to Expiration", operator: "between", min: 365, max: 900, unit: "D" },
           { field: "marketCapB", label: "Market Cap", operator: "gte", min: 10, unit: "B" },
           { field: "delta", label: "Delta", operator: "between", min: 0.65, max: 0.9 },
           { field: "openInterest", label: "Contract OI", operator: "gte", min: 100 },

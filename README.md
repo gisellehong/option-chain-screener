@@ -24,6 +24,8 @@
 
 Dashboard 每個 scenario 都有 `Adjust filters` 區塊，可以直接在 UI 修改 min/max threshold，結果會即時重算。這些 UI 調整目前只保留在當次 session；要改預設值時，再更新 `src/data/screenerConfigs.ts` 裡對應 strategy 的 `scenarios`。
 
+LEAPS 另外提供 `365–600D`、`540–900D`、`365–900D` quick ranges。OpenD 預設抓取完整 `365–900 DTE` coverage，再由 Dashboard filter 決定顯示區間，避免畫面調整時因原始資料未抓取而漏掉 contracts。
+
 ## Local Commands
 
 ```bash
@@ -201,6 +203,7 @@ Each scheduled snapshot records the top ranked matched contracts as compact sign
 
 - 用 `get_option_expiration_date` 找 weekly CSP 與 LEAPS 目標到期日。
 - 用 `get_option_chain` 取合約代碼並先依 strike range 粗篩。
+- 強制保留 `data/youtuber-trades/trades.json` 內仍有效的 AAG tracked contracts，即使合約位於 screener 的一般 strike range 之外。
 - 用 `get_market_snapshot` 批量補報價與 Greeks。
 - 暫時用 current IV 作為 `IV Proxy`；等累積歷史 snapshot 後再改成真正 IV percentile / IV rank。
 

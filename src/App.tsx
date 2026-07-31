@@ -65,7 +65,7 @@ const watchlistNews = watchlistNewsRaw as {
 };
 type DashboardView = "screener" | "watchlist" | "tracker" | "youtuber" | "report";
 
-type TradeValidationStatus = "supported" | "plausible" | "questionable" | "unsupported";
+type TradeValidationStatus = "supported" | "plausible" | "questionable" | "unsupported" | "screenshot_only";
 
 interface YouTuberTradeQuote {
   path: string;
@@ -83,28 +83,29 @@ interface YouTuberTradeQuote {
 
 interface YouTuberTrade {
   id: string;
-  tradeDate: string;
-  tradeTimeEt: string;
+  tradeDate: string | null;
+  tradeTimeEt: string | null;
   observedAtSgt: string;
   broker: string;
-  executionVenue: string;
+  executionVenue: string | null;
   accountLabel?: string;
+  positionKind?: "executed_trade" | "observed_position";
   ticker: string;
   companyName: string;
   action: "sell" | "buy";
-  quantity: number;
+  quantity: number | null;
   optionType: "put" | "call";
   expiration: string;
   strike: number;
-  fillPrice: number;
-  limitPrice: number;
-  grossPremium: number;
-  commission: number;
-  realizedPnl: number;
+  fillPrice: number | null;
+  limitPrice: number | null;
+  grossPremium: number | null;
+  commission: number | null;
+  realizedPnl: number | null;
   validation: {
     status: TradeValidationStatus;
-    nearestBeforeSnapshot: YouTuberTradeQuote;
-    nearestAfterSnapshot: YouTuberTradeQuote;
+    nearestBeforeSnapshot?: YouTuberTradeQuote;
+    nearestAfterSnapshot?: YouTuberTradeQuote;
     assessment: string;
   };
 }
@@ -126,16 +127,18 @@ interface YouTuberTradeLifecycle {
   tradeId: string;
   entryQuote: {
     generatedAt: string;
-    underlyingPrice: number;
-    iv: number;
-    delta: number;
+    underlyingPrice: number | null;
+    iv: number | null;
+    delta: number | null;
   };
   historical: {
     quoteCount: number;
     maxLoss: number | null;
     worstQuote: {
       generatedAt: string;
+      bid?: number;
       ask: number;
+      mark?: number;
       underlyingPrice: number;
     } | null;
   };
@@ -566,14 +569,16 @@ function findCurrentContract(trade: YouTuberTrade): OptionCandidate | undefined 
 }
 
 function profitCapturePct(trade: YouTuberTrade, currentAsk: number | null): number | null {
-  if (!currentAsk || trade.fillPrice <= 0) return null;
+  if (!currentAsk || trade.fillPrice === null || trade.fillPrice <= 0 || trade.action !== "sell") return null;
   return ((trade.fillPrice - currentAsk) / trade.fillPrice) * 100;
 }
 
 function tradeStatus(trade: YouTuberTrade, current: OptionCandidate | undefined): string {
   if (!current) return "No current quote";
+  if (trade.action === "buy" && trade.optionType === "call") {
+    return current.underlyingPrice > trade.strike ? "ITM" : "Open OTM";
+  }
   if (trade.optionType === "put" && current.underlyingPrice < trade.strike) return "ITM risk";
-  if (trade.optionType === "call" && current.underlyingPrice > trade.strike) return "ITM risk";
   const capture = profitCapturePct(trade, current.ask);
   if (capture !== null && capture >= 80) return "Hit 80%";
   if (capture !== null && capture >= 50) return "Hit 50%";
@@ -583,13 +588,16 @@ function tradeStatus(trade: YouTuberTrade, current: OptionCandidate | undefined)
 
 function tradeStatusTone(status: string): string {
   if (status === "ITM risk" || status === "Premium up") return "weak";
-  if (status.includes("Hit")) return "strong";
+  if (status.includes("Hit") || status === "ITM") return "strong";
   return "watch";
 }
 
-function openPnl(trade: YouTuberTrade, currentAsk: number | null): number | null {
-  if (!currentAsk || trade.action !== "sell") return null;
-  return (trade.fillPrice - currentAsk) * trade.quantity * 100;
+function openPnl(trade: YouTuberTrade, current: OptionCandidate | undefined): number | null {
+  if (!current || trade.fillPrice === null || trade.quantity === null) return null;
+  const mark = trade.action === "buy" ? current.bid : current.ask;
+  if (!Number.isFinite(mark) || mark <= 0) return null;
+  const perSharePnl = trade.action === "buy" ? mark - trade.fillPrice : trade.fillPrice - mark;
+  return perSharePnl * trade.quantity * 100;
 }
 
 function pnlTone(value: number | null): string {
@@ -613,16 +621,26 @@ function YouTuberTracker({
 
     const current = findCurrentContract(trade);
     const capture = profitCapturePct(trade, current?.ask ?? null);
-    const pnl = openPnl(trade, current?.ask ?? null);
-    const collateral = trade.optionType === "put" ? trade.strike * trade.quantity * 100 : null;
-    const returnOnCollateral = collateral ? (trade.grossPremium / collateral) * 100 : null;
+    const pnl = openPnl(trade, current);
+    const collateral =
+      trade.optionType === "put" && trade.quantity !== null
+        ? trade.strike * trade.quantity * 100
+        : null;
+    const returnOnCollateral =
+      collateral && trade.grossPremium !== null ? (trade.grossPremium / collateral) * 100 : null;
     const liveQuoteSetsMaxLoss =
       pnl !== null &&
       (lifecycle.historical.maxLoss === null || pnl < lifecycle.historical.maxLoss);
     const maxLoss = liveQuoteSetsMaxLoss ? pnl : lifecycle.historical.maxLoss;
     const maxLossQuote =
       liveQuoteSetsMaxLoss && current
-        ? { ask: current.ask, generatedAt }
+        ? {
+            bid: current.bid,
+            ask: current.ask,
+            mark: trade.action === "buy" ? current.bid : current.ask,
+            underlyingPrice: current.underlyingPrice,
+            generatedAt: generatedAt ?? new Date().toISOString(),
+          }
         : lifecycle.historical.worstQuote;
     return [{
       trade,
@@ -637,12 +655,25 @@ function YouTuberTracker({
       status: tradeStatus(trade, current),
     }];
   });
-  const openRows = rows.filter((row) => row.lifecycle.expiry === null);
-  const closedRows = rows.filter((row) => row.lifecycle.expiry !== null);
-  const openPnlRows = openRows.filter((row) => row.pnl !== null);
-  const totalOpenPnl =
-    openPnlRows.length > 0 ? openPnlRows.reduce((sum, row) => sum + (row.pnl ?? 0), 0) : null;
-  const totalCollectedPremium = closedRows.reduce(
+  const sellPutRows = rows.filter((row) => row.trade.action === "sell" && row.trade.optionType === "put");
+  const leapsCallRows = rows.filter((row) => row.trade.action === "buy" && row.trade.optionType === "call");
+  const openPutRows = sellPutRows.filter((row) => row.lifecycle.expiry === null);
+  const closedPutRows = sellPutRows.filter((row) => row.lifecycle.expiry !== null);
+  const openPutPnlRows = openPutRows.filter((row) => row.pnl !== null);
+  const totalOpenPutPnl =
+    openPutPnlRows.length > 0 ? openPutPnlRows.reduce((sum, row) => sum + (row.pnl ?? 0), 0) : null;
+  const openLeapsRows = leapsCallRows.filter((row) => row.lifecycle.expiry === null);
+  const openLeapsPnlRows = openLeapsRows.filter((row) => row.pnl !== null);
+  const totalOpenLeapsPnl =
+    openLeapsPnlRows.length > 0 ? openLeapsPnlRows.reduce((sum, row) => sum + (row.pnl ?? 0), 0) : null;
+  const knownLeapsCostRows = openLeapsRows.filter(
+    (row) => row.trade.grossPremium !== null && row.trade.commission !== null,
+  );
+  const totalLeapsCost = knownLeapsCostRows.reduce(
+    (sum, row) => sum + (row.trade.grossPremium ?? 0) + (row.trade.commission ?? 0),
+    0,
+  );
+  const totalCollectedPremium = closedPutRows.reduce(
     (sum, row) => sum + (row.lifecycle.expiry?.premiumCollected ?? 0),
     0,
   );
@@ -655,20 +686,20 @@ function YouTuberTracker({
             <ClipboardList size={19} />
             <h2>AAG Tracker</h2>
           </div>
-          <p>從 IBKR 截圖建立的外部交易紀錄。Open Trades 對照最新 snapshot；Closed Trades 以到期日收盤標的價格判定是否可合理假設為 Auto-expired。</p>
+          <p>同一頁分開追蹤 Sell Put 與 LEAPS Call。Sell Put 使用最新 ask 估算回補成本；Long Call 使用最新 bid 估算可執行的平倉價值。</p>
         </div>
       </section>
 
       <section className="tradeGroup">
         <div className="tradeGroupHead">
           <div>
-            <h3>Open Trades</h3>
+            <h3>Sell Put Tracker · Open Trades</h3>
             <p>持續以最新 ask 估算買回成本與未實現損益。</p>
           </div>
           <div className="tradeGroupSummary">
             <span>Open P&amp;L</span>
-            <strong className={pnlTone(totalOpenPnl)}>{totalOpenPnl === null ? "N/A" : formatCurrency(totalOpenPnl, 0)}</strong>
-            <small>{openRows.length} live trades · Updated {formatShortDate(generatedAt)}</small>
+            <strong className={pnlTone(totalOpenPutPnl)}>{totalOpenPutPnl === null ? "N/A" : formatCurrency(totalOpenPutPnl, 0)}</strong>
+            <small>{openPutRows.length} live trades · Updated {formatShortDate(generatedAt)}</small>
           </div>
         </div>
         <div className="tableWrap">
@@ -687,7 +718,7 @@ function YouTuberTracker({
             </tr>
           </thead>
           <tbody>
-            {openRows.map(({ trade, current, capture, pnl, maxLoss, maxLossQuote, collateral, returnOnCollateral, status }) => {
+            {openPutRows.map(({ trade, current, capture, pnl, maxLoss, maxLossQuote, collateral, returnOnCollateral, status }) => {
               const latestAsk = current?.ask ?? null;
               const latestBid = current?.bid ?? null;
               const latestMid = current && Number.isFinite(current.bid) && Number.isFinite(current.ask)
@@ -701,20 +732,22 @@ function YouTuberTracker({
                       {trade.ticker} {trade.expiration} {trade.strike} {trade.optionType.toUpperCase()}
                     </strong>
                     <small>
-                      {trade.action.toUpperCase()} {trade.quantity} · {trade.executionVenue}
+                      {trade.action.toUpperCase()} {trade.quantity ?? "Qty not provided"} · {trade.executionVenue ?? trade.broker}
                     </small>
                   </td>
                   <td>
-                    {formatCurrency(trade.fillPrice)} credit
+                    {trade.fillPrice === null ? "Not provided" : `${formatCurrency(trade.fillPrice)} credit`}
                     <small>
-                      Entered {formatTradeDate(trade.tradeDate)} · {trade.tradeTimeEt} ET
+                      {trade.tradeDate && trade.tradeTimeEt
+                        ? `Entered ${formatTradeDate(trade.tradeDate)} · ${trade.tradeTimeEt} ET`
+                        : `Tracking since ${formatShortDate(trade.observedAtSgt)}`}
                     </small>
                     <small>
-                      Limit {formatCurrency(trade.limitPrice)}
+                      Limit {trade.limitPrice === null ? "N/A" : formatCurrency(trade.limitPrice)}
                     </small>
                   </td>
                   <td>
-                    {formatCurrency(trade.grossPremium, 0)}
+                    {trade.grossPremium === null ? "N/A" : formatCurrency(trade.grossPremium, 0)}
                     <small>
                       Collateral {collateral === null ? "N/A" : formatCurrency(collateral, 0)}
                     </small>
@@ -774,13 +807,142 @@ function YouTuberTracker({
       <section className="tradeGroup">
         <div className="tradeGroupHead">
           <div>
-            <h3>Closed Trades</h3>
+            <h3>LEAPS Call Tracker</h3>
+            <p>Long Call 以最新 bid 保守估算平倉價值，並分開顯示 DTE、Delta、IV、intrinsic share 與 effective leverage。</p>
+          </div>
+          <div className="tradeGroupSummary">
+            <span>Open P&amp;L / Cost Basis</span>
+            <strong className={pnlTone(totalOpenLeapsPnl)}>
+              {totalOpenLeapsPnl === null ? "N/A" : formatCurrency(totalOpenLeapsPnl, 0)}
+            </strong>
+            <small>
+              {openLeapsRows.length} live calls · {formatCurrency(totalLeapsCost, 0)} known cost ({knownLeapsCostRows.length}/{openLeapsRows.length})
+            </small>
+          </div>
+        </div>
+        <div className="tableWrap">
+          <table className="youtuberTable leapsTradesTable">
+            <thead>
+              <tr>
+                <th>Trade</th>
+                <th>Entry Debit</th>
+                <th>Current Bid / Mid</th>
+                <th>Open P&amp;L</th>
+                <th>Max Loss to Date</th>
+                <th>DTE / Greeks</th>
+                <th>Intrinsic / Leverage</th>
+                <th>Breakeven / Risk</th>
+              </tr>
+            </thead>
+            <tbody>
+              {openLeapsRows.map(({ trade, current, pnl, maxLoss, maxLossQuote, status }) => {
+                const latestMid = current ? (current.bid + current.ask) / 2 : null;
+                const optionReturn =
+                  pnl === null || trade.grossPremium === null || trade.grossPremium <= 0
+                    ? null
+                    : (pnl / trade.grossPremium) * 100;
+                const intrinsicValue = current ? Math.max(current.underlyingPrice - trade.strike, 0) : null;
+                const intrinsicPct =
+                  current && latestMid && latestMid > 0 && intrinsicValue !== null
+                    ? (intrinsicValue / latestMid) * 100
+                    : null;
+                const effectiveLeverage =
+                  current && latestMid && latestMid > 0
+                    ? (current.delta * current.underlyingPrice) / latestMid
+                    : null;
+                const breakeven = trade.fillPrice === null ? null : trade.strike + trade.fillPrice;
+                const breakevenDistance =
+                  current && breakeven !== null && current.underlyingPrice > 0
+                    ? ((breakeven - current.underlyingPrice) / current.underlyingPrice) * 100
+                    : null;
+                const spreadPct =
+                  current && latestMid && latestMid > 0
+                    ? ((current.ask - current.bid) / latestMid) * 100
+                    : null;
+
+                return (
+                  <tr key={trade.id}>
+                    <td>
+                      <strong>{trade.ticker} {trade.expiration} {trade.strike} CALL</strong>
+                      <small>
+                        {trade.accountLabel ? `${trade.accountLabel} · ` : ""}
+                        BUY {trade.quantity ?? "Qty not provided"} · {trade.executionVenue ?? trade.broker}
+                      </small>
+                    </td>
+                    <td>
+                      {trade.fillPrice === null ? "Not provided" : `${formatCurrency(trade.fillPrice)} debit`}
+                      <small>
+                        {trade.grossPremium === null || trade.commission === null
+                          ? "Cost basis unavailable"
+                          : `${formatCurrency(trade.grossPremium, 0)} premium + ${formatCurrency(trade.commission)} commission`}
+                      </small>
+                      <small>
+                        {trade.tradeDate && trade.tradeTimeEt
+                          ? `Entered ${formatTradeDate(trade.tradeDate)} · ${trade.tradeTimeEt} ET`
+                          : `Tracking since ${formatShortDate(trade.observedAtSgt)}`}
+                      </small>
+                    </td>
+                    <td>
+                      {current ? formatCurrency(current.bid) : "N/A"}
+                      <small>
+                        {current && latestMid
+                          ? `Mid/Ask ${formatCurrency(latestMid)} / ${formatCurrency(current.ask)}`
+                          : "Waiting for matching snapshot"}
+                      </small>
+                    </td>
+                    <td>
+                      <span className={`score ${pnlTone(pnl)}`}>{pnl === null ? "N/A" : formatCurrency(pnl, 0)}</span>
+                      <small>{optionReturn === null ? "Executable return N/A" : `${formatPercent(optionReturn, 1)} at bid`}</small>
+                    </td>
+                    <td>
+                      <span className={`score ${pnlTone(maxLoss)}`}>{maxLoss === null ? "N/A" : formatCurrency(maxLoss, 0)}</span>
+                      <small>
+                        {maxLossQuote
+                          ? `Mark ${formatCurrency(maxLossQuote.mark ?? maxLossQuote.bid ?? maxLossQuote.ask)} · ${formatShortDate(maxLossQuote.generatedAt)}`
+                          : "No archived quote"}
+                      </small>
+                    </td>
+                    <td>
+                      {current ? `${current.dte} DTE` : "N/A"}
+                      <small>{current ? `Delta ${formatNumber(current.delta, 3)} · IV ${formatPercent(current.iv, 1)}` : "No current Greeks"}</small>
+                      <small>{current ? `Vega ${formatNumber(current.vega, 3)} · Theta ${formatNumber(current.theta, 3)}` : ""}</small>
+                    </td>
+                    <td>
+                      {intrinsicPct === null ? "N/A" : `${formatPercent(intrinsicPct, 1)} intrinsic`}
+                      <small>{effectiveLeverage === null ? "Effective leverage N/A" : `${formatNumber(effectiveLeverage, 2)}x effective leverage`}</small>
+                    </td>
+                    <td>
+                      {breakeven === null ? "N/A" : formatCurrency(breakeven)}
+                      <small>{breakevenDistance === null ? "Breakeven distance N/A" : `${formatPercent(breakevenDistance, 1)} to expiry breakeven`}</small>
+                      <small>
+                        {current
+                          ? `${status} · OI ${compactNumber(current.openInterest)} · Vol ${compactNumber(current.volume)} · Spread ${formatMaybePercent(spreadPct, 1)}`
+                          : "Screenshot-only entry; awaiting next snapshot"}
+                      </small>
+                    </td>
+                  </tr>
+                );
+              })}
+              {openLeapsRows.length === 0 && (
+                <tr>
+                  <td colSpan={8}>No open LEAPS calls recorded.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section className="tradeGroup">
+        <div className="tradeGroupHead">
+          <div>
+            <h3>Sell Put Tracker · Closed Trades</h3>
             <p>以到期日 close snapshot 的標的價格判定最終狀態；未提供實際成交回補單時，結果標記為 assumed。</p>
           </div>
           <div className="tradeGroupSummary">
             <span>Premium Collected</span>
             <strong className="strong">{formatCurrency(totalCollectedPremium, 0)}</strong>
-            <small>{closedRows.length} closed trades · assumed when OTM</small>
+            <small>{closedPutRows.length} closed trades · assumed when OTM</small>
           </div>
         </div>
         <div className="tableWrap">
@@ -797,7 +959,7 @@ function YouTuberTracker({
               </tr>
             </thead>
             <tbody>
-              {closedRows.map(({ trade, lifecycle, collateral, maxLoss, returnOnCollateral }) => {
+              {closedPutRows.map(({ trade, lifecycle, collateral, maxLoss, returnOnCollateral }) => {
                 const expiry = lifecycle.expiry;
                 if (!expiry) return null;
 
@@ -805,15 +967,19 @@ function YouTuberTracker({
                   <tr key={trade.id}>
                     <td>
                       <strong>{trade.ticker} {trade.expiration} {trade.strike} {trade.optionType.toUpperCase()}</strong>
-                      <small>{trade.action.toUpperCase()} {trade.quantity} · {trade.executionVenue}</small>
+                      <small>{trade.action.toUpperCase()} {trade.quantity ?? "Qty not provided"} · {trade.executionVenue ?? trade.broker}</small>
                     </td>
                     <td>
-                      {formatCurrency(trade.fillPrice)} credit
-                      <small>Entered {formatTradeDate(trade.tradeDate)} · {trade.tradeTimeEt} ET</small>
-                      <small>IV {formatPercent(lifecycle.entryQuote.iv, 1)} · Delta {formatNumber(lifecycle.entryQuote.delta, 3)}</small>
+                      {trade.fillPrice === null ? "Not provided" : `${formatCurrency(trade.fillPrice)} credit`}
+                      <small>
+                        {trade.tradeDate && trade.tradeTimeEt
+                          ? `Entered ${formatTradeDate(trade.tradeDate)} · ${trade.tradeTimeEt} ET`
+                          : `Tracking since ${formatShortDate(trade.observedAtSgt)}`}
+                      </small>
+                      <small>IV {formatMaybePercent(lifecycle.entryQuote.iv, 1)} · Delta {formatMaybeNumber(lifecycle.entryQuote.delta, 3)}</small>
                     </td>
                     <td>
-                      {formatCurrency(trade.grossPremium, 0)}
+                      {trade.grossPremium === null ? "N/A" : formatCurrency(trade.grossPremium, 0)}
                       <small>Collateral {collateral === null ? "N/A" : formatCurrency(collateral, 0)} · {returnOnCollateral === null ? "N/A" : `${formatPercent(returnOnCollateral, 2)} ROC`}</small>
                     </td>
                     <td>
@@ -1040,6 +1206,7 @@ function CandidateTable({
   selectedId,
   onSelect,
   onFilterChange,
+  onDtePreset,
   onResetFilters,
 }: {
   config: ScreenerConfig;
@@ -1049,6 +1216,7 @@ function CandidateTable({
   selectedId: string;
   onSelect: (id: string) => void;
   onFilterChange: (filterIndex: number, bound: "min" | "max", value: number | undefined) => void;
+  onDtePreset: (min: number, max: number) => void;
   onResetFilters: () => void;
 }) {
   const isLeaps = config.id === "leaps_deep_itm_call";
@@ -1075,6 +1243,14 @@ function CandidateTable({
 
       <details className="filterEditor">
         <summary>Adjust filters</summary>
+        {isLeaps && (
+          <div className="dtePresets" aria-label="LEAPS DTE quick ranges">
+            <span>DTE quick ranges</span>
+            <button type="button" onClick={() => onDtePreset(365, 600)}>12–20M · 365–600D</button>
+            <button type="button" onClick={() => onDtePreset(540, 900)}>18–30M · 540–900D</button>
+            <button type="button" onClick={() => onDtePreset(365, 900)}>All LEAPS · 365–900D</button>
+          </div>
+        )}
         <div className="filterGrid">
           {filters.map((filter, index) => (
             <label key={`${filter.field}-${filter.label}`} className="filterControl">
@@ -1357,6 +1533,15 @@ export function App() {
     });
   }
 
+  function setScenarioDteRange(scenario: ScreenerScenario, min: number, max: number): void {
+    const key = scenarioKey(scenario);
+    const currentFilters = filterOverrides[key] ?? scenario.filters;
+    const nextFilters = currentFilters.map((filter) =>
+      filter.field === "dte" ? { ...filter, min, max } : filter,
+    );
+    setFilterOverrides((current) => ({ ...current, [key]: nextFilters }));
+  }
+
   return (
     <main>
       <header className="topbar">
@@ -1493,6 +1678,7 @@ export function App() {
                 onFilterChange={(filterIndex, bound, value) =>
                   updateScenarioFilter(result.scenario, filterIndex, bound, value)
                 }
+                onDtePreset={(min, max) => setScenarioDteRange(result.scenario, min, max)}
                 onResetFilters={() => resetScenarioFilters(result.scenario)}
               />
             ))}
