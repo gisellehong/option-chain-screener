@@ -972,6 +972,335 @@ dd {
   line-height: 1.5;
 }
 
+.soxlWorkspace {
+  gap: 20px;
+}
+
+.soxlHeader {
+  align-items: center;
+  padding: 18px 20px;
+  border: 1px solid #d8d1c5;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #fffdfa 0%, #f0f5ee 100%);
+}
+
+.soxlOverview {
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+}
+
+.soxlWorkspace,
+.soxlWorkspace > *,
+.soxlTradeGroup {
+  min-width: 0;
+}
+
+.soxlTradeGroup .tableWrap {
+  max-width: 100%;
+}
+
+.soxlComparison {
+  padding: 18px;
+  border: 1px solid #d8d1c5;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.soxlPanelHead,
+.soxlTraderTitle,
+.soxlTradeIdentity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.soxlPanelHead {
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.soxlRatioDefinition {
+  color: #77716a;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.soxlKicker {
+  display: block;
+  margin-bottom: 3px;
+  color: #787168;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.soxlCompareGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.soxlTraderCard {
+  min-width: 0;
+  padding: 15px;
+  border: 1px solid #e3ddd2;
+  border-radius: 9px;
+  background: #fbfaf7;
+}
+
+.soxlTraderTitle small,
+.soxlTraderTitle strong {
+  display: block;
+}
+
+.soxlTraderTitle small {
+  margin-top: 2px;
+  color: #77716a;
+  font-size: 12px;
+}
+
+.traderBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.traderBadge.traderG {
+  background: #dff1e7;
+  color: #12623f;
+}
+
+.traderBadge.traderL {
+  background: #dfeaf7;
+  color: #245a8d;
+}
+
+.soxlMiniFacts {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 14px 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.soxlMiniFacts div {
+  display: block;
+  padding: 9px 10px;
+  border: 1px solid #e8e2d8;
+  border-radius: 7px;
+  background: #ffffff;
+}
+
+.soxlMiniFacts dd {
+  margin-top: 4px;
+  text-align: left;
+}
+
+.soxlMonthlyProfit {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid #e3ddd2;
+}
+
+.soxlMonthlyHead strong,
+.soxlMonthlyHead small {
+  display: block;
+}
+
+.soxlMonthlyHead strong {
+  color: #303236;
+  font-size: 13px;
+}
+
+.soxlMonthlyHead small {
+  margin-top: 3px;
+  color: #77716a;
+  font-size: 11px;
+}
+
+.soxlMonthlyBars {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.soxlMonthColumn {
+  display: grid;
+  grid-template-rows: 18px 104px 18px;
+  gap: 5px;
+  min-width: 0;
+  text-align: center;
+}
+
+.soxlMonthColumn > strong {
+  overflow: hidden;
+  color: #3f3b36;
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.soxlMonthColumn > span {
+  color: #706961;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.soxlMonthPlot {
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px 6px 0 0;
+  border-top: 1px solid #eee9e1;
+  background: #f7f5f1;
+}
+
+.soxlZeroLine {
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 1px;
+  background: #9c958b;
+}
+
+.soxlMonthPlot i {
+  position: absolute;
+  right: 22%;
+  left: 22%;
+  z-index: 2;
+  min-height: 2px;
+  border: 1px solid #315f4b;
+  border-radius: 5px 5px 0 0;
+  background: #4d8a6c;
+}
+
+.soxlMonthlyProfit.chartL .soxlMonthPlot i {
+  border-color: #315a7f;
+  background: #4f7fa8;
+}
+
+.soxlMonthPlot i.negative,
+.soxlMonthlyProfit.chartL .soxlMonthPlot i.negative {
+  border-color: #7b7368;
+  border-radius: 0 0 5px 5px;
+  background: #c9c1b5;
+}
+
+.soxlFilters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid #ded8ce;
+  border-radius: 9px;
+  background: #fffdfa;
+}
+
+.soxlFilters > svg {
+  color: #6e675e;
+}
+
+.soxlFilterGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.soxlFilterGroup > span {
+  margin-right: 3px;
+  color: #6c655d;
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.soxlFilterGroup button {
+  min-height: 30px;
+  padding: 0 9px;
+  border: 1px solid #d6cec1;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #4b4741;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.soxlFilterGroup button.active {
+  border-color: #202225;
+  background: #202225;
+  color: #ffffff;
+}
+
+.soxlTradeGroup {
+  margin-top: 0;
+}
+
+.soxlTradeTable {
+  min-width: 1840px;
+}
+
+.soxlTradeTable td {
+  min-width: 145px;
+}
+
+.soxlTradeTable td:first-child {
+  min-width: 190px;
+}
+
+.soxlTradeTable td:nth-child(2),
+.soxlTradeTable td:nth-child(9) {
+  min-width: 205px;
+}
+
+.soxlTradeIdentity > div {
+  min-width: 0;
+}
+
+.positiveText {
+  color: #12623f;
+}
+
+.negativeText {
+  color: #9d2e2e;
+}
+
+.soxlMethodology {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.soxlMethodology > div {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 12px 14px;
+  border: 1px solid #ded8ce;
+  border-radius: 8px;
+  background: #fbfaf7;
+  color: #5e5851;
+}
+
+.soxlMethodology svg {
+  flex: 0 0 auto;
+  margin-top: 1px;
+}
+
+.soxlMethodology p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
 @media (max-width: 1040px) {
   .overview {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -986,6 +1315,11 @@ dd {
   }
 
   .tradeDetailGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .soxlCompareGrid,
+  .soxlMethodology {
     grid-template-columns: 1fr;
   }
 }
@@ -1009,6 +1343,27 @@ dd {
 
   .tradeGroupHead {
     flex-direction: column;
+  }
+
+  .soxlHeader {
+    align-items: flex-start;
+  }
+
+  .soxlPanelHead {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .soxlRatioDefinition {
+    text-align: left;
+  }
+
+  .soxlFilters {
+    align-items: flex-start;
+  }
+
+  .soxlFilterGroup {
+    flex-wrap: wrap;
   }
 
   .tradeGroupSummary {

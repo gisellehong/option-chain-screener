@@ -1,0 +1,2252 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-07T16:21:20.946Z",
+  "source": {
+    "snapshotRoot": "data/snapshots",
+    "parsedSnapshotCount": 679,
+    "earliestSnapshotAt": "2026-06-07T18:26:34+08:00",
+    "latestSnapshotAt": "2026-08-08T00:14:18+08:00",
+    "priceConvention": "Maximum premium uses the highest observed ask inside the holding window. Covered calls use Black-Scholes modeled prices when the exact contract quote was not archived."
+  },
+  "summary": {
+    "tradeCount": 34,
+    "fullCoverageCount": 26,
+    "partialCoverageCount": 5,
+    "missingCoverageCount": 3,
+    "estimatedGreeksCount": 10,
+    "missingGreeksCount": 0
+  },
+  "trades": [
+    {
+      "tradeId": "tracker-149",
+      "entryGreeks": {
+        "iv": 231.75,
+        "delta": -0.0935,
+        "underlyingPrice": 222.98,
+        "source": "sheet",
+        "quoteAt": null
+      },
+      "historical": {
+        "quoteCount": 0,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 0,
+        "matchedMarketDates": 0,
+        "coverageRatio": 0,
+        "coverage": "missing",
+        "firstQuoteAt": null,
+        "lastQuoteAt": null,
+        "maximumPremium": null,
+        "maximumUnrealizedLoss": null,
+        "maximumLossPctCollateral": null,
+        "worstQuote": null,
+        "dailyMaxPremium": []
+      },
+      "returns": {
+        "recordedProfit": 657.24,
+        "entryRoi": 0.016061,
+        "realizedRoi": 0.013278,
+        "annualizedRealizedReturn": 1.211579,
+        "sourceAnnualReturn": 1.46553
+      },
+      "qualityFlags": [
+        "date_only_trade_window",
+        "missing_quote_history"
+      ]
+    },
+    {
+      "tradeId": "tracker-150",
+      "entryGreeks": {
+        "iv": 230.32,
+        "delta": -0.0976,
+        "underlyingPrice": 222.98,
+        "source": "sheet",
+        "quoteAt": null
+      },
+      "historical": {
+        "quoteCount": 0,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 0,
+        "matchedMarketDates": 0,
+        "coverageRatio": 0,
+        "coverage": "missing",
+        "firstQuoteAt": null,
+        "lastQuoteAt": null,
+        "maximumPremium": null,
+        "maximumUnrealizedLoss": null,
+        "maximumLossPctCollateral": null,
+        "worstQuote": null,
+        "dailyMaxPremium": []
+      },
+      "returns": {
+        "recordedProfit": 268.38,
+        "entryRoi": 0.018155,
+        "realizedRoi": 0.015975,
+        "annualizedRealizedReturn": 1.457719,
+        "sourceAnnualReturn": 1.656622
+      },
+      "qualityFlags": [
+        "date_only_trade_window",
+        "missing_quote_history"
+      ]
+    },
+    {
+      "tradeId": "tracker-151",
+      "entryGreeks": {
+        "iv": 199.62,
+        "delta": -0.0976,
+        "underlyingPrice": 232.75,
+        "source": "sheet",
+        "quoteAt": null
+      },
+      "historical": {
+        "quoteCount": 55,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 5,
+        "matchedMarketDates": 5,
+        "coverageRatio": 1,
+        "coverage": "partial",
+        "firstQuoteAt": "2026-06-07T23:08:24+08:00",
+        "lastQuoteAt": "2026-06-11T23:39:36+08:00",
+        "maximumPremium": 16.45,
+        "maximumUnrealizedLoss": -1245,
+        "maximumLossPctCollateral": 0.073235,
+        "worstQuote": {
+          "marketDate": "2026-06-07",
+          "generatedAt": "2026-06-07T23:08:24+08:00",
+          "bid": 14.65,
+          "ask": 16.45,
+          "underlyingPrice": 182.54,
+          "iv": 226.97,
+          "delta": -0.389446
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-06-07",
+            "maximumAsk": 16.45,
+            "generatedAt": "2026-06-07T23:08:24+08:00"
+          },
+          {
+            "marketDate": "2026-06-08",
+            "maximumAsk": 16.45,
+            "generatedAt": "2026-06-08T21:10:29+08:00"
+          },
+          {
+            "marketDate": "2026-06-09",
+            "maximumAsk": 14.85,
+            "generatedAt": "2026-06-10T01:06:36+08:00"
+          },
+          {
+            "marketDate": "2026-06-10",
+            "maximumAsk": 9,
+            "generatedAt": "2026-06-11T03:40:53+08:00"
+          },
+          {
+            "marketDate": "2026-06-11",
+            "maximumAsk": 11,
+            "generatedAt": "2026-06-11T21:08:38+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 388.08,
+        "entryRoi": 0.023529,
+        "realizedRoi": 0.022828,
+        "annualizedRealizedReturn": 1.388718,
+        "sourceAnnualReturn": 2.147059
+      },
+      "qualityFlags": [
+        "date_only_trade_window",
+        "partial_quote_coverage"
+      ]
+    },
+    {
+      "tradeId": "tracker-157",
+      "entryGreeks": {
+        "iv": 246.28,
+        "delta": -0.0922,
+        "underlyingPrice": 218.9,
+        "source": "sheet",
+        "quoteAt": null
+      },
+      "historical": {
+        "quoteCount": 47,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 4,
+        "matchedMarketDates": 4,
+        "coverageRatio": 1,
+        "coverage": "full",
+        "firstQuoteAt": "2026-06-08T21:10:29+08:00",
+        "lastQuoteAt": "2026-06-11T23:39:36+08:00",
+        "maximumPremium": 14,
+        "maximumUnrealizedLoss": -1135,
+        "maximumLossPctCollateral": 0.070938,
+        "worstQuote": {
+          "marketDate": "2026-06-09",
+          "generatedAt": "2026-06-10T00:36:17+08:00",
+          "bid": 12.3,
+          "ask": 14,
+          "underlyingPrice": 167.15,
+          "iv": 280.63,
+          "delta": -0.374133
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-06-08",
+            "maximumAsk": 12.35,
+            "generatedAt": "2026-06-08T21:10:29+08:00"
+          },
+          {
+            "marketDate": "2026-06-09",
+            "maximumAsk": 14,
+            "generatedAt": "2026-06-10T00:36:17+08:00"
+          },
+          {
+            "marketDate": "2026-06-10",
+            "maximumAsk": 6,
+            "generatedAt": "2026-06-11T03:40:53+08:00"
+          },
+          {
+            "marketDate": "2026-06-11",
+            "maximumAsk": 6.8,
+            "generatedAt": "2026-06-11T21:08:38+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 223.01,
+        "entryRoi": 0.016563,
+        "realizedRoi": 0.013938,
+        "annualizedRealizedReturn": 1.695805,
+        "sourceAnnualReturn": 1.511328
+      },
+      "qualityFlags": [
+        "date_only_trade_window"
+      ]
+    },
+    {
+      "tradeId": "tracker-162",
+      "entryGreeks": {
+        "iv": 231.45,
+        "delta": -0.089,
+        "underlyingPrice": 266.89,
+        "source": "sheet",
+        "quoteAt": null
+      },
+      "historical": {
+        "quoteCount": 36,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 3,
+        "matchedMarketDates": 3,
+        "coverageRatio": 1,
+        "coverage": "full",
+        "firstQuoteAt": "2026-06-15T21:42:06+08:00",
+        "lastQuoteAt": "2026-06-17T23:41:11+08:00",
+        "maximumPremium": 4.7,
+        "maximumUnrealizedLoss": -510,
+        "maximumLossPctCollateral": 0.0085,
+        "worstQuote": {
+          "marketDate": "2026-06-16",
+          "generatedAt": "2026-06-17T04:11:42+08:00",
+          "bid": 4,
+          "ask": 4.7,
+          "underlyingPrice": 226.19,
+          "iv": 216.88,
+          "delta": -0.198505
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-06-15",
+            "maximumAsk": 2.5,
+            "generatedAt": "2026-06-15T22:41:59+08:00"
+          },
+          {
+            "marketDate": "2026-06-16",
+            "maximumAsk": 4.7,
+            "generatedAt": "2026-06-17T04:11:42+08:00"
+          },
+          {
+            "marketDate": "2026-06-17",
+            "maximumAsk": 4.7,
+            "generatedAt": "2026-06-17T21:11:45+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 874.9,
+        "entryRoi": 0.015,
+        "realizedRoi": 0.014582,
+        "annualizedRealizedReturn": 1.774095,
+        "sourceAnnualReturn": 1.825
+      },
+      "qualityFlags": [
+        "date_only_trade_window"
+      ]
+    },
+    {
+      "tradeId": "tracker-163",
+      "entryGreeks": {
+        "iv": 206.34,
+        "delta": -0.1317,
+        "underlyingPrice": 267.73,
+        "source": "sheet",
+        "quoteAt": null
+      },
+      "historical": {
+        "quoteCount": 112,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 9,
+        "matchedMarketDates": 9,
+        "coverageRatio": 1,
+        "coverage": "full",
+        "firstQuoteAt": "2026-06-16T00:11:09+08:00",
+        "lastQuoteAt": "2026-06-25T23:40:55+08:00",
+        "maximumPremium": 12,
+        "maximumUnrealizedLoss": -360,
+        "maximumLossPctCollateral": 0.018947,
+        "worstQuote": {
+          "marketDate": "2026-06-17",
+          "generatedAt": "2026-06-17T21:11:45+08:00",
+          "bid": 9.45,
+          "ask": 12,
+          "underlyingPrice": 226.19,
+          "iv": 191.417,
+          "delta": -0.226623
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-06-15",
+            "maximumAsk": 6.65,
+            "generatedAt": "2026-06-16T00:11:09+08:00"
+          },
+          {
+            "marketDate": "2026-06-16",
+            "maximumAsk": 11.75,
+            "generatedAt": "2026-06-17T04:11:42+08:00"
+          },
+          {
+            "marketDate": "2026-06-17",
+            "maximumAsk": 12,
+            "generatedAt": "2026-06-17T21:11:45+08:00"
+          },
+          {
+            "marketDate": "2026-06-18",
+            "maximumAsk": 10.35,
+            "generatedAt": "2026-06-18T21:09:24+08:00"
+          },
+          {
+            "marketDate": "2026-06-19",
+            "maximumAsk": 4,
+            "generatedAt": "2026-06-19T21:11:27+08:00"
+          },
+          {
+            "marketDate": "2026-06-22",
+            "maximumAsk": 4,
+            "generatedAt": "2026-06-22T21:09:28+08:00"
+          },
+          {
+            "marketDate": "2026-06-23",
+            "maximumAsk": 7.9,
+            "generatedAt": "2026-06-23T21:44:08+08:00"
+          },
+          {
+            "marketDate": "2026-06-24",
+            "maximumAsk": 8.75,
+            "generatedAt": "2026-06-25T03:08:56+08:00"
+          },
+          {
+            "marketDate": "2026-06-25",
+            "maximumAsk": 4.3,
+            "generatedAt": "2026-06-25T21:11:40+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 805.75,
+        "entryRoi": 0.044211,
+        "realizedRoi": 0.042408,
+        "annualizedRealizedReturn": 1.40718,
+        "sourceAnnualReturn": 1.466986
+      },
+      "qualityFlags": [
+        "date_only_trade_window"
+      ]
+    },
+    {
+      "tradeId": "tracker-164",
+      "entryGreeks": {
+        "iv": 269.562,
+        "delta": -0.060933,
+        "underlyingPrice": 267.7,
+        "source": "snapshot_estimate",
+        "quoteAt": "2026-06-16T21:13:51+08:00"
+      },
+      "historical": {
+        "quoteCount": 22,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 2,
+        "matchedMarketDates": 2,
+        "coverageRatio": 1,
+        "coverage": "full",
+        "firstQuoteAt": "2026-06-16T21:13:51+08:00",
+        "lastQuoteAt": "2026-06-17T23:41:11+08:00",
+        "maximumPremium": 4.7,
+        "maximumUnrealizedLoss": -610,
+        "maximumLossPctCollateral": 0.01525,
+        "worstQuote": {
+          "marketDate": "2026-06-16",
+          "generatedAt": "2026-06-17T04:11:42+08:00",
+          "bid": 4,
+          "ask": 4.7,
+          "underlyingPrice": 226.19,
+          "iv": 216.88,
+          "delta": -0.198505
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-06-16",
+            "maximumAsk": 4.7,
+            "generatedAt": "2026-06-17T04:11:42+08:00"
+          },
+          {
+            "marketDate": "2026-06-17",
+            "maximumAsk": 4.7,
+            "generatedAt": "2026-06-17T21:11:45+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 313.26,
+        "entryRoi": 0.00825,
+        "realizedRoi": 0.007832,
+        "annualizedRealizedReturn": 1.429267,
+        "sourceAnnualReturn": 1.505625
+      },
+      "qualityFlags": [
+        "date_only_trade_window",
+        "entry_greeks_estimated"
+      ]
+    },
+    {
+      "tradeId": "tracker-165",
+      "entryGreeks": {
+        "iv": 210.404,
+        "delta": -0.162571,
+        "underlyingPrice": 237,
+        "source": "snapshot_estimate",
+        "quoteAt": "2026-06-18T02:39:24+08:00"
+      },
+      "historical": {
+        "quoteCount": 87,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 7,
+        "matchedMarketDates": 7,
+        "coverageRatio": 1,
+        "coverage": "full",
+        "firstQuoteAt": "2026-06-17T21:11:45+08:00",
+        "lastQuoteAt": "2026-06-25T23:40:55+08:00",
+        "maximumPremium": 12,
+        "maximumUnrealizedLoss": -350,
+        "maximumLossPctCollateral": 0.018421,
+        "worstQuote": {
+          "marketDate": "2026-06-17",
+          "generatedAt": "2026-06-17T21:11:45+08:00",
+          "bid": 9.45,
+          "ask": 12,
+          "underlyingPrice": 226.19,
+          "iv": 191.417,
+          "delta": -0.226623
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-06-17",
+            "maximumAsk": 12,
+            "generatedAt": "2026-06-17T21:11:45+08:00"
+          },
+          {
+            "marketDate": "2026-06-18",
+            "maximumAsk": 10.35,
+            "generatedAt": "2026-06-18T21:09:24+08:00"
+          },
+          {
+            "marketDate": "2026-06-19",
+            "maximumAsk": 4,
+            "generatedAt": "2026-06-19T21:11:27+08:00"
+          },
+          {
+            "marketDate": "2026-06-22",
+            "maximumAsk": 4,
+            "generatedAt": "2026-06-22T21:09:28+08:00"
+          },
+          {
+            "marketDate": "2026-06-23",
+            "maximumAsk": 7.9,
+            "generatedAt": "2026-06-23T21:44:08+08:00"
+          },
+          {
+            "marketDate": "2026-06-24",
+            "maximumAsk": 8.75,
+            "generatedAt": "2026-06-25T03:08:56+08:00"
+          },
+          {
+            "marketDate": "2026-06-25",
+            "maximumAsk": 4.3,
+            "generatedAt": "2026-06-25T21:11:40+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 815.75,
+        "entryRoi": 0.044737,
+        "realizedRoi": 0.042934,
+        "annualizedRealizedReturn": 1.741231,
+        "sourceAnnualReturn": 1.814327
+      },
+      "qualityFlags": [
+        "date_only_trade_window",
+        "entry_greeks_estimated"
+      ]
+    },
+    {
+      "tradeId": "tracker-166",
+      "entryGreeks": {
+        "iv": 211.96,
+        "delta": -0.1102,
+        "underlyingPrice": 269.025,
+        "source": "sheet",
+        "quoteAt": null
+      },
+      "historical": {
+        "quoteCount": 72,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 6,
+        "matchedMarketDates": 6,
+        "coverageRatio": 1,
+        "coverage": "full",
+        "firstQuoteAt": "2026-06-18T21:09:24+08:00",
+        "lastQuoteAt": "2026-06-25T23:40:55+08:00",
+        "maximumPremium": 10.35,
+        "maximumUnrealizedLoss": -1040,
+        "maximumLossPctCollateral": 0.027368,
+        "worstQuote": {
+          "marketDate": "2026-06-18",
+          "generatedAt": "2026-06-18T21:09:24+08:00",
+          "bid": 9.1,
+          "ask": 10.35,
+          "underlyingPrice": 233.86,
+          "iv": 210.98,
+          "delta": -0.197387
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-06-18",
+            "maximumAsk": 10.35,
+            "generatedAt": "2026-06-18T21:09:24+08:00"
+          },
+          {
+            "marketDate": "2026-06-19",
+            "maximumAsk": 4,
+            "generatedAt": "2026-06-19T21:11:27+08:00"
+          },
+          {
+            "marketDate": "2026-06-22",
+            "maximumAsk": 4,
+            "generatedAt": "2026-06-22T21:09:28+08:00"
+          },
+          {
+            "marketDate": "2026-06-23",
+            "maximumAsk": 7.9,
+            "generatedAt": "2026-06-23T21:44:08+08:00"
+          },
+          {
+            "marketDate": "2026-06-24",
+            "maximumAsk": 8.75,
+            "generatedAt": "2026-06-25T03:08:56+08:00"
+          },
+          {
+            "marketDate": "2026-06-25",
+            "maximumAsk": 4.3,
+            "generatedAt": "2026-06-25T21:11:40+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 967.54,
+        "entryRoi": 0.027105,
+        "realizedRoi": 0.025462,
+        "annualizedRealizedReturn": 1.161685,
+        "sourceAnnualReturn": 1.236678
+      },
+      "qualityFlags": [
+        "date_only_trade_window"
+      ]
+    },
+    {
+      "tradeId": "tracker-167",
+      "entryGreeks": {
+        "iv": 229.03,
+        "delta": -0.0608,
+        "underlyingPrice": 274.495,
+        "source": "sheet",
+        "quoteAt": null
+      },
+      "historical": {
+        "quoteCount": 35,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 6,
+        "matchedMarketDates": 4,
+        "coverageRatio": 0.666667,
+        "coverage": "partial",
+        "firstQuoteAt": "2026-06-18T21:09:24+08:00",
+        "lastQuoteAt": "2026-06-25T23:40:55+08:00",
+        "maximumPremium": 6.1,
+        "maximumUnrealizedLoss": -990,
+        "maximumLossPctCollateral": 0.019412,
+        "worstQuote": {
+          "marketDate": "2026-06-18",
+          "generatedAt": "2026-06-18T21:09:24+08:00",
+          "bid": 5.15,
+          "ask": 6.1,
+          "underlyingPrice": 233.86,
+          "iv": 221.323,
+          "delta": -0.123218
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-06-18",
+            "maximumAsk": 6.1,
+            "generatedAt": "2026-06-18T21:09:24+08:00"
+          },
+          {
+            "marketDate": "2026-06-23",
+            "maximumAsk": 4.4,
+            "generatedAt": "2026-06-23T21:44:08+08:00"
+          },
+          {
+            "marketDate": "2026-06-24",
+            "maximumAsk": 4.2,
+            "generatedAt": "2026-06-25T03:08:56+08:00"
+          },
+          {
+            "marketDate": "2026-06-25",
+            "maximumAsk": 2.42,
+            "generatedAt": "2026-06-25T21:11:40+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 803.31,
+        "entryRoi": 0.016471,
+        "realizedRoi": 0.015751,
+        "annualizedRealizedReturn": 0.718648,
+        "sourceAnnualReturn": 0.751471
+      },
+      "qualityFlags": [
+        "date_only_trade_window",
+        "partial_quote_coverage"
+      ]
+    },
+    {
+      "tradeId": "tracker-171",
+      "entryGreeks": {
+        "iv": 241.7,
+        "delta": -0.0692,
+        "underlyingPrice": 225.38,
+        "source": "sheet",
+        "quoteAt": null
+      },
+      "historical": {
+        "quoteCount": 24,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 4,
+        "matchedMarketDates": 3,
+        "coverageRatio": 0.75,
+        "coverage": "partial",
+        "firstQuoteAt": "2026-06-26T21:39:34+08:00",
+        "lastQuoteAt": "2026-07-01T23:40:57+08:00",
+        "maximumPremium": 3.5,
+        "maximumUnrealizedLoss": -340,
+        "maximumLossPctCollateral": 0.005667,
+        "worstQuote": {
+          "marketDate": "2026-06-26",
+          "generatedAt": "2026-06-26T21:39:34+08:00",
+          "bid": 3.05,
+          "ask": 3.5,
+          "underlyingPrice": 216.45,
+          "iv": 241.98,
+          "delta": -0.089065
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-06-26",
+            "maximumAsk": 3.5,
+            "generatedAt": "2026-06-26T21:39:34+08:00"
+          },
+          {
+            "marketDate": "2026-06-29",
+            "maximumAsk": 3.3,
+            "generatedAt": "2026-06-29T21:11:43+08:00"
+          },
+          {
+            "marketDate": "2026-07-01",
+            "maximumAsk": 0.7,
+            "generatedAt": "2026-07-01T23:11:57+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 1015.12,
+        "entryRoi": 0.017667,
+        "realizedRoi": 0.016919,
+        "annualizedRealizedReturn": 1.029219,
+        "sourceAnnualReturn": 1.074722
+      },
+      "qualityFlags": [
+        "date_only_trade_window",
+        "partial_quote_coverage"
+      ]
+    },
+    {
+      "tradeId": "tracker-172",
+      "entryGreeks": {
+        "iv": 228.19,
+        "delta": -0.109,
+        "underlyingPrice": 225.766,
+        "source": "sheet",
+        "quoteAt": null
+      },
+      "historical": {
+        "quoteCount": 37,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 4,
+        "matchedMarketDates": 4,
+        "coverageRatio": 1,
+        "coverage": "full",
+        "firstQuoteAt": "2026-06-26T21:08:03+08:00",
+        "lastQuoteAt": "2026-07-01T23:40:57+08:00",
+        "maximumPremium": 6.4,
+        "maximumUnrealizedLoss": -450,
+        "maximumLossPctCollateral": 0.013636,
+        "worstQuote": {
+          "marketDate": "2026-06-26",
+          "generatedAt": "2026-06-26T21:39:34+08:00",
+          "bid": 4.55,
+          "ask": 6.4,
+          "underlyingPrice": 216.45,
+          "iv": 231.729,
+          "delta": -0.140365
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-06-26",
+            "maximumAsk": 6.4,
+            "generatedAt": "2026-06-26T21:39:34+08:00"
+          },
+          {
+            "marketDate": "2026-06-29",
+            "maximumAsk": 5.85,
+            "generatedAt": "2026-06-29T21:11:43+08:00"
+          },
+          {
+            "marketDate": "2026-06-30",
+            "maximumAsk": 1.5,
+            "generatedAt": "2026-06-30T21:13:11+08:00"
+          },
+          {
+            "marketDate": "2026-07-01",
+            "maximumAsk": 1.32,
+            "generatedAt": "2026-07-01T21:40:00+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 806.94,
+        "entryRoi": 0.025152,
+        "realizedRoi": 0.024453,
+        "annualizedRealizedReturn": 1.487541,
+        "sourceAnnualReturn": 1.530051
+      },
+      "qualityFlags": [
+        "date_only_trade_window"
+      ]
+    },
+    {
+      "tradeId": "tracker-173",
+      "entryGreeks": {
+        "iv": 209.25,
+        "delta": -0.2112,
+        "underlyingPrice": 225.766,
+        "source": "sheet",
+        "quoteAt": null
+      },
+      "historical": {
+        "quoteCount": 51,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 4,
+        "matchedMarketDates": 4,
+        "coverageRatio": 1,
+        "coverage": "full",
+        "firstQuoteAt": "2026-06-26T21:08:03+08:00",
+        "lastQuoteAt": "2026-07-01T23:40:57+08:00",
+        "maximumPremium": 12.5,
+        "maximumUnrealizedLoss": -600,
+        "maximumLossPctCollateral": 0.015789,
+        "worstQuote": {
+          "marketDate": "2026-06-26",
+          "generatedAt": "2026-06-26T21:39:34+08:00",
+          "bid": 10.85,
+          "ask": 12.5,
+          "underlyingPrice": 216.45,
+          "iv": 219.772,
+          "delta": -0.2638
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-06-26",
+            "maximumAsk": 12.5,
+            "generatedAt": "2026-06-26T21:39:34+08:00"
+          },
+          {
+            "marketDate": "2026-06-29",
+            "maximumAsk": 11.9,
+            "generatedAt": "2026-06-29T21:11:43+08:00"
+          },
+          {
+            "marketDate": "2026-06-30",
+            "maximumAsk": 3.85,
+            "generatedAt": "2026-06-30T21:13:11+08:00"
+          },
+          {
+            "marketDate": "2026-07-01",
+            "maximumAsk": 2.8,
+            "generatedAt": "2026-07-01T21:40:00+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 1827.43,
+        "entryRoi": 0.05,
+        "realizedRoi": 0.04809,
+        "annualizedRealizedReturn": 2.925491,
+        "sourceAnnualReturn": 3.041667
+      },
+      "qualityFlags": [
+        "date_only_trade_window"
+      ]
+    },
+    {
+      "tradeId": "tracker-175",
+      "entryGreeks": {
+        "iv": 198.4,
+        "delta": -0.1509,
+        "underlyingPrice": 236.52,
+        "source": "sheet",
+        "quoteAt": null
+      },
+      "historical": {
+        "quoteCount": 59,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 7,
+        "matchedMarketDates": 6,
+        "coverageRatio": 0.857143,
+        "coverage": "full",
+        "firstQuoteAt": "2026-07-01T21:11:17+08:00",
+        "lastQuoteAt": "2026-07-09T23:40:50+08:00",
+        "maximumPremium": 19.3,
+        "maximumUnrealizedLoss": -2340,
+        "maximumLossPctCollateral": 0.065,
+        "worstQuote": {
+          "marketDate": "2026-07-02",
+          "generatedAt": "2026-07-03T04:08:11+08:00",
+          "bid": 17.5,
+          "ask": 19.3,
+          "underlyingPrice": 181.47,
+          "iv": 180.355,
+          "delta": -0.43376
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-07-01",
+            "maximumAsk": 10,
+            "generatedAt": "2026-07-02T04:07:13+08:00"
+          },
+          {
+            "marketDate": "2026-07-02",
+            "maximumAsk": 19.3,
+            "generatedAt": "2026-07-03T04:08:11+08:00"
+          },
+          {
+            "marketDate": "2026-07-03",
+            "maximumAsk": 19.3,
+            "generatedAt": "2026-07-03T21:12:06+08:00"
+          },
+          {
+            "marketDate": "2026-07-06",
+            "maximumAsk": 19.3,
+            "generatedAt": "2026-07-06T21:08:54+08:00"
+          },
+          {
+            "marketDate": "2026-07-07",
+            "maximumAsk": 10.2,
+            "generatedAt": "2026-07-07T21:13:05+08:00"
+          },
+          {
+            "marketDate": "2026-07-09",
+            "maximumAsk": 4.3,
+            "generatedAt": "2026-07-09T22:41:51+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 1217.54,
+        "entryRoi": 0.042222,
+        "realizedRoi": 0.033821,
+        "annualizedRealizedReturn": 1.371612,
+        "sourceAnnualReturn": 1.712346
+      },
+      "qualityFlags": [
+        "date_only_trade_window",
+        "expiration_year_normalized"
+      ]
+    },
+    {
+      "tradeId": "tracker-176",
+      "entryGreeks": {
+        "iv": 206.9,
+        "delta": -0.1197,
+        "underlyingPrice": 236,
+        "source": "sheet",
+        "quoteAt": null
+      },
+      "historical": {
+        "quoteCount": 75,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 7,
+        "matchedMarketDates": 7,
+        "coverageRatio": 1,
+        "coverage": "full",
+        "firstQuoteAt": "2026-07-01T21:40:00+08:00",
+        "lastQuoteAt": "2026-07-09T23:40:50+08:00",
+        "maximumPremium": 19.15,
+        "maximumUnrealizedLoss": -4065,
+        "maximumLossPctCollateral": 0.079706,
+        "worstQuote": {
+          "marketDate": "2026-07-02",
+          "generatedAt": "2026-07-03T03:12:26+08:00",
+          "bid": 17.85,
+          "ask": 19.15,
+          "underlyingPrice": 171.6146,
+          "iv": 190.805,
+          "delta": -0.431959
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-07-01",
+            "maximumAsk": 7.8,
+            "generatedAt": "2026-07-02T04:07:13+08:00"
+          },
+          {
+            "marketDate": "2026-07-02",
+            "maximumAsk": 19.15,
+            "generatedAt": "2026-07-03T03:12:26+08:00"
+          },
+          {
+            "marketDate": "2026-07-03",
+            "maximumAsk": 14,
+            "generatedAt": "2026-07-03T21:12:06+08:00"
+          },
+          {
+            "marketDate": "2026-07-06",
+            "maximumAsk": 14,
+            "generatedAt": "2026-07-06T21:08:54+08:00"
+          },
+          {
+            "marketDate": "2026-07-07",
+            "maximumAsk": 6.95,
+            "generatedAt": "2026-07-07T21:13:05+08:00"
+          },
+          {
+            "marketDate": "2026-07-08",
+            "maximumAsk": 11.3,
+            "generatedAt": "2026-07-09T00:42:02+08:00"
+          },
+          {
+            "marketDate": "2026-07-09",
+            "maximumAsk": 9.5,
+            "generatedAt": "2026-07-09T21:13:26+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 1376.33,
+        "entryRoi": 0.032941,
+        "realizedRoi": 0.026987,
+        "annualizedRealizedReturn": 1.094468,
+        "sourceAnnualReturn": 1.335948
+      },
+      "qualityFlags": [
+        "date_only_trade_window",
+        "expiration_year_normalized"
+      ]
+    },
+    {
+      "tradeId": "tracker-177",
+      "entryGreeks": {
+        "iv": 190.04,
+        "delta": -0.1794,
+        "underlyingPrice": 227.16,
+        "source": "sheet",
+        "quoteAt": null
+      },
+      "historical": {
+        "quoteCount": 59,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 7,
+        "matchedMarketDates": 6,
+        "coverageRatio": 0.857143,
+        "coverage": "full",
+        "firstQuoteAt": "2026-07-01T21:11:17+08:00",
+        "lastQuoteAt": "2026-07-09T23:40:50+08:00",
+        "maximumPremium": 19.3,
+        "maximumUnrealizedLoss": -1130,
+        "maximumLossPctCollateral": 0.062778,
+        "worstQuote": {
+          "marketDate": "2026-07-02",
+          "generatedAt": "2026-07-03T04:08:11+08:00",
+          "bid": 17.5,
+          "ask": 19.3,
+          "underlyingPrice": 181.47,
+          "iv": 180.355,
+          "delta": -0.43376
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-07-01",
+            "maximumAsk": 10,
+            "generatedAt": "2026-07-02T04:07:13+08:00"
+          },
+          {
+            "marketDate": "2026-07-02",
+            "maximumAsk": 19.3,
+            "generatedAt": "2026-07-03T04:08:11+08:00"
+          },
+          {
+            "marketDate": "2026-07-03",
+            "maximumAsk": 19.3,
+            "generatedAt": "2026-07-03T21:12:06+08:00"
+          },
+          {
+            "marketDate": "2026-07-06",
+            "maximumAsk": 19.3,
+            "generatedAt": "2026-07-06T21:08:54+08:00"
+          },
+          {
+            "marketDate": "2026-07-07",
+            "maximumAsk": 10.2,
+            "generatedAt": "2026-07-07T21:13:05+08:00"
+          },
+          {
+            "marketDate": "2026-07-09",
+            "maximumAsk": 4.3,
+            "generatedAt": "2026-07-09T22:41:51+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 668.08,
+        "entryRoi": 0.044444,
+        "realizedRoi": 0.037116,
+        "annualizedRealizedReturn": 1.505242,
+        "sourceAnnualReturn": 1.802469
+      },
+      "qualityFlags": [
+        "date_only_trade_window",
+        "expiration_year_normalized"
+      ]
+    },
+    {
+      "tradeId": "tracker-178",
+      "entryGreeks": {
+        "iv": 190.734,
+        "delta": -0.141992,
+        "underlyingPrice": 218.9245,
+        "source": "snapshot_estimate",
+        "quoteAt": "2026-07-02T22:10:17+08:00"
+      },
+      "historical": {
+        "quoteCount": 61,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 6,
+        "matchedMarketDates": 6,
+        "coverageRatio": 1,
+        "coverage": "full",
+        "firstQuoteAt": "2026-07-02T21:10:35+08:00",
+        "lastQuoteAt": "2026-07-09T23:40:50+08:00",
+        "maximumPremium": 19.15,
+        "maximumUnrealizedLoss": -2630,
+        "maximumLossPctCollateral": 0.077353,
+        "worstQuote": {
+          "marketDate": "2026-07-02",
+          "generatedAt": "2026-07-03T03:12:26+08:00",
+          "bid": 17.85,
+          "ask": 19.15,
+          "underlyingPrice": 171.6146,
+          "iv": 190.805,
+          "delta": -0.431959
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-07-02",
+            "maximumAsk": 19.15,
+            "generatedAt": "2026-07-03T03:12:26+08:00"
+          },
+          {
+            "marketDate": "2026-07-03",
+            "maximumAsk": 14,
+            "generatedAt": "2026-07-03T21:12:06+08:00"
+          },
+          {
+            "marketDate": "2026-07-06",
+            "maximumAsk": 14,
+            "generatedAt": "2026-07-06T21:08:54+08:00"
+          },
+          {
+            "marketDate": "2026-07-07",
+            "maximumAsk": 6.95,
+            "generatedAt": "2026-07-07T21:13:05+08:00"
+          },
+          {
+            "marketDate": "2026-07-08",
+            "maximumAsk": 11.3,
+            "generatedAt": "2026-07-09T00:42:02+08:00"
+          },
+          {
+            "marketDate": "2026-07-09",
+            "maximumAsk": 9.5,
+            "generatedAt": "2026-07-09T21:13:26+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 1047.68,
+        "entryRoi": 0.035294,
+        "realizedRoi": 0.030814,
+        "annualizedRealizedReturn": 1.405894,
+        "sourceAnnualReturn": 1.610294
+      },
+      "qualityFlags": [
+        "date_only_trade_window",
+        "expiration_year_normalized",
+        "entry_greeks_estimated"
+      ]
+    },
+    {
+      "tradeId": "tracker-179",
+      "entryGreeks": {
+        "iv": 186.497,
+        "delta": -0.198205,
+        "underlyingPrice": 185.825,
+        "source": "snapshot_estimate",
+        "quoteAt": "2026-07-10T23:42:02+08:00"
+      },
+      "historical": {
+        "quoteCount": 60,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 5,
+        "matchedMarketDates": 5,
+        "coverageRatio": 1,
+        "coverage": "full",
+        "firstQuoteAt": "2026-07-10T21:08:36+08:00",
+        "lastQuoteAt": "2026-07-16T22:09:21+08:00",
+        "maximumPremium": 11.2,
+        "maximumUnrealizedLoss": -1040,
+        "maximumLossPctCollateral": 0.033548,
+        "worstQuote": {
+          "marketDate": "2026-07-13",
+          "generatedAt": "2026-07-14T03:14:52+08:00",
+          "bid": 10.25,
+          "ask": 11.2,
+          "underlyingPrice": 163.76,
+          "iv": 218.22,
+          "delta": -0.371212
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-07-10",
+            "maximumAsk": 9.4,
+            "generatedAt": "2026-07-10T21:42:17+08:00"
+          },
+          {
+            "marketDate": "2026-07-13",
+            "maximumAsk": 11.2,
+            "generatedAt": "2026-07-14T03:14:52+08:00"
+          },
+          {
+            "marketDate": "2026-07-14",
+            "maximumAsk": 10.9,
+            "generatedAt": "2026-07-14T21:12:04+08:00"
+          },
+          {
+            "marketDate": "2026-07-15",
+            "maximumAsk": 10.05,
+            "generatedAt": "2026-07-15T22:43:52+08:00"
+          },
+          {
+            "marketDate": "2026-07-16",
+            "maximumAsk": 9.65,
+            "generatedAt": "2026-07-16T22:09:21+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 1200,
+        "entryRoi": 0.03871,
+        "realizedRoi": 0.03871,
+        "annualizedRealizedReturn": 1.569893,
+        "sourceAnnualReturn": 2.018433
+      },
+      "qualityFlags": [
+        "date_only_trade_window",
+        "expiration_year_normalized",
+        "entry_greeks_estimated",
+        "assignment_lifecycle_unresolved"
+      ]
+    },
+    {
+      "tradeId": "tracker-180",
+      "entryGreeks": {
+        "iv": 184.012,
+        "delta": -0.233082,
+        "underlyingPrice": 186.69,
+        "source": "snapshot_estimate",
+        "quoteAt": "2026-07-10T22:39:41+08:00"
+      },
+      "historical": {
+        "quoteCount": 57,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 5,
+        "matchedMarketDates": 5,
+        "coverageRatio": 1,
+        "coverage": "full",
+        "firstQuoteAt": "2026-07-10T21:08:36+08:00",
+        "lastQuoteAt": "2026-07-16T21:10:07+08:00",
+        "maximumPremium": 13.5,
+        "maximumUnrealizedLoss": -600,
+        "maximumLossPctCollateral": 0.0375,
+        "worstQuote": {
+          "marketDate": "2026-07-13",
+          "generatedAt": "2026-07-14T03:14:52+08:00",
+          "bid": 12.35,
+          "ask": 13.5,
+          "underlyingPrice": 163.76,
+          "iv": 212.777,
+          "delta": -0.42487
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-07-10",
+            "maximumAsk": 10.6,
+            "generatedAt": "2026-07-10T21:42:17+08:00"
+          },
+          {
+            "marketDate": "2026-07-13",
+            "maximumAsk": 13.5,
+            "generatedAt": "2026-07-14T03:14:52+08:00"
+          },
+          {
+            "marketDate": "2026-07-14",
+            "maximumAsk": 13.2,
+            "generatedAt": "2026-07-14T21:12:04+08:00"
+          },
+          {
+            "marketDate": "2026-07-15",
+            "maximumAsk": 10.9,
+            "generatedAt": "2026-07-15T23:43:01+08:00"
+          },
+          {
+            "marketDate": "2026-07-16",
+            "maximumAsk": 7.9,
+            "generatedAt": "2026-07-16T21:10:07+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 750,
+        "entryRoi": 0.046875,
+        "realizedRoi": 0.046875,
+        "annualizedRealizedReturn": 1.901042,
+        "sourceAnnualReturn": 2.444196
+      },
+      "qualityFlags": [
+        "date_only_trade_window",
+        "expiration_year_normalized",
+        "entry_greeks_estimated",
+        "assignment_lifecycle_unresolved"
+      ]
+    },
+    {
+      "tradeId": "tracker-181",
+      "entryGreeks": {
+        "iv": 199.89,
+        "delta": -0.1101,
+        "underlyingPrice": 189.33,
+        "source": "sheet",
+        "quoteAt": null
+      },
+      "historical": {
+        "quoteCount": 66,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 5,
+        "matchedMarketDates": 5,
+        "coverageRatio": 1,
+        "coverage": "full",
+        "firstQuoteAt": "2026-07-10T21:08:36+08:00",
+        "lastQuoteAt": "2026-07-16T23:43:08+08:00",
+        "maximumPremium": 6.25,
+        "maximumUnrealizedLoss": -900,
+        "maximumLossPctCollateral": 0.021429,
+        "worstQuote": {
+          "marketDate": "2026-07-15",
+          "generatedAt": "2026-07-16T00:42:12+08:00",
+          "bid": 5.65,
+          "ask": 6.25,
+          "underlyingPrice": 151.41,
+          "iv": 232.367,
+          "delta": -0.313507
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-07-10",
+            "maximumAsk": 5.3,
+            "generatedAt": "2026-07-10T21:42:17+08:00"
+          },
+          {
+            "marketDate": "2026-07-13",
+            "maximumAsk": 6.05,
+            "generatedAt": "2026-07-14T03:40:15+08:00"
+          },
+          {
+            "marketDate": "2026-07-14",
+            "maximumAsk": 5.9,
+            "generatedAt": "2026-07-14T21:12:04+08:00"
+          },
+          {
+            "marketDate": "2026-07-15",
+            "maximumAsk": 6.25,
+            "generatedAt": "2026-07-16T00:42:12+08:00"
+          },
+          {
+            "marketDate": "2026-07-16",
+            "maximumAsk": 5,
+            "generatedAt": "2026-07-16T23:13:32+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 975,
+        "entryRoi": 0.023214,
+        "realizedRoi": 0.023214,
+        "annualizedRealizedReturn": 0.941468,
+        "sourceAnnualReturn": 1.210459
+      },
+      "qualityFlags": [
+        "date_only_trade_window",
+        "expiration_year_normalized",
+        "assignment_lifecycle_unresolved"
+      ]
+    },
+    {
+      "tradeId": "tracker-182",
+      "entryGreeks": {
+        "iv": 239.28,
+        "delta": -0.083,
+        "underlyingPrice": 167.185,
+        "source": "sheet",
+        "quoteAt": null
+      },
+      "historical": {
+        "quoteCount": 50,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 4,
+        "matchedMarketDates": 4,
+        "coverageRatio": 1,
+        "coverage": "full",
+        "firstQuoteAt": "2026-07-13T21:41:39+08:00",
+        "lastQuoteAt": "2026-07-16T23:43:08+08:00",
+        "maximumPremium": 2.42,
+        "maximumUnrealizedLoss": -47,
+        "maximumLossPctCollateral": 0.003917,
+        "worstQuote": {
+          "marketDate": "2026-07-13",
+          "generatedAt": "2026-07-14T03:40:15+08:00",
+          "bid": 2.24,
+          "ask": 2.42,
+          "underlyingPrice": 163.26,
+          "iv": 255.839,
+          "delta": -0.099853
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-07-13",
+            "maximumAsk": 2.42,
+            "generatedAt": "2026-07-14T03:40:15+08:00"
+          },
+          {
+            "marketDate": "2026-07-14",
+            "maximumAsk": 2.2,
+            "generatedAt": "2026-07-14T21:12:04+08:00"
+          },
+          {
+            "marketDate": "2026-07-15",
+            "maximumAsk": 2,
+            "generatedAt": "2026-07-16T00:42:12+08:00"
+          },
+          {
+            "marketDate": "2026-07-16",
+            "maximumAsk": 1.14,
+            "generatedAt": "2026-07-16T21:39:45+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 145,
+        "entryRoi": 0.01625,
+        "realizedRoi": 0.012083,
+        "annualizedRealizedReturn": 1.102604,
+        "sourceAnnualReturn": 1.482813
+      },
+      "qualityFlags": [
+        "date_only_trade_window",
+        "expiration_year_normalized"
+      ]
+    },
+    {
+      "tradeId": "tracker-183",
+      "entryGreeks": {
+        "iv": 239.28,
+        "delta": -0.083,
+        "underlyingPrice": 167.185,
+        "source": "sheet",
+        "quoteAt": null
+      },
+      "historical": {
+        "quoteCount": 50,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 4,
+        "matchedMarketDates": 4,
+        "coverageRatio": 1,
+        "coverage": "full",
+        "firstQuoteAt": "2026-07-13T21:41:39+08:00",
+        "lastQuoteAt": "2026-07-16T23:43:08+08:00",
+        "maximumPremium": 2.42,
+        "maximumUnrealizedLoss": -235,
+        "maximumLossPctCollateral": 0.003917,
+        "worstQuote": {
+          "marketDate": "2026-07-13",
+          "generatedAt": "2026-07-14T03:40:15+08:00",
+          "bid": 2.24,
+          "ask": 2.42,
+          "underlyingPrice": 163.26,
+          "iv": 255.839,
+          "delta": -0.099853
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-07-13",
+            "maximumAsk": 2.42,
+            "generatedAt": "2026-07-14T03:40:15+08:00"
+          },
+          {
+            "marketDate": "2026-07-14",
+            "maximumAsk": 2.2,
+            "generatedAt": "2026-07-14T21:12:04+08:00"
+          },
+          {
+            "marketDate": "2026-07-15",
+            "maximumAsk": 2,
+            "generatedAt": "2026-07-16T00:42:12+08:00"
+          },
+          {
+            "marketDate": "2026-07-16",
+            "maximumAsk": 1.14,
+            "generatedAt": "2026-07-16T21:39:45+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 718.92,
+        "entryRoi": 0.01625,
+        "realizedRoi": 0.011982,
+        "annualizedRealizedReturn": 1.093357,
+        "sourceAnnualReturn": 1.482813
+      },
+      "qualityFlags": [
+        "date_only_trade_window",
+        "expiration_year_normalized"
+      ]
+    },
+    {
+      "tradeId": "tracker-184",
+      "entryGreeks": {
+        "iv": 214.92,
+        "delta": -0.1972,
+        "underlyingPrice": 167.255,
+        "source": "sheet",
+        "quoteAt": null
+      },
+      "historical": {
+        "quoteCount": 51,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 4,
+        "matchedMarketDates": 4,
+        "coverageRatio": 1,
+        "coverage": "full",
+        "firstQuoteAt": "2026-07-13T21:12:45+08:00",
+        "lastQuoteAt": "2026-07-16T23:43:08+08:00",
+        "maximumPremium": 6.25,
+        "maximumUnrealizedLoss": -175,
+        "maximumLossPctCollateral": 0.0125,
+        "worstQuote": {
+          "marketDate": "2026-07-15",
+          "generatedAt": "2026-07-16T00:42:12+08:00",
+          "bid": 5.65,
+          "ask": 6.25,
+          "underlyingPrice": 151.41,
+          "iv": 232.367,
+          "delta": -0.313507
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-07-13",
+            "maximumAsk": 6.05,
+            "generatedAt": "2026-07-14T03:40:15+08:00"
+          },
+          {
+            "marketDate": "2026-07-14",
+            "maximumAsk": 5.9,
+            "generatedAt": "2026-07-14T21:12:04+08:00"
+          },
+          {
+            "marketDate": "2026-07-15",
+            "maximumAsk": 6.25,
+            "generatedAt": "2026-07-16T00:42:12+08:00"
+          },
+          {
+            "marketDate": "2026-07-16",
+            "maximumAsk": 5,
+            "generatedAt": "2026-07-16T23:13:32+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 450,
+        "entryRoi": 0.032143,
+        "realizedRoi": 0.032143,
+        "annualizedRealizedReturn": 1.955357,
+        "sourceAnnualReturn": 2.933036
+      },
+      "qualityFlags": [
+        "date_only_trade_window",
+        "expiration_year_normalized",
+        "assignment_lifecycle_unresolved"
+      ]
+    },
+    {
+      "tradeId": "tracker-185",
+      "entryGreeks": {
+        "iv": 237.89,
+        "delta": -0.0635,
+        "underlyingPrice": 172.27,
+        "source": "sheet",
+        "quoteAt": null
+      },
+      "historical": {
+        "quoteCount": 77,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 7,
+        "matchedMarketDates": 7,
+        "coverageRatio": 1,
+        "coverage": "full",
+        "firstQuoteAt": "2026-07-15T22:43:52+08:00",
+        "lastQuoteAt": "2026-07-23T23:42:10+08:00",
+        "maximumPremium": 8.4,
+        "maximumUnrealizedLoss": -3075,
+        "maximumLossPctCollateral": 0.058571,
+        "worstQuote": {
+          "marketDate": "2026-07-17",
+          "generatedAt": "2026-07-17T21:39:47+08:00",
+          "bid": 7.15,
+          "ask": 8.4,
+          "underlyingPrice": 118.58,
+          "iv": 225.237,
+          "delta": -0.276506
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-07-15",
+            "maximumAsk": 4.2,
+            "generatedAt": "2026-07-16T00:42:12+08:00"
+          },
+          {
+            "marketDate": "2026-07-16",
+            "maximumAsk": 4.45,
+            "generatedAt": "2026-07-17T03:42:46+08:00"
+          },
+          {
+            "marketDate": "2026-07-17",
+            "maximumAsk": 8.4,
+            "generatedAt": "2026-07-17T21:39:47+08:00"
+          },
+          {
+            "marketDate": "2026-07-20",
+            "maximumAsk": 5,
+            "generatedAt": "2026-07-20T21:09:44+08:00"
+          },
+          {
+            "marketDate": "2026-07-21",
+            "maximumAsk": 2.85,
+            "generatedAt": "2026-07-21T21:13:26+08:00"
+          },
+          {
+            "marketDate": "2026-07-22",
+            "maximumAsk": 0.95,
+            "generatedAt": "2026-07-22T21:13:10+08:00"
+          },
+          {
+            "marketDate": "2026-07-23",
+            "maximumAsk": 0.72,
+            "generatedAt": "2026-07-23T21:09:17+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 1093.14,
+        "entryRoi": 0.021429,
+        "realizedRoi": 0.020822,
+        "annualizedRealizedReturn": 0.844436,
+        "sourceAnnualReturn": 0.869048
+      },
+      "qualityFlags": [
+        "date_only_trade_window",
+        "expiration_year_normalized"
+      ]
+    },
+    {
+      "tradeId": "tracker-187",
+      "entryGreeks": {
+        "iv": 306.55,
+        "delta": -0.0464,
+        "underlyingPrice": 142.9,
+        "source": "sheet",
+        "quoteAt": null
+      },
+      "historical": {
+        "quoteCount": 0,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 4,
+        "matchedMarketDates": 0,
+        "coverageRatio": 0,
+        "coverage": "missing",
+        "firstQuoteAt": null,
+        "lastQuoteAt": null,
+        "maximumPremium": null,
+        "maximumUnrealizedLoss": null,
+        "maximumLossPctCollateral": null,
+        "worstQuote": null,
+        "dailyMaxPremium": []
+      },
+      "returns": {
+        "recordedProfit": 484.61,
+        "entryRoi": 0.011765,
+        "realizedRoi": 0.011403,
+        "annualizedRealizedReturn": 1.040486,
+        "sourceAnnualReturn": 1.073529
+      },
+      "qualityFlags": [
+        "date_only_trade_window",
+        "missing_quote_history"
+      ]
+    },
+    {
+      "tradeId": "tracker-189",
+      "entryGreeks": {
+        "iv": 234.81,
+        "delta": -0.0942,
+        "underlyingPrice": 155.59,
+        "source": "sheet",
+        "quoteAt": null
+      },
+      "historical": {
+        "quoteCount": 67,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 6,
+        "matchedMarketDates": 6,
+        "coverageRatio": 1,
+        "coverage": "full",
+        "firstQuoteAt": "2026-07-23T21:09:17+08:00",
+        "lastQuoteAt": "2026-07-30T23:42:52+08:00",
+        "maximumPremium": 10.5,
+        "maximumUnrealizedLoss": -2250,
+        "maximumLossPctCollateral": 0.071429,
+        "worstQuote": {
+          "marketDate": "2026-07-28",
+          "generatedAt": "2026-07-28T22:10:38+08:00",
+          "bid": 9.2,
+          "ask": 10.5,
+          "underlyingPrice": 105.3185,
+          "iv": 264.736,
+          "delta": -0.430267
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-07-23",
+            "maximumAsk": 3.4,
+            "generatedAt": "2026-07-23T23:42:10+08:00"
+          },
+          {
+            "marketDate": "2026-07-24",
+            "maximumAsk": 4.95,
+            "generatedAt": "2026-07-25T03:13:03+08:00"
+          },
+          {
+            "marketDate": "2026-07-27",
+            "maximumAsk": 7.85,
+            "generatedAt": "2026-07-27T22:39:49+08:00"
+          },
+          {
+            "marketDate": "2026-07-28",
+            "maximumAsk": 10.5,
+            "generatedAt": "2026-07-28T22:10:38+08:00"
+          },
+          {
+            "marketDate": "2026-07-29",
+            "maximumAsk": 8.8,
+            "generatedAt": "2026-07-29T21:11:17+08:00"
+          },
+          {
+            "marketDate": "2026-07-30",
+            "maximumAsk": 5.15,
+            "generatedAt": "2026-07-30T21:43:47+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": -63.66,
+        "entryRoi": 0.028571,
+        "realizedRoi": -0.002021,
+        "annualizedRealizedReturn": -0.105378,
+        "sourceAnnualReturn": 1.303571
+      },
+      "qualityFlags": [
+        "date_only_trade_window"
+      ]
+    },
+    {
+      "tradeId": "tracker-190",
+      "entryGreeks": {
+        "iv": 246.45,
+        "delta": -0.0767,
+        "underlyingPrice": 146.01,
+        "source": "sheet",
+        "quoteAt": null
+      },
+      "historical": {
+        "quoteCount": 59,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 5,
+        "matchedMarketDates": 5,
+        "coverageRatio": 1,
+        "coverage": "full",
+        "firstQuoteAt": "2026-07-24T22:08:42+08:00",
+        "lastQuoteAt": "2026-07-30T23:42:52+08:00",
+        "maximumPremium": 7.9,
+        "maximumUnrealizedLoss": -2900,
+        "maximumLossPctCollateral": 0.061053,
+        "worstQuote": {
+          "marketDate": "2026-07-29",
+          "generatedAt": "2026-07-29T22:40:42+08:00",
+          "bid": 7.05,
+          "ask": 7.9,
+          "underlyingPrice": 96.44,
+          "iv": 279.379,
+          "delta": -0.400483
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-07-24",
+            "maximumAsk": 3.05,
+            "generatedAt": "2026-07-25T03:13:03+08:00"
+          },
+          {
+            "marketDate": "2026-07-27",
+            "maximumAsk": 4.5,
+            "generatedAt": "2026-07-27T22:39:49+08:00"
+          },
+          {
+            "marketDate": "2026-07-28",
+            "maximumAsk": 6.2,
+            "generatedAt": "2026-07-28T22:10:38+08:00"
+          },
+          {
+            "marketDate": "2026-07-29",
+            "maximumAsk": 7.9,
+            "generatedAt": "2026-07-29T22:40:42+08:00"
+          },
+          {
+            "marketDate": "2026-07-30",
+            "maximumAsk": 2,
+            "generatedAt": "2026-07-30T21:43:47+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 217.4,
+        "entryRoi": 0.022105,
+        "realizedRoi": 0.004577,
+        "annualizedRealizedReturn": 0.278424,
+        "sourceAnnualReturn": 1.152632
+      },
+      "qualityFlags": [
+        "date_only_trade_window"
+      ]
+    },
+    {
+      "tradeId": "tracker-191",
+      "entryGreeks": {
+        "iv": 250.87,
+        "delta": -0.0647,
+        "underlyingPrice": 137.31,
+        "source": "sheet",
+        "quoteAt": null
+      },
+      "historical": {
+        "quoteCount": 49,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 5,
+        "matchedMarketDates": 4,
+        "coverageRatio": 0.8,
+        "coverage": "partial",
+        "firstQuoteAt": "2026-07-27T22:10:46+08:00",
+        "lastQuoteAt": "2026-07-30T23:42:52+08:00",
+        "maximumPremium": 5.5,
+        "maximumUnrealizedLoss": -800,
+        "maximumLossPctCollateral": 0.047059,
+        "worstQuote": {
+          "marketDate": "2026-07-29",
+          "generatedAt": "2026-07-30T04:12:57+08:00",
+          "bid": 4.45,
+          "ask": 5.5,
+          "underlyingPrice": 91.99,
+          "iv": 277.931,
+          "delta": -0.35342
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-07-27",
+            "maximumAsk": 2.66,
+            "generatedAt": "2026-07-27T22:39:49+08:00"
+          },
+          {
+            "marketDate": "2026-07-28",
+            "maximumAsk": 3.3,
+            "generatedAt": "2026-07-28T22:10:38+08:00"
+          },
+          {
+            "marketDate": "2026-07-29",
+            "maximumAsk": 5.5,
+            "generatedAt": "2026-07-30T04:12:57+08:00"
+          },
+          {
+            "marketDate": "2026-07-30",
+            "maximumAsk": 5,
+            "generatedAt": "2026-07-30T21:13:54+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 198.99,
+        "entryRoi": 0.017647,
+        "realizedRoi": 0.011705,
+        "annualizedRealizedReturn": 0.712072,
+        "sourceAnnualReturn": 0.920168
+      },
+      "qualityFlags": [
+        "date_only_trade_window",
+        "partial_quote_coverage"
+      ]
+    },
+    {
+      "tradeId": "screenshot-20260803-soxl-80p",
+      "entryGreeks": {
+        "iv": 228.918,
+        "delta": -0.096966,
+        "underlyingPrice": 108.19,
+        "source": "snapshot_exact",
+        "quoteAt": "2026-08-03T22:17:25+08:00"
+      },
+      "historical": {
+        "quoteCount": 13,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 4,
+        "matchedMarketDates": 2,
+        "coverageRatio": 0.5,
+        "coverage": "partial",
+        "firstQuoteAt": "2026-08-03T22:47:33+08:00",
+        "lastQuoteAt": "2026-08-04T21:18:42+08:00",
+        "maximumPremium": 1.02,
+        "maximumUnrealizedLoss": 0,
+        "maximumLossPctCollateral": 0,
+        "worstQuote": {
+          "marketDate": "2026-08-03",
+          "generatedAt": "2026-08-03T23:18:05+08:00",
+          "bid": 0.86,
+          "ask": 1.02,
+          "underlyingPrice": 113.455,
+          "iv": 238.858,
+          "delta": -0.066262
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-08-03",
+            "maximumAsk": 1.02,
+            "generatedAt": "2026-08-03T23:18:05+08:00"
+          },
+          {
+            "marketDate": "2026-08-04",
+            "maximumAsk": 0.83,
+            "generatedAt": "2026-08-04T21:18:42+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 897.84,
+        "entryRoi": 0.014375,
+        "realizedRoi": 0.014029,
+        "annualizedRealizedReturn": 1.280123,
+        "sourceAnnualReturn": 1.311719
+      },
+      "qualityFlags": [
+        "timestamp_trade_window",
+        "partial_quote_coverage"
+      ]
+    },
+    {
+      "tradeId": "screenshot-20260805-soxl-90p",
+      "entryGreeks": {
+        "iv": 215.181,
+        "delta": -0.074749,
+        "underlyingPrice": 139.1201,
+        "source": "snapshot_estimate",
+        "quoteAt": "2026-08-05T22:16:52+08:00"
+      },
+      "historical": {
+        "quoteCount": 27,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 3,
+        "matchedMarketDates": 3,
+        "coverageRatio": 1,
+        "coverage": "full",
+        "firstQuoteAt": "2026-08-05T22:49:39+08:00",
+        "lastQuoteAt": "2026-08-07T21:15:06+08:00",
+        "maximumPremium": 2.09,
+        "maximumUnrealizedLoss": -54,
+        "maximumLossPctCollateral": 0.001,
+        "worstQuote": {
+          "marketDate": "2026-08-05",
+          "generatedAt": "2026-08-05T22:49:39+08:00",
+          "bid": 1.85,
+          "ask": 2.09,
+          "underlyingPrice": 133.4513,
+          "iv": 205.467,
+          "delta": -0.085887
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-08-05",
+            "maximumAsk": 2.09,
+            "generatedAt": "2026-08-05T22:49:39+08:00"
+          },
+          {
+            "marketDate": "2026-08-06",
+            "maximumAsk": 1.6,
+            "generatedAt": "2026-08-06T21:14:18+08:00"
+          },
+          {
+            "marketDate": "2026-08-07",
+            "maximumAsk": 0.98,
+            "generatedAt": "2026-08-07T21:15:06+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 862.7,
+        "entryRoi": 0.022222,
+        "realizedRoi": 0.015976,
+        "annualizedRealizedReturn": 2.915607,
+        "sourceAnnualReturn": 0.901235
+      },
+      "qualityFlags": [
+        "timestamp_trade_window",
+        "entry_greeks_estimated"
+      ]
+    },
+    {
+      "tradeId": "screenshot-l-20260720-soxl-163c",
+      "entryGreeks": {
+        "iv": 208.18822,
+        "delta": 0.370198,
+        "underlyingPrice": 147.43,
+        "source": "model_estimate",
+        "quoteAt": "2026-07-20T21:38:38+08:00"
+      },
+      "historical": {
+        "quoteCount": 61,
+        "modeledQuoteCount": 61,
+        "availableMarketDates": 5,
+        "matchedMarketDates": 5,
+        "coverageRatio": 1,
+        "coverage": "full",
+        "firstQuoteAt": "2026-07-20T21:38:38+08:00",
+        "lastQuoteAt": "2026-07-24T21:39:53+08:00",
+        "maximumPremium": 11.447525,
+        "maximumUnrealizedLoss": -1184.26,
+        "maximumLossPctCollateral": 0.026776,
+        "worstQuote": {
+          "marketDate": "2026-07-22",
+          "generatedAt": "2026-07-22T23:12:08+08:00",
+          "bid": 11.447525,
+          "ask": 11.447525,
+          "underlyingPrice": 164.71,
+          "iv": 208.18822,
+          "delta": 0.558411
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-07-20",
+            "maximumAsk": 7.493520061306185,
+            "generatedAt": "2026-07-20T21:38:38+08:00"
+          },
+          {
+            "marketDate": "2026-07-21",
+            "maximumAsk": 11.034956323357164,
+            "generatedAt": "2026-07-22T01:09:26+08:00"
+          },
+          {
+            "marketDate": "2026-07-22",
+            "maximumAsk": 11.447524817912793,
+            "generatedAt": "2026-07-22T23:12:08+08:00"
+          },
+          {
+            "marketDate": "2026-07-23",
+            "maximumAsk": 7.039333526526022,
+            "generatedAt": "2026-07-23T21:43:56+08:00"
+          },
+          {
+            "marketDate": "2026-07-24",
+            "maximumAsk": 1.5922019039852628,
+            "generatedAt": "2026-07-24T21:11:05+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 2097.21,
+        "entryRoi": 0.050872,
+        "realizedRoi": 0.047417,
+        "annualizedRealizedReturn": 4.326809,
+        "sourceAnnualReturn": 4.642034
+      },
+      "qualityFlags": [
+        "timestamp_trade_window",
+        "entry_greeks_estimated",
+        "modeled_quote_history"
+      ]
+    },
+    {
+      "tradeId": "screenshot-l-20260724-soxl-156c",
+      "entryGreeks": {
+        "iv": 218.65534,
+        "delta": 0.39517,
+        "underlyingPrice": 136.99,
+        "source": "model_estimate",
+        "quoteAt": "2026-07-24T22:42:29+08:00"
+      },
+      "historical": {
+        "quoteCount": 14,
+        "modeledQuoteCount": 14,
+        "availableMarketDates": 2,
+        "matchedMarketDates": 2,
+        "coverageRatio": 1,
+        "coverage": "full",
+        "firstQuoteAt": "2026-07-24T22:42:29+08:00",
+        "lastQuoteAt": "2026-07-27T21:41:42+08:00",
+        "maximumPremium": 14.467508,
+        "maximumUnrealizedLoss": -1340.25,
+        "maximumLossPctCollateral": 0.032612,
+        "worstQuote": {
+          "marketDate": "2026-07-24",
+          "generatedAt": "2026-07-25T00:09:05+08:00",
+          "bid": 14.467508,
+          "ask": 14.467508,
+          "underlyingPrice": 147.3001,
+          "iv": 218.65534,
+          "delta": 0.487366
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-07-24",
+            "maximumAsk": 14.467507551872188,
+            "generatedAt": "2026-07-25T00:09:05+08:00"
+          },
+          {
+            "marketDate": "2026-07-27",
+            "maximumAsk": 6.302218391822535,
+            "generatedAt": "2026-07-27T21:41:42+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 1466.3,
+        "entryRoi": 0.072998,
+        "realizedRoi": 0.035679,
+        "annualizedRealizedReturn": 4.340945,
+        "sourceAnnualReturn": 3.806326
+      },
+      "qualityFlags": [
+        "timestamp_trade_window",
+        "entry_greeks_estimated",
+        "modeled_quote_history"
+      ]
+    },
+    {
+      "tradeId": "screenshot-l-20260730-soxl-140c",
+      "entryGreeks": {
+        "iv": 185.259636,
+        "delta": 0.283608,
+        "underlyingPrice": 115.164333,
+        "source": "model_estimate",
+        "quoteAt": null
+      },
+      "historical": {
+        "quoteCount": 89,
+        "modeledQuoteCount": 89,
+        "availableMarketDates": 7,
+        "matchedMarketDates": 7,
+        "coverageRatio": 1,
+        "coverage": "full",
+        "firstQuoteAt": "2026-07-30T22:43:21+08:00",
+        "lastQuoteAt": "2026-08-07T21:15:06+08:00",
+        "maximumPremium": 10.554391,
+        "maximumUnrealizedLoss": -1716.32,
+        "maximumLossPctCollateral": 0.049677,
+        "worstQuote": {
+          "marketDate": "2026-08-04",
+          "generatedAt": "2026-08-05T03:17:28+08:00",
+          "bid": 10.554391,
+          "ask": 10.554391,
+          "underlyingPrice": 142.03,
+          "iv": 185.259636,
+          "delta": 0.568182
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-07-30",
+            "maximumAsk": 5.480572318686356,
+            "generatedAt": "2026-07-30T22:43:21+08:00"
+          },
+          {
+            "marketDate": "2026-07-31",
+            "maximumAsk": 7.519715632428571,
+            "generatedAt": "2026-07-31T21:43:09+08:00"
+          },
+          {
+            "marketDate": "2026-08-03",
+            "maximumAsk": 2.5757757981437592,
+            "generatedAt": "2026-08-04T02:15:28+08:00"
+          },
+          {
+            "marketDate": "2026-08-04",
+            "maximumAsk": 10.554391474789512,
+            "generatedAt": "2026-08-05T03:17:28+08:00"
+          },
+          {
+            "marketDate": "2026-08-05",
+            "maximumAsk": 9.21463574810818,
+            "generatedAt": "2026-08-05T21:48:56+08:00"
+          },
+          {
+            "marketDate": "2026-08-06",
+            "maximumAsk": 5.628401494095058,
+            "generatedAt": "2026-08-06T23:15:22+08:00"
+          },
+          {
+            "marketDate": "2026-08-07",
+            "maximumAsk": 0.4842465761774193,
+            "generatedAt": "2026-08-07T21:15:06+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": 11.29,
+        "entryRoi": 0.041969,
+        "realizedRoi": 0.000327,
+        "annualizedRealizedReturn": 0.014909,
+        "sourceAnnualReturn": 1.914836
+      },
+      "qualityFlags": [
+        "timestamp_trade_window",
+        "entry_greeks_estimated",
+        "modeled_quote_history"
+      ]
+    },
+    {
+      "tradeId": "screenshot-l-20260807-soxl-156c",
+      "entryGreeks": {
+        "iv": 150.128351,
+        "delta": 0.368029,
+        "underlyingPrice": 141.9136,
+        "source": "model_estimate",
+        "quoteAt": "2026-08-07T21:46:06+08:00"
+      },
+      "historical": {
+        "quoteCount": 6,
+        "modeledQuoteCount": 6,
+        "availableMarketDates": 1,
+        "matchedMarketDates": 1,
+        "coverageRatio": 1,
+        "coverage": "full",
+        "firstQuoteAt": "2026-08-07T21:46:06+08:00",
+        "lastQuoteAt": "2026-08-08T00:14:18+08:00",
+        "maximumPremium": 6.777502,
+        "maximumUnrealizedLoss": 0,
+        "maximumLossPctCollateral": 0,
+        "worstQuote": {
+          "marketDate": "2026-08-07",
+          "generatedAt": "2026-08-07T21:46:06+08:00",
+          "bid": 6.777502,
+          "ask": 6.777502,
+          "underlyingPrice": 141.9136,
+          "iv": 150.128351,
+          "delta": 0.367921
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-08-07",
+            "maximumAsk": 6.777502483397193,
+            "generatedAt": "2026-08-07T21:46:06+08:00"
+          }
+        ]
+      },
+      "returns": {
+        "recordedProfit": null,
+        "entryRoi": 0.047799,
+        "realizedRoi": null,
+        "annualizedRealizedReturn": null,
+        "sourceAnnualReturn": 2.492378
+      },
+      "qualityFlags": [
+        "timestamp_trade_window",
+        "entry_greeks_estimated",
+        "modeled_quote_history"
+      ]
+    }
+  ]
+}

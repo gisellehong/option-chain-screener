@@ -22,6 +22,7 @@ import youtuberTradesRaw from "../data/youtuber-trades/trades.json";
 import youtuberLifecycleRaw from "../data/youtuber-trades/lifecycle.json";
 import { screenerConfigs } from "./data/screenerConfigs";
 import { watchlistMetadata } from "./data/watchlistMetadata";
+import { SoxlTracker } from "./features/SoxlTracker";
 import { compactNumber, formatCurrency, formatNumber, formatPercent } from "./lib/format";
 import { scoreCandidates } from "./lib/scoring";
 import type {
@@ -63,7 +64,7 @@ const watchlistNews = watchlistNewsRaw as {
   byTicker: Record<string, WatchlistNewsItem[]>;
   errors: Record<string, string>;
 };
-type DashboardView = "screener" | "watchlist" | "tracker" | "youtuber" | "report";
+type DashboardView = "screener" | "watchlist" | "tracker" | "youtuber" | "soxl" | "report";
 
 type TradeValidationStatus = "supported" | "plausible" | "questionable" | "unsupported" | "screenshot_only";
 
@@ -1547,7 +1548,7 @@ export function App() {
       <header className="topbar">
         <div>
           <span className="eyebrow">Option Chain Screener</span>
-          <h1>Trading Idea Dashboard</h1>
+          <h1>Trading Dashboard</h1>
         </div>
         <div className="actions">
           <button type="button" title="Refresh">
@@ -1568,6 +1569,7 @@ export function App() {
           { id: "watchlist", label: "Watchlist", icon: Newspaper },
           { id: "tracker", label: "Signal Tracker", icon: Database },
           { id: "youtuber", label: "AAG Tracker", icon: ClipboardList },
+          { id: "soxl", label: "SOXL Tracker", icon: ClipboardList },
           { id: "report", label: "Strategy Report", icon: BarChart3 },
         ].map((view) => {
           const Icon = view.icon;
@@ -1636,6 +1638,7 @@ export function App() {
       {activeView === "youtuber" && (
         <YouTuberTracker tradesData={youtuberTrades} generatedAt={realOptionsMeta.generatedAt} />
       )}
+      {activeView === "soxl" && <SoxlTracker />}
       {activeView === "report" && <StrategyReport trackingData={tracking} />}
       {activeView === "screener" && (
       <section className="workspace">
