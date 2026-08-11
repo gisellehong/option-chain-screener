@@ -225,6 +225,7 @@ const lifecycleTrades = trades.map((trade) => {
     if (worst === null || worst.ask === null || quote.ask > worst.ask) return quote;
     return worst;
   }, null);
+  const latestQuote = [...quotes].reverse().find((quote) => quote.ask !== null) ?? null;
 
   const entryQuote = chooseEntryQuote([...quotes], trade);
   const usesEstimatedGreeks = trade.entryIv === null || trade.entryDelta === null;
@@ -236,6 +237,12 @@ const lifecycleTrades = trades.map((trade) => {
   const maximumUnrealizedLoss = worstQuote?.ask === null || !worstQuote
     ? null
     : Math.min(0, (trade.entryPremium - worstQuote.ask) * trade.contracts * 100);
+  const unrealizedProfit = trade.closeDate === null && latestQuote?.ask !== null
+    ? (trade.entryPremium - latestQuote.ask) * trade.contracts * 100
+    : null;
+  const unrealizedRoi = unrealizedProfit !== null && trade.collateral > 0
+    ? unrealizedProfit / trade.collateral
+    : null;
 
   const dailyMaxPremium = [...new Set(quotes.map((quote) => quote.marketDate))].map((marketDate) => {
     const dailyWorst = quotes
@@ -266,6 +273,27 @@ const lifecycleTrades = trades.map((trade) => {
       source: entryGreeksSource,
       quoteAt: trade.entryQuoteAt ?? (usesEstimatedGreeks ? entryQuote?.generatedAt ?? null : null),
     },
+    ...(trade.closeDate === null
+      ? {
+          openPosition: {
+            markPremium: round(latestQuote?.ask ?? null),
+            unrealizedProfit: round(unrealizedProfit, 2),
+            unrealizedRoi: round(unrealizedRoi),
+            quote: latestQuote
+              ? {
+                  marketDate: latestQuote.marketDate,
+                  generatedAt: latestQuote.generatedAt,
+                  bid: round(latestQuote.bid),
+                  ask: round(latestQuote.ask),
+                  underlyingPrice: round(latestQuote.underlyingPrice),
+                  iv: round(latestQuote.iv),
+                  delta: round(latestQuote.delta),
+                  modeled: latestQuote.modeled,
+                }
+              : null,
+          },
+        }
+      : {}),
     historical: {
       quoteCount: quotes.length,
       modeledQuoteCount: quotes.filter((quote) => quote.modeled).length,
