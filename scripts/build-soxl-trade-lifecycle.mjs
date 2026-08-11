@@ -226,6 +226,21 @@ const lifecycleTrades = trades.map((trade) => {
     return worst;
   }, null);
   const latestQuote = [...quotes].reverse().find((quote) => quote.ask !== null) ?? null;
+  const brokerMarkQuote = trade.entryMarkPremium !== undefined && trade.entryMarkPremium !== null
+    ? {
+        marketDate: trade.entryDate,
+        generatedAt: trade.entryMarkAt ?? `${trade.entryDate}T${trade.entryTime}`,
+        bid: null,
+        ask: trade.entryMarkPremium,
+        mid: trade.entryMarkPremium,
+        underlyingPrice: trade.underlyingAtEntry,
+        iv: trade.entryIv === null ? null : trade.entryIv * 100,
+        delta: trade.entryDelta,
+        modeled: false,
+        source: "broker_mark",
+      }
+    : null;
+  const openQuote = latestQuote ?? brokerMarkQuote;
 
   const entryQuote = chooseEntryQuote([...quotes], trade);
   const usesEstimatedGreeks = trade.entryIv === null || trade.entryDelta === null;
@@ -237,8 +252,8 @@ const lifecycleTrades = trades.map((trade) => {
   const maximumUnrealizedLoss = worstQuote?.ask === null || !worstQuote
     ? null
     : Math.min(0, (trade.entryPremium - worstQuote.ask) * trade.contracts * 100);
-  const unrealizedProfit = trade.closeDate === null && latestQuote?.ask !== null
-    ? (trade.entryPremium - latestQuote.ask) * trade.contracts * 100
+  const unrealizedProfit = trade.closeDate === null && openQuote?.ask !== null
+    ? (trade.entryPremium - openQuote.ask) * trade.contracts * 100
     : null;
   const unrealizedRoi = unrealizedProfit !== null && trade.collateral > 0
     ? unrealizedProfit / trade.collateral
@@ -276,19 +291,20 @@ const lifecycleTrades = trades.map((trade) => {
     ...(trade.closeDate === null
       ? {
           openPosition: {
-            markPremium: round(latestQuote?.ask ?? null),
+            markPremium: round(openQuote?.ask ?? null),
             unrealizedProfit: round(unrealizedProfit, 2),
             unrealizedRoi: round(unrealizedRoi),
-            quote: latestQuote
+            quote: openQuote
               ? {
-                  marketDate: latestQuote.marketDate,
-                  generatedAt: latestQuote.generatedAt,
-                  bid: round(latestQuote.bid),
-                  ask: round(latestQuote.ask),
-                  underlyingPrice: round(latestQuote.underlyingPrice),
-                  iv: round(latestQuote.iv),
-                  delta: round(latestQuote.delta),
-                  modeled: latestQuote.modeled,
+                  marketDate: openQuote.marketDate,
+                  generatedAt: openQuote.generatedAt,
+                  bid: round(openQuote.bid),
+                  ask: round(openQuote.ask),
+                  underlyingPrice: round(openQuote.underlyingPrice),
+                  iv: round(openQuote.iv),
+                  delta: round(openQuote.delta),
+                  modeled: openQuote.modeled,
+                  source: openQuote.source ?? (openQuote.modeled ? "model_estimate" : "snapshot_ask"),
                 }
               : null,
           },

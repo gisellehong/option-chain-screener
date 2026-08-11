@@ -10,7 +10,7 @@ type Coverage = "full" | "partial" | "missing";
 type TraderFilter = "All" | Trader;
 type StrategyFilter = "All" | Strategy;
 type StatusFilter = "All" | "Open" | "Closed";
-type EntryGreeksSource = "sheet" | "snapshot_exact" | "snapshot_estimate" | "model_estimate" | "missing";
+type EntryGreeksSource = "sheet" | "snapshot_exact" | "snapshot_estimate" | "model_estimate" | "broker_screenshot" | "missing";
 
 interface SoxlTrade {
   id: string;
@@ -67,6 +67,7 @@ interface SoxlLifecycle {
       iv: number | null;
       delta: number | null;
       modeled: boolean;
+      source: "snapshot_ask" | "model_estimate" | "broker_mark";
     } | null;
   };
   historical: {
@@ -461,6 +462,17 @@ export function SoxlTracker() {
                   : unrealizedProfit < 0
                     ? "negativeText"
                     : "positiveText";
+                const openQuote = lifecycle.openPosition?.quote ?? null;
+                const openMarkBasis = openQuote?.source === "broker_mark"
+                  ? "broker mark"
+                  : openQuote?.source === "model_estimate"
+                    ? "model mark"
+                    : "latest Ask";
+                const openQuoteLabel = openQuote?.source === "broker_mark"
+                  ? "Moomoo broker mark"
+                  : openQuote?.source === "model_estimate"
+                    ? "Model estimate"
+                    : "Snapshot Ask";
                 return (
                   <tr key={trade.id}>
                     <td>
@@ -487,11 +499,11 @@ export function SoxlTracker() {
                     <td>
                       <strong>Δ {formatMaybeNumber(lifecycle.entryGreeks.delta, 4)}</strong>
                       <small>IV {lifecycle.entryGreeks.iv === null ? "N/A" : `${formatNumber(lifecycle.entryGreeks.iv, 1)}%`}</small>
-                      <small>{lifecycle.entryGreeks.source === "sheet" ? "Sheet entry" : lifecycle.entryGreeks.source === "snapshot_exact" ? `Snapshot · ${formatTimestamp(lifecycle.entryGreeks.quoteAt)}` : lifecycle.entryGreeks.source === "model_estimate" ? "Model estimate" : lifecycle.entryGreeks.source === "snapshot_estimate" ? `Estimated · ${formatTimestamp(lifecycle.entryGreeks.quoteAt)}` : "Missing"}</small>
+                      <small>{lifecycle.entryGreeks.source === "sheet" ? "Sheet entry" : lifecycle.entryGreeks.source === "snapshot_exact" ? `Snapshot · ${formatTimestamp(lifecycle.entryGreeks.quoteAt)}` : lifecycle.entryGreeks.source === "broker_screenshot" ? `Moomoo Greeks · ${formatTimestamp(lifecycle.entryGreeks.quoteAt)}` : lifecycle.entryGreeks.source === "model_estimate" ? "Model estimate" : lifecycle.entryGreeks.source === "snapshot_estimate" ? `Estimated · ${formatTimestamp(lifecycle.entryGreeks.quoteAt)}` : "Missing"}</small>
                     </td>
                     <td>
                       <strong className={open ? unrealizedClass : ""}>{open ? unrealizedStatus : assigned ? "Assigned" : formatMaybeCurrency(trade.closePrice)}</strong>
-                      <small>{open ? lifecycle.openPosition?.markPremium !== null && lifecycle.openPosition?.markPremium !== undefined ? `Current premium ${formatCurrency(lifecycle.openPosition.markPremium)} · latest Ask` : "Current premium unavailable" : assigned ? "No buy-to-close price" : "Buy-to-close price"}</small>
+                      <small>{open ? lifecycle.openPosition?.markPremium !== null && lifecycle.openPosition?.markPremium !== undefined ? `Current premium ${formatCurrency(lifecycle.openPosition.markPremium)} · ${openMarkBasis}` : "Current premium unavailable" : assigned ? "No buy-to-close price" : "Buy-to-close price"}</small>
                       <small className={open ? unrealizedClass : trade.closedProfit !== null && trade.closedProfit < 0 ? "negativeText" : "positiveText"}>
                         {open
                           ? unrealizedProfit === null
@@ -502,7 +514,7 @@ export function SoxlTracker() {
                             : `${formatCurrency(trade.closedProfit, 0)} recorded P&L`}
                       </small>
                       {open && lifecycle.openPosition?.quote && (
-                        <small>{lifecycle.openPosition.quote.modeled ? "Model estimate" : "Snapshot Ask"} · {formatTimestamp(lifecycle.openPosition.quote.generatedAt)}</small>
+                        <small>{openQuoteLabel} · {formatTimestamp(lifecycle.openPosition.quote.generatedAt)}</small>
                       )}
                     </td>
                     <td>
@@ -541,7 +553,7 @@ export function SoxlTracker() {
       </section>
 
       <section className="soxlMethodology">
-        <div><Activity size={18} /><p><strong>Open Position</strong> uses the latest Ask for current premium and unrealized P&L. CC uses a labeled model estimate when the exact quote is unavailable.</p></div>
+        <div><Activity size={18} /><p><strong>Open Position</strong> uses the latest Ask for current premium and unrealized P&L. A labeled model estimate or broker mark is used only when no later exact quote exists.</p></div>
         <div><ShieldAlert size={18} /><p><strong>Maximum Unrealized Loss</strong> = min(0, (entry credit − maximum Ask) × contracts × 100). CC shows the short-call leg only.</p></div>
         <div><Percent size={18} /><p><strong>Premium Captured</strong> = (entry premium − close price) ÷ entry premium. Commissions are excluded.</p></div>
       </section>
