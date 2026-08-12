@@ -60,6 +60,7 @@ Local scheduled snapshots can also publish fresh generated data automatically. S
 
 ```bash
 AUTO_PUBLISH_GITHUB=true
+GITHUB_PUBLISH_BRANCH=main
 ```
 
 When enabled, successful non-`--skip-fetch` snapshot runs will commit and push only:
@@ -67,6 +68,10 @@ When enabled, successful non-`--skip-fetch` snapshot runs will commit and push o
 - `src/data/generated/realOptions.json`
 - `src/data/generated/realOptions.meta.json`
 - `src/data/generated/tracking.json`
+
+Publishing uses an isolated temporary worktree based on `GITHUB_PUBLISH_BRANCH`
+(default: `main`). This keeps scheduled snapshots from being committed to whichever
+feature branch happens to be checked out locally.
 
 GitHub Actions then rebuilds and redeploys the GitHub Pages dashboard. Other local code or config edits are not included in those automatic data commits.
 

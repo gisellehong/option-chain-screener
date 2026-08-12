@@ -27,7 +27,13 @@ function isOutOfTheMoney(trade, underlyingPrice) {
     : underlyingPrice < trade.strike;
 }
 
-const snapshots = [];
+const tradeStates = trades.map((trade) => ({
+  trade,
+  entryAt: trade.validation?.nearestAfterSnapshot?.generatedAt ?? trade.observedAtSgt,
+  quoteHistory: [],
+  expiryClose: null,
+}));
+
 for (const date of fs.readdirSync(snapshotsRoot).sort()) {
   const directory = path.join(snapshotsRoot, date);
   if (!fs.statSync(directory).isDirectory()) continue;
@@ -36,30 +42,48 @@ for (const date of fs.readdirSync(snapshotsRoot).sort()) {
     if (!filename.endsWith(".json")) continue;
     const filePath = path.join(directory, filename);
     const snapshot = readSnapshot(filePath);
-    snapshots.push({ date, filename, filePath, snapshot });
+
+    for (const state of tradeStates) {
+      const { trade, entryAt } = state;
+      if (snapshot.generatedAt >= entryAt) {
+        const contract = contractFor(trade, snapshot);
+        if (contract) {
+          state.quoteHistory.push({
+            date,
+            filename,
+            path: path.relative(root, filePath),
+            generatedAt: snapshot.generatedAt,
+            bid: contract.bid,
+            ask: contract.ask,
+            mark: trade.action === "buy" ? contract.bid : contract.ask,
+            underlyingPrice: contract.underlyingPrice,
+          });
+        }
+      }
+
+      if (
+        state.expiryClose === null &&
+        date === trade.expiration &&
+        filename.startsWith("close-") &&
+        snapshot.session === "close"
+      ) {
+        const candidate = snapshot.candidates?.find((row) => row.ticker === trade.ticker);
+        if (candidate) {
+          state.expiryClose = {
+            path: path.relative(root, filePath),
+            generatedAt: snapshot.generatedAt,
+            underlyingPrice: candidate.underlyingPrice,
+          };
+        }
+      }
+    }
   }
 }
 
-const lifecycle = trades.map((trade) => {
+const lifecycle = tradeStates.map((state) => {
+  const { trade, entryAt, expiryClose } = state;
   const entrySnapshot = trade.validation?.nearestAfterSnapshot ?? null;
-  const entryAt = entrySnapshot?.generatedAt ?? trade.observedAtSgt;
-  const quoteHistory = snapshots
-    .map(({ date, filename, filePath, snapshot }) => {
-      const contract = contractFor(trade, snapshot);
-      if (!contract || snapshot.generatedAt < entryAt) return null;
-      return {
-        date,
-        filename,
-        path: path.relative(root, filePath),
-        generatedAt: snapshot.generatedAt,
-        bid: contract.bid,
-        ask: contract.ask,
-        mark: trade.action === "buy" ? contract.bid : contract.ask,
-        underlyingPrice: contract.underlyingPrice,
-      };
-    })
-    .filter(Boolean)
-    .sort((a, b) => a.generatedAt.localeCompare(b.generatedAt));
+  const quoteHistory = state.quoteHistory.sort((a, b) => a.generatedAt.localeCompare(b.generatedAt));
 
   const worstQuote = quoteHistory.reduce((worst, quote) => {
     if (worst === null) return quote;
@@ -77,20 +101,6 @@ const lifecycle = trades.map((trade) => {
           100,
       )
     : null;
-
-  const expiryClose = snapshots
-    .filter(({ date, filename, snapshot }) => date === trade.expiration && filename.startsWith("close-") && snapshot.session === "close")
-    .map(({ filePath, snapshot }) => {
-      const candidate = snapshot.candidates?.find((row) => row.ticker === trade.ticker);
-      return candidate
-        ? {
-            path: path.relative(root, filePath),
-            generatedAt: snapshot.generatedAt,
-            underlyingPrice: candidate.underlyingPrice,
-          }
-        : null;
-    })
-    .find(Boolean);
 
   const autoExpired = expiryClose ? isOutOfTheMoney(trade, expiryClose.underlyingPrice) : false;
 
