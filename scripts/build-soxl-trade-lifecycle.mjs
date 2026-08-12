@@ -7,6 +7,13 @@ const tradesPath = path.join(root, "data/soxl-trades/trades.json");
 const outputPath = path.join(root, "data/soxl-trades/lifecycle.json");
 const tradesData = JSON.parse(fs.readFileSync(tradesPath, "utf8"));
 const trades = tradesData.trades;
+const tradeIds = trades.map((trade) => trade.id);
+if (tradeIds.some((tradeId) => !tradeId)) {
+  throw new Error("Every SOXL trade must have a non-empty id.");
+}
+if (new Set(tradeIds).size !== tradeIds.length) {
+  throw new Error("SOXL trades contain duplicate ids.");
+}
 
 const easternDateFormatter = new Intl.DateTimeFormat("en-CA", {
   timeZone: "America/New_York",
@@ -349,6 +356,16 @@ const lifecycleTrades = trades.map((trade) => {
     qualityFlags,
   };
 });
+
+const lifecycleIds = lifecycleTrades.map((item) => item.tradeId);
+const missingLifecycleIds = tradeIds.filter((tradeId) => !lifecycleIds.includes(tradeId));
+const unexpectedLifecycleIds = lifecycleIds.filter((tradeId) => !tradeIds.includes(tradeId));
+if (missingLifecycleIds.length || unexpectedLifecycleIds.length) {
+  throw new Error(
+    `SOXL trade/lifecycle id mismatch. Missing: ${missingLifecycleIds.join(", ") || "none"}; ` +
+    `unexpected: ${unexpectedLifecycleIds.join(", ") || "none"}.`,
+  );
+}
 
 const summary = {
   tradeCount: lifecycleTrades.length,
