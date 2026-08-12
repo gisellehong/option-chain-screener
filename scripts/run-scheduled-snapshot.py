@@ -24,6 +24,7 @@ META_PATH = ROOT / "src/data/generated/realOptions.meta.json"
 TRACKING_PATH = ROOT / "src/data/generated/tracking.json"
 GEX_PATH = ROOT / "src/data/generated/gex.json"
 NEWS_PATH = ROOT / "src/data/generated/watchlistNews.json"
+YOUTUBER_TRADES_PATH = ROOT / "data/youtuber-trades/trades.json"
 YOUTUBER_LIFECYCLE_PATH = ROOT / "data/youtuber-trades/lifecycle.json"
 YOUTUBER_LIFECYCLE_SCRIPT = ROOT / "scripts/build-youtuber-trade-lifecycle.mjs"
 SNAPSHOT_ROOT = ROOT / "data/snapshots"
@@ -715,6 +716,7 @@ def publish_generated_data(session: str, generated_at: str) -> dict[str, Any]:
         "src/data/generated/gex.json",
         "src/data/generated/gex-SOXL.json",
         "src/data/generated/watchlistNews.json",
+        str(YOUTUBER_TRADES_PATH.relative_to(ROOT)),
         str(YOUTUBER_LIFECYCLE_PATH.relative_to(ROOT)),
     ]
     target_branch = os.getenv("GITHUB_PUBLISH_BRANCH", "main").strip() or "main"
@@ -894,7 +896,15 @@ def main() -> int:
     metadata = write_outputs(args, generated_at, watchlists, candidates, fetch_result, report, telegram, gex_result, news_result)
     lifecycle_result = run_youtuber_lifecycle()
     if should_publish and not args.skip_fetch:
-        publish = publish_generated_data(args.session, generated_at)
+        if lifecycle_result["exitCode"] == 0:
+            publish = publish_generated_data(args.session, generated_at)
+        else:
+            publish = {
+                "enabled": True,
+                "published": False,
+                "error": "Skipped publish because AAG lifecycle generation failed.",
+                "commit": None,
+            }
 
     print(json.dumps({
         "generatedAt": generated_at,
