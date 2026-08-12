@@ -27,6 +27,9 @@ NEWS_PATH = ROOT / "src/data/generated/watchlistNews.json"
 YOUTUBER_TRADES_PATH = ROOT / "data/youtuber-trades/trades.json"
 YOUTUBER_LIFECYCLE_PATH = ROOT / "data/youtuber-trades/lifecycle.json"
 YOUTUBER_LIFECYCLE_SCRIPT = ROOT / "scripts/build-youtuber-trade-lifecycle.mjs"
+SOXL_TRADES_PATH = ROOT / "data/soxl-trades/trades.json"
+SOXL_LIFECYCLE_PATH = ROOT / "data/soxl-trades/lifecycle.json"
+SOXL_LIFECYCLE_SCRIPT = ROOT / "scripts/build-soxl-trade-lifecycle.mjs"
 SNAPSHOT_ROOT = ROOT / "data/snapshots"
 REPORT_ROOT = ROOT / "data/reports"
 NY_TZ = ZoneInfo("America/New_York")
@@ -172,6 +175,17 @@ def run_news_fetch(tickers: list[str], output: Path) -> dict[str, Any]:
 
 def run_youtuber_lifecycle() -> dict[str, Any]:
     cmd = ["node", str(YOUTUBER_LIFECYCLE_SCRIPT.relative_to(ROOT))]
+    completed = subprocess.run(cmd, cwd=ROOT, text=True, capture_output=True, check=False)
+    return {
+        "exitCode": completed.returncode,
+        "stdout": completed.stdout,
+        "stderr": completed.stderr,
+        "command": " ".join(cmd),
+    }
+
+
+def run_soxl_lifecycle() -> dict[str, Any]:
+    cmd = ["node", str(SOXL_LIFECYCLE_SCRIPT.relative_to(ROOT))]
     completed = subprocess.run(cmd, cwd=ROOT, text=True, capture_output=True, check=False)
     return {
         "exitCode": completed.returncode,
@@ -718,6 +732,8 @@ def publish_generated_data(session: str, generated_at: str) -> dict[str, Any]:
         "src/data/generated/watchlistNews.json",
         str(YOUTUBER_TRADES_PATH.relative_to(ROOT)),
         str(YOUTUBER_LIFECYCLE_PATH.relative_to(ROOT)),
+        str(SOXL_TRADES_PATH.relative_to(ROOT)),
+        str(SOXL_LIFECYCLE_PATH.relative_to(ROOT)),
     ]
     target_branch = os.getenv("GITHUB_PUBLISH_BRANCH", "main").strip() or "main"
     fetch = run_git(["fetch", "origin", target_branch])
@@ -895,14 +911,20 @@ def main() -> int:
     publish = {"enabled": should_publish, "published": False, "error": None, "commit": None}
     metadata = write_outputs(args, generated_at, watchlists, candidates, fetch_result, report, telegram, gex_result, news_result)
     lifecycle_result = run_youtuber_lifecycle()
+    soxl_lifecycle_result = run_soxl_lifecycle()
     if should_publish and not args.skip_fetch:
-        if lifecycle_result["exitCode"] == 0:
+        failed_lifecycles = [
+            name
+            for name, result in (("AAG", lifecycle_result), ("SOXL", soxl_lifecycle_result))
+            if result["exitCode"] != 0
+        ]
+        if not failed_lifecycles:
             publish = publish_generated_data(args.session, generated_at)
         else:
             publish = {
                 "enabled": True,
                 "published": False,
-                "error": "Skipped publish because AAG lifecycle generation failed.",
+                "error": f"Skipped publish because lifecycle generation failed: {', '.join(failed_lifecycles)}.",
                 "commit": None,
             }
 
@@ -916,10 +938,15 @@ def main() -> int:
         "gex": gex_result,
         "news": news_result,
         "youtuberLifecycle": lifecycle_result,
+        "soxlLifecycle": soxl_lifecycle_result,
         "publish": publish,
     }, indent=2))
     print("\n" + report)
-    return 0 if not telegram.get("error") and lifecycle_result["exitCode"] == 0 else 1
+    return 0 if (
+        not telegram.get("error")
+        and lifecycle_result["exitCode"] == 0
+        and soxl_lifecycle_result["exitCode"] == 0
+    ) else 1
 
 
 if __name__ == "__main__":
