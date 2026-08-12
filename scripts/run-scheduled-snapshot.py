@@ -6,8 +6,10 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shutil
 import subprocess
 import sys
+import tempfile
 import urllib.parse
 import urllib.request
 from datetime import datetime
@@ -701,8 +703,8 @@ def env_truthy(name: str) -> bool:
     return os.getenv(name, "").strip().lower() in {"1", "true", "yes", "on"}
 
 
-def run_git(args: list[str]) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(["git", *args], cwd=ROOT, text=True, capture_output=True, check=False)
+def run_git(args: list[str], cwd: Path = ROOT) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(["git", *args], cwd=cwd, text=True, capture_output=True, check=False)
 
 
 def publish_generated_data(session: str, generated_at: str) -> dict[str, Any]:
@@ -715,39 +717,88 @@ def publish_generated_data(session: str, generated_at: str) -> dict[str, Any]:
         "src/data/generated/watchlistNews.json",
         str(YOUTUBER_LIFECYCLE_PATH.relative_to(ROOT)),
     ]
-    status = run_git(["status", "--porcelain", "--", *paths])
-    if status.returncode != 0:
-        return {"enabled": True, "published": False, "error": status.stderr.strip(), "commit": None}
-    if not status.stdout.strip():
-        return {"enabled": True, "published": False, "error": None, "commit": None, "message": "No generated data changes."}
+    target_branch = os.getenv("GITHUB_PUBLISH_BRANCH", "main").strip() or "main"
+    fetch = run_git(["fetch", "origin", target_branch])
+    if fetch.returncode != 0:
+        return {"enabled": True, "published": False, "error": fetch.stderr.strip(), "commit": None}
 
-    add = run_git(["add", *paths])
-    if add.returncode != 0:
-        return {"enabled": True, "published": False, "error": add.stderr.strip(), "commit": None}
+    publish_root = Path(tempfile.mkdtemp(prefix="option-chain-screener-publish-"))
+    worktree_added = False
+    try:
+        worktree = run_git(["worktree", "add", "--detach", str(publish_root), f"origin/{target_branch}"])
+        if worktree.returncode != 0:
+            return {
+                "enabled": True,
+                "published": False,
+                "error": worktree.stderr.strip() or worktree.stdout.strip(),
+                "commit": None,
+            }
+        worktree_added = True
 
-    commit_message = f"Update option snapshot: {session} {generated_at}"
-    commit = run_git(["commit", "-m", commit_message])
-    if commit.returncode != 0:
-        return {"enabled": True, "published": False, "error": commit.stderr.strip() or commit.stdout.strip(), "commit": None}
+        for relative_path in paths:
+            source = ROOT / relative_path
+            destination = publish_root / relative_path
+            if not source.exists():
+                return {
+                    "enabled": True,
+                    "published": False,
+                    "error": f"Missing generated publish file: {relative_path}",
+                    "commit": None,
+                }
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(source, destination)
 
-    commit_id = run_git(["rev-parse", "--short", "HEAD"])
-    push = run_git(["push", "origin", "HEAD"])
-    if push.returncode != 0:
+        status = run_git(["status", "--porcelain", "--", *paths], cwd=publish_root)
+        if status.returncode != 0:
+            return {"enabled": True, "published": False, "error": status.stderr.strip(), "commit": None}
+        if not status.stdout.strip():
+            return {
+                "enabled": True,
+                "published": False,
+                "error": None,
+                "commit": None,
+                "message": "No generated data changes.",
+                "targetBranch": target_branch,
+            }
+
+        add = run_git(["add", *paths], cwd=publish_root)
+        if add.returncode != 0:
+            return {"enabled": True, "published": False, "error": add.stderr.strip(), "commit": None}
+
+        commit_message = f"Update option snapshot: {session} {generated_at}"
+        commit = run_git(["commit", "-m", commit_message], cwd=publish_root)
+        if commit.returncode != 0:
+            return {
+                "enabled": True,
+                "published": False,
+                "error": commit.stderr.strip() or commit.stdout.strip(),
+                "commit": None,
+            }
+
+        commit_id = run_git(["rev-parse", "--short", "HEAD"], cwd=publish_root)
+        push = run_git(["push", "origin", f"HEAD:refs/heads/{target_branch}"], cwd=publish_root)
+        if push.returncode != 0:
+            return {
+                "enabled": True,
+                "published": False,
+                "error": push.stderr.strip() or push.stdout.strip(),
+                "commit": commit_id.stdout.strip() if commit_id.returncode == 0 else None,
+                "targetBranch": target_branch,
+            }
+
         return {
             "enabled": True,
-            "published": False,
-            "error": push.stderr.strip() or push.stdout.strip(),
+            "published": True,
+            "error": None,
             "commit": commit_id.stdout.strip() if commit_id.returncode == 0 else None,
+            "targetBranch": target_branch,
+            "stdout": push.stdout.strip(),
+            "stderr": push.stderr.strip(),
         }
-
-    return {
-        "enabled": True,
-        "published": True,
-        "error": None,
-        "commit": commit_id.stdout.strip() if commit_id.returncode == 0 else None,
-        "stdout": push.stdout.strip(),
-        "stderr": push.stderr.strip(),
-    }
+    finally:
+        if worktree_added:
+            run_git(["worktree", "remove", "--force", str(publish_root)])
+        shutil.rmtree(publish_root, ignore_errors=True)
 
 
 def write_outputs(
