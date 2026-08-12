@@ -68,6 +68,11 @@ When enabled, successful non-`--skip-fetch` snapshot runs will commit and push o
 - `src/data/generated/realOptions.json`
 - `src/data/generated/realOptions.meta.json`
 - `src/data/generated/tracking.json`
+- `src/data/generated/gex.json`
+- `src/data/generated/gex-SOXL.json`
+- `src/data/generated/watchlistNews.json`
+- `data/youtuber-trades/trades.json`
+- `data/youtuber-trades/lifecycle.json`
 
 Publishing uses an isolated temporary worktree based on `GITHUB_PUBLISH_BRANCH`
 (default: `main`). This keeps scheduled snapshots from being committed to whichever

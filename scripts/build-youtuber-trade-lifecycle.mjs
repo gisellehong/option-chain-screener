@@ -6,6 +6,13 @@ const snapshotsRoot = path.join(root, "data/snapshots");
 const tradesPath = path.join(root, "data/youtuber-trades/trades.json");
 const outputPath = path.join(root, "data/youtuber-trades/lifecycle.json");
 const trades = JSON.parse(fs.readFileSync(tradesPath, "utf8")).trades;
+const tradeIds = trades.map((trade) => trade.id);
+if (tradeIds.some((tradeId) => !tradeId)) {
+  throw new Error("Every AAG trade must have a non-empty id.");
+}
+if (new Set(tradeIds).size !== tradeIds.length) {
+  throw new Error("AAG trades contain duplicate ids.");
+}
 
 function readSnapshot(filePath) {
   return JSON.parse(fs.readFileSync(filePath, "utf8"));
@@ -127,6 +134,16 @@ const lifecycle = tradeStates.map((state) => {
       : null,
   };
 });
+
+const lifecycleIds = lifecycle.map((item) => item.tradeId);
+const missingLifecycleIds = tradeIds.filter((tradeId) => !lifecycleIds.includes(tradeId));
+const unexpectedLifecycleIds = lifecycleIds.filter((tradeId) => !tradeIds.includes(tradeId));
+if (missingLifecycleIds.length || unexpectedLifecycleIds.length) {
+  throw new Error(
+    `AAG trade/lifecycle id mismatch. Missing: ${missingLifecycleIds.join(", ") || "none"}; ` +
+    `unexpected: ${unexpectedLifecycleIds.join(", ") || "none"}.`,
+  );
+}
 
 fs.writeFileSync(
   outputPath,
