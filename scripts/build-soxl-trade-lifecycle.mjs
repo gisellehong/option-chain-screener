@@ -259,7 +259,7 @@ const lifecycleTrades = trades.map((trade) => {
   const maximumUnrealizedLoss = worstQuote?.ask === null || !worstQuote
     ? null
     : Math.min(0, (trade.entryPremium - worstQuote.ask) * trade.contracts * 100);
-  const unrealizedProfit = trade.closeDate === null && openQuote?.ask !== null
+  const unrealizedProfit = trade.closeDate === null && openQuote !== null && openQuote.ask !== null
     ? (trade.entryPremium - openQuote.ask) * trade.contracts * 100
     : null;
   const unrealizedRoi = unrealizedProfit !== null && trade.collateral > 0

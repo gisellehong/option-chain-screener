@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-14T15:47:04.736Z",
+  "generatedAt": "2026-08-14T15:55:30.974Z",
   "source": {
     "snapshotRoot": "data/snapshots",
     "parsedSnapshotCount": 753,
@@ -9,11 +9,11 @@
     "priceConvention": "Maximum premium uses the highest observed ask inside the holding window. Covered calls use Black-Scholes modeled prices when the exact contract quote was not archived."
   },
   "summary": {
-    "tradeCount": 36,
+    "tradeCount": 37,
     "fullCoverageCount": 28,
     "partialCoverageCount": 5,
-    "missingCoverageCount": 3,
-    "estimatedGreeksCount": 10,
+    "missingCoverageCount": 4,
+    "estimatedGreeksCount": 11,
     "missingGreeksCount": 0
   },
   "trades": [
@@ -2357,31 +2357,15 @@
         "source": "broker_screenshot",
         "quoteAt": "2026-08-11T23:09:42+08:00"
       },
-      "openPosition": {
-        "markPremium": 0.53,
-        "unrealizedProfit": 785,
-        "unrealizedRoi": 0.015392,
-        "quote": {
-          "marketDate": "2026-08-14",
-          "generatedAt": "2026-08-14T23:46:14+08:00",
-          "bid": 0.45,
-          "ask": 0.53,
-          "underlyingPrice": 140.06,
-          "iv": 136.693,
-          "delta": -0.04272,
-          "modeled": false,
-          "source": "snapshot_ask"
-        }
-      },
       "historical": {
-        "quoteCount": 47,
+        "quoteCount": 42,
         "modeledQuoteCount": 0,
         "availableMarketDates": 4,
         "matchedMarketDates": 4,
         "coverageRatio": 1,
         "coverage": "full",
         "firstQuoteAt": "2026-08-11T23:17:16+08:00",
-        "lastQuoteAt": "2026-08-14T23:46:14+08:00",
+        "lastQuoteAt": "2026-08-14T21:13:17+08:00",
         "maximumPremium": 2.45,
         "maximumUnrealizedLoss": -175,
         "maximumLossPctCollateral": 0.003431,
@@ -2418,14 +2402,57 @@
         ]
       },
       "returns": {
-        "recordedProfit": null,
+        "recordedProfit": 793.92,
         "entryRoi": 0.020588,
-        "realizedRoi": null,
-        "annualizedRealizedReturn": null,
+        "realizedRoi": 0.015567,
+        "annualizedRealizedReturn": 1.893992,
         "sourceAnnualReturn": 0.751471
       },
       "qualityFlags": [
         "timestamp_trade_window"
+      ]
+    },
+    {
+      "tradeId": "screenshot-g-20260814-soxl-115p",
+      "entryGreeks": {
+        "iv": 137.253981,
+        "delta": -0.153642,
+        "underlyingPrice": 145.96,
+        "source": "model_estimate",
+        "quoteAt": null
+      },
+      "openPosition": {
+        "markPremium": null,
+        "unrealizedProfit": null,
+        "unrealizedRoi": null,
+        "quote": null
+      },
+      "historical": {
+        "quoteCount": 0,
+        "modeledQuoteCount": 0,
+        "availableMarketDates": 0,
+        "matchedMarketDates": 0,
+        "coverageRatio": 0,
+        "coverage": "missing",
+        "firstQuoteAt": null,
+        "lastQuoteAt": null,
+        "maximumPremium": null,
+        "maximumUnrealizedLoss": null,
+        "maximumLossPctCollateral": null,
+        "worstQuote": null,
+        "dailyMaxPremium": []
+      },
+      "returns": {
+        "recordedProfit": null,
+        "entryRoi": 0.031304,
+        "realizedRoi": null,
+        "annualizedRealizedReturn": null,
+        "sourceAnnualReturn": 0.816149
+      },
+      "qualityFlags": [
+        "timestamp_trade_window",
+        "missing_quote_history",
+        "entry_greeks_estimated"
       ]
     }
   ]
