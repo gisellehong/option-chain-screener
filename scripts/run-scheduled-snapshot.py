@@ -723,18 +723,19 @@ def run_git(args: list[str], cwd: Path = ROOT) -> subprocess.CompletedProcess[st
 
 
 def publish_generated_data(session: str, generated_at: str) -> dict[str, Any]:
-    paths = [
+    copied_paths = [
         "src/data/generated/realOptions.json",
         "src/data/generated/realOptions.meta.json",
         "src/data/generated/tracking.json",
         "src/data/generated/gex.json",
         "src/data/generated/gex-SOXL.json",
         "src/data/generated/watchlistNews.json",
-        str(YOUTUBER_TRADES_PATH.relative_to(ROOT)),
+    ]
+    lifecycle_paths = [
         str(YOUTUBER_LIFECYCLE_PATH.relative_to(ROOT)),
-        str(SOXL_TRADES_PATH.relative_to(ROOT)),
         str(SOXL_LIFECYCLE_PATH.relative_to(ROOT)),
     ]
+    paths = [*copied_paths, *lifecycle_paths]
     target_branch = os.getenv("GITHUB_PUBLISH_BRANCH", "main").strip() or "main"
     fetch = run_git(["fetch", "origin", target_branch])
     if fetch.returncode != 0:
@@ -753,7 +754,7 @@ def publish_generated_data(session: str, generated_at: str) -> dict[str, Any]:
             }
         worktree_added = True
 
-        for relative_path in paths:
+        for relative_path in copied_paths:
             source = ROOT / relative_path
             destination = publish_root / relative_path
             if not source.exists():
@@ -765,6 +766,33 @@ def publish_generated_data(session: str, generated_at: str) -> dict[str, Any]:
                 }
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(source, destination)
+
+        snapshot_source = ROOT / "data/snapshots"
+        snapshot_destination = publish_root / "data/snapshots"
+        if not snapshot_source.exists():
+            return {
+                "enabled": True,
+                "published": False,
+                "error": "Missing local snapshot history: data/snapshots",
+                "commit": None,
+            }
+        snapshot_destination.symlink_to(snapshot_source, target_is_directory=True)
+
+        for script_path in (YOUTUBER_LIFECYCLE_SCRIPT, SOXL_LIFECYCLE_SCRIPT):
+            lifecycle = subprocess.run(
+                ["node", str(script_path.relative_to(ROOT))],
+                cwd=publish_root,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            if lifecycle.returncode != 0:
+                return {
+                    "enabled": True,
+                    "published": False,
+                    "error": lifecycle.stderr.strip() or lifecycle.stdout.strip(),
+                    "commit": None,
+                }
 
         status = run_git(["status", "--porcelain", "--", *paths], cwd=publish_root)
         if status.returncode != 0:

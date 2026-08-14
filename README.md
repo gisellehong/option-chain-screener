@@ -71,14 +71,14 @@ When enabled, successful non-`--skip-fetch` snapshot runs will commit and push o
 - `src/data/generated/gex.json`
 - `src/data/generated/gex-SOXL.json`
 - `src/data/generated/watchlistNews.json`
-- `data/youtuber-trades/trades.json`
 - `data/youtuber-trades/lifecycle.json`
-- `data/soxl-trades/trades.json`
 - `data/soxl-trades/lifecycle.json`
 
 Publishing uses an isolated temporary worktree based on `GITHUB_PUBLISH_BRANCH`
-(default: `main`). This keeps scheduled snapshots from being committed to whichever
-feature branch happens to be checked out locally.
+(default: `main`). Lifecycle files are rebuilt inside that worktree from the canonical
+trade tables on the target branch, using the local archived snapshots. This keeps
+scheduled snapshots from reverting manually maintained trades when another feature
+branch happens to be checked out locally.
 
 GitHub Actions then rebuilds and redeploys the GitHub Pages dashboard. Other local code or config edits are not included in those automatic data commits.
 
