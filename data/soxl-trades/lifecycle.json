@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-14T15:55:30.974Z",
+  "generatedAt": "2026-08-14T16:09:49.313Z",
   "source": {
     "snapshotRoot": "data/snapshots",
     "parsedSnapshotCount": 753,
@@ -13,7 +13,7 @@
     "fullCoverageCount": 28,
     "partialCoverageCount": 5,
     "missingCoverageCount": 4,
-    "estimatedGreeksCount": 11,
+    "estimatedGreeksCount": 10,
     "missingGreeksCount": 0
   },
   "trades": [
@@ -2415,17 +2415,27 @@
     {
       "tradeId": "screenshot-g-20260814-soxl-115p",
       "entryGreeks": {
-        "iv": 137.253981,
-        "delta": -0.153642,
-        "underlyingPrice": 145.96,
-        "source": "model_estimate",
-        "quoteAt": null
+        "iv": 127.6,
+        "delta": -0.1602,
+        "underlyingPrice": 143.525,
+        "source": "broker_screenshot",
+        "quoteAt": "2026-08-14T22:19:12+08:00"
       },
       "openPosition": {
-        "markPremium": null,
-        "unrealizedProfit": null,
-        "unrealizedRoi": null,
-        "quote": null
+        "markPremium": 3.43,
+        "unrealizedProfit": 170,
+        "unrealizedRoi": 0.001478,
+        "quote": {
+          "marketDate": "2026-08-14",
+          "generatedAt": "2026-08-14T22:19:12+08:00",
+          "bid": null,
+          "ask": 3.43,
+          "underlyingPrice": 143.525,
+          "iv": 127.6,
+          "delta": -0.1602,
+          "modeled": false,
+          "source": "broker_mark"
+        }
       },
       "historical": {
         "quoteCount": 0,
@@ -2451,8 +2461,7 @@
       },
       "qualityFlags": [
         "timestamp_trade_window",
-        "missing_quote_history",
-        "entry_greeks_estimated"
+        "missing_quote_history"
       ]
     }
   ]
