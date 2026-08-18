@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-11T22:52:37+08:00",
+  "updatedAt": "2026-08-18T23:18:46+08:00",
   "source": {
     "type": "ibkr_screenshot",
     "path": "/Users/patrick_giselle/Downloads/Screenshot_20260609_095652.jpg",
@@ -99,9 +99,68 @@
       "visibleTradeCount": 2,
       "screenTradeCount": 2,
       "note": "Discord screenshot from Rich.TW shows 2 fully visible AMZN and AMD short put trades for Aug 11, 2026."
+    },
+    {
+      "type": "ibkr_discord_screenshot",
+      "path": "/tmp/codex-remote-attachments/019eb6f0-0bf0-7580-9ffc-30467c789a37/801DEE11-A18F-4325-8448-A81E4D66ED34/1-Photo-1.jpg",
+      "visibleTradeCount": 1,
+      "screenTradeCount": 2,
+      "note": "Discord screenshot from Rich.TW shows 1 fully visible AMD short put trade out of 2 listed for Aug 18, 2026."
     }
   ],
   "trades": [
+    {
+      "id": "ibkr-20260818-093155-amd-20260828-435-put-sell-10",
+      "tradeDate": "2026-08-18",
+      "tradeTimeEt": "09:31:55",
+      "observedAtSgt": "2026-08-18T21:31:55+08:00",
+      "broker": "IBKR",
+      "executionVenue": "BOX",
+      "accountLabel": "Rich.TW",
+      "positionKind": "executed_trade",
+      "ticker": "AMD",
+      "companyName": "Advanced Micro Devices",
+      "action": "sell",
+      "quantity": 10,
+      "optionType": "put",
+      "expiration": "2026-08-28",
+      "strike": 435,
+      "fillPrice": 2.42,
+      "limitPrice": 2.42,
+      "grossPremium": 2420,
+      "commission": 7.06,
+      "realizedPnl": 0,
+      "validation": {
+        "status": "supported",
+        "nearestBeforeSnapshot": {
+          "path": "data/snapshots/2026-08-18/pre_market-20260818T211813_0800.json",
+          "generatedAt": "2026-08-18T21:18:13+08:00",
+          "minutesFromTrade": -13.7,
+          "bid": 1.48,
+          "ask": 1.74,
+          "mid": 1.61,
+          "underlyingPrice": 506,
+          "iv": 62.385,
+          "delta": -0.066368265,
+          "volume": 164,
+          "openInterest": 542
+        },
+        "nearestAfterSnapshot": {
+          "path": "data/snapshots/2026-08-18/half_hourly-20260818T214811_0800.json",
+          "generatedAt": "2026-08-18T21:48:11+08:00",
+          "minutesFromTrade": 16.27,
+          "bid": 2.39,
+          "ask": 2.63,
+          "mid": 2.51,
+          "underlyingPrice": 489.23,
+          "iv": 58.073,
+          "delta": -0.106042371,
+          "volume": 82,
+          "openInterest": 542
+        },
+        "assessment": "The reported 2.42 fill was inside the nearest post-fill bid/ask spread captured 16.27 minutes later, so the execution is supported by archived option-chain data."
+      }
+    },
     {
       "id": "ibkr-20260811-094842-amzn-20260821-255-put-sell-4",
       "tradeDate": "2026-08-11",
