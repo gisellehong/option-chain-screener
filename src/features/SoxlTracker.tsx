@@ -135,6 +135,32 @@ interface JoinedTrade {
 
 const tradesData = tradesRaw as unknown as SoxlTradesData;
 const lifecycleData = lifecycleRaw as unknown as SoxlLifecycleData;
+
+export interface SoxlTrackerSummary {
+  openCount: number;
+  closedCount: number;
+  openPnl: number | null;
+  openCollateral: number;
+  realizedResult: number;
+  updatedAt: string;
+}
+
+export function getSoxlTrackerSummary(): SoxlTrackerSummary {
+  const lifecycleByTrade = new Map(lifecycleData.trades.map((lifecycle) => [lifecycle.tradeId, lifecycle]));
+  const openTrades = tradesData.trades.filter((trade) => trade.closeDate === null);
+  const openPnlValues = openTrades
+    .map((trade) => lifecycleByTrade.get(trade.id)?.openPosition?.unrealizedProfit ?? null)
+    .filter((value): value is number => value !== null);
+
+  return {
+    openCount: openTrades.length,
+    closedCount: tradesData.trades.length - openTrades.length,
+    openPnl: openPnlValues.length > 0 ? openPnlValues.reduce((sum, value) => sum + value, 0) : null,
+    openCollateral: openTrades.reduce((sum, trade) => sum + trade.collateral, 0),
+    realizedResult: tradesData.trades.reduce((sum, trade) => sum + (trade.closedProfit ?? 0), 0),
+    updatedAt: lifecycleData.generatedAt,
+  };
+}
 const PROFIT_MONTHS = [
   { key: "2026-06", label: "Jun" },
   { key: "2026-07", label: "Jul" },
@@ -329,7 +355,7 @@ function TraderComparison({ rows }: { rows: JoinedTrade[] }) {
   );
 }
 
-export function SoxlTracker() {
+export function SoxlTracker({ embedded = false }: { embedded?: boolean }) {
   const [traderFilter, setTraderFilter] = useState<TraderFilter>("All");
   const [strategyFilter, setStrategyFilter] = useState<StrategyFilter>("All");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("All");
@@ -370,8 +396,8 @@ export function SoxlTracker() {
   const closedCount = filteredRows.length - openCount;
 
   return (
-    <section className="wideWorkspace soxlWorkspace">
-      <section className="sectionHead soxlHeader">
+    <section className={embedded ? "soxlWorkspace trackerEmbedded" : "wideWorkspace soxlWorkspace"}>
+      {!embedded && <section className="sectionHead soxlHeader">
         <div>
           <div className="titleLine">
             <ClipboardList size={19} />
@@ -382,15 +408,15 @@ export function SoxlTracker() {
             CC 缺少完整合約報價時使用模型估算。
           </p>
         </div>
-      </section>
+      </section>}
 
-      <section className="overview reportOverview soxlOverview">
+      {!embedded && <section className="overview reportOverview soxlOverview">
         <SummaryMetric label="Trades" value={String(filteredRows.length)} subValue={`${openCount} open · ${closedCount} closed`} />
         <SummaryMetric label="Recorded P&L" value={formatCurrency(totalProfit, 0)} subValue="Closed trades; commissions included" />
         <SummaryMetric label="Avg Realized ROI" value={formatFraction(averageRoi)} subValue="Recorded profit ÷ collateral" />
         <SummaryMetric label="Avg Annualized" value={formatFraction(averageAnnualized, 1)} subValue="Realized ROI × 365 ÷ days held" />
         <SummaryMetric label="Worst Max Loss" value={formatMaybeCurrency(worstObservedLoss, 0)} subValue="Highest observed Ask convention" />
-      </section>
+      </section>}
 
       <TraderComparison rows={filteredRows} />
 
