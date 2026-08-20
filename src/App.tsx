@@ -22,7 +22,7 @@ import youtuberTradesRaw from "../data/youtuber-trades/trades.json";
 import youtuberLifecycleRaw from "../data/youtuber-trades/lifecycle.json";
 import { screenerConfigs } from "./data/screenerConfigs";
 import { watchlistMetadata } from "./data/watchlistMetadata";
-import { SoxlTracker } from "./features/SoxlTracker";
+import { getSoxlTrackerSummary, SoxlTracker } from "./features/SoxlTracker";
 import { compactNumber, formatCurrency, formatNumber, formatPercent } from "./lib/format";
 import { scoreCandidates } from "./lib/scoring";
 import type {
@@ -64,7 +64,8 @@ const watchlistNews = watchlistNewsRaw as {
   byTicker: Record<string, WatchlistNewsItem[]>;
   errors: Record<string, string>;
 };
-type DashboardView = "screener" | "watchlist" | "tracker" | "youtuber" | "soxl" | "report";
+type DashboardView = "screener" | "watchlist" | "tracker" | "trades" | "report";
+type TradeTrackerSource = "aag" | "soxl";
 
 type TradeValidationStatus = "supported" | "plausible" | "questionable" | "unsupported" | "screenshot_only";
 
@@ -611,9 +612,11 @@ function pnlTone(value: number | null): string {
 function YouTuberTracker({
   tradesData,
   generatedAt,
+  embedded = false,
 }: {
   tradesData: YouTuberTradesData;
   generatedAt: string | null;
+  embedded?: boolean;
 }) {
   const lifecycleByTrade = new Map(youtuberLifecycle.trades.map((lifecycle) => [lifecycle.tradeId, lifecycle]));
   const rows = tradesData.trades.flatMap((trade) => {
@@ -680,8 +683,8 @@ function YouTuberTracker({
   );
 
   return (
-    <section className="wideWorkspace">
-      <section className="sectionHead">
+    <section className={embedded ? "trackerEmbedded" : "wideWorkspace"}>
+      {!embedded && <section className="sectionHead">
         <div>
           <div className="titleLine">
             <ClipboardList size={19} />
@@ -689,7 +692,7 @@ function YouTuberTracker({
           </div>
           <p>同一頁分開追蹤 Sell Put 與 LEAPS Call。Sell Put 使用最新 ask 估算回補成本；Long Call 使用最新 bid 估算可執行的平倉價值。</p>
         </div>
-      </section>
+      </section>}
 
       <section className="tradeGroup">
         <div className="tradeGroupHead">
@@ -1007,6 +1010,129 @@ function YouTuberTracker({
         </div>
       </section>
 
+    </section>
+  );
+}
+
+interface TradeTrackerSummary {
+  openCount: number;
+  closedCount: number;
+  openPnl: number | null;
+  openCollateral: number;
+  realizedResult: number;
+  updatedAt: string | null;
+}
+
+function getAagTrackerSummary(
+  tradesData: YouTuberTradesData,
+  generatedAt: string | null,
+): TradeTrackerSummary {
+  const lifecycleByTrade = new Map(youtuberLifecycle.trades.map((lifecycle) => [lifecycle.tradeId, lifecycle]));
+  const openTrades = tradesData.trades.filter((trade) => lifecycleByTrade.get(trade.id)?.expiry === null);
+  const openPnlValues = openTrades
+    .map((trade) => openPnl(trade, findCurrentContract(trade)))
+    .filter((value): value is number => value !== null);
+
+  return {
+    openCount: openTrades.length,
+    closedCount: tradesData.trades.length - openTrades.length,
+    openPnl: openPnlValues.length > 0 ? openPnlValues.reduce((sum, value) => sum + value, 0) : null,
+    openCollateral: openTrades.reduce((sum, trade) => (
+      trade.action === "sell" && trade.optionType === "put" && trade.quantity !== null
+        ? sum + trade.strike * trade.quantity * 100
+        : sum
+    ), 0),
+    realizedResult: tradesData.trades.reduce((sum, trade) => (
+      sum + (lifecycleByTrade.get(trade.id)?.expiry?.premiumCollected ?? 0)
+    ), 0),
+    updatedAt: generatedAt ?? youtuberLifecycle.generatedAt,
+  };
+}
+
+function UnifiedTradeTracker({
+  tradesData,
+  generatedAt,
+}: {
+  tradesData: YouTuberTradesData;
+  generatedAt: string | null;
+}) {
+  const [source, setSource] = useState<TradeTrackerSource>("aag");
+  const aagSummary = useMemo(() => getAagTrackerSummary(tradesData, generatedAt), [generatedAt, tradesData]);
+  const soxlSummary = useMemo(() => getSoxlTrackerSummary(), []);
+  const summary = source === "aag" ? aagSummary : soxlSummary;
+  const sourceLabel = source === "aag" ? "AAG" : "SOXL";
+  const resultLabel = source === "aag" ? "Premium Collected" : "Recorded P&L";
+
+  return (
+    <section className="wideWorkspace trackerHub">
+      <section className="sectionHead trackerHubHeader">
+        <div>
+          <div className="titleLine">
+            <ClipboardList size={19} />
+            <h2>Trade Tracker</h2>
+          </div>
+          <p>AAG 與 SOXL 交易集中於同一個 Dashboard，使用一致的部位、損益與資金曝險摘要。</p>
+        </div>
+        <div className="trackerSourceTabs" role="tablist" aria-label="Trade tracker source">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={source === "aag"}
+            className={source === "aag" ? "active" : ""}
+            onClick={() => setSource("aag")}
+          >
+            <ClipboardList size={16} />
+            <span>AAG</span>
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={source === "soxl"}
+            className={source === "soxl" ? "active" : ""}
+            onClick={() => setSource("soxl")}
+          >
+            <TrendingUp size={16} />
+            <span>SOXL</span>
+          </button>
+        </div>
+      </section>
+
+      <section className="overview trackerOverview" aria-label={`${sourceLabel} tracker summary`}>
+        <SummaryMetric
+          label="Open Positions"
+          value={String(summary.openCount)}
+          subValue={`${summary.closedCount} closed trades`}
+        />
+        <SummaryMetric
+          label="Open P&L"
+          value={summary.openPnl === null ? "N/A" : formatCurrency(summary.openPnl, 0)}
+          subValue="Latest available position marks"
+        />
+        <SummaryMetric
+          label="Open Collateral"
+          value={formatCurrency(summary.openCollateral, 0)}
+          subValue={source === "aag" ? "Open cash-secured puts" : "Recorded open collateral"}
+        />
+        <SummaryMetric
+          label={resultLabel}
+          value={formatCurrency(summary.realizedResult, 0)}
+          subValue={`Closed trades · Updated ${formatShortDate(summary.updatedAt)}`}
+        />
+      </section>
+
+      <div className="trackerSourceContext">
+        <div>
+          <span>Active tracker</span>
+          <strong>{sourceLabel}</strong>
+        </div>
+        <small>{source === "aag" ? "Rich's AAG positions" : "G / L SOXL strategy records"}</small>
+      </div>
+
+      <div role="tabpanel" aria-label={`${sourceLabel} tracker`}>
+        {source === "aag"
+          ? <YouTuberTracker tradesData={tradesData} generatedAt={generatedAt} embedded />
+          : <SoxlTracker embedded />}
+      </div>
     </section>
   );
 }
@@ -1568,8 +1694,7 @@ export function App() {
           { id: "screener", label: "Today Screener", icon: Filter },
           { id: "watchlist", label: "Watchlist", icon: Newspaper },
           { id: "tracker", label: "Signal Tracker", icon: Database },
-          { id: "youtuber", label: "AAG Tracker", icon: ClipboardList },
-          { id: "soxl", label: "SOXL Tracker", icon: ClipboardList },
+          { id: "trades", label: "Trade Tracker", icon: ClipboardList },
           { id: "report", label: "Strategy Report", icon: BarChart3 },
         ].map((view) => {
           const Icon = view.icon;
@@ -1635,10 +1760,9 @@ export function App() {
 
       {activeView === "tracker" && <SignalTracker trackingData={tracking} />}
       {activeView === "watchlist" && <Watchlist dataSet={dataSet} generatedAt={realOptionsMeta.generatedAt} />}
-      {activeView === "youtuber" && (
-        <YouTuberTracker tradesData={youtuberTrades} generatedAt={realOptionsMeta.generatedAt} />
+      {activeView === "trades" && (
+        <UnifiedTradeTracker tradesData={youtuberTrades} generatedAt={realOptionsMeta.generatedAt} />
       )}
-      {activeView === "soxl" && <SoxlTracker />}
       {activeView === "report" && <StrategyReport trackingData={tracking} />}
       {activeView === "screener" && (
       <section className="workspace">

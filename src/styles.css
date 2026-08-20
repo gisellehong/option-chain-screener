@@ -178,6 +178,107 @@ h3 {
   padding: 20px 32px 32px;
 }
 
+.trackerHub {
+  gap: 0;
+}
+
+.trackerHubHeader {
+  align-items: center;
+  padding: 2px 0 16px;
+}
+
+.trackerSourceTabs {
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid #cfc7b8;
+  border-radius: 8px;
+  background: #f3f0ea;
+}
+
+.trackerSourceTabs button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-width: 96px;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #56514a;
+  font-weight: 850;
+}
+
+.trackerSourceTabs button:hover {
+  color: #202225;
+}
+
+.trackerSourceTabs button.active {
+  background: #202225;
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgb(32 34 37 / 18%);
+}
+
+.trackerOverview {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0 -32px;
+  border-top: 1px solid #ddd8cc;
+}
+
+.trackerSourceContext {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 0 2px;
+  border-bottom: 1px solid #d8d1c5;
+}
+
+.trackerSourceContext div {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+}
+
+.trackerSourceContext span,
+.trackerSourceContext small {
+  color: #706961;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.trackerSourceContext strong {
+  color: #202225;
+  font-size: 19px;
+}
+
+.trackerEmbedded {
+  display: grid;
+  min-width: 0;
+  gap: 16px;
+}
+
+.trackerEmbedded > *,
+.trackerEmbedded .tradeGroup {
+  min-width: 0;
+}
+
+.trackerEmbedded .tableWrap {
+  width: 100%;
+  max-width: 100%;
+}
+
+.trackerHub > [role="tabpanel"] {
+  min-width: 0;
+}
+
+.trackerEmbedded .tradeGroup:first-child {
+  margin-top: 18px;
+}
+
 .primary {
   min-width: 0;
 }
@@ -1343,6 +1444,31 @@ dd {
 
   .tradeGroupHead {
     flex-direction: column;
+  }
+
+  .trackerHubHeader {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .trackerSourceTabs {
+    width: 100%;
+  }
+
+  .trackerSourceTabs button {
+    flex: 1 1 0;
+  }
+
+  .trackerOverview {
+    grid-template-columns: 1fr 1fr;
+    margin-right: -16px;
+    margin-left: -16px;
+  }
+
+  .trackerSourceContext {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
   }
 
   .soxlHeader {
