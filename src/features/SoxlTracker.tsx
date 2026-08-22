@@ -34,6 +34,12 @@ interface SoxlTrade {
   sourceAnnualReturn: number;
   entryIv: number | null;
   entryDelta: number | null;
+  rollGroupId?: string;
+  rollFromTradeId?: string;
+  rollToTradeId?: string;
+  rollNetCredit?: number;
+  rollCumulativeCredit?: number;
+  rollBreakeven?: number;
   notes: string | null;
   closeDate: string | null;
   daysHeld: number | null;
@@ -135,6 +141,7 @@ interface JoinedTrade {
 
 const tradesData = tradesRaw as unknown as SoxlTradesData;
 const lifecycleData = lifecycleRaw as unknown as SoxlLifecycleData;
+const tradeById = new Map(tradesData.trades.map((trade) => [trade.id, trade]));
 
 export interface SoxlTrackerSummary {
   openCount: number;
@@ -499,6 +506,8 @@ export function SoxlTracker({ embedded = false }: { embedded?: boolean }) {
                   : openQuote?.source === "model_estimate"
                     ? "Model estimate"
                     : "Snapshot Ask";
+                const rollFrom = trade.rollFromTradeId ? tradeById.get(trade.rollFromTradeId) : null;
+                const rollTo = trade.rollToTradeId ? tradeById.get(trade.rollToTradeId) : null;
                 return (
                   <tr key={trade.id}>
                     <td>
@@ -516,6 +525,9 @@ export function SoxlTracker({ embedded = false }: { embedded?: boolean }) {
                       <small>{trade.strategy === "CC" ? "Covered Call" : "Cash-Secured Put"}</small>
                       <small>Exp {formatDate(trade.expiration)} · {trade.contracts} contract{trade.contracts === 1 ? "" : "s"}</small>
                       <small>{trade.expirationCorrected ? `Normalized from ${trade.sourceContractLabel}` : `${trade.dte} DTE at entry`}</small>
+                      {rollFrom && <small>Rolled from {formatDate(rollFrom.expiration)} · {formatCurrency(rollFrom.strike, 0)} PUT</small>}
+                      {rollTo && <small>Rolled to {formatDate(rollTo.expiration)} · {formatCurrency(rollTo.strike, 0)} PUT</small>}
+                      {trade.rollNetCredit !== undefined && <small>{formatCurrency(trade.rollNetCredit)} net roll credit</small>}
                     </td>
                     <td>
                       <strong>{formatCurrency(trade.entryPremium)} credit</strong>
@@ -566,6 +578,8 @@ export function SoxlTracker({ embedded = false }: { embedded?: boolean }) {
                       </strong>
                       <small>{open ? "Calculated after close" : assigned ? "No buy-to-close debit" : `(${formatCurrency(trade.entryPremium)} − ${formatMaybeCurrency(trade.closePrice)}) ÷ ${formatCurrency(trade.entryPremium)}`}</small>
                       <small>Commissions excluded</small>
+                      {trade.rollCumulativeCredit !== undefined && <small>{formatCurrency(trade.rollCumulativeCredit)} cumulative roll premium</small>}
+                      {trade.rollBreakeven !== undefined && <small>{formatCurrency(trade.rollBreakeven)} roll-chain breakeven</small>}
                     </td>
                   </tr>
                 );
