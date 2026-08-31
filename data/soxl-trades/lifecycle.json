@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-31T15:43:21.472Z",
+  "generatedAt": "2026-08-31T16:18:06.255Z",
   "source": {
     "snapshotRoot": "data/snapshots",
-    "parsedSnapshotCount": 916,
+    "parsedSnapshotCount": 917,
     "earliestSnapshotAt": "2026-06-07T18:26:34+08:00",
-    "latestSnapshotAt": "2026-08-31T23:41:53+08:00",
+    "latestSnapshotAt": "2026-09-01T00:16:29+08:00",
     "priceConvention": "Maximum premium uses the highest observed ask inside the holding window. Covered calls use Black-Scholes modeled prices when the exact contract quote was not archived."
   },
   "summary": {
     "tradeCount": 40,
     "fullCoverageCount": 29,
-    "partialCoverageCount": 7,
-    "missingCoverageCount": 4,
+    "partialCoverageCount": 8,
+    "missingCoverageCount": 3,
     "estimatedGreeksCount": 12,
     "missingGreeksCount": 0
   },
@@ -2674,25 +2674,49 @@
         "quoteAt": "2026-08-22T01:12:55+08:00"
       },
       "openPosition": {
-        "markPremium": null,
-        "unrealizedProfit": null,
-        "unrealizedRoi": null,
-        "quote": null
+        "markPremium": 5.6,
+        "unrealizedProfit": 1010,
+        "unrealizedRoi": 0.019238,
+        "quote": {
+          "marketDate": "2026-08-31",
+          "generatedAt": "2026-09-01T00:16:29+08:00",
+          "bid": 4.95,
+          "ask": 5.6,
+          "underlyingPrice": 111.095,
+          "iv": 105.632,
+          "delta": -0.345903,
+          "modeled": false,
+          "source": "snapshot_ask"
+        }
       },
       "historical": {
-        "quoteCount": 0,
+        "quoteCount": 1,
         "modeledQuoteCount": 0,
-        "availableMarketDates": 0,
-        "matchedMarketDates": 0,
-        "coverageRatio": 0,
-        "coverage": "missing",
-        "firstQuoteAt": null,
-        "lastQuoteAt": null,
-        "maximumPremium": null,
-        "maximumUnrealizedLoss": null,
-        "maximumLossPctCollateral": null,
-        "worstQuote": null,
-        "dailyMaxPremium": []
+        "availableMarketDates": 1,
+        "matchedMarketDates": 1,
+        "coverageRatio": 1,
+        "coverage": "partial",
+        "firstQuoteAt": "2026-09-01T00:16:29+08:00",
+        "lastQuoteAt": "2026-09-01T00:16:29+08:00",
+        "maximumPremium": 5.6,
+        "maximumUnrealizedLoss": 0,
+        "maximumLossPctCollateral": 0,
+        "worstQuote": {
+          "marketDate": "2026-08-31",
+          "generatedAt": "2026-09-01T00:16:29+08:00",
+          "bid": 4.95,
+          "ask": 5.6,
+          "underlyingPrice": 111.095,
+          "iv": 105.632,
+          "delta": -0.345903
+        },
+        "dailyMaxPremium": [
+          {
+            "marketDate": "2026-08-31",
+            "maximumAsk": 5.6,
+            "generatedAt": "2026-09-01T00:16:29+08:00"
+          }
+        ]
       },
       "returns": {
         "recordedProfit": null,
@@ -2703,7 +2727,7 @@
       },
       "qualityFlags": [
         "timestamp_trade_window",
-        "missing_quote_history",
+        "partial_quote_coverage",
         "entry_greeks_estimated"
       ]
     }
