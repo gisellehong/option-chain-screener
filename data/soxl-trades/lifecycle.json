@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-01T18:46:07.263Z",
+  "generatedAt": "2026-09-01T19:14:50.695Z",
   "source": {
     "snapshotRoot": "data/snapshots",
-    "parsedSnapshotCount": 937,
+    "parsedSnapshotCount": 938,
     "earliestSnapshotAt": "2026-06-07T18:26:34+08:00",
-    "latestSnapshotAt": "2026-09-02T02:44:38+08:00",
+    "latestSnapshotAt": "2026-09-02T03:13:20+08:00",
     "priceConvention": "Maximum premium uses the highest observed ask inside the holding window. Covered calls use Black-Scholes modeled prices when the exact contract quote was not archived."
   },
   "summary": {
@@ -2674,41 +2674,41 @@
         "quoteAt": "2026-08-22T01:12:55+08:00"
       },
       "openPosition": {
-        "markPremium": 7,
-        "unrealizedProfit": 310,
-        "unrealizedRoi": 0.005905,
+        "markPremium": 7.65,
+        "unrealizedProfit": -15,
+        "unrealizedRoi": -0.000286,
         "quote": {
           "marketDate": "2026-09-01",
-          "generatedAt": "2026-09-02T01:13:30+08:00",
-          "bid": 6.65,
-          "ask": 7,
-          "underlyingPrice": 105.3696,
-          "iv": 99.86,
-          "delta": -0.463159,
+          "generatedAt": "2026-09-02T03:13:20+08:00",
+          "bid": 7.2,
+          "ask": 7.65,
+          "underlyingPrice": 105.29,
+          "iv": 110.416,
+          "delta": -0.45557,
           "modeled": false,
           "source": "snapshot_ask"
         }
       },
       "historical": {
-        "quoteCount": 15,
+        "quoteCount": 16,
         "modeledQuoteCount": 0,
         "availableMarketDates": 2,
         "matchedMarketDates": 2,
         "coverageRatio": 1,
         "coverage": "partial",
         "firstQuoteAt": "2026-09-01T00:16:29+08:00",
-        "lastQuoteAt": "2026-09-02T01:13:30+08:00",
-        "maximumPremium": 7.1,
-        "maximumUnrealizedLoss": 0,
-        "maximumLossPctCollateral": 0,
+        "lastQuoteAt": "2026-09-02T03:13:20+08:00",
+        "maximumPremium": 7.65,
+        "maximumUnrealizedLoss": -15,
+        "maximumLossPctCollateral": 0.000286,
         "worstQuote": {
           "marketDate": "2026-09-01",
-          "generatedAt": "2026-09-02T00:44:48+08:00",
-          "bid": 6.45,
-          "ask": 7.1,
-          "underlyingPrice": 105.27,
-          "iv": 98.261,
-          "delta": -0.463827
+          "generatedAt": "2026-09-02T03:13:20+08:00",
+          "bid": 7.2,
+          "ask": 7.65,
+          "underlyingPrice": 105.29,
+          "iv": 110.416,
+          "delta": -0.45557
         },
         "dailyMaxPremium": [
           {
@@ -2718,8 +2718,8 @@
           },
           {
             "marketDate": "2026-09-01",
-            "maximumAsk": 7.1,
-            "generatedAt": "2026-09-02T00:44:48+08:00"
+            "maximumAsk": 7.65,
+            "generatedAt": "2026-09-02T03:13:20+08:00"
           }
         ]
       },
