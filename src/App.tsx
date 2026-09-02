@@ -195,6 +195,10 @@ function scoreTone(score: number): string {
   return "weak";
 }
 
+function formatOptionalPercent(value: number | null | undefined, digits = 1): string {
+  return typeof value === "number" && Number.isFinite(value) ? formatPercent(value, digits) : "N/A";
+}
+
 function filterStep(field: FilterRule["field"]): number {
   if (field === "delta" || field === "gamma" || field === "theta" || field === "vega") return 0.01;
   if (field === "spread" || field === "lastPrice" || field === "bid" || field === "ask") return 0.05;
@@ -222,6 +226,10 @@ function exportCsv(
     "spread",
     "openInterest",
     "volume",
+    "expiryItmProbability",
+    "touchProbability",
+    "bidAnnualizedRoi",
+    "midAnnualizedRoi",
     "score",
   ];
   const csv = [
@@ -1330,6 +1338,8 @@ function CandidateTable({
   scenario,
   filters,
   rows,
+  matchedRows,
+  diagnosticRows,
   selectedId,
   onSelect,
   onFilterChange,
@@ -1340,6 +1350,8 @@ function CandidateTable({
   scenario: ScreenerScenario;
   filters: FilterRule[];
   rows: ScoredCandidate[];
+  matchedRows: ScoredCandidate[];
+  diagnosticRows: ScoredCandidate[];
   selectedId: string;
   onSelect: (id: string) => void;
   onFilterChange: (filterIndex: number, bound: "min" | "max", value: number | undefined) => void;
@@ -1347,6 +1359,20 @@ function CandidateTable({
   onResetFilters: () => void;
 }) {
   const isLeaps = config.id === "leaps_deep_itm_call";
+  const isConservative = config.id === "soxl_conservative_csp";
+  const conservativeBuckets = isConservative
+    ? Array.from({ length: config.maxExpirations ?? 5 }, (_, index) => index + 1).map((bucket) => {
+        const candidates = diagnosticRows.filter((row) => row.soxlFridayBucket === bucket);
+        const selected = matchedRows.find((row) => row.soxlFridayBucket === bucket);
+        const closestRejected = [...candidates].sort((left, right) => {
+          if (left.failedFilters.length !== right.failedFilters.length) {
+            return left.failedFilters.length - right.failedFilters.length;
+          }
+          return right.score - left.score;
+        })[0];
+        return { bucket, selected, closestRejected };
+      })
+    : [];
 
   return (
     <section className={`scenarioPanel ${scenario.id}`}>
@@ -1434,6 +1460,33 @@ function CandidateTable({
         </button>
       </details>
 
+      {isConservative && (
+        <div className="expiryBucketGrid" aria-label="SOXL conservative Friday expiry buckets">
+          {conservativeBuckets.map(({ bucket, selected, closestRejected }) => (
+            <article key={bucket} className={selected ? "matched" : "rejected"}>
+              <span>第 {bucket} 週 · Friday</span>
+              {selected ? (
+                <>
+                  <strong>{selected.expiration} · ${formatNumber(selected.strike, 0)} Put</strong>
+                  <small>
+                    ITM {formatOptionalPercent(selected.expiryItmProbability, 1)} · Mid Ann. {formatPercent(selected.midAnnualizedRoi, 1)}
+                  </small>
+                </>
+              ) : (
+                <>
+                  <strong>{closestRejected?.expiration ?? "No chain data"} · 無推薦</strong>
+                  <small>
+                    {closestRejected
+                      ? `Closest rejected: ${closestRejected.failedFilters.join(" · ")}`
+                      : "尚未抓到該週五的 Option Chain／機率資料"}
+                  </small>
+                </>
+              )}
+            </article>
+          ))}
+        </div>
+      )}
+
       <div className="tableWrap">
         <table>
           <thead>
@@ -1444,10 +1497,10 @@ function CandidateTable({
               <th>DTE</th>
               <th>Strike</th>
               <th>Delta</th>
-              <th>IV</th>
-              <th>IV Proxy</th>
+              <th>{isConservative ? "Expiry ITM" : "IV"}</th>
+              <th>{isConservative ? "Touch Prob." : "IV Proxy"}</th>
               <th>Bid/Ask</th>
-              <th>{isLeaps ? "% Intrinsic" : "Ann. ROI"}</th>
+              <th>{isLeaps ? "% Intrinsic" : isConservative ? "Bid / Mid Ann." : "Ann. ROI"}</th>
               <th>{isLeaps ? "Leverage" : "% OTM"}</th>
               <th>OI</th>
               <th>Volume</th>
@@ -1462,6 +1515,7 @@ function CandidateTable({
               >
                 <td>
                   <span className={`score ${scoreTone(row.score)}`}>{formatNumber(row.score, 0)}</span>
+                  {!row.matched && <small title={row.failedFilters.join(", ")}>Rejected · {row.failedFilters.length}</small>}
                 </td>
                 <td>
                   <strong>{row.ticker}</strong>
@@ -1471,13 +1525,19 @@ function CandidateTable({
                 <td>{row.dte}</td>
                 <td>{formatCurrency(row.strike, 0)}</td>
                 <td>{formatNumber(row.delta, 2)}</td>
-                <td>{formatPercent(row.iv, 1)}</td>
-                <td>{formatPercent(row.ivPercentile, 0)}</td>
+                <td>{isConservative ? formatOptionalPercent(row.expiryItmProbability, 1) : formatPercent(row.iv, 1)}</td>
+                <td>{isConservative ? formatOptionalPercent(row.touchProbability, 1) : formatPercent(row.ivPercentile, 0)}</td>
                 <td>
                   {formatCurrency(row.bid)} / {formatCurrency(row.ask)}
                   <small>{formatCurrency(row.spread)} spread</small>
                 </td>
-                <td>{isLeaps ? formatPercent(row.intrinsicValuePct, 1) : formatPercent(row.annualizedRoi, 0)}</td>
+                <td>
+                  {isLeaps
+                    ? formatPercent(row.intrinsicValuePct, 1)
+                    : isConservative
+                      ? `${formatPercent(row.bidAnnualizedRoi, 1)} / ${formatPercent(row.midAnnualizedRoi, 1)}`
+                      : formatPercent(row.annualizedRoi, 0)}
+                </td>
                 <td>{isLeaps ? `${formatNumber(row.leverageRatio, 1)}x` : formatPercent(row.distanceOtmPct, 1)}</td>
                 <td>{compactNumber(row.openInterest)}</td>
                 <td>{compactNumber(row.volume)}</td>
@@ -1485,6 +1545,7 @@ function CandidateTable({
             ))}
           </tbody>
         </table>
+        {rows.length === 0 && <div className="emptyTable">沒有符合條件的合約；開啟 Show rejects 可查看淘汰原因。</div>}
       </div>
     </section>
   );
@@ -1501,6 +1562,7 @@ function DetailPanel({ row, config }: { row?: ScoredCandidate; config: ScreenerC
   }
 
   const isLeaps = config.id === "leaps_deep_itm_call";
+  const isConservative = config.id === "soxl_conservative_csp";
 
   return (
     <aside className="detail">
@@ -1569,6 +1631,24 @@ function DetailPanel({ row, config }: { row?: ScoredCandidate; config: ScreenerC
           <dt>Potential ROI</dt>
           <dd>{formatPercent(row.potentialRoi, 2)}</dd>
         </div>
+        {isConservative && (
+          <>
+            <div>
+              <dt>Expiry ITM / Touch Probability</dt>
+              <dd>
+                {formatOptionalPercent(row.expiryItmProbability, 2)} / {formatOptionalPercent(row.touchProbability, 2)}
+              </dd>
+            </div>
+            <div>
+              <dt>Bid / Mid Annualized ROI</dt>
+              <dd>{formatPercent(row.bidAnnualizedRoi, 1)} / {formatPercent(row.midAnnualizedRoi, 1)}</dd>
+            </div>
+            <div>
+              <dt>Probability Model</dt>
+              <dd>{row.probabilitySource ?? "Unavailable"} · n={row.probabilitySampleSize ?? 0}</dd>
+            </div>
+          </>
+        )}
       </dl>
 
       <div className="warningList">
@@ -1608,6 +1688,7 @@ export function App() {
           filters,
           rows: scoreCandidates(activeConfig, filters, dataSet, showAll),
           matchedRows: scoreCandidates(activeConfig, filters, dataSet, false),
+          diagnosticRows: scoreCandidates(activeConfig, filters, dataSet, true),
         };
       }),
     [activeConfig, dataSet, filterOverrides, showAll],
@@ -1734,14 +1815,18 @@ export function App() {
       {activeView === "screener" && (
       <section className="overview">
         <SummaryMetric
-          label="Best Case"
+          label={activeConfig.id === "soxl_conservative_csp" ? "Qualified Weeks" : "Best Case"}
           value={String(bestResult?.matchedRows.length ?? 0)}
           subValue={`${bestResult?.rows.length ?? 0} visible rows`}
         />
         <SummaryMetric
-          label="Middle Case"
-          value={String(middleResult?.matchedRows.length ?? 0)}
-          subValue={`${middleResult?.rows.length ?? 0} visible rows`}
+          label={activeConfig.id === "soxl_conservative_csp" ? "Covered Fridays" : "Middle Case"}
+          value={
+            activeConfig.id === "soxl_conservative_csp"
+              ? String(new Set(bestResult?.diagnosticRows.map((row) => row.soxlFridayBucket).filter(Boolean)).size)
+              : String(middleResult?.matchedRows.length ?? 0)
+          }
+          subValue={activeConfig.id === "soxl_conservative_csp" ? "next five Friday buckets" : `${middleResult?.rows.length ?? 0} visible rows`}
         />
         <SummaryMetric label="Best Score" value={formatNumber(bestScore, 0)} subValue={activeConfig.shortName} />
         <SummaryMetric label="Avg Spread" value={formatCurrency(avgSpread)} subValue="all matched contracts" />
@@ -1800,6 +1885,8 @@ export function App() {
                 scenario={result.scenario}
                 filters={result.filters}
                 rows={result.rows}
+                matchedRows={result.matchedRows}
+                diagnosticRows={result.diagnosticRows}
                 selectedId={selectedRow?.id ?? ""}
                 onSelect={setSelectedId}
                 onFilterChange={(filterIndex, bound, value) =>

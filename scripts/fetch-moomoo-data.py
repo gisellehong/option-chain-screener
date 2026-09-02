@@ -17,6 +17,7 @@ import time
 from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Any, Iterable
+from zoneinfo import ZoneInfo
 
 DEFAULT_UNIVERSE = ["AAPL", "AMD", "NVDA", "TSLA", "MSFT", "SMH"]
 DEFAULT_OUTPUT_PATH = Path("src/data/generated/realOptions.json")
@@ -24,10 +25,14 @@ DEFAULT_TRACKED_TRADES_PATH = Path("data/youtuber-trades/trades.json")
 OPTION_CHAIN_DELAY_SECONDS = 3.1
 SNAPSHOT_DELAY_SECONDS = 0.55
 SNAPSHOT_BATCH_SIZE = 400
+SOXL_CONSERVATIVE_MAX_DTE = 42
+SOXL_CONSERVATIVE_EXPIRATIONS = 5
+SOXL_HISTORY_LOOKBACK_YEARS = 8
+NEW_YORK_TZ = ZoneInfo("America/New_York")
 
 
 try:
-    from moomoo import OpenQuoteContext, RET_OK
+    from moomoo import AuType, KLType, OpenQuoteContext, RET_OK
 except ImportError as exc:
     raise SystemExit(
         "Missing moomoo Python SDK. Install it with `python3 -m pip install moomoo` "
@@ -68,7 +73,23 @@ def display_ticker(code: str) -> str:
 
 def days_to_expiration(expiration: str) -> int:
     expiry = datetime.strptime(expiration, "%Y-%m-%d").date()
-    return max(0, (expiry - date.today()).days)
+    return max(0, (expiry - market_today()).days)
+
+
+def market_today() -> date:
+    return datetime.now(NEW_YORK_TZ).date()
+
+
+def trading_days_to_expiration(expiration: str) -> int:
+    """Count weekdays after today through expiry; exchange holidays are not included."""
+    expiry = datetime.strptime(expiration, "%Y-%m-%d").date()
+    cursor = market_today() + timedelta(days=1)
+    count = 0
+    while cursor <= expiry:
+        if cursor.weekday() < 5:
+            count += 1
+        cursor += timedelta(days=1)
+    return max(1, count)
 
 
 def to_float(value: Any, default: float = 0.0) -> float:
@@ -183,6 +204,79 @@ def expiration_dates(
     return dates[:max_count]
 
 
+def friday_expiration_dates(
+    quote_ctx: OpenQuoteContext,
+    code: str,
+    max_dte: int = SOXL_CONSERVATIVE_MAX_DTE,
+    max_count: int = SOXL_CONSERVATIVE_EXPIRATIONS,
+) -> list[str]:
+    dates = expiration_dates(quote_ctx, code, 1, max_dte, 64)
+    return [value for value in dates if datetime.strptime(value, "%Y-%m-%d").date().weekday() == 4][:max_count]
+
+
+def fetch_adjusted_daily_history(quote_ctx: OpenQuoteContext, code: str) -> list[dict[str, Any]]:
+    start = (market_today() - timedelta(days=SOXL_HISTORY_LOOKBACK_YEARS * 366)).isoformat()
+    end = market_today().isoformat()
+    page_req_key = None
+    records: list[dict[str, Any]] = []
+
+    while True:
+        ret, data, next_page_req_key = quote_ctx.request_history_kline(
+            code=code,
+            start=start,
+            end=end,
+            ktype=KLType.K_DAY,
+            autype=AuType.QFQ,
+            max_count=1000,
+            page_req_key=page_req_key,
+        )
+        if ret != RET_OK:
+            raise RuntimeError(f"request_history_kline {code} failed: {data}")
+        records.extend(frame_records(data))
+        if next_page_req_key is None:
+            break
+        page_req_key = next_page_req_key
+        time.sleep(SNAPSHOT_DELAY_SECONDS)
+
+    normalized = []
+    for row in records:
+        close = to_float(row.get("close"))
+        low = to_float(row.get("low"), close)
+        timestamp = str(row.get("time_key", ""))
+        if close > 0 and low > 0 and timestamp:
+            normalized.append({"date": timestamp[:10], "close": close, "low": low})
+    return sorted(normalized, key=lambda row: row["date"])
+
+
+def empirical_downside_probabilities(
+    history: list[dict[str, Any]],
+    strike: float,
+    underlying_price: float,
+    horizon: int,
+) -> tuple[float | None, float | None, int]:
+    """Estimate terminal and path-touch probabilities from rolling adjusted SOXL paths."""
+    if strike <= 0 or underlying_price <= 0 or horizon <= 0 or len(history) <= horizon:
+        return None, None, 0
+
+    threshold_ratio = strike / underlying_price
+    terminal_hits = 0
+    touch_hits = 0
+    samples = 0
+    for index in range(0, len(history) - horizon):
+        start_close = history[index]["close"]
+        if start_close <= 0:
+            continue
+        terminal_ratio = history[index + horizon]["close"] / start_close
+        minimum_ratio = min(row["low"] for row in history[index + 1 : index + horizon + 1]) / start_close
+        terminal_hits += int(terminal_ratio <= threshold_ratio)
+        touch_hits += int(minimum_ratio <= threshold_ratio)
+        samples += 1
+
+    if samples == 0:
+        return None, None, 0
+    return round(terminal_hits / samples * 100, 2), round(touch_hits / samples * 100, 2), samples
+
+
 def option_type_value(value: Any) -> str | None:
     text = str(value).lower()
     if "call" in text or text in {"1", "optiontype.call"}:
@@ -199,6 +293,7 @@ def collect_chain_codes(
     underlying_price: float,
     max_expirations: int,
     tracked_contracts: list[dict[str, Any]],
+    conservative_expirations: set[str] | None = None,
 ) -> list[str]:
     option_codes: set[str] = set()
     selected_expirations = expirations[:max_expirations]
@@ -229,7 +324,8 @@ def collect_chain_codes(
                 continue
             if opt_type == "call" and underlying_price * 0.45 <= strike <= underlying_price * 0.9:
                 option_codes.add(str(option_code))
-            if opt_type == "put" and underlying_price * 0.65 <= strike <= underlying_price:
+            put_floor = 0.55 if expiration in (conservative_expirations or set()) else 0.65
+            if opt_type == "put" and underlying_price * put_floor <= strike <= underlying_price:
                 option_codes.add(str(option_code))
         if expiration != selected_expirations[-1]:
             time.sleep(OPTION_CHAIN_DELAY_SECONDS)
@@ -268,10 +364,11 @@ def map_snapshot(row: dict[str, Any], underlying: dict[str, Any]) -> dict[str, A
         "id": code,
         "ticker": display_ticker(underlying_code),
         "companyName": str(underlying.get("name") or display_ticker(underlying_code)),
-        "sector": "ETF" if display_ticker(underlying_code) in {"SMH", "SPY", "QQQ", "IWM"} else "Unknown",
+        "sector": "ETF" if display_ticker(underlying_code) in {"SMH", "SOXL", "SPY", "QQQ", "IWM"} else "Unknown",
         "optionType": option_type,
         "expiration": expiration,
         "dte": days_to_expiration(expiration),
+        "tradingDte": trading_days_to_expiration(expiration),
         "strike": strike,
         "underlyingPrice": underlying_price,
         "marketCapB": market_cap_b,
@@ -321,12 +418,15 @@ def fetch_ticker_candidates(
         args.leaps_max_dte,
         args.max_expirations_per_ticker,
     )
+    conservative_expirations = friday_expiration_dates(quote_ctx, code) if display_ticker(code) == "SOXL" else []
     tracked_expirations = [
         str(contract["expiration"])
         for contract in tracked_contracts
         if days_to_expiration(str(contract["expiration"])) >= 0
     ]
-    all_expirations = sorted(set(weekly_expirations + leaps_expirations + tracked_expirations))
+    all_expirations = sorted(
+        set(weekly_expirations + leaps_expirations + conservative_expirations + tracked_expirations)
+    )
     option_codes = collect_chain_codes(
         quote_ctx,
         code,
@@ -334,6 +434,7 @@ def fetch_ticker_candidates(
         underlying_price,
         args.max_expirations_per_ticker,
         tracked_contracts,
+        set(conservative_expirations),
     )
     option_snapshots = get_snapshot_map(quote_ctx, option_codes) if option_codes else {}
     candidates = [
@@ -342,10 +443,37 @@ def fetch_ticker_candidates(
         if candidate is not None
     ]
 
+    probability_history_error = None
+    if display_ticker(code) == "SOXL":
+        try:
+            history = fetch_adjusted_daily_history(quote_ctx, code)
+        except RuntimeError as exc:
+            history = []
+            probability_history_error = str(exc)
+        bucket_by_expiration = {
+            expiration: index + 1 for index, expiration in enumerate(conservative_expirations)
+        }
+        for candidate in candidates:
+            if candidate["optionType"] != "put":
+                continue
+            candidate["soxlFridayBucket"] = bucket_by_expiration.get(candidate["expiration"])
+            expiry_probability, touch_probability, sample_size = empirical_downside_probabilities(
+                history,
+                candidate["strike"],
+                candidate["underlyingPrice"],
+                candidate["tradingDte"],
+            )
+            candidate["expiryItmProbability"] = expiry_probability
+            candidate["touchProbability"] = touch_probability
+            candidate["probabilitySampleSize"] = sample_size
+            candidate["probabilitySource"] = "SOXL QFQ rolling daily paths (8Y)"
+
     return candidates, {
         "ticker": display_ticker(code),
         "underlyingPrice": underlying_price,
         "expirations": len(all_expirations),
+        "conservativeFridayExpirations": conservative_expirations,
+        "probabilityHistoryError": probability_history_error,
         "trackedContracts": len(tracked_contracts),
         "optionCodes": len(option_codes),
         "candidates": len(candidates),

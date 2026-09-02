@@ -537,6 +537,62 @@ h3 {
   font-weight: 800;
 }
 
+.expiryBucketGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(150px, 1fr));
+  gap: 8px;
+  margin: 0 0 14px;
+}
+
+.expiryBucketGrid article {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  padding: 11px 12px;
+  border: 1px solid #ded8ce;
+  border-left: 4px solid #a6a099;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.expiryBucketGrid article.matched {
+  border-left-color: #2f8f66;
+  background: #f5fbf8;
+}
+
+.expiryBucketGrid article.rejected {
+  border-left-color: #b56a5a;
+  background: #fff9f7;
+}
+
+.expiryBucketGrid span,
+.expiryBucketGrid small {
+  color: #6b645b;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.expiryBucketGrid strong {
+  overflow: hidden;
+  color: #222427;
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emptyTable {
+  padding: 18px;
+  color: #6b645b;
+  font-size: 13px;
+  text-align: center;
+}
+
+@media (max-width: 1100px) {
+  .expiryBucketGrid {
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+  }
+}
+
 .tableWrap {
   overflow: auto;
   border: 1px solid #d8d1c5;

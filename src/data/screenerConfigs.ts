@@ -96,6 +96,34 @@ export const screenerConfigs: ScreenerConfig[] = [
       },
     ],
   },
+  {
+    id: "soxl_conservative_csp",
+    name: "SOXL Conservative CSP · 老 K",
+    shortName: "SOXL Conservative",
+    intent: "依照老 K 24 筆公開樣本建立的保守型 Cash-Secured Put：先控制到期價內機率，再從未來五個週五到期日各選一張兼顧報酬與流動性的合約。",
+    optionType: "put",
+    tickerWhitelist: ["SOXL"],
+    maxResultsPerExpiration: 1,
+    maxExpirations: 5,
+    sortDescription: "Hard gate: expiry ITM probability <= 5% and midpoint annualized ROI >= 20%; rank by probability-adjusted premium and liquidity.",
+    scenarios: [
+      {
+        id: "conservative",
+        name: "老 K Conservative",
+        shortName: "Conservative",
+        intent: "每個週五到期桶只保留一張；Delta 與 OTM 距離是護欄，Bid-Ask Spread 只列警示、不直接淘汰。",
+        filters: [
+          { field: "soxlFridayBucket", label: "Friday Expiry Bucket", operator: "between", min: 1, max: 5 },
+          { field: "dte", label: "Days to Expiration", operator: "between", min: 1, max: 42, unit: "D" },
+          { field: "expiryItmProbability", label: "Expiry ITM Probability", operator: "lte", max: 5, unit: "%" },
+          { field: "midAnnualizedRoi", label: "Mid Annualized ROI", operator: "gte", min: 20, unit: "%" },
+          { field: "delta", label: "Delta Guardrail", operator: "between", min: -0.1, max: -0.02 },
+          { field: "distanceOtmPct", label: "% OTM", operator: "between", min: 20, max: 45, unit: "%" },
+          { field: "openInterest", label: "Contract OI", operator: "gte", min: 250 },
+        ],
+      },
+    ],
+  },
 ];
 
 export function getScreenerConfig(id: string): ScreenerConfig {

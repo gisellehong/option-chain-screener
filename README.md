@@ -2,22 +2,23 @@
 
 本專案是用來取代手動調整 Moomoo/Futubull options screener 的本地 MVP。資料源已固定為 moomoo OpenD live data，並保留 mock data 作為 UI / 離線開發用途。
 
-第一版先以兩個策略為核心：
+目前有三個獨立策略：
 
 - `Deep ITM LEAPS Call`: 尋找可替代正股持倉的深度價內 LEAPS Call。
 - `IV Expansion for Weekly CSP`: 尋找高 IV、短天期、流動性足夠的 Weekly Cash Secured Put。
+- `SOXL Conservative CSP · 老 K`: 以歷史路徑的到期 ITM／期間觸及機率，從未來五個週五到期日各挑一張保守型 SOXL Put。
 
 ## MVP Scope
 
 - Strategy configs: 把篩選條件集中在 `src/data/screenerConfigs.ts`。
-- Scenario filters: 每個策略同時有 `Best case` 和 `Middle case`，Dashboard 會同時呈現兩組結果。
+- Scenario filters: 通用策略有 `Best case` 和 `Middle case`；SOXL Conservative 使用獨立的 `Conservative` scenario。
 - Scoring engine: 由 `src/lib/scoring.ts` 計算衍生欄位、filter pass/fail 和 score。
 - Dashboard: 顯示 overview、filter rail、candidate table、contract detail、warnings 和 CSV export。
 - Data source: moomoo OpenD live snapshot，輸出到 `src/data/generated/realOptions.json`。
 
 ## Screener Scenarios
 
-每個 screener strategy 不再只有一組 fixed filters，而是同時顯示兩個 scenario：
+通用 screener strategy 會同時顯示兩個 scenario：
 
 - `Best case`: 嚴格條件，用來找最接近理想交易結構的候選。
 - `Middle case`: 放寬後的次要選擇，用來找還值得研究、但不完全符合最佳條件的候選。
@@ -25,6 +26,8 @@
 Dashboard 每個 scenario 都有 `Adjust filters` 區塊，可以直接在 UI 修改 min/max threshold，結果會即時重算。這些 UI 調整目前只保留在當次 session；要改預設值時，再更新 `src/data/screenerConfigs.ts` 裡對應 strategy 的 `scenarios`。
 
 LEAPS 另外提供 `365–600D`、`540–900D`、`365–900D` quick ranges。OpenD 預設抓取完整 `365–900 DTE` coverage，再由 Dashboard filter 決定顯示區間，避免畫面調整時因原始資料未抓取而漏掉 contracts。
+
+SOXL Conservative 不改動原本 Weekly CSP 條件。Fetcher 只對 SOXL 額外抓取未來五個 Friday expirations（最長 42 DTE）及 55%–100% spot 的 Put strikes，並以八年 QFQ 日線 rolling paths 產生 `expiryItmProbability` 與 `touchProbability`。修正版規則以 `Expiry ITM <= 5%`、`Mid Annualized ROI >= 20%` 為主門檻；Delta `-0.10 至 -0.02`、OTM `20%–45%` 與 OI `>=250` 為 guardrails。驗證資料與報告位於 `analysis/lao-k-soxl-csp-2026-08/`。
 
 ## Local Commands
 
@@ -35,6 +38,7 @@ npm run build
 npm run fetch:watchlist-news
 npm run fetch:gex -- SPX
 npm run fetch:moomoo -- AAPL AMD NVDA TSLA MSFT SMH
+npm run validate:lao-k
 npm run snapshot -- --session pre_market
 npm run snapshot -- --session half_hourly
 npm run report:telegram -- --session pre_market
@@ -71,14 +75,14 @@ When enabled, successful non-`--skip-fetch` snapshot runs will commit and push o
 - `src/data/generated/gex.json`
 - `src/data/generated/gex-SOXL.json`
 - `src/data/generated/watchlistNews.json`
-- `data/youtuber-trades/trades.json`
 - `data/youtuber-trades/lifecycle.json`
-- `data/soxl-trades/trades.json`
 - `data/soxl-trades/lifecycle.json`
 
 Publishing uses an isolated temporary worktree based on `GITHUB_PUBLISH_BRANCH`
-(default: `main`). This keeps scheduled snapshots from being committed to whichever
-feature branch happens to be checked out locally.
+(default: `main`). Lifecycle files are rebuilt inside that worktree from the canonical
+trade tables on the target branch, using the local archived snapshots. This keeps
+scheduled snapshots from reverting manually maintained trades when another feature
+branch happens to be checked out locally.
 
 GitHub Actions then rebuilds and redeploys the GitHub Pages dashboard. Other local code or config edits are not included in those automatic data commits.
 
@@ -217,6 +221,7 @@ Each scheduled snapshot records the top ranked matched contracts as compact sign
 - 用 `get_option_chain` 取合約代碼並先依 strike range 粗篩。
 - 強制保留 `data/youtuber-trades/trades.json` 內仍有效的 AAG tracked contracts，即使合約位於 screener 的一般 strike range 之外。
 - 用 `get_market_snapshot` 批量補報價與 Greeks。
+- 對 SOXL 額外抓五個週五到期日，並用八年前復權日線計算 empirical expiry/touch probabilities。
 - 暫時用 current IV 作為 `IV Proxy`；等累積歷史 snapshot 後再改成真正 IV percentile / IV rank。
 
 注意事項：

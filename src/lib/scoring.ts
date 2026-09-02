@@ -29,6 +29,9 @@ function derive(candidate: OptionCandidate): Omit<
   const cashRequired = candidate.optionType === "put" ? candidate.strike * 100 : mid * 100;
   const potentialRoi = cashRequired > 0 ? ((mid * 100) / cashRequired) * 100 : 0;
   const annualizedRoi = candidate.dte > 0 ? potentialRoi * (365 / candidate.dte) : 0;
+  const bidRoi = candidate.optionType === "put" && candidate.strike > 0 ? (candidate.bid / candidate.strike) * 100 : 0;
+  const bidAnnualizedRoi = candidate.dte > 0 ? bidRoi * (365 / candidate.dte) : 0;
+  const midAnnualizedRoi = annualizedRoi;
   const leverageRatio = mid > 0 ? candidate.underlyingPrice / mid : 0;
 
   return {
@@ -44,6 +47,9 @@ function derive(candidate: OptionCandidate): Omit<
     cashRequired,
     potentialRoi,
     annualizedRoi,
+    bidRoi,
+    bidAnnualizedRoi,
+    midAnnualizedRoi,
     leverageRatio,
   };
 }
@@ -109,6 +115,10 @@ function buildWarnings(candidate: OptionCandidate, derived: ReturnType<typeof de
     warnings.push("IV proxy; no history yet");
   }
 
+  if (candidate.soxlFridayBucket && candidate.expiryItmProbability == null) {
+    warnings.push("Historical probability unavailable");
+  }
+
   return warnings;
 }
 
@@ -133,15 +143,29 @@ function scoreWeeklyCsp(candidate: ScoredCandidate): number {
   return clamp(highIvProxy * 0.24 + liquidity * 0.2 + tightSpread * 0.18 + premium * 0.18 + otmBuffer * 0.12 + dteFit * 0.08);
 }
 
+function scoreSoxlConservative(candidate: ScoredCandidate): number {
+  const probability = candidate.expiryItmProbability ?? 100;
+  const probabilityFit = clamp(100 - probability * 8);
+  const premium = clamp(candidate.bidAnnualizedRoi * 2.5);
+  const midpointPremium = clamp(candidate.midAnnualizedRoi * 2);
+  const liquidity = clamp(Math.log10(candidate.openInterest + candidate.volume + 1) * 18);
+  const tightSpread = clamp(100 - candidate.spreadPct * 2.5);
+
+  return clamp(
+    premium * 0.32 + midpointPremium * 0.18 + probabilityFit * 0.25 + liquidity * 0.15 + tightSpread * 0.1,
+  );
+}
+
 export function scoreCandidates(
   config: ScreenerConfig,
   filters: FilterRule[],
   candidates: OptionCandidate[],
   showAll = false,
 ): ScoredCandidate[] {
-  return candidates
+  const scored = candidates
     .filter(hasUsableQuote)
     .filter((candidate) => candidate.optionType === config.optionType)
+    .filter((candidate) => !config.tickerWhitelist || config.tickerWhitelist.includes(candidate.ticker))
     .map((candidate) => {
       const derived = derive(candidate);
       const scoredBase = {
@@ -155,7 +179,12 @@ export function scoreCandidates(
       const failedFilters = filters
         .filter((filter) => !passesFilter(scoredBase, filter))
         .map((filter) => filter.label);
-      const score = config.id === "leaps_deep_itm_call" ? scoreLeaps(scoredBase) : scoreWeeklyCsp(scoredBase);
+      const score =
+        config.id === "leaps_deep_itm_call"
+          ? scoreLeaps(scoredBase)
+          : config.id === "soxl_conservative_csp"
+            ? scoreSoxlConservative(scoredBase)
+            : scoreWeeklyCsp(scoredBase);
 
       return {
         ...scoredBase,
@@ -166,4 +195,22 @@ export function scoreCandidates(
     })
     .filter((candidate) => showAll || candidate.matched)
     .sort((left, right) => right.score - left.score);
+
+  if (showAll || !config.maxResultsPerExpiration) {
+    return scored;
+  }
+
+  const allowedExpirations = new Set(
+    [...new Set(scored.map((candidate) => candidate.expiration))]
+      .sort((left, right) => left.localeCompare(right))
+      .slice(0, config.maxExpirations),
+  );
+  const counts = new Map<string, number>();
+  return scored.filter((candidate) => {
+    if (!allowedExpirations.has(candidate.expiration)) return false;
+    const count = counts.get(candidate.expiration) ?? 0;
+    if (count >= config.maxResultsPerExpiration!) return false;
+    counts.set(candidate.expiration, count + 1);
+    return true;
+  });
 }
