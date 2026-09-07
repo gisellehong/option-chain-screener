@@ -78,6 +78,14 @@ export const watchlistMetadata: WatchlistMetadata[] = [
     ],
   },
   {
+    ticker: "TSM",
+    companyName: "Taiwan Semiconductor Manufacturing",
+    category: "Semiconductors",
+    strategyTags: ["LEAPS", "Weekly CSP", "Core monitor"],
+    monitorReason: "Leading-edge foundry demand, AI accelerator volume, advanced packaging capacity, and geopolitical risk.",
+    news: [],
+  },
+  {
     ticker: "AMD",
     companyName: "AMD",
     category: "Semiconductors",

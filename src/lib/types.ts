@@ -1,4 +1,4 @@
-export type ScreenerId = "leaps_deep_itm_call" | "weekly_cash_secured_put";
+export type ScreenerId = "leaps_deep_itm_call" | "weekly_cash_secured_put" | "soxl_conservative_csp";
 
 export type OptionType = "call" | "put";
 
@@ -20,6 +20,9 @@ export type MetricField =
   | "cashRequired"
   | "potentialRoi"
   | "annualizedRoi"
+  | "bidRoi"
+  | "bidAnnualizedRoi"
+  | "midAnnualizedRoi"
   | "leverageRatio";
 
 export interface FilterRule {
@@ -32,7 +35,7 @@ export interface FilterRule {
 }
 
 export interface ScreenerScenario {
-  id: "best" | "middle";
+  id: string;
   name: string;
   shortName: string;
   intent: string;
@@ -41,11 +44,15 @@ export interface ScreenerScenario {
 
 export interface ScreenerConfig {
   id: ScreenerId;
+  version: string;
   name: string;
   shortName: string;
   intent: string;
   optionType: OptionType;
   sortDescription: string;
+  tickerWhitelist?: string[];
+  maxResultsPerExpiration?: number;
+  maxExpirations?: number;
   scenarios: ScreenerScenario[];
 }
 
@@ -72,6 +79,12 @@ export interface OptionCandidate {
   openInterest: number;
   volume: number;
   dayChangePct: number;
+  tradingDte?: number;
+  soxlFridayBucket?: number;
+  expiryItmProbability?: number | null;
+  touchProbability?: number | null;
+  probabilitySampleSize?: number;
+  probabilitySource?: string;
   earningsDate?: string;
   priceSource?: string;
   underlyingPriceSource?: string;
@@ -94,11 +107,14 @@ export interface ScoredCandidate extends OptionCandidate {
   cashRequired: number;
   potentialRoi: number;
   annualizedRoi: number;
+  bidRoi: number;
+  bidAnnualizedRoi: number;
+  midAnnualizedRoi: number;
   leverageRatio: number;
   warnings: string[];
 }
 
-export type TrackingStrategy = "leaps" | "weekly_csp";
+export type TrackingStrategy = "leaps" | "weekly_csp" | "soxl_csp";
 
 export interface TrackingQuote {
   mid: number;
@@ -118,6 +134,8 @@ export interface TrackingSignal {
   session: string;
   strategy: TrackingStrategy;
   scenario: string;
+  strategyVersion?: string;
+  entryPriceConvention?: string;
   rank: number;
   score: number;
   contractId: string;

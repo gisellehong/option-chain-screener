@@ -537,6 +537,62 @@ h3 {
   font-weight: 800;
 }
 
+.expiryBucketGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(150px, 1fr));
+  gap: 8px;
+  margin: 0 0 14px;
+}
+
+.expiryBucketGrid article {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  padding: 11px 12px;
+  border: 1px solid #ded8ce;
+  border-left: 4px solid #a6a099;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.expiryBucketGrid article.matched {
+  border-left-color: #2f8f66;
+  background: #f5fbf8;
+}
+
+.expiryBucketGrid article.rejected {
+  border-left-color: #b56a5a;
+  background: #fff9f7;
+}
+
+.expiryBucketGrid span,
+.expiryBucketGrid small {
+  color: #6b645b;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.expiryBucketGrid strong {
+  overflow: hidden;
+  color: #222427;
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emptyTable {
+  padding: 18px;
+  color: #6b645b;
+  font-size: 13px;
+  text-align: center;
+}
+
+@media (max-width: 1100px) {
+  .expiryBucketGrid {
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+  }
+}
+
 .tableWrap {
   overflow: auto;
   border: 1px solid #d8d1c5;
@@ -1523,3 +1579,38 @@ dd {
     flex: 0 0 auto;
   }
 }
+
+/* Three work areas: trade selection, source evidence, own accounts. */
+:root {color:#1c2938;background:#f2f5f8;}
+.topbar {background:#fff;border-color:#dbe3ec;padding:24px 32px;}
+h1 {font-size:28px;}
+.titleSecondary {font-size:18px;font-weight:400;color:#66798e;margin-left:12px;}
+.eyebrow {color:#57728e;letter-spacing:.08em;}
+.viewTabs {background:#fff;border-color:#dbe3ec;}
+.viewTabs button.active,.subnav button.active {background:#183c59;color:#fff;border-color:#183c59;}
+.subnav {display:flex;flex-wrap:wrap;gap:8px;padding:16px 32px 0;}
+.subnav button,.filterBar button {padding:10px 14px;border:1px solid #ccd7e2;border-radius:8px;background:#fff;color:#26445d;font-size:14px;}
+.strategyTabs {padding-top:16px;}
+.strategyTabs button {font-size:14px;}
+.sourceLine {color:#607187;font-size:13px;line-height:1.7;}
+a {color:#1b638f;}
+.notice {padding:12px 16px;border-left:3px solid #628aa8;background:#edf3f8;color:#39556c;line-height:1.65;font-size:14px;}
+.notice.warning {border-color:#bd7b13;background:#fff5df;color:#6b4b17;}
+.externalNotice {margin:20px 32px;}
+.metricGrid {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:20px 0;}
+.metric {padding:20px;border:1px solid #d8e2eb;border-radius:10px;background:#fff;display:flex;flex-direction:column;gap:10px;}
+.metric>span {font-size:14px;color:#50647a;}.metric>strong {font-size:28px;font-weight:650;font-variant-numeric:tabular-nums;}.metric>small {font-size:13px;color:#697b8d;line-height:1.5;}
+.filterBar {display:flex;flex-wrap:wrap;align-items:end;gap:16px;margin:20px 0;}
+.filterBar label,.sectionHead>label,.riskInputs label {display:flex;flex-direction:column;gap:7px;font-size:14px;color:#50647a;}
+select,input[type=number] {border:1px solid #c2cfda;border-radius:6px;padding:9px 10px;background:white;color:#1b354a;min-height:40px;font:inherit;max-width:100%;}
+.panel {background:#fff;border:1px solid #d8e2eb;border-radius:10px;padding:22px;min-width:0;}
+.panel p {font-size:14px;line-height:1.7;}.portfolioPanels {display:grid;grid-template-columns:1.2fr 1fr;gap:18px;margin:20px 0;}
+.monthRow {display:flex;gap:12px;align-items:center;margin-top:20px;font-size:14px;}.monthRow>span {flex:0 0 65px;}.monthRow>strong {min-width:105px;text-align:right;}.barTrack {flex:1;height:10px;background:#edf2f6;border-radius:3px;overflow:hidden;}.gainBar,.lossBar {height:100%;border-radius:3px;background:#248171;}.lossBar {background:#c35454;}.gain {color:#176e5c;}.loss {color:#b24545;}
+.emptyState {padding:36px;background:#fff;border:1px dashed #bdcbd7;border-radius:12px;margin:20px 0;}.emptyState p {max-width:720px;color:#576b7e;line-height:1.7;}
+.fileButton {cursor:pointer;padding:11px 15px;border:1px solid #b9cbd9;background:white;border-radius:8px;color:#254f6b;font-size:14px;}.fileButton input {display:block;margin-top:10px;max-width:240px;font-size:13px;}
+.legacyDetails {margin:28px 0;border-top:1px solid #cdd9e4;padding-top:20px;}.legacyDetails>summary {cursor:pointer;color:#566c80;font-size:14px;}
+.portfolio .tableWrap {max-height:660px;overflow:auto;}.portfolio td details {max-width:300px;font-size:13px;}.portfolio td details summary {cursor:pointer;}.portfolio td details p {white-space:normal;line-height:1.6;}
+.detailStack {display:flex;flex-direction:column;gap:18px;min-width:0;}.detailStack>aside {position:static;}.riskPanel {font-size:14px;}.riskInputs {display:grid;grid-template-columns:1fr 1fr;gap:12px;}.riskInputs input,.riskInputs select {width:100%;min-width:0;}.riskNumbers {display:grid;grid-template-columns:1fr auto;gap:12px;margin:20px 0;}.riskNumbers dt {color:#5a7186;}.riskNumbers dd {margin:0;text-align:right;font-variant-numeric:tabular-nums;}.riskPanel input[type=range] {width:100%;margin-top:12px;}.riskPanel>small {line-height:1.6;color:#6a7c8e;}
+button:disabled {opacity:.4;cursor:not-allowed;}button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible {outline:3px solid #4f96cb;outline-offset:3px;}
+@media(max-width:1050px){.metricGrid{grid-template-columns:repeat(2,minmax(0,1fr));}.portfolioPanels{grid-template-columns:1fr;}}
+@media(max-width:650px){.metricGrid{grid-template-columns:1fr;}.subnav{padding:12px 16px 0;}.topbar{padding:20px 16px;}.titleSecondary{display:block;margin:8px 0 0;}.riskInputs{grid-template-columns:1fr;}.filterBar label{width:100%;}.monthRow{gap:8px;}.monthRow>strong{min-width:90px;font-size:13px;}.fileButton{margin-top:12px;}.sectionHead{flex-wrap:wrap;}}

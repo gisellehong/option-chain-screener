@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import os
 import shutil
 import subprocess
@@ -45,42 +46,13 @@ SESSION_LABELS = {
     "manual": "手動測試 / Manual",
 }
 
+SHARED_CONFIGS = json.loads((ROOT / "config/screeners.json").read_text())
+STRATEGY_IDS = {"leaps": "leaps_deep_itm_call", "weekly_csp": "weekly_cash_secured_put", "soxl_csp": "soxl_conservative_csp"}
 SCREENER_CONFIGS = {
-    "leaps": {
-        "title": "LEAPS Call - 深度 ITM 替代正股",
-        "option_type": "call",
-        "filters": [
-            ("dte", "between", 365, 600),
-            ("marketCapB", "gte", 10, None),
-            ("delta", "between", 0.75, 0.85),
-            ("openInterest", "gte", 500, None),
-            ("volume", "gte", 10, None),
-            ("intrinsicValuePct", "between", 70, 85),
-            ("vega", "gte", 0.2, None),
-            ("ivPercentile", "lte", None, 40),
-            ("percentItm", "gte", 20, None),
-            ("potentialRoi", "gte", 0, None),
-            ("annualizedRoi", "gte", 0, None),
-        ],
-    },
-    "weekly_csp": {
-        "title": "Weekly CSP - 高 IV 現金擔保 Put",
-        "option_type": "put",
-        "filters": [
-            ("lastPrice", "gte", 2.5, None),
-            ("delta", "between", -0.12, 0),
-            ("dte", "between", 1, 10),
-            ("volume", "gte", 200, None),
-            ("ivPercentile", "gte", 50, None),
-            ("distanceOtmPct", "gte", 0, None),
-            ("iv", "gte", 30, None),
-            ("spread", "lte", None, 0.5),
-            ("potentialRoi", "gte", 0, None),
-            ("annualizedRoi", "gte", 0, None),
-            ("dayChangePct", "gte", 0, None),
-        ],
-    },
+    key: {"title": next(c["name"] for c in SHARED_CONFIGS if c["id"] == value)}
+    for key, value in STRATEGY_IDS.items()
 }
+
 
 
 def parse_args() -> argparse.Namespace:
@@ -282,27 +254,10 @@ def score_row(strategy: str, row: dict[str, Any]) -> float:
 
 
 def scored_candidates(candidates: list[dict[str, Any]], strategy: str, allowed_tickers: list[str]) -> list[dict[str, Any]]:
-    config = SCREENER_CONFIGS[strategy]
-    allowed = set(allowed_tickers)
-    scored: list[dict[str, Any]] = []
-    for candidate in candidates:
-        if candidate.get("ticker") not in allowed or candidate.get("optionType") != config["option_type"]:
-            continue
-        if number(candidate.get("bid")) <= 0 or number(candidate.get("ask")) <= 0 or number(candidate.get("ask")) < number(candidate.get("bid")):
-            continue
-        row = {**candidate, **derive(candidate)}
-        failed = [
-            field
-            for field, operator, lower, upper in config["filters"]
-            if not passes(number(row.get(field)), operator, lower, upper)
-        ]
-        row["matched"] = len(failed) == 0
-        row["failedFilters"] = failed
-        row["score"] = score_row(strategy, row)
-        row["warnings"] = warnings_for(row)
-        if row["matched"]:
-            scored.append(row)
-    return sorted(scored, key=lambda item: item["score"], reverse=True)
+    # Use the frontend engine, not a second Python interpretation of the filters.
+    payload = {"configId": STRATEGY_IDS[strategy], "candidates": [row for row in candidates if row.get("ticker") in allowed_tickers]}
+    result = subprocess.run(["node", str(ROOT / "scripts/score-options.mjs")], input=json.dumps(payload), text=True, capture_output=True, check=True)
+    return json.loads(result.stdout)
 
 
 def parse_time(value: str) -> datetime:
@@ -325,8 +280,8 @@ def tracking_seed() -> dict[str, Any]:
 def signal_key(signal: dict[str, Any]) -> str:
     return "|".join(
         [
-            str(signal.get("signalAt")),
-            str(signal.get("session")),
+            datetime.fromisoformat(str(signal.get("signalAt"))).astimezone(NY_TZ).date().isoformat() if signal.get("strategy") == "soxl_csp" else str(signal.get("signalAt")),
+            str(signal.get("strategyVersion", "legacy")) if signal.get("strategy") == "soxl_csp" else str(signal.get("session")),
             str(signal.get("strategy")),
             str(signal.get("scenario")),
             str(signal.get("contractId")),
@@ -343,6 +298,8 @@ def compact_signal(
     scenario: str = "best",
 ) -> dict[str, Any]:
     mid = number(row.get("mid"))
+    if strategy == "soxl_csp":
+        scenario = "execution"
     signal = {
         "id": f"{generated_at}|{strategy}|{scenario}|{rank}|{row.get('id')}",
         "signalAt": generated_at,
@@ -358,6 +315,8 @@ def compact_signal(
         "expiration": row.get("expiration"),
         "dte": number(row.get("dte")),
         "strike": number(row.get("strike")),
+        "strategyVersion": next(c["version"] for c in SHARED_CONFIGS if c["id"] == STRATEGY_IDS[strategy]),
+        "entryPriceConvention": "bid" if strategy == "soxl_csp" else "mid",
         "entry": {
             "mid": mid,
             "bid": number(row.get("bid")),
@@ -376,11 +335,11 @@ def compact_signal(
             "lastObservedAt": None,
         },
     }
-    if strategy == "weekly_csp":
+    if strategy in {"weekly_csp", "soxl_csp"}:
         signal["outcome"] = {
             "status": "open",
             "targetProfitPct": 80,
-            "targetAsk": round(mid * 0.2, 4) if mid > 0 else None,
+            "targetAsk": round(number(row.get("bid")) * 0.2, 4) if strategy == "soxl_csp" else round(mid * 0.2, 4) if mid > 0 else None,
             "hit80At": None,
             "daysTo80": None,
             "hit80Within5D": False,
@@ -407,6 +366,7 @@ def latest_quote(row: dict[str, Any]) -> dict[str, Any]:
     derived = derive(row)
     return {
         "mid": derived["mid"],
+        "priceSource": row.get("priceSource"),
         "bid": number(row.get("bid")),
         "ask": number(row.get("ask")),
         "underlyingPrice": number(row.get("underlyingPrice")),
@@ -418,6 +378,10 @@ def latest_quote(row: dict[str, Any]) -> dict[str, Any]:
 
 
 def update_signal_outcome(signal: dict[str, Any], quote: dict[str, Any], generated_at: str) -> None:
+    # A missing/proxy/crossed quote must never manufacture a 100% capture.
+    ask, bid = quote.get("ask"), quote.get("bid")
+    if not isinstance(ask, (int, float)) or not isinstance(bid, (int, float)) or not math.isfinite(ask) or not math.isfinite(bid) or ask <= 0 or bid < 0 or ask < bid or quote.get("priceSource") == "moomoo_last_price_proxy":
+        return
     signal["latest"] = {
         **quote,
         "observedAt": generated_at,
@@ -429,12 +393,17 @@ def update_signal_outcome(signal: dict[str, Any], quote: dict[str, Any], generat
 
     entry = signal.get("entry", {})
     outcome = signal.setdefault("outcome", {})
-    if signal.get("strategy") == "weekly_csp":
-        entry_credit = number(entry.get("mid"))
+    if signal.get("strategy") in {"weekly_csp", "soxl_csp"}:
+        entry_credit = number(entry.get("bid" if signal.get("entryPriceConvention") == "bid" else "mid"))
         current_ask = number(quote.get("ask"))
         current_underlying = number(quote.get("underlyingPrice"))
         strike = number(signal.get("strike"))
         profit_capture = ((entry_credit - current_ask) / entry_credit) * 100 if entry_credit > 0 else 0
+        outcome["worstProfitCapturePct"] = min(number(outcome.get("worstProfitCapturePct", profit_capture)), profit_capture)
+        for target in (50, 70, 80):
+            if profit_capture >= target and not outcome.get(f"hit{target}At"):
+                if target != 80:
+                    outcome[f"hit{target}At"] = generated_at
         previous_best = outcome.get("bestProfitCapturePct")
         if previous_best is None or profit_capture > number(previous_best):
             outcome["bestProfitCapturePct"] = round(profit_capture, 2)
@@ -449,8 +418,9 @@ def update_signal_outcome(signal: dict[str, Any], quote: dict[str, Any], generat
             outcome["daysTo80"] = round(days_between(str(signal.get("signalAt")), generated_at), 2)
             outcome["hit80Within5D"] = outcome["daysTo80"] <= 5
             outcome["status"] = "hit_80"
-        if generated_at[:10] > str(signal.get("expiration")):
+        if datetime.fromisoformat(generated_at).astimezone(NY_TZ).date().isoformat() > str(signal.get("expiration")):
             outcome["expired"] = True
+            outcome["settlementStatus"] = "unverified"
             if not outcome.get("hit80At"):
                 outcome["status"] = "expired_no_80"
         elif not outcome.get("hit80At"):
@@ -529,18 +499,20 @@ def update_tracking(
         row = rows_by_id.get(str(signal.get("contractId")))
         if row:
             update_signal_outcome(signal, latest_quote(row), generated_at)
-        elif signal.get("strategy") == "weekly_csp" and generated_at[:10] > str(signal.get("expiration")):
+        elif signal.get("strategy") in {"weekly_csp", "soxl_csp"} and datetime.fromisoformat(generated_at).astimezone(NY_TZ).date().isoformat() > str(signal.get("expiration")):
             outcome = signal.setdefault("outcome", {})
             outcome["expired"] = True
+            outcome["settlementStatus"] = "unverified"
             if not outcome.get("hit80At"):
                 outcome["status"] = "expired_no_80"
 
     ranked_by_strategy = {
         "leaps": scored_candidates(candidates, "leaps", watchlists["leaps"]),
         "weekly_csp": scored_candidates(candidates, "weekly_csp", watchlists["weekly_csp"]),
+        "soxl_csp": scored_candidates(candidates, "soxl_csp", ["SOXL"]),
     }
     for strategy, rows in ranked_by_strategy.items():
-        for rank, row in enumerate(rows[:top], start=1):
+        for rank, row in enumerate(rows[:5] if strategy == "soxl_csp" else rows[:top], start=1):
             signal = compact_signal(row, strategy, session, generated_at, rank)
             key = signal_key(signal)
             if key not in by_key:
@@ -646,7 +618,10 @@ def csp_focus_line(row: dict[str, Any]) -> str:
 
 
 def compact_candidate_line(strategy: str, index: int, row: dict[str, Any]) -> str:
-    if strategy == "leaps":
+    if strategy == "soxl_csp":
+        metrics = (f"ITM {fmt_pct(row['expiryItmProbability'])}, Touch {fmt_pct(row['touchProbability'])}, "
+                   f"Bid {fmt_money(row['bid'])}, Bid Ann {fmt_pct(row['bidAnnualizedRoi'])}, Cash {fmt_money(row['cashRequired'])}")
+    elif strategy == "leaps":
         metrics = (
             f"Score {number(row['score']):.0f}, Delta {number(row['delta']):.2f}, "
             f"IV {fmt_pct(row['iv'])}, Intr {fmt_pct(row['intrinsicValuePct'], 0)}, Mid {fmt_money(row['mid'])}"
@@ -669,6 +644,7 @@ def build_report(
     scored_by_strategy = {
         "leaps": scored_candidates(candidates, "leaps", watchlists["leaps"]),
         "weekly_csp": scored_candidates(candidates, "weekly_csp", watchlists["weekly_csp"]),
+        "soxl_csp": scored_candidates(candidates, "soxl_csp", ["SOXL"]),
     }
     total_matches = sum(len(rows) for rows in scored_by_strategy.values())
     dashboard_url = os.getenv("DASHBOARD_URL", "").strip()
@@ -681,7 +657,7 @@ def build_report(
         lines.append(f"Dashboard: {dashboard_url}")
     lines.append("")
 
-    for strategy in ("leaps", "weekly_csp"):
+    for strategy in ("soxl_csp", "leaps", "weekly_csp"):
         rows = scored_by_strategy[strategy]
         lines.append(f"*{SCREENER_CONFIGS[strategy]['title']}*")
         if not rows:

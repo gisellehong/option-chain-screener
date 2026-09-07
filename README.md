@@ -1,30 +1,42 @@
-# Option Chain Screener
+# 股票選擇權交易工作台 · Stock Options Trading Desk
 
-本專案是用來取代手動調整 Moomoo/Futubull options screener 的本地 MVP。資料源已固定為 moomoo OpenD live data，並保留 mock data 作為 UI / 離線開發用途。
+新版以三個區塊組織：
 
-第一版先以兩個策略為核心：
+1. **Screener**：預設 SOXL 保守 CSP；比較履約價、風險與 Bid 收益，含口數／完整接股現金檢查。LEAPS、Weekly CSP 保留為舊版研究。
+2. **第三方 Tracker**：老 K SOXL 推薦與 AAG，保留訊號來源，不混入個人實現損益。
+3. **自己的 P&L**：股票／ETF 選擇權私人帳本，按帳戶、標的與狀態檢視；Patrick GMP 無來源時保持待資料。
 
-- `Deep ITM LEAPS Call`: 尋找可替代正股持倉的深度價內 LEAPS Call。
-- `IV Expansion for Weekly CSP`: 尋找高 IV、短天期、流動性足夠的 Weekly Cash Secured Put。
+ES futures options、2025 ES 績效、Leo 研究不在本版範圍。
 
-## MVP Scope
+## 規則與證據
 
-- Strategy configs: 把篩選條件集中在 `src/data/screenerConfigs.ts`。
-- Scenario filters: 每個策略同時有 `Best case` 和 `Middle case`，Dashboard 會同時呈現兩組結果。
-- Scoring engine: 由 `src/lib/scoring.ts` 計算衍生欄位、filter pass/fail 和 score。
-- Dashboard: 顯示 overview、filter rail、candidate table、contract detail、warnings 和 CSV export。
-- Data source: moomoo OpenD live snapshot，輸出到 `src/data/generated/realOptions.json`。
+預設集中於 `config/screeners.json`；前端與 Python 排程都使用 `src/lib/scoring.ts`，經 `scripts/score-options.mjs` 共用計算。UI 自訂門檻只留在當次 session。SOXL 預設 Risk first v1 與老 K Reference 分列；v1 尚需前推驗證，不能把低 Delta 或歷史 ITM 比例解讀為保證不被指派。
 
-## Screener Scenarios
+完整分支盤點、整合處置與資料口徑見 [整合紀錄](analysis/dashboard-restructure-2026-09-07.md)。
 
-每個 screener strategy 不再只有一組 fixed filters，而是同時顯示兩個 scenario：
+## 私人帳本
 
-- `Best case`: 嚴格條件，用來找最接近理想交易結構的候選。
-- `Middle case`: 放寬後的次要選擇，用來找還值得研究、但不完全符合最佳條件的候選。
+Google Sheets connector 讀取 `Tracker` 的 `A1:AT400`，使用 `UNFORMATTED_VALUE`；當資料超過此範圍時應延伸並確認最後交易列。將回傳值存為本機 `data/private/google-sheet.local.json`，結構為 `{fetchedAt, spreadsheetUrl, tracker: {values: [...]}}`，再執行：
 
-Dashboard 每個 scenario 都有 `Adjust filters` 區塊，可以直接在 UI 修改 min/max threshold，結果會即時重算。這些 UI 調整目前只保留在當次 session；要改預設值時，再更新 `src/data/screenerConfigs.ts` 裡對應 strategy 的 `scenarios`。
+```bash
+npm run import:ledger -- data/private/google-sheet.local.json
+npm run dev
+```
 
-LEAPS 另外提供 `365–600D`、`540–900D`、`365–900D` quick ranges。OpenD 預設抓取完整 `365–900 DTE` coverage，再由 Dashboard filter 決定顯示區間，避免畫面調整時因原始資料未抓取而漏掉 contracts。
+正規化輸出 `data/private/ledger.local.json`。此目錄被 Git 忽略，不進入公開 bundle。本機開發版自動讀取一次快照；線上靜態版可匯入正規化 JSON，僅儲存在當前瀏覽器。尚未建立 Google Sheet 持續自動同步。匯入 schema 可參考 `LedgerTrade`（`src/features/Portfolio.tsx`）；請勿將私人檔案複製到 `src/` 或 `public/`。
+
+帳本保留 Sheet Closed Profit、券商核對差額、轉倉群組與來源列。未實現僅包含有精確合約報價的部位，CC 不含正股腿。帳戶淨值 NLV 與股票選擇權損益不同，這裡不混算。
+
+## 驗證
+
+```bash
+npm ci
+npm test
+npm run validate:lao-k
+npm run build
+```
+
+老 K 驗證腳本是 Reference 歷史推薦重現，不是 v1 勝率。SOXL v1 排程採同紐約交易日／版本／合約去重與 Bid → Ask 達標觀察；舊策略保持 Mid 假設。
 
 ## Local Commands
 
@@ -49,7 +61,7 @@ Deployment flow:
 ```bash
 npm run fetch:moomoo -- AAPL AMD NVDA TSLA MSFT SMH
 npm run build
-git add .
+git add src/data/generated/realOptions.json src/data/generated/realOptions.meta.json
 git commit -m "Update moomoo screener data"
 git push origin main
 ```
