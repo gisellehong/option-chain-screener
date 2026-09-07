@@ -18,7 +18,7 @@
 
 分支不能整包覆蓋 main：72b720f 的 SOXL 主表較舊，會丟掉 main 的 8/14 後平倉、8/22 轉倉資料。採用 main 的 `SoxlTracker.tsx`、交易主表與 lifecycle builder，從 feature branch 收回老 K 24 筆推薦證據、SOXL 五個週五到期桶、八年 rolling-path 歷史機率、SOXL watchlist 與篩選欄位。保留 main 明確的 `openQuote !== null && openQuote.ask !== null` 檢查；不引入 feature branch 的 optional-chain 回歸。AAG 主表兩端內容相同，保留 main；其較新的隔離發布流程同樣保留。
 
-新的整合分支：`codex/dashboard-restructure-20260907`。原始工作目錄的未提交行情與 lifecycle 檔案未被覆寫；在獨立 worktree 完成實作。沒有刪除歷史分支或重寫 Git 歷史。
+新的整合分支：`codex/dashboard-restructure-20260907`。在獨立 worktree 完成實作後，原始工作目錄已 fast-forward 至整合後的 main。8 個原有未提交行情／lifecycle 檔案先備份及 stash，再逐位元組還原至工作目錄，並保留 stash 與備份。沒有刪除歷史分支或重寫 Git 歷史。
 
 ## 三區塊
 
@@ -52,7 +52,7 @@ Patrick GMP 尚未取得來源，顯示待資料而非零損益。未實現損�
 - `npm run build`：TypeScript 與 production build。
 - `npm run validate:lao-k`：24 筆 Reference 推薦規則回放（16 校準／8 樣本外），不代表新 v1 績效。
 - 本機瀏覽器確認三區塊、私人帳本讀取及待資料狀態。
-- 尚未用新規則執行真實 OpenD 抓取或發送 Telegram；既有自動排程來源工作目錄未切換。
+- 尚未用新規則執行真實 OpenD 抓取或發送 Telegram；既有自動排程仍使用原來路徑，該路徑已更新至 main 的新版程式，私人帳本也已複製至其忽略目錄。
 
 ## 參考連結
 
