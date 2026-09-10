@@ -634,6 +634,9 @@ function YouTuberTracker({
     const lifecycle = lifecycleByTrade.get(trade.id);
     if (!lifecycle) return [];
 
+    const entryDte = trade.tradeDate
+      ? Math.round((Date.parse(`${trade.expiration}T00:00:00Z`) - Date.parse(`${trade.tradeDate}T00:00:00Z`)) / 86_400_000)
+      : null;
     const current = findCurrentContract(trade);
     const capture = profitCapturePct(trade, current?.ask ?? null);
     const pnl = openPnl(trade, current);
@@ -666,6 +669,7 @@ function YouTuberTracker({
       maxLoss,
       maxLossQuote,
       collateral,
+      entryDte,
       returnOnCollateral,
       status: tradeStatus(trade, current),
     }];
@@ -673,6 +677,8 @@ function YouTuberTracker({
   const sellPutRows = rows.filter((row) => row.trade.action === "sell" && row.trade.optionType === "put");
   const leapsCallRows = rows.filter((row) => row.trade.action === "buy" && row.trade.optionType === "call");
   const openPutRows = sellPutRows.filter((row) => row.lifecycle.expiry === null);
+  const totalOpenPutPremium = openPutRows.reduce((sum, row) => sum + (row.trade.grossPremium ?? 0), 0);
+  const totalOpenPutCollateral = openPutRows.reduce((sum, row) => sum + (row.collateral ?? 0), 0);
   const closedPutRows = sellPutRows.filter((row) => row.lifecycle.expiry !== null);
   const openPutPnlRows = openPutRows.filter((row) => row.pnl !== null);
   const totalOpenPutPnl =
@@ -709,12 +715,14 @@ function YouTuberTracker({
         <div className="tradeGroupHead">
           <div>
             <h3>Sell Put Tracker · Open Trades</h3>
-            <p>持續以最新 ask 估算買回成本與未實現損益。</p>
+            <p>持續以最新 ask 估算買回成本與未實現損益。Entry IV／Delta 採進場快照；Entry DTE 為成交日至到期日的日曆天數。Entry ROC = 毛權利金 ÷ 接股擔保金，未年化、未扣佣金。</p>
           </div>
           <div className="tradeGroupSummary">
             <span>Open P&amp;L</span>
             <strong className={pnlTone(totalOpenPutPnl)}>{totalOpenPutPnl === null ? "N/A" : formatCurrency(totalOpenPutPnl, 0)}</strong>
             <small>{openPutRows.length} live trades · Updated {formatShortDate(generatedAt)}</small>
+            <small>權利金總額 Total Premium {formatCurrency(totalOpenPutPremium, 0)}</small>
+            <small>接股擔保金 Total Collateral {formatCurrency(totalOpenPutCollateral, 0)}</small>
           </div>
         </div>
         <div className="tableWrap">
@@ -722,18 +730,18 @@ function YouTuberTracker({
           <thead>
             <tr>
               <th>Trade</th>
-              <th>Entry</th>
-              <th>Max Premium / Collateral</th>
+              <th>Entry Snapshot / DTE</th>
+              <th>Entry ROC / Total Amount</th>
               <th>Current</th>
               <th>Open P&L</th>
               <th>Max Loss to Date</th>
               <th>Premium Capture</th>
-              <th>IV / Delta</th>
+              <th>Current IV / Delta</th>
               <th>Risk</th>
             </tr>
           </thead>
           <tbody>
-            {openPutRows.map(({ trade, current, capture, pnl, maxLoss, maxLossQuote, collateral, returnOnCollateral, status }) => {
+            {openPutRows.map(({ trade, lifecycle, entryDte, current, capture, pnl, maxLoss, maxLossQuote, collateral, returnOnCollateral, status }) => {
               const latestAsk = current?.ask ?? null;
               const latestBid = current?.bid ?? null;
               const latestMid = current && Number.isFinite(current.bid) && Number.isFinite(current.ask)
@@ -760,12 +768,14 @@ function YouTuberTracker({
                     <small>
                       Limit {trade.limitPrice === null ? "N/A" : formatCurrency(trade.limitPrice)}
                     </small>
+                    <small>Entry IV {formatMaybePercent(lifecycle.entryQuote.iv, 1)} · Delta {formatMaybeNumber(lifecycle.entryQuote.delta, 3)}</small>
+                    <small>Entry DTE {entryDte === null ? "N/A" : `${entryDte} 天 (days)`}</small>
+                    <small>Snapshot {formatShortDate(lifecycle.entryQuote.generatedAt)}（本地時間）</small>
                   </td>
                   <td>
-                    {trade.grossPremium === null ? "N/A" : formatCurrency(trade.grossPremium, 0)}
-                    <small>
-                      Collateral {collateral === null ? "N/A" : formatCurrency(collateral, 0)}
-                    </small>
+                    <strong>{returnOnCollateral === null ? "N/A" : formatPercent(returnOnCollateral, 2)} Entry ROC</strong>
+                    <small>權利金總額 Total Premium {trade.grossPremium === null ? "N/A" : formatCurrency(trade.grossPremium, 0)}</small>
+                    <small>接股擔保金 Collateral {collateral === null ? "N/A" : formatCurrency(collateral, 0)}</small>
                   </td>
                   <td>
                     {latestAsk === null ? "N/A" : formatCurrency(latestAsk)}
@@ -793,11 +803,6 @@ function YouTuberTracker({
                   </td>
                   <td>
                     {capture === null ? "N/A" : formatPercent(capture, 1)}
-                    <small>
-                      {returnOnCollateral === null
-                        ? "Return on collateral N/A"
-                        : `${formatPercent(returnOnCollateral, 2)} initial ROC`}
-                    </small>
                   </td>
                   <td>
                     {current ? formatPercent(current.iv, 1) : "N/A"}
@@ -974,7 +979,7 @@ function YouTuberTracker({
               </tr>
             </thead>
             <tbody>
-              {closedPutRows.map(({ trade, lifecycle, collateral, maxLoss, returnOnCollateral }) => {
+              {closedPutRows.map(({ trade, lifecycle, entryDte, collateral, maxLoss, returnOnCollateral }) => {
                 const expiry = lifecycle.expiry;
                 if (!expiry) return null;
 
@@ -992,6 +997,7 @@ function YouTuberTracker({
                           : `Tracking since ${formatShortDate(trade.observedAtSgt)}`}
                       </small>
                       <small>IV {formatMaybePercent(lifecycle.entryQuote.iv, 1)} · Delta {formatMaybeNumber(lifecycle.entryQuote.delta, 3)}</small>
+                      <small>Entry DTE {entryDte === null ? "N/A" : `${entryDte} 天 (days)`}</small>
                     </td>
                     <td>
                       {trade.grossPremium === null ? "N/A" : formatCurrency(trade.grossPremium, 0)}
