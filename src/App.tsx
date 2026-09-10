@@ -1370,7 +1370,7 @@ function CandidateTable({
   const isLeaps = config.id === "leaps_deep_itm_call";
   const isConservative = config.id === "soxl_conservative_csp";
   const conservativeBuckets = isConservative
-    ? Array.from({ length: config.maxExpirations ?? 5 }, (_, index) => index + 1).map((bucket) => {
+    ? Array.from({ length: config.maxExpirations ?? 6 }, (_, index) => index + 1).map((bucket) => {
         const candidates = diagnosticRows.filter((row) => row.soxlFridayBucket === bucket);
         const selected = matchedRows.find((row) => row.soxlFridayBucket === bucket);
         const closestRejected = [...candidates].sort((left, right) => {
@@ -1473,7 +1473,7 @@ function CandidateTable({
         <div className="expiryBucketGrid" aria-label="SOXL conservative Friday expiry buckets">
           {conservativeBuckets.map(({ bucket, selected, closestRejected }) => (
             <article key={bucket} className={selected ? "matched" : "rejected"}>
-              <span>第 {bucket} 週 · Friday</span>
+              <span>{bucket === 1 ? "本週到期" : `第 ${bucket - 1} 週`} · Friday</span>
               {selected ? (
                 <>
                   <strong>{selected.expiration} · ${formatNumber(selected.strike, 0)} Put</strong>
@@ -1840,7 +1840,7 @@ function DashboardApp() {
               ? String(new Set(bestResult?.diagnosticRows.map((row) => row.soxlFridayBucket).filter(Boolean)).size)
               : String(middleResult?.matchedRows.length ?? 0)
           }
-          subValue={activeConfig.id === "soxl_conservative_csp" ? "next five Friday buckets" : `${middleResult?.rows.length ?? 0} visible rows`}
+          subValue={activeConfig.id === "soxl_conservative_csp" ? "本週到期 + 未來五週 · Fridays" : `${middleResult?.rows.length ?? 0} visible rows`}
         />
         <SummaryMetric label={activeConfig.id === "soxl_conservative_csp" ? "舊版 Score 參考" : "Best Score"} value={formatNumber(bestScore, 0)} subValue={activeConfig.shortName} />
         <SummaryMetric label="Avg Spread" value={formatCurrency(avgSpread)} subValue="all matched contracts" />

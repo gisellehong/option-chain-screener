@@ -26,7 +26,7 @@ OPTION_CHAIN_DELAY_SECONDS = 3.1
 SNAPSHOT_DELAY_SECONDS = 0.55
 SNAPSHOT_BATCH_SIZE = 400
 SOXL_CONSERVATIVE_MAX_DTE = 42
-SOXL_CONSERVATIVE_EXPIRATIONS = 5
+SOXL_CONSERVATIVE_EXPIRATIONS = 6
 SOXL_HISTORY_LOOKBACK_YEARS = 8
 NEW_YORK_TZ = ZoneInfo("America/New_York")
 
@@ -214,8 +214,13 @@ def friday_expiration_dates(
     max_dte: int = SOXL_CONSERVATIVE_MAX_DTE,
     max_count: int = SOXL_CONSERVATIVE_EXPIRATIONS,
 ) -> list[str]:
-    dates = expiration_dates(quote_ctx, code, 1, max_dte, 64)
-    return [value for value in dates if datetime.strptime(value, "%Y-%m-%d").date().weekday() == 4][:max_count]
+    today = market_today()
+    week_start = today - timedelta(days=today.weekday())
+    dates = expiration_dates(quote_ctx, code, 0, max_dte, 64)
+    return sorted({value for value in dates
+                   if (expiry := date.fromisoformat(value)) >= today
+                   and expiry.weekday() == 4
+                   and 0 <= (expiry - week_start).days // 7 < max_count})
 
 
 def fetch_adjusted_daily_history(quote_ctx: OpenQuoteContext, code: str) -> list[dict[str, Any]]:
@@ -455,7 +460,8 @@ def fetch_ticker_candidates(
             history = []
             probability_history_error = str(exc)
         bucket_by_expiration = {
-            expiration: index + 1 for index, expiration in enumerate(conservative_expirations)
+            expiration: (date.fromisoformat(expiration) - market_today() + timedelta(days=market_today().weekday())).days // 7 + 1
+            for expiration in conservative_expirations
         }
         for candidate in candidates:
             if candidate["optionType"] != "put":

@@ -32,3 +32,10 @@ test('missing expiry stays unknown; spread collateral respects long leg',()=>{
  const ledger=normalizeSheet(raw([trade({4:'SOXL'}),trade({2:'BPS',7:65})]));assert.equal(ledger.trades[0].expiration,null);assert.equal(ledger.trades[1].cashRequired,800);
  assert.throws(()=>normalizeSheet({tracker:{values:[[]]}}),/headers/);
 });
+test('current expiry plus five future weeks can each produce a recommendation',()=>{
+ const dates=['2026-09-11','2026-09-18','2026-09-25','2026-10-02','2026-10-09','2026-10-16'];
+ const rows=score(dates.map((expiration,i)=>({...base,id:`week-${i}`,expiration,dte:1+7*i,soxlFridayBucket:i+1})));
+ assert.equal(rows.length,6);
+ assert.ok(rows.some(row=>row.expiration==='2026-10-16'));
+ assert.equal(score([{...base,soxlFridayBucket:7}]).length,0);
+});
