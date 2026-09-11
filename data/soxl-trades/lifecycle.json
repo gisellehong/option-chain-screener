@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-10T20:17:47.856Z",
+  "generatedAt": "2026-09-11T13:47:41.546Z",
   "source": {
     "snapshotRoot": "data/snapshots",
-    "parsedSnapshotCount": 1047,
+    "parsedSnapshotCount": 1049,
     "earliestSnapshotAt": "2026-06-07T18:26:34+08:00",
-    "latestSnapshotAt": "2026-09-11T04:16:08+08:00",
+    "latestSnapshotAt": "2026-09-11T21:45:58+08:00",
     "priceConvention": "Maximum premium uses the highest observed ask inside the holding window. Covered calls use Black-Scholes modeled prices when the exact contract quote was not archived."
   },
   "summary": {
@@ -2674,30 +2674,30 @@
         "quoteAt": "2026-08-22T01:12:55+08:00"
       },
       "openPosition": {
-        "markPremium": 0.61,
-        "unrealizedProfit": 3505,
-        "unrealizedRoi": 0.066762,
+        "markPremium": 0.05,
+        "unrealizedProfit": 3785,
+        "unrealizedRoi": 0.072095,
         "quote": {
-          "marketDate": "2026-09-10",
-          "generatedAt": "2026-09-11T04:16:08+08:00",
-          "bid": 0.55,
-          "ask": 0.61,
-          "underlyingPrice": 115.76,
-          "iv": 162.659,
-          "delta": -0.116078,
+          "marketDate": "2026-09-11",
+          "generatedAt": "2026-09-11T21:45:58+08:00",
+          "bid": 0.03,
+          "ask": 0.05,
+          "underlyingPrice": 121.315,
+          "iv": 244.966,
+          "delta": -0.013724,
           "modeled": false,
           "source": "snapshot_ask"
         }
       },
       "historical": {
-        "quoteCount": 115,
+        "quoteCount": 116,
         "modeledQuoteCount": 0,
-        "availableMarketDates": 9,
-        "matchedMarketDates": 9,
+        "availableMarketDates": 10,
+        "matchedMarketDates": 10,
         "coverageRatio": 1,
         "coverage": "partial",
         "firstQuoteAt": "2026-09-01T00:16:29+08:00",
-        "lastQuoteAt": "2026-09-11T04:16:08+08:00",
+        "lastQuoteAt": "2026-09-11T21:45:58+08:00",
         "maximumPremium": 7.65,
         "maximumUnrealizedLoss": -15,
         "maximumLossPctCollateral": 0.000286,
@@ -2755,6 +2755,11 @@
             "marketDate": "2026-09-10",
             "maximumAsk": 0.69,
             "generatedAt": "2026-09-10T22:14:16+08:00"
+          },
+          {
+            "marketDate": "2026-09-11",
+            "maximumAsk": 0.05,
+            "generatedAt": "2026-09-11T21:45:58+08:00"
           }
         ]
       },
