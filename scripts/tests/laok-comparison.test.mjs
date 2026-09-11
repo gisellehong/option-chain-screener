@@ -77,3 +77,16 @@ test('forward archive rejects stale reuse and preserves original config, time an
   const d=JSON.parse(original);assert.equal(d.recordedAt,'2026-09-10T14:00:01Z');assert.equal(d.scenarios.execution[0].strike,70);assert.ok(d.snapshotSha256 && d.configHash);
  } finally {fs.rmSync(root,{recursive:true,force:true});}
 });
+
+test('coverage audit distinguishes unrequested, absent response, unusable quote, and unknown historical data',()=>{
+ const s={...snap('2026-09-10T14:00:00Z',[]),coverage:{tickers:[{ticker:'SOXL',expirations:[base.expiration],contracts:[]}]}};
+ assert.equal(diagnose(base,s,scenario).status,'inventory_not_listed');
+ for(const status of ['outside_scope','not_returned','invalid_quote']) {
+   s.coverage.tickers[0].contracts=[{...base,status}];
+   assert.equal(diagnose(base,s,scenario).status,status);
+   const dataset={sources:[{date:'2026-09-10',postId:'x',publishedAt:'2026-09-10T14:10:00Z'}],recommendations:[{...base,sourceId:'x'}]};
+   const result=buildComparison(dataset,[s]);
+   assert.equal(result.summary.scenarios.execution.missingData,1);
+   assert.equal(result.summary.scenarios.execution.comparable,0);
+ }
+});

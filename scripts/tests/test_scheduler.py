@@ -38,3 +38,15 @@ class SignalTests(unittest.TestCase):
         self.assertIsNotNone(s['outcome']['hit80At'])
 
 if __name__=='__main__':unittest.main()
+
+class QuarterHourTests(unittest.TestCase):
+    def test_quarter_hour_slots_preserve_close_and_have_no_duplicates(self):
+        from datetime import datetime
+        spec=importlib.util.spec_from_file_location('due',Path(__file__).parents[1]/'run-due-snapshot.py')
+        due=importlib.util.module_from_spec(spec);spec.loader.exec_module(due)
+        times=[item['time'] for item in due.SCHEDULE]
+        self.assertEqual(len(times),len(set(times)))
+        for minute in range(570,960,15):
+            job=due.due_job(datetime(2026,9,11,minute//60,minute%60,tzinfo=due.NY_TZ),10)
+            self.assertIsNotNone(job)
+        self.assertEqual(due.due_job(datetime(2026,9,11,16,0,tzinfo=due.NY_TZ),10)['session'],'close')

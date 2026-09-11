@@ -36,7 +36,14 @@ export function diagnose(reference, snapshot, scenario, config=CONFIG) {
   if (!config.tickerWhitelist.includes(reference.ticker)) return {status:'outside_universe',reasons:['標的範圍不同 · Universe']};
   if (!snapshot) return {status:'missing_snapshot',reasons:['發文前 60 分鐘內無正常交易時段快照']};
   const row=snapshot.candidates.find(c=>contractKey(c)===contractKey(reference));
-  if (!row) return {status:'missing_contract',reasons:['期權鏈未收錄合約 · Coverage']};
+  if (!row) {
+    const coverage=snapshot.coverage?.tickers?.find(t=>t.ticker===reference.ticker);
+    const entry=coverage?.contracts?.find(c=>contractKey(c)===contractKey(reference));
+    const reasons={outside_scope:'合約存在，但未納入報價抓取範圍',not_returned:'已請求報價，但供應商未回傳',invalid_quote:'已回傳，但報價或必要欄位不完整'};
+    if(entry && reasons[entry.status]) return {status:entry.status,reasons:[reasons[entry.status]]};
+    if(coverage) return {status:coverage.expirations.includes(reference.expiration)?'inventory_not_listed':'outside_scope',reasons:[coverage.expirations.includes(reference.expiration)?'該到期日的合約清單未列出此合約':'該到期日未納入本次合約清單']};
+    return {status:'missing_contract',reasons:['歷史快照未收錄，無抓取紀錄可判定原因']};
+  }
   if (!usableQuote(row)) return {status:'invalid_quote',reasons:['報價不可用 · Quote quality']};
   const scored=scoreCandidates(config, scenario.filters,[row],true)[0];
   const missing=scenario.filters.filter(f=>!Number.isFinite(scored[f.field]));
@@ -100,6 +107,9 @@ function sourceInventory(wiki, dataset) {
 function loadSnapshots(root, startDate) {
   const cacheRoot=path.join(root,'data/laok-comparison/cache');
   const snapshots=[];
+  const referenceFile=path.join(root,'data/laok-reference/recommendations.json');
+  const tickers=new Set(['SOXL','NBIS','LITE',...(fs.existsSync(referenceFile)?read(referenceFile).recommendations.map(r=>r.ticker):[])]);
+  const universeKey=[...tickers].sort().join(',');
   const archive=path.join(root,'data/snapshots');
   if(!fs.existsSync(archive)) return snapshots;
   for(const day of fs.readdirSync(archive).filter(d=>d>=startDate).sort()) {
@@ -109,13 +119,13 @@ function loadSnapshots(root, startDate) {
       const filename=path.join(directory,name), stat=fs.statSync(filename);
       const cache=path.join(cacheRoot,day,name);
       let data=fs.existsSync(cache)?read(cache):null;
-      if(!data || data.cacheVersion!==1 || data.size!==stat.size || data.mtime!==stat.mtimeMs) {
+      if(!data || data.cacheVersion!==2 || data.universeKey!==universeKey || data.size!==stat.size || data.mtime!==stat.mtimeMs) {
         const raw=read(filename);
-        data={cacheVersion:1,size:stat.size,mtime:stat.mtimeMs,generatedAt:raw.generatedAt,session:raw.session,fresh:raw.fresh,
-          candidates:(raw.candidates??[]).filter(c=>c.optionType==='put' && ['SOXL','NBIS','LITE'].includes(c.ticker)).map(slim)};
+        data={cacheVersion:2,universeKey,size:stat.size,mtime:stat.mtimeMs,generatedAt:raw.generatedAt,session:raw.session,fresh:raw.fresh,coverage:raw.coverage,
+          candidates:(raw.candidates??[]).filter(c=>c.optionType==='put' && tickers.has(c.ticker)).map(slim)};
         write(cache,data);
       }
-      if(!data.generatedAt || !data.candidates.length) continue;
+      if(!data.generatedAt) continue;
       snapshots.push({...data,file:path.relative(root,filename),decisionPath:path.join(root,'data/laok-comparison/decisions',day,name)});
     }
   }
@@ -132,7 +142,7 @@ export function buildComparison(dataset, snapshots, decisions=new Map()) {
         const diagnosis=diagnose(r,selected,s,config);
         const pick=decision?.scenarios[s.id]?.find(p=>p.expiration===r.expiration && p.ticker===r.ticker) ?? null;
         const exact=pick ? contractKey(pick)===contractKey(r) : false;
-        const status=['outside_universe','missing_snapshot','missing_contract','invalid_quote','missing_model_data'].includes(diagnosis.status) ? diagnosis.status : exact ? 'exact_match' : diagnosis.status==='filtered' ? 'filtered' : pick ? 'rank_difference' : 'no_pick';
+        const status=['outside_universe','missing_snapshot','missing_contract','outside_scope','not_returned','inventory_not_listed','invalid_quote','missing_model_data'].includes(diagnosis.status) ? diagnosis.status : exact ? 'exact_match' : diagnosis.status==='filtered' ? 'filtered' : pick ? 'rank_difference' : 'no_pick';
         return [s.id,{...diagnosis,status,pick,exactMatch:exact,strikeDifference:pick?round(pick.strike-r.strike):null,
           outcome:pairedOutcome(diagnosis.referenceAtSnapshot,pick,selected,snapshots)}];
       }));
@@ -154,13 +164,13 @@ export function buildComparison(dataset, snapshots, decisions=new Map()) {
       const comparable=rows.filter(r=>['exact_match','filtered','rank_difference','no_pick'].includes(r.status));
       return [s.id,{total:rows.length,comparable:comparable.length,exactMatches:comparable.filter(r=>r.exactMatch).length,
         exactMatchPct:comparable.length?round(comparable.filter(r=>r.exactMatch).length/comparable.length*100):null,
-        outsideUniverse:rows.filter(r=>r.status==='outside_universe').length,missingData:rows.filter(r=>['missing_snapshot','missing_contract','invalid_quote','missing_model_data'].includes(r.status)).length,
+        outsideUniverse:rows.filter(r=>r.status==='outside_universe').length,missingData:rows.filter(r=>['missing_snapshot','missing_contract','outside_scope','not_returned','inventory_not_listed','invalid_quote','missing_model_data'].includes(r.status)).length,
         pairedMarks:rows.filter(r=>r.outcome?.status==='paper_mark_only').length}];
     }))};
   return {schemaVersion:1,generatedAt:new Date().toISOString(),configHash:HASH,summary,groups,
     limitations:['發文時間不等於截圖報價時間；對齊值僅為發文前最近 60 分鐘內的正常交易時段快照。','歷史回放使用目前規則，不代表當日曾經推薦；凍結紀錄另列。','同時點 Bid → Ask 紙上估值，未計佣金與滑價；不代表成交、平倉或實現損益。','缺漏合約不計入可比命中率；來源未列出的到期桶不當作已證實拒絕。','1／3／5 session 為有共同報價的觀察交易日；資料缺日不能視為連續交易日。','目前沒有足夠前推樣本判定優勝，也不以截圖入選比例自動修改風控。']};
 }
-export const statusLabel = {outside_universe:'標的範圍不同',missing_snapshot:'缺當時快照',missing_contract:'缺合約',invalid_quote:'報價不可用',missing_model_data:'缺模型欄位',exact_match:'同合約',filtered:'門檻淘汰',rank_difference:'排序差異',no_pick:'未選出'};
+export const statusLabel = {outside_universe:'標的範圍不同',missing_snapshot:'缺當時快照',missing_contract:'缺合約・原因未知',outside_scope:'未納入抓取',not_returned:'已請求未回傳',inventory_not_listed:'合約清單未列出',invalid_quote:'報價不可用',missing_model_data:'缺模型欄位',exact_match:'同合約',filtered:'門檻淘汰',rank_difference:'排序差異',no_pick:'未選出'};
 function markdown(report) {
   const s=report.summary;
   const lines=['# 老 K 每日比對 · Daily comparison','',`更新：${report.generatedAt}；來源截至 ${s.latestSourceDate}。共 ${s.sourceDays} 日／${s.recommendations} 筆。`, '',

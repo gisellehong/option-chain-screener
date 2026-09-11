@@ -28,6 +28,8 @@ SNAPSHOT_BATCH_SIZE = 400
 SOXL_CONSERVATIVE_MAX_DTE = 42
 SOXL_CONSERVATIVE_EXPIRATIONS = 6
 SOXL_HISTORY_LOOKBACK_YEARS = 8
+COMPARISON_MAX_DTE = 63
+COMPARISON_STRIKE_RANGE = (0.40, 1.10)
 NEW_YORK_TZ = ZoneInfo("America/New_York")
 
 
@@ -121,10 +123,14 @@ def frame_records(frame: Any) -> list[dict[str, Any]]:
 
 
 def call_or_raise(label: str, func: Any, *args: Any, **kwargs: Any) -> Any:
-    ret, data = func(*args, **kwargs)
-    if ret != RET_OK:
+    for attempt in range(3):
+        ret, data = func(*args, **kwargs)
+        if ret == RET_OK:
+            return data
+        if attempt < 2 and any(token in str(data).lower() for token in ("high frequency", "too frequent", "rate limit")):
+            time.sleep(31)
+            continue
         raise RuntimeError(f"{label} failed: {data}")
-    return data
 
 
 def ensure_opend_available(host: str, port: int) -> None:
@@ -203,6 +209,40 @@ def load_comparison_contracts(reference_path: Path, decisions_root: Path) -> dic
         seen.add(key)
         tracked.setdefault(normalize_code(ticker), []).append({"expiration": expiration, "strike": strike, "optionType": option_type})
     return tracked
+
+
+def comparison_universe(reference_path: Path) -> set[str]:
+    rows = json.loads(reference_path.read_text()).get("recommendations", []) if reference_path.exists() else []
+    return {normalize_code(t) for t in ["SOXL", "NBIS", "LITE"] + [r["ticker"] for r in rows if r.get("ticker")]}
+
+
+def inventory_call(cache_root: Path, method: str, function: Any, **kwargs: Any) -> list[dict[str, Any]]:
+    """Refresh chain definitions daily and after noon; quotes are never cached."""
+    now = datetime.now(NEW_YORK_TZ)
+    slot = f"{now.date()}-{'pm' if now.hour >= 12 else 'am'}"
+    key = '-'.join([method, str(kwargs['code']), str(kwargs.get('start', 'all'))])
+    filename = cache_root / slot / f"{key}.json"
+    if filename.exists():
+        return json.loads(filename.read_text())
+    rows = frame_records(call_or_raise(method, function, **kwargs))
+    # Persist only the definition fields we actually use, never quote/account data.
+    rows = [{k: str(r[k]) if k == 'option_type' else r[k] for k in
+             ('code', 'strike_time', 'strike_price', 'option_type') if k in r} for r in rows]
+    filename.parent.mkdir(parents=True, exist_ok=True)
+    filename.write_text(json.dumps(rows, default=str))
+    time.sleep(OPTION_CHAIN_DELAY_SECONDS)
+    return rows
+
+
+class InventoryContext:
+    def __init__(self, context: Any, cache_root: Path):
+        self.context, self.cache_root = context, cache_root
+
+    def __getattr__(self, name: str) -> Any:
+        function = getattr(self.context, name)
+        if name in {"get_option_chain", "get_option_expiration_date"}:
+            return lambda **kwargs: (RET_OK, inventory_call(self.cache_root, name, function, **kwargs))
+        return function
 
 
 def get_snapshot_map(quote_ctx: OpenQuoteContext, codes: list[str]) -> dict[str, dict[str, Any]]:
@@ -333,9 +373,12 @@ def collect_chain_codes(
     max_expirations: int,
     tracked_contracts: list[dict[str, Any]],
     conservative_expirations: set[str] | None = None,
+    comparison_expirations: set[str] | None = None,
+    audit: list[dict[str, Any]] | None = None,
 ) -> list[str]:
     option_codes: set[str] = set()
     selected_expirations = sorted(set(expirations[:max_expirations]) | {str(c["expiration"]) for c in tracked_contracts if str(c.get("expiration", "")) in expirations})
+    selected_expirations = sorted(set(selected_expirations) | (comparison_expirations or set()))
     tracked_keys = {
         (
             str(contract.get("expiration")),
@@ -358,15 +401,22 @@ def collect_chain_codes(
             opt_type = option_type_value(row.get("option_type"))
             if not option_code or not strike or opt_type is None:
                 continue
+            entry = {"ticker": display_ticker(code), "expiration": expiration, "strike": strike,
+                     "optionType": opt_type, "code": str(option_code)}
+            if audit is not None:
+                audit.append(entry)
             if (expiration, opt_type, round(strike, 4)) in tracked_keys:
                 option_codes.add(str(option_code))
                 continue
             if opt_type == "call" and underlying_price * 0.45 <= strike <= underlying_price * 0.9:
                 option_codes.add(str(option_code))
             put_floor = 0.55 if expiration in (conservative_expirations or set()) else 0.65
-            if opt_type == "put" and underlying_price * put_floor <= strike <= underlying_price:
+            put_ceiling = 1.0
+            if expiration in (comparison_expirations or set()):
+                put_floor, put_ceiling = COMPARISON_STRIKE_RANGE
+            if opt_type == "put" and underlying_price * put_floor <= strike <= underlying_price * put_ceiling:
                 option_codes.add(str(option_code))
-        if expiration != selected_expirations[-1]:
+        if expiration != selected_expirations[-1] and not isinstance(quote_ctx, InventoryContext):
             time.sleep(OPTION_CHAIN_DELAY_SECONDS)
     return sorted(option_codes)
 
@@ -458,6 +508,7 @@ def fetch_ticker_candidates(
         args.max_expirations_per_ticker,
     )
     conservative_expirations = friday_expiration_dates(quote_ctx, code) if display_ticker(code) == "SOXL" else []
+    comparison_expirations = expiration_dates(quote_ctx, code, 0, COMPARISON_MAX_DTE, 1000) if code in getattr(args, 'comparison_codes', set()) else []
     tracked_expirations = [
         str(contract["expiration"])
         for contract in tracked_contracts
@@ -466,6 +517,7 @@ def fetch_ticker_candidates(
     all_expirations = sorted(
         set(weekly_expirations + leaps_expirations + conservative_expirations + tracked_expirations)
     )
+    audit: list[dict[str, Any]] = []
     option_codes = collect_chain_codes(
         quote_ctx,
         code,
@@ -474,6 +526,8 @@ def fetch_ticker_candidates(
         args.max_expirations_per_ticker,
         tracked_contracts,
         set(conservative_expirations),
+        set(comparison_expirations),
+        audit,
     )
     option_snapshots = get_snapshot_map(quote_ctx, option_codes) if option_codes else {}
     candidates = [
@@ -481,6 +535,13 @@ def fetch_ticker_candidates(
         for candidate in (map_snapshot(row, underlying) for row in option_snapshots.values())
         if candidate is not None
     ]
+    requested = set(option_codes)
+    mapped = {r['id'] for r in candidates}
+    for entry in audit:
+        option_code = entry['code']
+        entry['status'] = ('outside_scope' if option_code not in requested else
+                           'not_returned' if option_code not in option_snapshots else
+                           'invalid_quote' if option_code not in mapped else 'available')
 
     probability_history_error = None
     if display_ticker(code) == "SOXL":
@@ -511,16 +572,20 @@ def fetch_ticker_candidates(
     return candidates, {
         "ticker": display_ticker(code),
         "underlyingPrice": underlying_price,
-        "expirations": len(all_expirations),
+        "expirations": len(set(all_expirations) | set(comparison_expirations)),
         "conservativeFridayExpirations": conservative_expirations,
         "probabilityHistoryError": probability_history_error,
         "trackedContracts": len(tracked_contracts),
         "optionCodes": len(option_codes),
         "candidates": len(candidates),
+        "coverage": {"ticker": display_ticker(code), "comparisonMaxDte": COMPARISON_MAX_DTE if comparison_expirations else None,
+                     "expirations": sorted(set(all_expirations[:args.max_expirations_per_ticker]) | set(comparison_expirations) | set(tracked_expirations)), "contracts": audit,
+                     "requested": len(requested), "returned": len(option_snapshots), "usable": len(candidates)},
     }
 
 
 def main() -> int:
+    started = time.monotonic()
     args = parse_args()
     codes = [normalize_code(ticker) for ticker in (args.tickers or DEFAULT_UNIVERSE)]
     tracked_contracts_by_code = load_active_tracked_contracts(args.tracked_trades)
@@ -530,6 +595,8 @@ def main() -> int:
         if code not in codes:
             codes.append(code)
     project_root = Path(__file__).resolve().parents[1]
+    args.comparison_codes = comparison_universe(project_root / "data/laok-reference/recommendations.json")
+    codes = sorted(set(codes) | args.comparison_codes)
     for code, contracts in load_comparison_contracts(
         project_root / "data/laok-reference/recommendations.json",
         project_root / "data/laok-comparison/decisions",
@@ -542,10 +609,11 @@ def main() -> int:
 
     ensure_opend_available(args.host, args.port)
     quote_ctx = OpenQuoteContext(host=args.host, port=args.port)
+    inventory_ctx = InventoryContext(quote_ctx, project_root / "data/option-inventory")
     try:
         for code in codes:
             candidates, summary = fetch_ticker_candidates(
-                quote_ctx,
+                inventory_ctx,
                 code,
                 args,
                 tracked_contracts_by_code.get(code, []),
@@ -559,6 +627,10 @@ def main() -> int:
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(all_candidates, indent=2) + "\n", encoding="utf-8")
+    coverage = {"schemaVersion": 1, "generatedAt": datetime.now(NEW_YORK_TZ).isoformat(),
+                "elapsedSeconds": round(time.monotonic() - started, 2),
+                "tickers": [s.pop('coverage') for s in summaries]}
+    args.output.with_suffix('.coverage.json').write_text(json.dumps(coverage) + '\n')
     print(json.dumps({"outputPath": str(args.output), "summaries": summaries, "totalCandidates": len(all_candidates)}, indent=2))
     return 0
 

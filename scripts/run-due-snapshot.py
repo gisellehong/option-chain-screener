@@ -56,6 +56,12 @@ SCHEDULE = [
     {"session": "close", "key": "close_1600", "time": clock_time(16, 0)},
 ]
 
+# Extra quarter-hour quote observations; keep existing reporting sessions unchanged.
+SCHEDULE.extend({"session": "half_hourly", "key": f"quotes_{minute // 60:02d}{minute % 60:02d}",
+                 "time": clock_time(minute // 60, minute % 60)}
+                for minute in range(9 * 60 + 45, 16 * 60, 15) if minute % 30 == 15)
+SCHEDULE.sort(key=lambda item: item["time"])
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run a scheduled snapshot only when a market session is due.")
@@ -157,8 +163,10 @@ def due_soxl_gex_job(now_ny: datetime, grace_minutes: int) -> dict[str, str] | N
     return None
 
 
-def run_snapshot(session: str, send_telegram: bool, top: int) -> int:
+def run_snapshot(session: str, send_telegram: bool, top: int, quotes_only: bool = False) -> int:
     cmd = [sys.executable, "scripts/run-scheduled-snapshot.py", "--session", session, "--top", str(top)]
+    if quotes_only:
+        cmd.extend(["--skip-gex", "--skip-news"])
     if send_telegram:
         cmd.append("--send-telegram")
     print("Running:", " ".join(cmd))
@@ -217,7 +225,8 @@ def main() -> int:
             state[job["run_key"]] = "started"
             write_state(state)
             if job["type"] == "snapshot":
-                exit_code = run_snapshot(job["session"], not args.no_telegram, args.top)
+                quotes_only = job["key"].startswith("quotes_")
+                exit_code = run_snapshot(job["session"], not args.no_telegram and not quotes_only, args.top, quotes_only)
             else:
                 exit_code = run_gex_update(job["ticker"], not args.no_telegram)
             state[job["run_key"]] = "completed" if exit_code == 0 else f"failed:{exit_code}"

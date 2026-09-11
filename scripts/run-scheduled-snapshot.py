@@ -850,6 +850,7 @@ def write_outputs(
         "candidateCount": len(candidates),
         "fresh": not args.skip_fetch and fetch_result.get("exitCode") == 0,
         "candidates": candidates,
+        "coverage": read_json(args.output.with_suffix(".coverage.json"), None) if not args.skip_fetch and fetch_result.get("exitCode") == 0 else None,
     }
     snapshot_path.write_text(json.dumps(snapshot_payload, indent=2) + "\n", encoding="utf-8")
     # Freeze decisions before any future LaoK source ingestion or retrospective tuning.
