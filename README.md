@@ -3,14 +3,14 @@
 新版以三個區塊組織：
 
 1. **Screener**：預設 SOXL 保守 CSP；比較履約價、風險與 Bid 收益，含口數／完整接股現金檢查。LEAPS、Weekly CSP 保留為舊版研究。
-2. **第三方 Tracker**：老 K SOXL 推薦與 AAG，保留訊號來源，不混入個人實現損益。
+2. **第三方 Tracker**：LaoK Wiki 每日推薦 × Screener 比對，以及 AAG，保留訊號來源，不混入個人實現損益。
 3. **自己的 P&L**：股票／ETF 選擇權私人帳本，按帳戶、標的與狀態檢視；Patrick GMP 無來源時保持待資料。
 
 ES futures options、2025 ES 績效、Leo 研究不在本版範圍。
 
 ## 規則與證據
 
-預設集中於 `config/screeners.json`；前端與 Python 排程都使用 `src/lib/scoring.ts`，經 `scripts/score-options.mjs` 共用計算。UI 自訂門檻只留在當次 session。SOXL 預設 Risk first v1 與老 K Reference 分列；v1 尚需前推驗證，不能把低 Delta 或歷史 ITM 比例解讀為保證不被指派。
+預設集中於 `config/screeners.json`；前端與 Python 排程都使用 `src/lib/scoring.ts`，經 `scripts/score-options.mjs` 共用計算。UI 自訂門檻只留在當次 session。SOXL 預設 Risk first v1 與舊版老 K Reference 假說分列；9 月新截圖已出現 ITM >5%、Mid 年化 <20% 等例外，Reference 不代表老 K 現行完整規則。v1 尚需前推驗證，不能把低 Delta 或歷史 ITM 比例解讀為保證不被指派。
 
 完整分支盤點、整合處置與資料口徑見 [整合紀錄](analysis/dashboard-restructure-2026-09-07.md)。
 
@@ -80,6 +80,7 @@ When enabled, successful non-`--skip-fetch` snapshot runs will commit and push o
 - `src/data/generated/realOptions.json`
 - `src/data/generated/realOptions.meta.json`
 - `src/data/generated/tracking.json`
+- `src/data/generated/laokComparison.json`
 - `src/data/generated/gex.json`
 - `src/data/generated/gex-SOXL.json`
 - `src/data/generated/watchlistNews.json`
@@ -246,3 +247,28 @@ Each scheduled snapshot records the top ranked matched contracts as compact sign
 - IV percentile: 累積 run history，從 `IV Proxy` 改成真正 IV percentile / IV rank。
 - Scoring weights: 用實際候選清單調整 score 權重，讓排序符合交易直覺。
 - Reporting: 把 matched candidates 轉成 Markdown/JSON，交給 Hermes Agent 或 Telegram bot。
+
+## 老 K 每日比對 · Daily comparison
+
+來源以獨立的 `/Users/patrick_giselle/Documents/llm_wiki/LaoK` 為準。人工核對的每日推薦保存在 `data/laok-reference/recommendations.json`，含來源頁、發布時間、圖片位置與 SHA-256；目前 8/24–9/10 共 13 日／54 筆。8/19 單張券商畫面另列 `otherObservations`，沒有可見 Bid/Ask，不混入每日五選。
+
+```bash
+npm run compare:laok
+# Wiki 位於別處時：
+npm run compare:laok -- --wiki /absolute/path/to/LaoK
+```
+
+輸出 `analysis/laok-daily-comparison.md` 與 Dashboard 使用的 `src/data/generated/laokComparison.json`。`inventory.needs_transcription` 會指出新來源；分類成 market-note、但標題有推薦的文章也會納入檢查。必須先實際閱讀圖片，不能只看標題生成交易；不清楚的數值填 null，Bid size 不填成 traded volume。每筆推薦必須有 date、ticker、expiration、strike、optionType 與 sourceId；來源具 publishedAt 與圖片 checksum。若有完整無推薦日，仍建立 sources 項目、recommendations 保持零筆。來源異動或缺圖會停止重建，避免靜默覆蓋證據。
+
+比對分兩層：
+
+- **選擇差異**：發文前最近 60 分鐘內、同紐約交易日的正常交易時段快照；以 ticker / expiry / put / strike 配對，分出範圍外、缺合約、缺模型欄位、報價不可用、門檻淘汰及排序差異。老 K 沒列出的到期桶不能推定已被拒絕。截圖時間未知，所以時間對齊只是近似。
+- **結果差異**：同標的／到期、相同快照用 Bid 開倉及 Ask 回購的紙上估值，以 strike collateral 正規化。保留 1／3／5 個有共同報價的觀察交易日、80% capture 首次觀察及最差現金報酬；資料缺日不能視為連續交易日。無報價／無平倉／無結算資料保持未知，不把 ITM probability、入選比例或未實現浮盈當成勝率。
+
+既有 `npm run snapshot` 每次**成功重新抓取**後，會以 `--snapshot` 自動保存篩選結果、完整 config、策略版本與 code/config hash 至本機 `data/laok-comparison/decisions/`；同一快照不能覆寫。只有 recordedAt 早於發布、且原快照 checksum 仍一致才算 frozen forward decision。過去沒有凍結紀錄的資料一律標示目前規則回放，不能稱為當時的真實選擇。`--skip-fetch` 不建立前推決策；舊 archives 沒有 quote-level 時間與 freshness 標記，僅供有此限制的回放。快取和決策留在本機，不進公開 bundle。
+
+Fetcher 會保留仍未到期的 LaoK 參考合約與凍結 picks，即使已落在一般 strike range 外；NBIS / LITE 也會補報價。這是結果追蹤，不會自動把它們加入 SOXL 篩選 Universe，也不套用 SOXL 專屬的 historical probability model。資料訂閱不可用時，報價缺口保持可見。
+
+Codex 每日追蹤於新加坡時間 12:30 檢查新截圖、核對转錄、更新比對；每週五檢查是否需要新 shadow experiment。既有 LaunchAgent 繼續取得盤中快照。電腦、Codex 排程環境及 OpenD 需可用；不會因本流程自行發 Telegram、commit、push 或部署。2026-09-11 起線上 GitHub Pages 包含此功能；每日比對更新後，下一次既有成功行情發布會一併發布 laokComparison.json。
+
+Fine-tuning 先區分模仿（selection fidelity）與改善（risk-adjusted outcomes）。9 月資料已有舊假說反例，故保留現行 Risk first 風控，候選變更先凍結成獨立版本，在後續交易日驗證，不能用調參過的同一批截圖宣稱 out-of-sample 成功，也不能把多個同日 SOXL 部位當成獨立樣本。

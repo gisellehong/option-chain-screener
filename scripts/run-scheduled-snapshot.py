@@ -703,6 +703,7 @@ def publish_generated_data(session: str, generated_at: str) -> dict[str, Any]:
         "src/data/generated/realOptions.json",
         "src/data/generated/realOptions.meta.json",
         "src/data/generated/tracking.json",
+        "src/data/generated/laokComparison.json",
         "src/data/generated/gex.json",
         "src/data/generated/gex-SOXL.json",
         "src/data/generated/watchlistNews.json",
@@ -847,9 +848,16 @@ def write_outputs(
         "session": args.session,
         "watchlists": watchlists,
         "candidateCount": len(candidates),
+        "fresh": not args.skip_fetch and fetch_result.get("exitCode") == 0,
         "candidates": candidates,
     }
     snapshot_path.write_text(json.dumps(snapshot_payload, indent=2) + "\n", encoding="utf-8")
+    # Freeze decisions before any future LaoK source ingestion or retrospective tuning.
+    if snapshot_payload["fresh"] and candidates:
+        subprocess.run(
+            ["node", str(ROOT / "scripts/compare-laok.mjs"), "--snapshot", str(snapshot_path)],
+            cwd=ROOT, check=True, capture_output=True, text=True,
+        )
     report_path.write_text(report, encoding="utf-8")
 
     metadata = {

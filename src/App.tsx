@@ -1802,7 +1802,7 @@ function DashboardApp() {
       </section>
 
       {activeView === "screener" && <div className="subnav" aria-label="Screener sections">{[["candidates","履約價候選 Candidates"],["watchlist","觀察清單 Watchlist"],["research","策略驗證 Research"]].map(([id,label])=><button key={id} className={screenerPage===id?"active":""} onClick={()=>setScreenerPage(id)}>{label}</button>)}</div>}
-      {activeView === "external" && <div className="subnav" aria-label="External sources">{[["laok","老 K · SOXL"],["aag","AAG · Rich"]].map(([id,label])=><button key={id} className={externalSource===id?"active":""} onClick={()=>setExternalSource(id)}>{label}</button>)}</div>}
+      {activeView === "external" && <div className="subnav" aria-label="External sources">{[["laok","老 K · 每日比對"],["aag","AAG · Rich"]].map(([id,label])=><button key={id} className={externalSource===id?"active":""} onClick={()=>setExternalSource(id)}>{label}</button>)}</div>}
       {activeView === "external" && (externalSource === "laok" ? <LaoKTracker /> : <><p className="notice externalNotice">AAG 第三方紀錄 · 來源更新 {youtuberTrades.updatedAt.slice(0,10)}。來源揭露可能不完整；權利金與推定到期結果不視為自有實現損益。</p><YouTuberTracker tradesData={youtuberTrades} generatedAt={realOptionsMeta.generatedAt} /></>)}
       {activeView === "pnl" && <Portfolio quotes={realOptions} quoteAt={realOptionsMeta.generatedAt} legacy={<SoxlTracker embedded />} />}
       {activeView === "screener" && screenerPage === "watchlist" && <Watchlist dataSet={dataSet} generatedAt={realOptionsMeta.generatedAt} />}

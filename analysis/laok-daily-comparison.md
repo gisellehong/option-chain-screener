@@ -1,0 +1,233 @@
+# 老 K 每日比對 · Daily comparison
+
+更新：2026-09-11T06:24:50.208Z；來源截至 2026-09-10。共 13 日／54 筆。
+
+歷史回放 12 日，事前凍結 0 日。14 筆至少違反一項舊版推定規則。
+
+## 方法與限制
+
+- 發文時間不等於截圖報價時間；對齊值僅為發文前最近 60 分鐘內的正常交易時段快照。
+- 歷史回放使用目前規則，不代表當日曾經推薦；凍結紀錄另列。
+- 同時點 Bid → Ask 紙上估值，未計佣金與滑價；不代表成交、平倉或實現損益。
+- 缺漏合約不計入可比命中率；來源未列出的到期桶不當作已證實拒絕。
+- 1／3／5 session 為有共同報價的觀察交易日；資料缺日不能視為連續交易日。
+- 目前沒有足夠前推樣本判定優勝，也不以截圖入選比例自動修改風控。
+
+## Fine-tuning 決策
+
+- 9/2 起出現 ITM >5%；9/4 出現 Mid 年化 <20%；9/8–9/9 出現 NBIS / LITE、Delta 與 OTM 護欄例外。舊規則是有日期範圍的假說。
+- 保留 Risk first 現行風控。擴大 Universe、放寬機率門檻、移除最低 Delta 均先作獨立 shadow experiment，不能由貼近老 K 直接推論更有利。
+- 每週檢查差異是否持續；凍結 configHash 與修改理由，依交易日切分校準／後續驗證，避免同日多筆當成獨立樣本。
+- 優劣以同標的／到期、相同報價時點、每單位接股現金的 Bid → Ask 報酬及最差觀察值比較；未有足夠到期／虧損／前推資料前保持未定。
+
+## 覆蓋與命中率
+
+|版本|可比筆數|同合約|缺資料|範圍外|紙上共同估值|
+|---|---:|---:|---:|---:|---:|
+|execution|19|2|30|5|9|
+|conservative|19|5|30|5|13|
+
+## 2026-09-10
+
+模式：current_rules_replay；發文：2026-09-10T14:04:33.000Z；快照：2026-09-10T21:44:26+08:00；間隔：20.117 分鐘。
+
+|老 K 合約|Risk first|選出合約|差異原因|Reference|
+|---|---|---|---|---|
+|SOXL 2026-09-18 80P|同合約|80P|—|門檻淘汰|
+|SOXL 2026-09-25 80P|排序差異|70P|同桶排序較後|排序差異|
+|SOXL 2026-10-02 75P|門檻淘汰|—|期間觸及 · Touch|同合約|
+|SOXL 2026-10-09 70P|排序差異|65P|同桶排序較後|同合約|
+|SOXL 2026-10-16 65P|缺合約|—|期權鏈未收錄合約 · Coverage|缺合約|
+
+|老 K / Risk first|共同觀察|老 K 現金報酬|Risk first 現金報酬|差（百分點）|
+|---|---|---:|---:|---:|
+|SOXL 2026-09-18 80P / 80P|2026-09-11T03:46:15+08:00|-0.112%|-0.112%|0|
+|SOXL 2026-09-25 80P / 70P|2026-09-11T03:46:15+08:00|-0.225%|-0.2%|0.025|
+|SOXL 2026-10-09 70P / 65P|2026-09-11T03:46:15+08:00|-0.457%|-0.169%|0.288|
+
+截圖例外：SOXL 80P (2026-09-25)：ITM >5%；SOXL 75P (2026-10-02)：ITM >5%。
+
+## 2026-09-09
+
+模式：current_rules_replay；發文：2026-09-09T13:52:39.000Z；快照：2026-09-09T21:47:36+08:00；間隔：5.05 分鐘。
+
+|老 K 合約|Risk first|選出合約|差異原因|Reference|
+|---|---|---|---|---|
+|SOXL 2026-09-18 85P|排序差異|75P|同桶排序較後|排序差異|
+|LITE 2026-09-25 795P|標的範圍不同|—|標的範圍不同 · Universe|標的範圍不同|
+|SOXL 2026-10-02 75P|排序差異|70P|同桶排序較後|排序差異|
+|NBIS 2026-10-09 180P|標的範圍不同|—|標的範圍不同 · Universe|標的範圍不同|
+|LITE 2026-10-16 760P|標的範圍不同|—|標的範圍不同 · Universe|標的範圍不同|
+
+|老 K / Risk first|共同觀察|老 K 現金報酬|Risk first 現金報酬|差（百分點）|
+|---|---|---:|---:|---:|
+|SOXL 2026-09-18 85P / 75P|2026-09-11T03:46:15+08:00|-0.035%|0.027%|0.062|
+|SOXL 2026-10-02 75P / 70P|2026-09-11T03:46:15+08:00|-0.267%|-0.3%|-0.033|
+
+截圖例外：LITE 795P (2026-09-25)：SOXL-only、OI <250；NBIS 180P (2026-10-09)：SOXL-only、ITM >5%、OI <250；LITE 760P (2026-10-16)：SOXL-only、Delta 超出 -0.10～-0.02。
+
+## 2026-09-08
+
+模式：unavailable；發文：2026-09-08T13:42:35.000Z；快照：缺資料；間隔：— 分鐘。
+
+|老 K 合約|Risk first|選出合約|差異原因|Reference|
+|---|---|---|---|---|
+|SOXL 2026-09-11 85P|缺當時快照|—|發文前 60 分鐘內無正常交易時段快照|缺當時快照|
+|SOXL 2026-09-18 80P|缺當時快照|—|發文前 60 分鐘內無正常交易時段快照|缺當時快照|
+|NBIS 2026-09-25 180P|標的範圍不同|—|標的範圍不同 · Universe|標的範圍不同|
+|NBIS 2026-10-02 175P|標的範圍不同|—|標的範圍不同 · Universe|標的範圍不同|
+|SOXL 2026-10-16 65P|缺當時快照|—|發文前 60 分鐘內無正常交易時段快照|缺當時快照|
+
+截圖例外：SOXL 85P (2026-09-11)：Delta 超出 -0.10～-0.02；NBIS 180P (2026-09-25)：SOXL-only、ITM >5%；NBIS 175P (2026-10-02)：SOXL-only、ITM >5%、Mid 年化 <20%；SOXL 65P (2026-10-16)：OTM 超出 20%～45%。
+
+## 2026-09-04
+
+模式：current_rules_replay；發文：2026-09-04T13:47:57.000Z；快照：2026-09-04T21:43:54+08:00；間隔：4.05 分鐘。
+
+|老 K 合約|Risk first|選出合約|差異原因|Reference|
+|---|---|---|---|---|
+|SOXL 2026-09-11 85P|排序差異|80P|同桶排序較後|門檻淘汰|
+|SOXL 2026-09-18 79P|排序差異|70P|同桶排序較後|同合約|
+|SOXL 2026-09-25 75P|門檻淘汰|65P|Expiry ITM Probability / 期間觸及 · Touch|門檻淘汰|
+|SOXL 2026-10-02 70P|同合約|70P|—|同合約|
+|SOXL 2026-10-09 70P|門檻淘汰|—|Expiry ITM Probability / 期間觸及 · Touch|門檻淘汰|
+
+|老 K / Risk first|共同觀察|老 K 現金報酬|Risk first 現金報酬|差（百分點）|
+|---|---|---:|---:|---:|
+|SOXL 2026-09-11 85P / 80P|2026-09-11T03:46:15+08:00|0.294%|0.175%|-0.119|
+|SOXL 2026-09-18 79P / 70P|2026-09-11T03:46:15+08:00|0.367%|0.143%|-0.224|
+|SOXL 2026-09-25 75P / 65P|2026-09-11T03:46:15+08:00|0.213%|0.108%|-0.105|
+|SOXL 2026-10-02 70P / 70P|2026-09-11T03:46:15+08:00|0.014%|0.014%|0|
+
+截圖例外：SOXL 85P (2026-09-11)：Mid 年化 <20%；SOXL 70P (2026-10-09)：ITM >5%。
+
+## 2026-09-03
+
+模式：current_rules_replay；發文：2026-09-03T13:51:24.000Z；快照：2026-09-03T21:46:28+08:00；間隔：4.933 分鐘。
+
+|老 K 合約|Risk first|選出合約|差異原因|Reference|
+|---|---|---|---|---|
+|SOXL 2026-09-11 75P|門檻淘汰|—|相對價差 · Spread|門檻淘汰|
+|SOXL 2026-09-18 69P|門檻淘汰|—|相對價差 · Spread|排序差異|
+|SOXL 2026-09-25 65P|門檻淘汰|—|期間觸及 · Touch|同合約|
+|SOXL 2026-10-02 65P|門檻淘汰|—|Expiry ITM Probability / 期間觸及 · Touch|門檻淘汰|
+|SOXL 2026-10-09 60P|缺合約|—|期權鏈未收錄合約 · Coverage|缺合約|
+
+截圖例外：SOXL 65P (2026-10-02)：ITM >5%。
+
+## 2026-09-02
+
+模式：current_rules_replay；發文：2026-09-02T14:00:29.000Z；快照：2026-09-02T21:44:46+08:00；間隔：15.717 分鐘。
+
+|老 K 合約|Risk first|選出合約|差異原因|Reference|
+|---|---|---|---|---|
+|SOXL 2026-09-11 75P|門檻淘汰|—|相對價差 · Spread|門檻淘汰|
+|SOXL 2026-09-18 70P|門檻淘汰|—|相對價差 · Spread|排序差異|
+|SOXL 2026-09-25 65P|門檻淘汰|—|相對價差 · Spread|門檻淘汰|
+|SOXL 2026-10-02 65P|門檻淘汰|—|Expiry ITM Probability / 期間觸及 · Touch / 相對價差 · Spread|門檻淘汰|
+|SOXL 2026-10-09 60P|缺合約|—|期權鏈未收錄合約 · Coverage|缺合約|
+
+截圖例外：SOXL 65P (2026-10-02)：ITM >5%；SOXL 60P (2026-10-09)：ITM >5%。
+
+## 2026-09-01
+
+模式：current_rules_replay；發文：2026-09-01T13:54:21.000Z；快照：2026-09-01T21:43:46+08:00；間隔：10.583 分鐘。
+
+|老 K 合約|Risk first|選出合約|差異原因|Reference|
+|---|---|---|---|---|
+|SOXL 2026-09-04 80P|缺模型欄位|—|缺少 Friday Expiry Bucket / 缺少 Expiry ITM Probability / 缺少 期間觸及 · Touch|缺模型欄位|
+|SOXL 2026-09-11 75P|缺模型欄位|—|缺少 Friday Expiry Bucket / 缺少 Expiry ITM Probability / 缺少 期間觸及 · Touch|缺模型欄位|
+|SOXL 2026-09-18 69P|缺合約|—|期權鏈未收錄合約 · Coverage|缺合約|
+|SOXL 2026-09-25 65P|缺合約|—|期權鏈未收錄合約 · Coverage|缺合約|
+
+截圖例外：無。
+
+## 2026-08-31
+
+模式：current_rules_replay；發文：2026-08-31T14:38:06.000Z；快照：2026-08-31T22:12:47+08:00；間隔：25.317 分鐘。
+
+|老 K 合約|Risk first|選出合約|差異原因|Reference|
+|---|---|---|---|---|
+|SOXL 2026-09-04 85P|缺模型欄位|—|缺少 Friday Expiry Bucket / 缺少 Expiry ITM Probability / 缺少 期間觸及 · Touch|缺模型欄位|
+|SOXL 2026-09-11 82P|缺合約|—|期權鏈未收錄合約 · Coverage|缺合約|
+|SOXL 2026-09-18 74P|缺合約|—|期權鏈未收錄合約 · Coverage|缺合約|
+|SOXL 2026-09-25 70P|缺合約|—|期權鏈未收錄合約 · Coverage|缺合約|
+
+截圖例外：無。
+
+## 2026-08-28
+
+模式：current_rules_replay；發文：2026-08-28T14:20:56.000Z；快照：2026-08-28T22:15:43+08:00；間隔：5.217 分鐘。
+
+|老 K 合約|Risk first|選出合約|差異原因|Reference|
+|---|---|---|---|---|
+|SOXL 2026-09-18 78P|缺合約|—|期權鏈未收錄合約 · Coverage|缺合約|
+|SOXL 2026-09-25 75P|缺合約|—|期權鏈未收錄合約 · Coverage|缺合約|
+
+截圖例外：無。
+
+## 2026-08-27
+
+模式：current_rules_replay；發文：2026-08-27T14:07:13.000Z；快照：2026-08-27T21:47:40+08:00；間隔：19.55 分鐘。
+
+|老 K 合約|Risk first|選出合約|差異原因|Reference|
+|---|---|---|---|---|
+|SOXL 2026-09-11 85P|缺合約|—|期權鏈未收錄合約 · Coverage|缺合約|
+|SOXL 2026-09-18 75P|缺合約|—|期權鏈未收錄合約 · Coverage|缺合約|
+|SOXL 2026-09-25 75P|缺合約|—|期權鏈未收錄合約 · Coverage|缺合約|
+
+截圖例外：無。
+
+## 2026-08-26
+
+模式：current_rules_replay；發文：2026-08-26T14:03:08.000Z；快照：2026-08-26T21:47:11+08:00；間隔：15.95 分鐘。
+
+|老 K 合約|Risk first|選出合約|差異原因|Reference|
+|---|---|---|---|---|
+|SOXL 2026-09-04 78P|缺模型欄位|—|缺少 Friday Expiry Bucket / 缺少 Expiry ITM Probability / 缺少 期間觸及 · Touch|缺模型欄位|
+|SOXL 2026-09-11 80P|缺合約|—|期權鏈未收錄合約 · Coverage|缺合約|
+|SOXL 2026-09-18 70P|缺合約|—|期權鏈未收錄合約 · Coverage|缺合約|
+
+截圖例外：無。
+
+## 2026-08-25
+
+模式：current_rules_replay；發文：2026-08-25T14:07:34.000Z；快照：2026-08-25T21:45:24+08:00；間隔：22.167 分鐘。
+
+|老 K 合約|Risk first|選出合約|差異原因|Reference|
+|---|---|---|---|---|
+|SOXL 2026-09-04 79P|缺模型欄位|—|缺少 Friday Expiry Bucket / 缺少 Expiry ITM Probability / 缺少 期間觸及 · Touch|缺模型欄位|
+|SOXL 2026-09-11 75P|缺合約|—|期權鏈未收錄合約 · Coverage|缺合約|
+|SOXL 2026-09-18 75P|缺合約|—|期權鏈未收錄合約 · Coverage|缺合約|
+|SOXL 2026-09-25 70P|缺合約|—|期權鏈未收錄合約 · Coverage|缺合約|
+
+截圖例外：無。
+
+## 2026-08-24
+
+模式：current_rules_replay；發文：2026-08-24T13:56:06.000Z；快照：2026-08-24T21:45:00+08:00；間隔：11.1 分鐘。
+
+|老 K 合約|Risk first|選出合約|差異原因|Reference|
+|---|---|---|---|---|
+|SOXL 2026-09-04 75P|缺合約|—|期權鏈未收錄合約 · Coverage|缺合約|
+|SOXL 2026-09-11 70P|缺合約|—|期權鏈未收錄合約 · Coverage|缺合約|
+|SOXL 2026-09-18 70P|缺合約|—|期權鏈未收錄合約 · Coverage|缺合約|
+|SOXL 2026-09-25 65P|缺合約|—|期權鏈未收錄合約 · Coverage|缺合約|
+
+截圖例外：無。
+
+## 參考連結
+
+- [2026-08-24 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-08-24-117150827544581.md)
+- [2026-08-25 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-08-25-117156534943749.md)
+- [2026-08-26 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-08-26-117162179821973.md)
+- [2026-08-27 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-08-27-117167858188293.md)
+- [2026-08-28 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-08-28-117173574434821.md)
+- [2026-08-31 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-08-31-117190628868101.md)
+- [2026-09-01 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-09-01-117196119080965.md)
+- [2026-09-02 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-09-02-117201805574157.md)
+- [2026-09-03 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-09-03-117207432167429.md)
+- [2026-09-04 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-09-04-117213080911877.md)
+- [2026-09-08 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-09-08-117235709050885.md)
+- [2026-09-09 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-09-09-117241410879501.md)
+- [2026-09-10 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-09-10-117247120048533.md)

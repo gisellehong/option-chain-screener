@@ -175,6 +175,36 @@ def load_active_tracked_contracts(path: Path) -> dict[str, list[dict[str, Any]]]
     return tracked
 
 
+
+def load_comparison_contracts(reference_path: Path, decisions_root: Path) -> dict[str, list[dict[str, Any]]]:
+    """Keep source recommendations and frozen screener picks quoted until expiry.
+
+    These are paper observations, not personal positions or an expanded screener universe.
+    """
+    rows = []
+    if reference_path.exists():
+        rows.extend(json.loads(reference_path.read_text(encoding="utf-8")).get("recommendations", []))
+    if decisions_root.exists():
+        for filename in decisions_root.glob("*/*.json"):
+            decision = json.loads(filename.read_text(encoding="utf-8"))
+            for picks in decision.get("scenarios", {}).values():
+                rows.extend(picks)
+    tracked: dict[str, list[dict[str, Any]]] = {}
+    seen = set()
+    today = market_today().isoformat()
+    for row in rows:
+        ticker = str(row.get("ticker", "")).strip().upper()
+        expiration = str(row.get("expiration", ""))
+        strike = to_float(row.get("strike"))
+        option_type = option_type_value(row.get("optionType", "put"))
+        key = (ticker, expiration, strike, option_type)
+        if not ticker or not expiration or expiration < today or strike <= 0 or option_type is None or key in seen:
+            continue
+        seen.add(key)
+        tracked.setdefault(normalize_code(ticker), []).append({"expiration": expiration, "strike": strike, "optionType": option_type})
+    return tracked
+
+
 def get_snapshot_map(quote_ctx: OpenQuoteContext, codes: list[str]) -> dict[str, dict[str, Any]]:
     snapshots: dict[str, dict[str, Any]] = {}
     batches = list(chunked(codes, SNAPSHOT_BATCH_SIZE))
@@ -305,7 +335,7 @@ def collect_chain_codes(
     conservative_expirations: set[str] | None = None,
 ) -> list[str]:
     option_codes: set[str] = set()
-    selected_expirations = expirations[:max_expirations]
+    selected_expirations = sorted(set(expirations[:max_expirations]) | {str(c["expiration"]) for c in tracked_contracts if str(c.get("expiration", "")) in expirations})
     tracked_keys = {
         (
             str(contract.get("expiration")),
@@ -496,6 +526,14 @@ def main() -> int:
     tracked_contracts_by_code = load_active_tracked_contracts(args.tracked_trades)
     private_path = Path(__file__).resolve().parents[1] / "data/private/ledger.local.json"
     for code, contracts in load_active_tracked_contracts(private_path).items():
+        tracked_contracts_by_code.setdefault(code, []).extend(contracts)
+        if code not in codes:
+            codes.append(code)
+    project_root = Path(__file__).resolve().parents[1]
+    for code, contracts in load_comparison_contracts(
+        project_root / "data/laok-reference/recommendations.json",
+        project_root / "data/laok-comparison/decisions",
+    ).items():
         tracked_contracts_by_code.setdefault(code, []).extend(contracts)
         if code not in codes:
             codes.append(code)
