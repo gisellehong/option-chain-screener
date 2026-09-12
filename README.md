@@ -250,7 +250,7 @@ Each scheduled snapshot records the top ranked matched contracts as compact sign
 
 ## 老 K 每日比對 · Daily comparison
 
-來源以獨立的 `/Users/patrick_giselle/Documents/llm_wiki/LaoK` 為準。人工核對的每日推薦保存在 `data/laok-reference/recommendations.json`，含來源頁、發布時間、圖片位置與 SHA-256；目前 8/24–9/10 共 13 日／54 筆。8/19 單張券商畫面另列 `otherObservations`，沒有可見 Bid/Ask，不混入每日五選。
+來源以獨立的 `/Users/patrick_giselle/Documents/llm_wiki/LaoK` 為準。人工核對的每日推薦保存在 `data/laok-reference/recommendations.json`，含來源頁、發布時間、圖片位置與 SHA-256；目前 8/24–9/11 共 14 日／58 筆。9/11 第 4 週明確留白（截圖寫最低 ITM 6.4% >6%），以 excludedBuckets 獨立記錄，不新增虛構推薦；附帶 position tracker 留在 otherObservations。8/19 單張券商畫面另列 `otherObservations`，沒有可見 Bid/Ask，不混入每日五選。
 
 ```bash
 npm run compare:laok
@@ -269,7 +269,7 @@ npm run compare:laok -- --wiki /absolute/path/to/LaoK
 
 Fetcher 會保留仍未到期的 LaoK 參考合約與凍結 picks，即使已落在一般 strike range 外；NBIS / LITE 也會補報價。這是結果追蹤，不會自動把它們加入 SOXL 篩選 Universe，也不套用 SOXL 專屬的 historical probability model。資料訂閱不可用時，報價缺口保持可見。
 
-Codex 每日追蹤於新加坡時間 12:30 檢查新截圖、核對转錄、更新比對；每週五檢查是否需要新 shadow experiment。既有 LaunchAgent 繼續取得盤中快照。電腦、Codex 排程環境及 OpenD 需可用；不會因本流程自行發 Telegram、commit、push 或部署。2026-09-11 起線上 GitHub Pages 包含此功能；每日比對更新後，下一次既有成功行情發布會一併發布 laokComparison.json。
+Codex 每日追蹤於新加坡時間 23:30 檢查新截圖、核對转錄、更新比對；每週五檢查是否需要新 shadow experiment。既有 LaunchAgent 繼續取得盤中快照。電腦、Codex 排程環境及 OpenD 需可用；本流程不發 Telegram。2026-09-12 起，使用者授權每日維護有實質更新且來源驗證、相關測試與 build 通過後，直接 commit、push 並部署至既有 GitHub Pages，確認線上更新成功後回報；無實質更新不重複部署。使用最新遠端 main 的隔離工作區，僅發布本次維護相關程式與公開資料，保留其他工作及最新行情。
 
 Fine-tuning 先區分模仿（selection fidelity）與改善（risk-adjusted outcomes）。9 月資料已有舊假說反例，故保留現行 Risk first 風控，候選變更先凍結成獨立版本，在後續交易日驗證，不能用調參過的同一批截圖宣稱 out-of-sample 成功，也不能把多個同日 SOXL 部位當成獨立樣本。
 

@@ -4,7 +4,8 @@
   "notes": [
     "Screenshot prices are displayed rounded values, not fills. Bid size is not traded volume.",
     "Publication time is an upper bound on screenshot capture time; exact quote timestamp is unknown.",
-    "Legacy 24 rows retain their existing transcription; 30 new rows visually reviewed on 2026-09-11."
+    "Legacy 24 rows retain their existing transcription; 30 new rows visually reviewed on 2026-09-11.",
+    "2026-09-12 visually reviewed 2026-09-11: four recommendations, explicit week-4 omission at stated 6% ceiling; separate position tracker."
   ],
   "sources": [
     {
@@ -123,6 +124,26 @@
       "imagePath": "raw/assets/social-posts/moomoo/117247120048533/01.png",
       "imageSha256": "da27d56ba94ea7b4483dc76d956ecdbe65d6b35ed0040ae1aceee5a92cc960b5",
       "completeRecommendationImage": true
+    },
+    {
+      "date": "2026-09-11",
+      "postId": "117252701159833",
+      "publishedAt": "2026-09-11T13:43:55.000Z",
+      "sourcePage": "wiki/sources/laok-post-2026-09-11-117252701159833.md",
+      "imagePath": "raw/assets/social-posts/moomoo/117252701159833/01.png",
+      "imageSha256": "221612058d316aa0505d1714cf7136b1c306ec632b14b0f878d014f52e07176b",
+      "completeRecommendationImage": true,
+      "excludedBuckets": [
+        {
+          "displayWeek": 4,
+          "ticker": "SOXL",
+          "expiration": "2026-10-09",
+          "expirationBasis": "inferred from adjacent weekly dates; screenshot only labels week 4",
+          "reason": "該檔最低到期 ITM 機率 6.4% 仍 >6%；不降低標準湊數",
+          "minimumItmPct": 6.4,
+          "statedItmCeilingPct": 6
+        }
+      ]
     }
   ],
   "recommendations": [
@@ -1241,6 +1262,98 @@
       "displayWeek": 5,
       "verification": "image-reviewed",
       "sourceId": "117247120048533"
+    },
+    {
+      "displayWeek": 1,
+      "expiration": "2026-09-18",
+      "strike": 90,
+      "dte": 7,
+      "otmPct": 24.1,
+      "expiryItmPct": 4.3,
+      "touchPct": 10.4,
+      "delta": -0.048,
+      "bid": 0.42,
+      "mid": 0.45,
+      "ask": 0.48,
+      "bidAnnualizedRoiPct": 24.3,
+      "midAnnualizedRoiPct": 26.1,
+      "openInterest": 9494,
+      "bidSize": 7,
+      "ticker": "SOXL",
+      "date": "2026-09-11",
+      "optionType": "put",
+      "volume": null,
+      "verification": "image-reviewed",
+      "sourceId": "117252701159833"
+    },
+    {
+      "displayWeek": 2,
+      "expiration": "2026-09-25",
+      "strike": 80,
+      "dte": 14,
+      "otmPct": 32.5,
+      "expiryItmPct": 3.4,
+      "touchPct": 9.4,
+      "delta": -0.045,
+      "bid": 0.6,
+      "mid": 0.68,
+      "ask": 0.75,
+      "bidAnnualizedRoiPct": 19.6,
+      "midAnnualizedRoiPct": 22,
+      "openInterest": 3181,
+      "bidSize": 1,
+      "ticker": "SOXL",
+      "date": "2026-09-11",
+      "optionType": "put",
+      "volume": null,
+      "verification": "image-reviewed",
+      "sourceId": "117252701159833"
+    },
+    {
+      "displayWeek": 3,
+      "expiration": "2026-10-02",
+      "strike": 75,
+      "dte": 21,
+      "otmPct": 37.1,
+      "expiryItmPct": 4.2,
+      "touchPct": 9.5,
+      "delta": -0.053,
+      "bid": 0.9,
+      "mid": 0.94,
+      "ask": 0.98,
+      "bidAnnualizedRoiPct": 20.9,
+      "midAnnualizedRoiPct": 21.8,
+      "openInterest": 2081,
+      "bidSize": 5,
+      "ticker": "SOXL",
+      "date": "2026-09-11",
+      "optionType": "put",
+      "volume": null,
+      "verification": "image-reviewed",
+      "sourceId": "117252701159833"
+    },
+    {
+      "displayWeek": 5,
+      "expiration": "2026-10-16",
+      "strike": 70,
+      "dte": 35,
+      "otmPct": 41.6,
+      "expiryItmPct": 4.4,
+      "touchPct": 12.4,
+      "delta": -0.062,
+      "bid": 1.36,
+      "mid": 1.45,
+      "ask": 1.54,
+      "bidAnnualizedRoiPct": 20.3,
+      "midAnnualizedRoiPct": 21.6,
+      "openInterest": 2035,
+      "bidSize": 65,
+      "ticker": "SOXL",
+      "date": "2026-09-11",
+      "optionType": "put",
+      "volume": null,
+      "verification": "image-reviewed",
+      "sourceId": "117252701159833"
     }
   ],
   "otherObservations": [
@@ -1263,6 +1376,16 @@
       "imagePath": "raw/sources/social-post-archive/images/moomoo/117122671247365/01.jpg",
       "imageSha256": "789a91806dd54962208b0d2fb16786c89843f964a2d3c981e108e908c91a6071",
       "reason": "五選一計畫前的單張券商合約畫面；未提供 Bid/Ask、ITM/Touch 或完整候選，獨立保存，不列入每日五選比對。"
+    },
+    {
+      "postId": "117252701159833",
+      "date": "2026-09-11",
+      "publishedAt": "2026-09-11T13:43:55.000Z",
+      "kind": "position-tracker",
+      "sourcePage": "wiki/sources/laok-post-2026-09-11-117252701159833.md",
+      "imagePath": "raw/assets/social-posts/moomoo/117252701159833/02.png",
+      "imageSha256": "6d4d76885ddf203b8c1e171a0cf98ebeadf74d173567ed88810ef1456160e4ad",
+      "reason": "附帶戰績追蹤圖，屬老 K 自述持倉／績效；獨立保存，不當成每日新推薦、真實成交或已驗證收益。"
     }
   ]
 }

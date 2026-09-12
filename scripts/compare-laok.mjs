@@ -148,12 +148,14 @@ export function buildComparison(dataset, snapshots, decisions=new Map()) {
       }));
       return {...r,screenshotExceptions:screenshotExceptions(r),scenarios};
     });
+    const excludedBuckets=source.excludedBuckets ?? [];
+    const rejectedBuckets=new Set(excludedBuckets.map(b=>`${b.ticker}:${b.expiration}`));
     const recommended=new Set(rows.map(contractKey));
     const publishedBuckets=new Set(rows.map(r=>`${r.ticker}:${r.expiration}`));
-    const extraPicks=decision ? Object.fromEntries(config.scenarios.map(s=>[s.id,decision.scenarios[s.id].filter(p=>!recommended.has(contractKey(p))).map(p=>({...p,classification:publishedBuckets.has(`${p.ticker}:${p.expiration}`)?'alternative_strike':'unlisted_bucket_not_proven_rejected'}))])) : {};
+    const extraPicks=decision ? Object.fromEntries(config.scenarios.map(s=>[s.id,decision.scenarios[s.id].filter(p=>!recommended.has(contractKey(p))).map(p=>({...p,classification:rejectedBuckets.has(`${p.ticker}:${p.expiration}`)?'explicit_no_recommendation':publishedBuckets.has(`${p.ticker}:${p.expiration}`)?'alternative_strike':'unlisted_bucket_not_proven_rejected'}))])) : {};
     return {date:source.date,sourceId:source.postId,sourcePage:source.sourcePage,publishedAt:source.publishedAt,
       snapshotAt:selected?.generatedAt ?? null,snapshotFile:selected?.file ?? null,alignmentMinutes:selected?round((Date.parse(source.publishedAt)-Date.parse(selected.generatedAt))/60000):null,
-      decisionMode:saved?'frozen_forward':selected?'current_rules_replay':'unavailable',configHash:decision?.configHash ?? HASH,configVersion:config.version,rows,extraPicks};
+      decisionMode:saved?'frozen_forward':selected?'current_rules_replay':'unavailable',configHash:decision?.configHash ?? HASH,configVersion:config.version,rows,extraPicks,excludedBuckets};
   });
   const all=groups.flatMap(g=>g.rows);
   const summary={sourceDays:groups.length,recommendations:all.length,latestSourceDate:groups.at(-1)?.date ?? null,
@@ -189,6 +191,7 @@ function markdown(report) {
       const a=r.scenarios.execution,b=r.scenarios.conservative;
       lines.push(`|${r.ticker} ${r.expiration} ${r.strike}P|${statusLabel[a.status]}|${a.pick?`${a.pick.strike}P`:'—'}|${a.reasons.join(' / ') || (a.status==='rank_difference'?'同桶排序較後':'—')}|${statusLabel[b.status]}|`);
     }
+    for(const bucket of g.excludedBuckets ?? []) lines.push('',`明確留白：第 ${bucket.displayWeek} 週 ${bucket.ticker}；${bucket.reason}。`);
     const paired=g.rows.filter(r=>r.scenarios.execution.outcome?.last);
     if(paired.length) {
       lines.push('', '|老 K / Risk first|共同觀察|老 K 現金報酬|Risk first 現金報酬|差（百分點）|','|---|---|---:|---:|---:|');
@@ -224,6 +227,9 @@ export function main(args=process.argv.slice(2)) {
   const wikiArg=args.indexOf('--wiki');
   const wiki=wikiArg>=0?path.resolve(args[wikiArg+1]):path.join(process.env.HOME,'Documents/llm_wiki/LaoK');
   const dataset=read(path.join(root,'data/laok-reference/recommendations.json'));
+  for(const source of [...dataset.sources,...(dataset.otherObservations ?? [])]) {
+    if(!source.imagePath || !source.imageSha256 || !fs.existsSync(path.join(wiki,source.imagePath)) || sha(fs.readFileSync(path.join(wiki,source.imagePath)))!==source.imageSha256) throw new Error('Source image changed or missing; verify provenance before comparing');
+  }
   const inventory=sourceInventory(wiki,dataset);
   if(inventory.some(s=>s.status==='source_changed_or_missing')) throw new Error('Source image changed or missing; verify provenance before comparing');
   const snapshots=loadSnapshots(root,dataset.sources[0].date);

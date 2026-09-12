@@ -90,3 +90,10 @@ test('coverage audit distinguishes unrequested, absent response, unusable quote,
    assert.equal(result.summary.scenarios.execution.comparable,0);
  }
 });
+test('explicit omitted bucket is preserved without inventing a recommendation',()=>{
+ const source={date:'2026-09-10',postId:'x',publishedAt:'2026-09-10T14:10:00Z',excludedBuckets:[{ticker:'SOXL',expiration:base.expiration,displayWeek:1,reason:'ITM ceiling'}]};
+ const result=buildComparison({sources:[source],recommendations:[]},[snap('2026-09-10T14:00:00Z')]);
+ assert.equal(result.summary.recommendations,0);
+ assert.equal(result.groups[0].excludedBuckets.length,1);
+ assert.equal(result.groups[0].extraPicks.execution[0].classification,'explicit_no_recommendation');
+});
