@@ -155,7 +155,7 @@ export function buildComparison(dataset, snapshots, decisions=new Map()) {
     const extraPicks=decision ? Object.fromEntries(config.scenarios.map(s=>[s.id,decision.scenarios[s.id].filter(p=>!recommended.has(contractKey(p))).map(p=>({...p,classification:rejectedBuckets.has(`${p.ticker}:${p.expiration}`)?'explicit_no_recommendation':publishedBuckets.has(`${p.ticker}:${p.expiration}`)?'alternative_strike':'unlisted_bucket_not_proven_rejected'}))])) : {};
     return {date:source.date,sourceId:source.postId,sourcePage:source.sourcePage,publishedAt:source.publishedAt,
       snapshotAt:selected?.generatedAt ?? null,snapshotFile:selected?.file ?? null,alignmentMinutes:selected?round((Date.parse(source.publishedAt)-Date.parse(selected.generatedAt))/60000):null,
-      decisionMode:saved?'frozen_forward':selected?'current_rules_replay':'unavailable',configHash:decision?.configHash ?? HASH,configVersion:config.version,rows,extraPicks,excludedBuckets};
+      decisionMode:saved?'frozen_forward':selected?'current_rules_replay':'unavailable',configHash:decision?.configHash ?? HASH,configVersion:config.version,rows,extraPicks,excludedBuckets,sourceNote:source.sourceNote ?? null,recommendationStatus:source.recommendationStatus ?? null};
   });
   const all=groups.flatMap(g=>g.rows);
   const summary={sourceDays:groups.length,recommendations:all.length,latestSourceDate:groups.at(-1)?.date ?? null,
@@ -191,6 +191,7 @@ function markdown(report) {
       const a=r.scenarios.execution,b=r.scenarios.conservative;
       lines.push(`|${r.ticker} ${r.expiration} ${r.strike}P|${statusLabel[a.status]}|${a.pick?`${a.pick.strike}P`:'—'}|${a.reasons.join(' / ') || (a.status==='rank_difference'?'同桶排序較後':'—')}|${statusLabel[b.status]}|`);
     }
+    if(g.sourceNote) lines.push('',`來源說明：${g.sourceNote}`);
     for(const bucket of g.excludedBuckets ?? []) lines.push('',`明確留白：第 ${bucket.displayWeek} 週 ${bucket.ticker}；${bucket.reason}。`);
     const paired=g.rows.filter(r=>r.scenarios.execution.outcome?.last);
     if(paired.length) {

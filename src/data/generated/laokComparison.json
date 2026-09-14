@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-12T04:33:09.031Z",
+  "generatedAt": "2026-09-14T15:31:38.271Z",
   "configHash": "7e8001606f0736678e6c85f67cf783ee2aad0df71ec7149a6d9a5413eedbe5ac",
   "summary": {
-    "sourceDays": 14,
+    "sourceDays": 15,
     "recommendations": 58,
-    "latestSourceDate": "2026-09-11",
-    "frozenDays": 0,
+    "latestSourceDate": "2026-09-14",
+    "frozenDays": 1,
     "replayDays": 12,
     "screenshotExceptionRows": 14,
     "scenarios": {
@@ -216,7 +216,9 @@
         "execution": [],
         "conservative": []
       },
-      "excludedBuckets": []
+      "excludedBuckets": [],
+      "sourceNote": null,
+      "recommendationStatus": null
     },
     {
       "date": "2026-08-25",
@@ -442,7 +444,9 @@
         "execution": [],
         "conservative": []
       },
-      "excludedBuckets": []
+      "excludedBuckets": [],
+      "sourceNote": null,
+      "recommendationStatus": null
     },
     {
       "date": "2026-08-26",
@@ -626,7 +630,9 @@
         "execution": [],
         "conservative": []
       },
-      "excludedBuckets": []
+      "excludedBuckets": [],
+      "sourceNote": null,
+      "recommendationStatus": null
     },
     {
       "date": "2026-08-27",
@@ -771,7 +777,9 @@
         "execution": [],
         "conservative": []
       },
-      "excludedBuckets": []
+      "excludedBuckets": [],
+      "sourceNote": null,
+      "recommendationStatus": null
     },
     {
       "date": "2026-08-28",
@@ -874,7 +882,9 @@
         "execution": [],
         "conservative": []
       },
-      "excludedBuckets": []
+      "excludedBuckets": [],
+      "sourceNote": null,
+      "recommendationStatus": null
     },
     {
       "date": "2026-08-31",
@@ -1100,7 +1110,9 @@
         "execution": [],
         "conservative": []
       },
-      "excludedBuckets": []
+      "excludedBuckets": [],
+      "sourceNote": null,
+      "recommendationStatus": null
     },
     {
       "date": "2026-09-01",
@@ -1365,7 +1377,9 @@
         "execution": [],
         "conservative": []
       },
-      "excludedBuckets": []
+      "excludedBuckets": [],
+      "sourceNote": null,
+      "recommendationStatus": null
     },
     {
       "date": "2026-09-02",
@@ -1579,18 +1593,18 @@
               "strikeDifference": -2,
               "outcome": {
                 "status": "paper_mark_only",
-                "observations": 42,
+                "observations": 49,
                 "last": {
-                  "at": "2026-09-12T03:35:01+08:00",
+                  "at": "2026-09-14T23:19:44+08:00",
                   "reference": {
-                    "pnlPerContract": 46,
-                    "collateralReturnPct": 0.657,
-                    "premiumCapturePct": 86.792
+                    "pnlPerContract": 36,
+                    "collateralReturnPct": 0.514,
+                    "premiumCapturePct": 67.925
                   },
                   "screener": {
-                    "pnlPerContract": 21,
-                    "collateralReturnPct": 0.309,
-                    "premiumCapturePct": 65.625
+                    "pnlPerContract": 17,
+                    "collateralReturnPct": 0.25,
+                    "premiumCapturePct": 53.125
                   }
                 },
                 "session1": {
@@ -1619,10 +1633,22 @@
                     "premiumCapturePct": 3.125
                   }
                 },
-                "session5": null,
-                "observedSessions": 4,
+                "session5": {
+                  "at": "2026-09-14T23:19:44+08:00",
+                  "reference": {
+                    "pnlPerContract": 36,
+                    "collateralReturnPct": 0.514,
+                    "premiumCapturePct": 67.925
+                  },
+                  "screener": {
+                    "pnlPerContract": 17,
+                    "collateralReturnPct": 0.25,
+                    "premiumCapturePct": 53.125
+                  }
+                },
+                "observedSessions": 5,
                 "horizonsBasis": "Nth observed session, not guaranteed consecutive exchange sessions",
-                "excessCollateralReturnPct": -0.348,
+                "excessCollateralReturnPct": -0.264,
                 "referenceWorstObservedCollateralReturnPct": -0.414,
                 "screenerWorstObservedCollateralReturnPct": -0.897,
                 "referenceFirst80": "2026-09-12T03:06:23+08:00",
@@ -1837,18 +1863,18 @@
               "strikeDifference": -3,
               "outcome": {
                 "status": "paper_mark_only",
-                "observations": 49,
+                "observations": 57,
                 "last": {
-                  "at": "2026-09-12T03:49:11+08:00",
+                  "at": "2026-09-14T23:19:44+08:00",
                   "reference": {
-                    "pnlPerContract": 48,
-                    "collateralReturnPct": 0.738,
-                    "premiumCapturePct": 48
+                    "pnlPerContract": 1,
+                    "collateralReturnPct": 0.015,
+                    "premiumCapturePct": 1
                   },
                   "screener": {
-                    "pnlPerContract": 20,
-                    "collateralReturnPct": 0.323,
-                    "premiumCapturePct": 34.483
+                    "pnlPerContract": -30,
+                    "collateralReturnPct": -0.484,
+                    "premiumCapturePct": -51.724
                   }
                 },
                 "session1": {
@@ -1864,11 +1890,23 @@
                     "premiumCapturePct": -60.345
                   }
                 },
-                "session3": null,
+                "session3": {
+                  "at": "2026-09-14T23:19:44+08:00",
+                  "reference": {
+                    "pnlPerContract": 1,
+                    "collateralReturnPct": 0.015,
+                    "premiumCapturePct": 1
+                  },
+                  "screener": {
+                    "pnlPerContract": -30,
+                    "collateralReturnPct": -0.484,
+                    "premiumCapturePct": -51.724
+                  }
+                },
                 "session5": null,
-                "observedSessions": 2,
+                "observedSessions": 3,
                 "horizonsBasis": "Nth observed session, not guaranteed consecutive exchange sessions",
-                "excessCollateralReturnPct": -0.415,
+                "excessCollateralReturnPct": -0.499,
                 "referenceWorstObservedCollateralReturnPct": -0.723,
                 "screenerWorstObservedCollateralReturnPct": -2.129,
                 "referenceFirst80": null,
@@ -2002,7 +2040,9 @@
           }
         ]
       },
-      "excludedBuckets": []
+      "excludedBuckets": [],
+      "sourceNote": null,
+      "recommendationStatus": null
     },
     {
       "date": "2026-09-03",
@@ -2216,18 +2256,18 @@
               "strikeDifference": -1,
               "outcome": {
                 "status": "paper_mark_only",
-                "observations": 28,
+                "observations": 34,
                 "last": {
-                  "at": "2026-09-12T03:35:01+08:00",
+                  "at": "2026-09-14T23:19:44+08:00",
                   "reference": {
-                    "pnlPerContract": 37,
-                    "collateralReturnPct": 0.536,
-                    "premiumCapturePct": 77.083
+                    "pnlPerContract": 25,
+                    "collateralReturnPct": 0.362,
+                    "premiumCapturePct": 52.083
                   },
                   "screener": {
-                    "pnlPerContract": 36,
-                    "collateralReturnPct": 0.529,
-                    "premiumCapturePct": 76.596
+                    "pnlPerContract": 32,
+                    "collateralReturnPct": 0.471,
+                    "premiumCapturePct": 68.085
                   }
                 },
                 "session1": {
@@ -2257,9 +2297,9 @@
                   }
                 },
                 "session5": null,
-                "observedSessions": 3,
+                "observedSessions": 4,
                 "horizonsBasis": "Nth observed session, not guaranteed consecutive exchange sessions",
-                "excessCollateralReturnPct": -0.007,
+                "excessCollateralReturnPct": 0.109,
                 "referenceWorstObservedCollateralReturnPct": -0.319,
                 "screenerWorstObservedCollateralReturnPct": -0.294,
                 "referenceFirst80": null,
@@ -2377,18 +2417,18 @@
               "strikeDifference": 0,
               "outcome": {
                 "status": "paper_mark_only",
-                "observations": 72,
+                "observations": 80,
                 "last": {
-                  "at": "2026-09-12T03:49:11+08:00",
+                  "at": "2026-09-14T23:19:44+08:00",
                   "reference": {
-                    "pnlPerContract": 53,
-                    "collateralReturnPct": 0.815,
-                    "premiumCapturePct": 72.603
+                    "pnlPerContract": 33,
+                    "collateralReturnPct": 0.508,
+                    "premiumCapturePct": 45.205
                   },
                   "screener": {
-                    "pnlPerContract": 53,
-                    "collateralReturnPct": 0.815,
-                    "premiumCapturePct": 72.603
+                    "pnlPerContract": 33,
+                    "collateralReturnPct": 0.508,
+                    "premiumCapturePct": 45.205
                   }
                 },
                 "session1": {
@@ -2417,8 +2457,20 @@
                     "premiumCapturePct": 54.795
                   }
                 },
-                "session5": null,
-                "observedSessions": 4,
+                "session5": {
+                  "at": "2026-09-14T23:19:44+08:00",
+                  "reference": {
+                    "pnlPerContract": 33,
+                    "collateralReturnPct": 0.508,
+                    "premiumCapturePct": 45.205
+                  },
+                  "screener": {
+                    "pnlPerContract": 33,
+                    "collateralReturnPct": 0.508,
+                    "premiumCapturePct": 45.205
+                  }
+                },
+                "observedSessions": 5,
                 "horizonsBasis": "Nth observed session, not guaranteed consecutive exchange sessions",
                 "excessCollateralReturnPct": 0,
                 "referenceWorstObservedCollateralReturnPct": -0.231,
@@ -2622,7 +2674,9 @@
           }
         ]
       },
-      "excludedBuckets": []
+      "excludedBuckets": [],
+      "sourceNote": null,
+      "recommendationStatus": null
     },
     {
       "date": "2026-09-04",
@@ -2947,18 +3001,18 @@
               "strikeDifference": -9,
               "outcome": {
                 "status": "paper_mark_only",
-                "observations": 88,
+                "observations": 96,
                 "last": {
-                  "at": "2026-09-12T03:49:11+08:00",
+                  "at": "2026-09-14T23:19:44+08:00",
                   "reference": {
-                    "pnlPerContract": 47,
-                    "collateralReturnPct": 0.595,
-                    "premiumCapturePct": 70.149
+                    "pnlPerContract": 20,
+                    "collateralReturnPct": 0.253,
+                    "premiumCapturePct": 29.851
                   },
                   "screener": {
-                    "pnlPerContract": 17,
-                    "collateralReturnPct": 0.243,
-                    "premiumCapturePct": 62.963
+                    "pnlPerContract": 10,
+                    "collateralReturnPct": 0.143,
+                    "premiumCapturePct": 37.037
                   }
                 },
                 "session1": {
@@ -3000,11 +3054,11 @@
                     "premiumCapturePct": 62.963
                   }
                 },
-                "observedSessions": 5,
+                "observedSessions": 6,
                 "horizonsBasis": "Nth observed session, not guaranteed consecutive exchange sessions",
-                "excessCollateralReturnPct": -0.352,
+                "excessCollateralReturnPct": -0.11,
                 "referenceWorstObservedCollateralReturnPct": -0.747,
-                "screenerWorstObservedCollateralReturnPct": -0.114,
+                "screenerWorstObservedCollateralReturnPct": -0.143,
                 "referenceFirst80": null,
                 "screenerFirst80": null
               }
@@ -3062,18 +3116,18 @@
               "strikeDifference": 0,
               "outcome": {
                 "status": "paper_mark_only",
-                "observations": 88,
+                "observations": 96,
                 "last": {
-                  "at": "2026-09-12T03:49:11+08:00",
+                  "at": "2026-09-14T23:19:44+08:00",
                   "reference": {
-                    "pnlPerContract": 47,
-                    "collateralReturnPct": 0.595,
-                    "premiumCapturePct": 70.149
+                    "pnlPerContract": 20,
+                    "collateralReturnPct": 0.253,
+                    "premiumCapturePct": 29.851
                   },
                   "screener": {
-                    "pnlPerContract": 47,
-                    "collateralReturnPct": 0.595,
-                    "premiumCapturePct": 70.149
+                    "pnlPerContract": 20,
+                    "collateralReturnPct": 0.253,
+                    "premiumCapturePct": 29.851
                   }
                 },
                 "session1": {
@@ -3115,7 +3169,7 @@
                     "premiumCapturePct": 70.149
                   }
                 },
-                "observedSessions": 5,
+                "observedSessions": 6,
                 "horizonsBasis": "Nth observed session, not guaranteed consecutive exchange sessions",
                 "excessCollateralReturnPct": 0,
                 "referenceWorstObservedCollateralReturnPct": -0.747,
@@ -3205,18 +3259,18 @@
               "strikeDifference": -10,
               "outcome": {
                 "status": "paper_mark_only",
-                "observations": 60,
+                "observations": 68,
                 "last": {
-                  "at": "2026-09-12T03:49:11+08:00",
+                  "at": "2026-09-14T23:19:44+08:00",
                   "reference": {
-                    "pnlPerContract": 49,
-                    "collateralReturnPct": 0.653,
-                    "premiumCapturePct": 57.647
+                    "pnlPerContract": -18,
+                    "collateralReturnPct": -0.24,
+                    "premiumCapturePct": -21.176
                   },
                   "screener": {
-                    "pnlPerContract": 20,
-                    "collateralReturnPct": 0.308,
-                    "premiumCapturePct": 50
+                    "pnlPerContract": 0,
+                    "collateralReturnPct": 0,
+                    "premiumCapturePct": 0
                   }
                 },
                 "session1": {
@@ -3246,11 +3300,11 @@
                   }
                 },
                 "session5": null,
-                "observedSessions": 3,
+                "observedSessions": 4,
                 "horizonsBasis": "Nth observed session, not guaranteed consecutive exchange sessions",
-                "excessCollateralReturnPct": -0.345,
-                "referenceWorstObservedCollateralReturnPct": -0.2,
-                "screenerWorstObservedCollateralReturnPct": -0.138,
+                "excessCollateralReturnPct": 0.24,
+                "referenceWorstObservedCollateralReturnPct": -0.693,
+                "screenerWorstObservedCollateralReturnPct": -0.631,
                 "referenceFirst80": null,
                 "screenerFirst80": null
               }
@@ -3366,18 +3420,18 @@
               "strikeDifference": 0,
               "outcome": {
                 "status": "paper_mark_only",
-                "observations": 87,
+                "observations": 95,
                 "last": {
-                  "at": "2026-09-12T03:49:11+08:00",
+                  "at": "2026-09-14T23:19:44+08:00",
                   "reference": {
-                    "pnlPerContract": 42,
-                    "collateralReturnPct": 0.6,
-                    "premiumCapturePct": 42
+                    "pnlPerContract": -45,
+                    "collateralReturnPct": -0.643,
+                    "premiumCapturePct": -45
                   },
                   "screener": {
-                    "pnlPerContract": 42,
-                    "collateralReturnPct": 0.6,
-                    "premiumCapturePct": 42
+                    "pnlPerContract": -45,
+                    "collateralReturnPct": -0.643,
+                    "premiumCapturePct": -45
                   }
                 },
                 "session1": {
@@ -3419,11 +3473,11 @@
                     "premiumCapturePct": 42
                   }
                 },
-                "observedSessions": 5,
+                "observedSessions": 6,
                 "horizonsBasis": "Nth observed session, not guaranteed consecutive exchange sessions",
                 "excessCollateralReturnPct": 0,
-                "referenceWorstObservedCollateralReturnPct": -0.2,
-                "screenerWorstObservedCollateralReturnPct": -0.2,
+                "referenceWorstObservedCollateralReturnPct": -0.857,
+                "screenerWorstObservedCollateralReturnPct": -0.857,
                 "referenceFirst80": null,
                 "screenerFirst80": null
               }
@@ -3481,18 +3535,18 @@
               "strikeDifference": 0,
               "outcome": {
                 "status": "paper_mark_only",
-                "observations": 87,
+                "observations": 95,
                 "last": {
-                  "at": "2026-09-12T03:49:11+08:00",
+                  "at": "2026-09-14T23:19:44+08:00",
                   "reference": {
-                    "pnlPerContract": 42,
-                    "collateralReturnPct": 0.6,
-                    "premiumCapturePct": 42
+                    "pnlPerContract": -45,
+                    "collateralReturnPct": -0.643,
+                    "premiumCapturePct": -45
                   },
                   "screener": {
-                    "pnlPerContract": 42,
-                    "collateralReturnPct": 0.6,
-                    "premiumCapturePct": 42
+                    "pnlPerContract": -45,
+                    "collateralReturnPct": -0.643,
+                    "premiumCapturePct": -45
                   }
                 },
                 "session1": {
@@ -3534,11 +3588,11 @@
                     "premiumCapturePct": 42
                   }
                 },
-                "observedSessions": 5,
+                "observedSessions": 6,
                 "horizonsBasis": "Nth observed session, not guaranteed consecutive exchange sessions",
                 "excessCollateralReturnPct": 0,
-                "referenceWorstObservedCollateralReturnPct": -0.2,
-                "screenerWorstObservedCollateralReturnPct": -0.2,
+                "referenceWorstObservedCollateralReturnPct": -0.857,
+                "screenerWorstObservedCollateralReturnPct": -0.857,
                 "referenceFirst80": null,
                 "screenerFirst80": null
               }
@@ -3742,7 +3796,9 @@
           }
         ]
       },
-      "excludedBuckets": []
+      "excludedBuckets": [],
+      "sourceNote": null,
+      "recommendationStatus": null
     },
     {
       "date": "2026-09-08",
@@ -3994,7 +4050,9 @@
         }
       ],
       "extraPicks": {},
-      "excludedBuckets": []
+      "excludedBuckets": [],
+      "sourceNote": null,
+      "recommendationStatus": null
     },
     {
       "date": "2026-09-09",
@@ -4084,18 +4142,18 @@
               "strikeDifference": -10,
               "outcome": {
                 "status": "paper_mark_only",
-                "observations": 49,
+                "observations": 57,
                 "last": {
-                  "at": "2026-09-12T03:49:11+08:00",
+                  "at": "2026-09-14T23:19:44+08:00",
                   "reference": {
-                    "pnlPerContract": 31,
-                    "collateralReturnPct": 0.365,
-                    "premiumCapturePct": 57.407
+                    "pnlPerContract": -36,
+                    "collateralReturnPct": -0.424,
+                    "premiumCapturePct": -66.667
                   },
                   "screener": {
-                    "pnlPerContract": 16,
-                    "collateralReturnPct": 0.213,
-                    "premiumCapturePct": 59.259
+                    "pnlPerContract": 0,
+                    "collateralReturnPct": 0,
+                    "premiumCapturePct": 0
                   }
                 },
                 "session1": {
@@ -4111,13 +4169,25 @@
                     "premiumCapturePct": 7.407
                   }
                 },
-                "session3": null,
+                "session3": {
+                  "at": "2026-09-14T23:19:44+08:00",
+                  "reference": {
+                    "pnlPerContract": -36,
+                    "collateralReturnPct": -0.424,
+                    "premiumCapturePct": -66.667
+                  },
+                  "screener": {
+                    "pnlPerContract": 0,
+                    "collateralReturnPct": 0,
+                    "premiumCapturePct": 0
+                  }
+                },
                 "session5": null,
-                "observedSessions": 2,
+                "observedSessions": 3,
                 "horizonsBasis": "Nth observed session, not guaranteed consecutive exchange sessions",
-                "excessCollateralReturnPct": -0.152,
-                "referenceWorstObservedCollateralReturnPct": -0.059,
-                "screenerWorstObservedCollateralReturnPct": -0.013,
+                "excessCollateralReturnPct": 0.424,
+                "referenceWorstObservedCollateralReturnPct": -1.141,
+                "screenerWorstObservedCollateralReturnPct": -0.373,
                 "referenceFirst80": null,
                 "screenerFirst80": null
               }
@@ -4175,18 +4245,18 @@
               "strikeDifference": -8,
               "outcome": {
                 "status": "paper_mark_only",
-                "observations": 49,
+                "observations": 57,
                 "last": {
-                  "at": "2026-09-12T03:49:11+08:00",
+                  "at": "2026-09-14T23:19:44+08:00",
                   "reference": {
-                    "pnlPerContract": 31,
-                    "collateralReturnPct": 0.365,
-                    "premiumCapturePct": 57.407
+                    "pnlPerContract": -36,
+                    "collateralReturnPct": -0.424,
+                    "premiumCapturePct": -66.667
                   },
                   "screener": {
-                    "pnlPerContract": -2,
-                    "collateralReturnPct": -0.026,
-                    "premiumCapturePct": -10.526
+                    "pnlPerContract": -18,
+                    "collateralReturnPct": -0.234,
+                    "premiumCapturePct": -94.737
                   }
                 },
                 "session1": {
@@ -4202,13 +4272,25 @@
                     "premiumCapturePct": -78.947
                   }
                 },
-                "session3": null,
+                "session3": {
+                  "at": "2026-09-14T23:19:44+08:00",
+                  "reference": {
+                    "pnlPerContract": -36,
+                    "collateralReturnPct": -0.424,
+                    "premiumCapturePct": -66.667
+                  },
+                  "screener": {
+                    "pnlPerContract": -18,
+                    "collateralReturnPct": -0.234,
+                    "premiumCapturePct": -94.737
+                  }
+                },
                 "session5": null,
-                "observedSessions": 2,
+                "observedSessions": 3,
                 "horizonsBasis": "Nth observed session, not guaranteed consecutive exchange sessions",
-                "excessCollateralReturnPct": -0.391,
-                "referenceWorstObservedCollateralReturnPct": -0.059,
-                "screenerWorstObservedCollateralReturnPct": -0.442,
+                "excessCollateralReturnPct": 0.19,
+                "referenceWorstObservedCollateralReturnPct": -1.141,
+                "screenerWorstObservedCollateralReturnPct": -0.597,
                 "referenceFirst80": null,
                 "screenerFirst80": null
               }
@@ -4339,18 +4421,18 @@
               "strikeDifference": -5,
               "outcome": {
                 "status": "paper_mark_only",
-                "observations": 49,
+                "observations": 57,
                 "last": {
-                  "at": "2026-09-12T03:49:11+08:00",
+                  "at": "2026-09-14T23:19:44+08:00",
                   "reference": {
-                    "pnlPerContract": 35,
-                    "collateralReturnPct": 0.467,
-                    "premiumCapturePct": 29.167
+                    "pnlPerContract": -87,
+                    "collateralReturnPct": -1.16,
+                    "premiumCapturePct": -72.5
                   },
                   "screener": {
-                    "pnlPerContract": 20,
-                    "collateralReturnPct": 0.286,
-                    "premiumCapturePct": 25.641
+                    "pnlPerContract": -67,
+                    "collateralReturnPct": -0.957,
+                    "premiumCapturePct": -85.897
                   }
                 },
                 "session1": {
@@ -4366,13 +4448,25 @@
                     "premiumCapturePct": -26.923
                   }
                 },
-                "session3": null,
+                "session3": {
+                  "at": "2026-09-14T23:19:44+08:00",
+                  "reference": {
+                    "pnlPerContract": -87,
+                    "collateralReturnPct": -1.16,
+                    "premiumCapturePct": -72.5
+                  },
+                  "screener": {
+                    "pnlPerContract": -67,
+                    "collateralReturnPct": -0.957,
+                    "premiumCapturePct": -85.897
+                  }
+                },
                 "session5": null,
-                "observedSessions": 2,
+                "observedSessions": 3,
                 "horizonsBasis": "Nth observed session, not guaranteed consecutive exchange sessions",
-                "excessCollateralReturnPct": -0.181,
-                "referenceWorstObservedCollateralReturnPct": -0.347,
-                "screenerWorstObservedCollateralReturnPct": -0.386,
+                "excessCollateralReturnPct": 0.203,
+                "referenceWorstObservedCollateralReturnPct": -1.72,
+                "screenerWorstObservedCollateralReturnPct": -1.171,
                 "referenceFirst80": null,
                 "screenerFirst80": null
               }
@@ -4430,18 +4524,18 @@
               "strikeDifference": -5,
               "outcome": {
                 "status": "paper_mark_only",
-                "observations": 49,
+                "observations": 57,
                 "last": {
-                  "at": "2026-09-12T03:49:11+08:00",
+                  "at": "2026-09-14T23:19:44+08:00",
                   "reference": {
-                    "pnlPerContract": 35,
-                    "collateralReturnPct": 0.467,
-                    "premiumCapturePct": 29.167
+                    "pnlPerContract": -87,
+                    "collateralReturnPct": -1.16,
+                    "premiumCapturePct": -72.5
                   },
                   "screener": {
-                    "pnlPerContract": 20,
-                    "collateralReturnPct": 0.286,
-                    "premiumCapturePct": 25.641
+                    "pnlPerContract": -67,
+                    "collateralReturnPct": -0.957,
+                    "premiumCapturePct": -85.897
                   }
                 },
                 "session1": {
@@ -4457,13 +4551,25 @@
                     "premiumCapturePct": -26.923
                   }
                 },
-                "session3": null,
+                "session3": {
+                  "at": "2026-09-14T23:19:44+08:00",
+                  "reference": {
+                    "pnlPerContract": -87,
+                    "collateralReturnPct": -1.16,
+                    "premiumCapturePct": -72.5
+                  },
+                  "screener": {
+                    "pnlPerContract": -67,
+                    "collateralReturnPct": -0.957,
+                    "premiumCapturePct": -85.897
+                  }
+                },
                 "session5": null,
-                "observedSessions": 2,
+                "observedSessions": 3,
                 "horizonsBasis": "Nth observed session, not guaranteed consecutive exchange sessions",
-                "excessCollateralReturnPct": -0.181,
-                "referenceWorstObservedCollateralReturnPct": -0.347,
-                "screenerWorstObservedCollateralReturnPct": -0.386,
+                "excessCollateralReturnPct": 0.203,
+                "referenceWorstObservedCollateralReturnPct": -1.72,
+                "screenerWorstObservedCollateralReturnPct": -1.171,
                 "referenceFirst80": null,
                 "screenerFirst80": null
               }
@@ -4790,7 +4896,9 @@
           }
         ]
       },
-      "excludedBuckets": []
+      "excludedBuckets": [],
+      "sourceNote": null,
+      "recommendationStatus": null
     },
     {
       "date": "2026-09-10",
@@ -4880,18 +4988,18 @@
               "strikeDifference": 0,
               "outcome": {
                 "status": "paper_mark_only",
-                "observations": 36,
+                "observations": 44,
                 "last": {
-                  "at": "2026-09-12T03:49:11+08:00",
+                  "at": "2026-09-14T23:19:44+08:00",
                   "reference": {
-                    "pnlPerContract": 12,
-                    "collateralReturnPct": 0.15,
-                    "premiumCapturePct": 44.444
+                    "pnlPerContract": -20,
+                    "collateralReturnPct": -0.25,
+                    "premiumCapturePct": -74.074
                   },
                   "screener": {
-                    "pnlPerContract": 12,
-                    "collateralReturnPct": 0.15,
-                    "premiumCapturePct": 44.444
+                    "pnlPerContract": -20,
+                    "collateralReturnPct": -0.25,
+                    "premiumCapturePct": -74.074
                   }
                 },
                 "session1": {
@@ -4909,11 +5017,11 @@
                 },
                 "session3": null,
                 "session5": null,
-                "observedSessions": 1,
+                "observedSessions": 2,
                 "horizonsBasis": "Nth observed session, not guaranteed consecutive exchange sessions",
                 "excessCollateralReturnPct": 0,
-                "referenceWorstObservedCollateralReturnPct": -0.162,
-                "screenerWorstObservedCollateralReturnPct": -0.162,
+                "referenceWorstObservedCollateralReturnPct": -0.787,
+                "screenerWorstObservedCollateralReturnPct": -0.787,
                 "referenceFirst80": null,
                 "screenerFirst80": null
               }
@@ -5091,18 +5199,18 @@
               "strikeDifference": -10,
               "outcome": {
                 "status": "paper_mark_only",
-                "observations": 36,
+                "observations": 44,
                 "last": {
-                  "at": "2026-09-12T03:49:11+08:00",
+                  "at": "2026-09-14T23:19:44+08:00",
                   "reference": {
-                    "pnlPerContract": 34,
-                    "collateralReturnPct": 0.425,
-                    "premiumCapturePct": 41.463
+                    "pnlPerContract": -78,
+                    "collateralReturnPct": -0.975,
+                    "premiumCapturePct": -95.122
                   },
                   "screener": {
-                    "pnlPerContract": 10,
-                    "collateralReturnPct": 0.143,
-                    "premiumCapturePct": 27.778
+                    "pnlPerContract": -26,
+                    "collateralReturnPct": -0.371,
+                    "premiumCapturePct": -72.222
                   }
                 },
                 "session1": {
@@ -5120,11 +5228,11 @@
                 },
                 "session3": null,
                 "session5": null,
-                "observedSessions": 1,
+                "observedSessions": 2,
                 "horizonsBasis": "Nth observed session, not guaranteed consecutive exchange sessions",
-                "excessCollateralReturnPct": -0.282,
-                "referenceWorstObservedCollateralReturnPct": -0.35,
-                "screenerWorstObservedCollateralReturnPct": -0.2,
+                "excessCollateralReturnPct": 0.604,
+                "referenceWorstObservedCollateralReturnPct": -1.687,
+                "screenerWorstObservedCollateralReturnPct": -0.771,
                 "referenceFirst80": null,
                 "screenerFirst80": null
               }
@@ -5182,18 +5290,18 @@
               "strikeDifference": -3,
               "outcome": {
                 "status": "paper_mark_only",
-                "observations": 30,
+                "observations": 38,
                 "last": {
-                  "at": "2026-09-12T03:49:11+08:00",
+                  "at": "2026-09-14T23:19:44+08:00",
                   "reference": {
-                    "pnlPerContract": 34,
-                    "collateralReturnPct": 0.425,
-                    "premiumCapturePct": 41.463
+                    "pnlPerContract": -78,
+                    "collateralReturnPct": -0.975,
+                    "premiumCapturePct": -95.122
                   },
                   "screener": {
-                    "pnlPerContract": -62,
-                    "collateralReturnPct": -0.805,
-                    "premiumCapturePct": -310
+                    "pnlPerContract": -100,
+                    "collateralReturnPct": -1.299,
+                    "premiumCapturePct": -500
                   }
                 },
                 "session1": {
@@ -5211,11 +5319,11 @@
                 },
                 "session3": null,
                 "session5": null,
-                "observedSessions": 1,
+                "observedSessions": 2,
                 "horizonsBasis": "Nth observed session, not guaranteed consecutive exchange sessions",
-                "excessCollateralReturnPct": -1.23,
-                "referenceWorstObservedCollateralReturnPct": -0.35,
-                "screenerWorstObservedCollateralReturnPct": -1.519,
+                "excessCollateralReturnPct": -0.324,
+                "referenceWorstObservedCollateralReturnPct": -1.687,
+                "screenerWorstObservedCollateralReturnPct": -2.13,
                 "referenceFirst80": null,
                 "screenerFirst80": null
               }
@@ -5333,18 +5441,18 @@
               "strikeDifference": 0,
               "outcome": {
                 "status": "paper_mark_only",
-                "observations": 36,
+                "observations": 44,
                 "last": {
-                  "at": "2026-09-12T03:49:11+08:00",
+                  "at": "2026-09-14T23:19:44+08:00",
                   "reference": {
-                    "pnlPerContract": 30,
-                    "collateralReturnPct": 0.4,
-                    "premiumCapturePct": 26.087
+                    "pnlPerContract": -92,
+                    "collateralReturnPct": -1.227,
+                    "premiumCapturePct": -80
                   },
                   "screener": {
-                    "pnlPerContract": 30,
-                    "collateralReturnPct": 0.4,
-                    "premiumCapturePct": 26.087
+                    "pnlPerContract": -92,
+                    "collateralReturnPct": -1.227,
+                    "premiumCapturePct": -80
                   }
                 },
                 "session1": {
@@ -5362,11 +5470,11 @@
                 },
                 "session3": null,
                 "session5": null,
-                "observedSessions": 1,
+                "observedSessions": 2,
                 "horizonsBasis": "Nth observed session, not guaranteed consecutive exchange sessions",
                 "excessCollateralReturnPct": 0,
-                "referenceWorstObservedCollateralReturnPct": -0.333,
-                "screenerWorstObservedCollateralReturnPct": -0.333,
+                "referenceWorstObservedCollateralReturnPct": -1.787,
+                "screenerWorstObservedCollateralReturnPct": -1.787,
                 "referenceFirst80": null,
                 "screenerFirst80": null
               }
@@ -5449,18 +5557,18 @@
               "strikeDifference": -5,
               "outcome": {
                 "status": "paper_mark_only",
-                "observations": 34,
+                "observations": 42,
                 "last": {
-                  "at": "2026-09-12T03:49:11+08:00",
+                  "at": "2026-09-14T23:19:44+08:00",
                   "reference": {
-                    "pnlPerContract": 16,
-                    "collateralReturnPct": 0.229,
-                    "premiumCapturePct": 13.793
+                    "pnlPerContract": -91,
+                    "collateralReturnPct": -1.3,
+                    "premiumCapturePct": -78.448
                   },
                   "screener": {
-                    "pnlPerContract": 18,
-                    "collateralReturnPct": 0.277,
-                    "premiumCapturePct": 20.225
+                    "pnlPerContract": -51,
+                    "collateralReturnPct": -0.785,
+                    "premiumCapturePct": -57.303
                   }
                 },
                 "session1": {
@@ -5478,11 +5586,11 @@
                 },
                 "session3": null,
                 "session5": null,
-                "observedSessions": 1,
+                "observedSessions": 2,
                 "horizonsBasis": "Nth observed session, not guaranteed consecutive exchange sessions",
-                "excessCollateralReturnPct": 0.048,
-                "referenceWorstObservedCollateralReturnPct": -0.514,
-                "screenerWorstObservedCollateralReturnPct": -0.323,
+                "excessCollateralReturnPct": 0.515,
+                "referenceWorstObservedCollateralReturnPct": -1.914,
+                "screenerWorstObservedCollateralReturnPct": -1.092,
                 "referenceFirst80": null,
                 "screenerFirst80": null
               }
@@ -5540,18 +5648,18 @@
               "strikeDifference": 0,
               "outcome": {
                 "status": "paper_mark_only",
-                "observations": 36,
+                "observations": 44,
                 "last": {
-                  "at": "2026-09-12T03:49:11+08:00",
+                  "at": "2026-09-14T23:19:44+08:00",
                   "reference": {
-                    "pnlPerContract": 16,
-                    "collateralReturnPct": 0.229,
-                    "premiumCapturePct": 13.793
+                    "pnlPerContract": -91,
+                    "collateralReturnPct": -1.3,
+                    "premiumCapturePct": -78.448
                   },
                   "screener": {
-                    "pnlPerContract": 16,
-                    "collateralReturnPct": 0.229,
-                    "premiumCapturePct": 13.793
+                    "pnlPerContract": -91,
+                    "collateralReturnPct": -1.3,
+                    "premiumCapturePct": -78.448
                   }
                 },
                 "session1": {
@@ -5569,11 +5677,11 @@
                 },
                 "session3": null,
                 "session5": null,
-                "observedSessions": 1,
+                "observedSessions": 2,
                 "horizonsBasis": "Nth observed session, not guaranteed consecutive exchange sessions",
                 "excessCollateralReturnPct": 0,
-                "referenceWorstObservedCollateralReturnPct": -0.514,
-                "screenerWorstObservedCollateralReturnPct": -0.514,
+                "referenceWorstObservedCollateralReturnPct": -1.914,
+                "screenerWorstObservedCollateralReturnPct": -1.914,
                 "referenceFirst80": null,
                 "screenerFirst80": null
               }
@@ -5752,7 +5860,9 @@
           }
         ]
       },
-      "excludedBuckets": []
+      "excludedBuckets": [],
+      "sourceNote": null,
+      "recommendationStatus": null
     },
     {
       "date": "2026-09-11",
@@ -5962,7 +6072,223 @@
           "minimumItmPct": 6.4,
           "statedItmCeilingPct": 6
         }
-      ]
+      ],
+      "sourceNote": null,
+      "recommendationStatus": null
+    },
+    {
+      "date": "2026-09-14",
+      "sourceId": "117269689532425",
+      "sourcePage": "wiki/sources/laok-post-2026-09-14-117269689532425.md",
+      "publishedAt": "2026-09-14T13:44:16.000Z",
+      "snapshotAt": "2026-09-14T21:36:25+08:00",
+      "snapshotFile": "data/snapshots/2026-09-14/half_hourly-20260914T213625_0800.json",
+      "alignmentMinutes": 7.85,
+      "decisionMode": "frozen_forward",
+      "configHash": "7e8001606f0736678e6c85f67cf783ee2aad0df71ec7149a6d9a5413eedbe5ac",
+      "configVersion": "2026-09-07.v1",
+      "rows": [],
+      "extraPicks": {
+        "execution": [
+          {
+            "id": "US.SOXL260918P69000",
+            "ticker": "SOXL",
+            "optionType": "put",
+            "expiration": "2026-09-18",
+            "dte": 4,
+            "strike": 69,
+            "underlyingPrice": 100.105,
+            "bid": 0.28,
+            "ask": 0.33,
+            "delta": -0.051142318,
+            "openInterest": 581,
+            "volume": 5,
+            "expiryItmProbability": 1.05,
+            "touchProbability": 2.04,
+            "soxlFridayBucket": 1,
+            "iv": 232.369,
+            "ivPercentile": 100,
+            "priceSource": "moomoo_snapshot",
+            "underlyingPriceSource": "moomoo_snapshot",
+            "probabilitySource": "SOXL QFQ rolling daily paths (8Y)",
+            "probabilitySampleSize": 2009,
+            "classification": "unlisted_bucket_not_proven_rejected"
+          },
+          {
+            "id": "US.SOXL260925P70000",
+            "ticker": "SOXL",
+            "optionType": "put",
+            "expiration": "2026-09-25",
+            "dte": 11,
+            "strike": 70,
+            "underlyingPrice": 100.105,
+            "bid": 0.78,
+            "ask": 0.9,
+            "delta": -0.064866896,
+            "openInterest": 4831,
+            "volume": 84,
+            "expiryItmProbability": 3.49,
+            "touchProbability": 8.18,
+            "soxlFridayBucket": 2,
+            "iv": 150.441,
+            "ivPercentile": 100,
+            "priceSource": "moomoo_snapshot",
+            "underlyingPriceSource": "moomoo_snapshot",
+            "probabilitySource": "SOXL QFQ rolling daily paths (8Y)",
+            "probabilitySampleSize": 2004,
+            "classification": "unlisted_bucket_not_proven_rejected"
+          },
+          {
+            "id": "US.SOXL261009P60000",
+            "ticker": "SOXL",
+            "optionType": "put",
+            "expiration": "2026-10-09",
+            "dte": 25,
+            "strike": 60,
+            "underlyingPrice": 100.105,
+            "bid": 0.95,
+            "ask": 1.1,
+            "delta": -0.051369755,
+            "openInterest": 1884,
+            "volume": 42,
+            "expiryItmProbability": 3.71,
+            "touchProbability": 8.78,
+            "soxlFridayBucket": 4,
+            "iv": 136.395,
+            "ivPercentile": 100,
+            "priceSource": "moomoo_snapshot",
+            "underlyingPriceSource": "moomoo_snapshot",
+            "probabilitySource": "SOXL QFQ rolling daily paths (8Y)",
+            "probabilitySampleSize": 1994,
+            "classification": "unlisted_bucket_not_proven_rejected"
+          },
+          {
+            "id": "US.SOXL261002P65000",
+            "ticker": "SOXL",
+            "optionType": "put",
+            "expiration": "2026-10-02",
+            "dte": 18,
+            "strike": 65,
+            "underlyingPrice": 100.105,
+            "bid": 0.98,
+            "ask": 1.13,
+            "delta": -0.064417459,
+            "openInterest": 7009,
+            "volume": 69,
+            "expiryItmProbability": 4.35,
+            "touchProbability": 9.1,
+            "soxlFridayBucket": 3,
+            "iv": 145.142,
+            "ivPercentile": 100,
+            "priceSource": "moomoo_snapshot",
+            "underlyingPriceSource": "moomoo_snapshot",
+            "probabilitySource": "SOXL QFQ rolling daily paths (8Y)",
+            "probabilitySampleSize": 1999,
+            "classification": "unlisted_bucket_not_proven_rejected"
+          }
+        ],
+        "conservative": [
+          {
+            "id": "US.SOXL260918P63000",
+            "ticker": "SOXL",
+            "optionType": "put",
+            "expiration": "2026-09-18",
+            "dte": 4,
+            "strike": 63,
+            "underlyingPrice": 100.105,
+            "bid": 0.06,
+            "ask": 0.39,
+            "delta": -0.022080555,
+            "openInterest": 789,
+            "volume": 23,
+            "expiryItmProbability": 0.45,
+            "touchProbability": 0.75,
+            "soxlFridayBucket": 1,
+            "iv": 230.12,
+            "ivPercentile": 100,
+            "priceSource": "moomoo_snapshot",
+            "underlyingPriceSource": "moomoo_snapshot",
+            "probabilitySource": "SOXL QFQ rolling daily paths (8Y)",
+            "probabilitySampleSize": 2009,
+            "classification": "unlisted_bucket_not_proven_rejected"
+          },
+          {
+            "id": "US.SOXL260925P65000",
+            "ticker": "SOXL",
+            "optionType": "put",
+            "expiration": "2026-09-25",
+            "dte": 11,
+            "strike": 65,
+            "underlyingPrice": 100.105,
+            "bid": 0.5,
+            "ask": 0.81,
+            "delta": -0.041506344,
+            "openInterest": 6822,
+            "volume": 659,
+            "expiryItmProbability": 1.8,
+            "touchProbability": 4.59,
+            "soxlFridayBucket": 2,
+            "iv": 156.807,
+            "ivPercentile": 100,
+            "priceSource": "moomoo_snapshot",
+            "underlyingPriceSource": "moomoo_snapshot",
+            "probabilitySource": "SOXL QFQ rolling daily paths (8Y)",
+            "probabilitySampleSize": 2004,
+            "classification": "unlisted_bucket_not_proven_rejected"
+          },
+          {
+            "id": "US.SOXL261002P58000",
+            "ticker": "SOXL",
+            "optionType": "put",
+            "expiration": "2026-10-02",
+            "dte": 18,
+            "strike": 58,
+            "underlyingPrice": 100.105,
+            "bid": 0.28,
+            "ask": 0.87,
+            "delta": -0.036699658,
+            "openInterest": 315,
+            "volume": 12,
+            "expiryItmProbability": 2.15,
+            "touchProbability": 4.95,
+            "soxlFridayBucket": 3,
+            "iv": 153.032,
+            "ivPercentile": 100,
+            "priceSource": "moomoo_snapshot",
+            "underlyingPriceSource": "moomoo_snapshot",
+            "probabilitySource": "SOXL QFQ rolling daily paths (8Y)",
+            "probabilitySampleSize": 1999,
+            "classification": "unlisted_bucket_not_proven_rejected"
+          },
+          {
+            "id": "US.SOXL261009P60000",
+            "ticker": "SOXL",
+            "optionType": "put",
+            "expiration": "2026-10-09",
+            "dte": 25,
+            "strike": 60,
+            "underlyingPrice": 100.105,
+            "bid": 0.95,
+            "ask": 1.1,
+            "delta": -0.051369755,
+            "openInterest": 1884,
+            "volume": 42,
+            "expiryItmProbability": 3.71,
+            "touchProbability": 8.78,
+            "soxlFridayBucket": 4,
+            "iv": 136.395,
+            "ivPercentile": 100,
+            "priceSource": "moomoo_snapshot",
+            "underlyingPriceSource": "moomoo_snapshot",
+            "probabilitySource": "SOXL QFQ rolling daily paths (8Y)",
+            "probabilitySampleSize": 1994,
+            "classification": "unlisted_bucket_not_proven_rejected"
+          }
+        ]
+      },
+      "excludedBuckets": [],
+      "sourceNote": "作者表示今天不開倉，傾向等 FOMC 會議與講話後再考慮，但保留跌幅過大時開倉的例外。附圖僅為既有持倉追蹤，未列新推薦；不是已驗證的實際零成交紀錄。",
+      "recommendationStatus": "no_new_recommendations"
     }
   ],
   "limitations": [
@@ -6048,6 +6374,11 @@
       "sourcePage": "wiki/sources/laok-post-2026-09-11-117252701159833.md",
       "postId": "117252701159833",
       "status": "imported"
+    },
+    {
+      "sourcePage": "wiki/sources/laok-post-2026-09-14-117269689532425.md",
+      "postId": "117269689532425",
+      "status": "imported"
     }
   ],
   "otherObservations": [
@@ -6080,6 +6411,19 @@
       "imagePath": "raw/assets/social-posts/moomoo/117252701159833/02.png",
       "imageSha256": "6d4d76885ddf203b8c1e171a0cf98ebeadf74d173567ed88810ef1456160e4ad",
       "reason": "附帶戰績追蹤圖，屬老 K 自述持倉／績效；獨立保存，不當成每日新推薦、真實成交或已驗證收益。"
+    },
+    {
+      "date": "2026-09-14",
+      "postId": "117269689532425",
+      "publishedAt": "2026-09-14T13:44:16.000Z",
+      "sourcePage": "wiki/sources/laok-post-2026-09-14-117269689532425.md",
+      "imagePath": "raw/assets/social-posts/moomoo/117269689532425/01.png",
+      "imageSha256": "02f55ccf1134fb168947f6026b3763533d33ffeed39808877c614fd0fe81bfae",
+      "completeRecommendationImage": false,
+      "recommendationStatus": "no_new_recommendations",
+      "sourceNote": "作者表示今天不開倉，傾向等 FOMC 會議與講話後再考慮，但保留跌幅過大時開倉的例外。附圖僅為既有持倉追蹤，未列新推薦；不是已驗證的實際零成交紀錄。",
+      "kind": "position-tracker",
+      "reason": "既有持倉追蹤截圖，未逐筆轉錄；不代表當日推薦、真實成交或實現績效。"
     }
   ]
 }

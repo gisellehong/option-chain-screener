@@ -250,7 +250,7 @@ Each scheduled snapshot records the top ranked matched contracts as compact sign
 
 ## 老 K 每日比對 · Daily comparison
 
-來源以獨立的 `/Users/patrick_giselle/Documents/llm_wiki/LaoK` 為準。人工核對的每日推薦保存在 `data/laok-reference/recommendations.json`，含來源頁、發布時間、圖片位置與 SHA-256；目前 8/24–9/11 共 14 日／58 筆。9/11 第 4 週明確留白（截圖寫最低 ITM 6.4% >6%），以 excludedBuckets 獨立記錄，不新增虛構推薦；附帶 position tracker 留在 otherObservations。8/19 單張券商畫面另列 `otherObservations`，沒有可見 Bid/Ask，不混入每日五選。
+來源以獨立的 `/Users/patrick_giselle/Documents/llm_wiki/LaoK` 為準。人工核對的每日推薦保存在 `data/laok-reference/recommendations.json`，含來源頁、發布時間、圖片位置與 SHA-256；目前來源涵蓋 8/24–9/14 共 15 日／58 筆；9/14 作者表示當日不開倉，僅附既有持倉追蹤，記錄零筆新增推薦及原文例外，不推定實際零成交。9/11 第 4 週明確留白（截圖寫最低 ITM 6.4% >6%），以 excludedBuckets 獨立記錄，不新增虛構推薦；附帶 position tracker 留在 otherObservations。8/19 單張券商畫面另列 `otherObservations`，沒有可見 Bid/Ask，不混入每日五選。
 
 ```bash
 npm run compare:laok
