@@ -34,6 +34,17 @@ function isOutOfTheMoney(trade, underlyingPrice) {
     : underlyingPrice < trade.strike;
 }
 
+function newYorkMarketDate(generatedAt) {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/New_York",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(new Date(generatedAt));
+  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return `${values.year}-${values.month}-${values.day}`;
+}
+
 const tradeStates = trades.map((trade) => ({
   trade,
   entryAt: trade.validation?.nearestAfterSnapshot?.generatedAt ?? trade.observedAtSgt,
@@ -70,9 +81,9 @@ for (const date of fs.readdirSync(snapshotsRoot).sort()) {
 
       if (
         state.expiryClose === null &&
-        date === trade.expiration &&
         filename.startsWith("close-") &&
-        snapshot.session === "close"
+        snapshot.session === "close" &&
+        newYorkMarketDate(snapshot.generatedAt) === trade.expiration
       ) {
         const candidate = snapshot.candidates?.find((row) => row.ticker === trade.ticker);
         if (candidate) {
