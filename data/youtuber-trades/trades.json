@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-29T22:49:00+08:00",
+  "updatedAt": "2026-09-30T07:48:00+08:00",
   "source": {
     "type": "ibkr_screenshot",
     "path": "/Users/patrick_giselle/Downloads/Screenshot_20260609_095652.jpg",
@@ -148,9 +148,96 @@
       "visibleTradeCount": 1,
       "screenTradeCount": 2,
       "note": "Rich.TW IBKR screenshot shows one fully visible AMD short put trade out of 2 listed for 2026-09-29."
+    },
+    {
+      "type": "ibkr_discord_screenshot",
+      "path": "data/youtuber-trades/sources/rich-2026-09-29-amzn-risk-reversal.jpg",
+      "visibleTradeCount": 2,
+      "screenTradeCount": 5,
+      "note": "Rich.TW Discord screenshot shows two fully visible AMZN option trades out of five listed for 2026-09-29."
     }
   ],
   "trades": [
+    {
+      "id": "ibkr-20260929-123801-amzn-20271217-200-put-sell-8",
+      "tradeDate": "2026-09-29",
+      "tradeTimeEt": "12:38:01",
+      "observedAtSgt": "2026-09-30T00:38:01+08:00",
+      "broker": "IBKR",
+      "executionVenue": "SAPPHIRE",
+      "accountLabel": "Rich.TW",
+      "positionKind": "executed_trade",
+      "ticker": "AMZN",
+      "companyName": "Amazon.com Inc",
+      "action": "sell",
+      "quantity": 8,
+      "optionType": "put",
+      "expiration": "2027-12-17",
+      "strike": 200,
+      "fillPrice": 12.85,
+      "limitPrice": 12.85,
+      "grossPremium": 10280,
+      "commission": 3.58,
+      "realizedPnl": 0,
+      "sourcePath": "data/youtuber-trades/sources/rich-2026-09-29-amzn-risk-reversal.jpg",
+      "validation": {
+        "status": "supported",
+        "nearestBeforeSnapshot": {
+          "path": "data/snapshots/2026-09-30/half_hourly-20260930T003345_0800.json",
+          "generatedAt": "2026-09-30T00:33:45+08:00",
+          "minutesFromTrade": -4.27,
+          "bid": 12.7,
+          "ask": 13.05,
+          "mid": 12.875,
+          "underlyingPrice": 246.95,
+          "iv": 34.876,
+          "delta": -0.200789856,
+          "volume": 5,
+          "openInterest": 5606
+        },
+        "nearestAfterSnapshot": {
+          "path": "data/snapshots/2026-09-30/half_hourly-20260930T004902_0800.json",
+          "generatedAt": "2026-09-30T00:49:02+08:00",
+          "minutesFromTrade": 11.02,
+          "bid": 12.7,
+          "ask": 12.95,
+          "mid": 12.825,
+          "underlyingPrice": 247.23,
+          "iv": 34.864,
+          "delta": -0.200138808,
+          "volume": 47,
+          "openInterest": 5606
+        },
+        "assessment": "User-provided Rich.TW Discord screenshot shows IBKR sale of 8 AMZN 2027-12-17 200 puts at 12.85, gross premium $10,280 and commission $3.58. The fill is inside both adjacent archived bid/ask spreads. The screenshot shows execution-time realized P&L of $0; no closing trade or assignment is shown."
+      }
+    },
+    {
+      "id": "ibkr-20260929-123746-amzn-20271217-300-call-buy-5",
+      "tradeDate": "2026-09-29",
+      "tradeTimeEt": "12:37:46",
+      "observedAtSgt": "2026-09-30T00:37:46+08:00",
+      "broker": "IBKR",
+      "executionVenue": "BOX",
+      "accountLabel": "Rich.TW",
+      "positionKind": "executed_trade",
+      "ticker": "AMZN",
+      "companyName": "Amazon.com Inc",
+      "action": "buy",
+      "quantity": 5,
+      "optionType": "call",
+      "expiration": "2027-12-17",
+      "strike": 300,
+      "fillPrice": 25.97,
+      "limitPrice": 25.97,
+      "grossPremium": 12985,
+      "commission": 3.48,
+      "realizedPnl": 0,
+      "sourcePath": "data/youtuber-trades/sources/rich-2026-09-29-amzn-risk-reversal.jpg",
+      "validation": {
+        "status": "screenshot_only",
+        "assessment": "User-provided Rich.TW Discord screenshot shows IBKR purchase of 5 AMZN 2027-12-17 300 calls at 25.97, premium debit $12,985 and commission $3.48. The contract is absent from archived option-chain snapshots, so entry Greeks and later mark-to-market cannot be verified yet. The screenshot shows execution-time realized P&L of $0; no closing trade is shown."
+      }
+    },
     {
       "id": "ibkr-20260929-095948-amd-20261009-560-put-sell-13",
       "tradeDate": "2026-09-29",
