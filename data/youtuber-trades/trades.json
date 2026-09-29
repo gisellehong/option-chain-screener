@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-22T23:00:00+08:00",
+  "updatedAt": "2026-09-29T22:49:00+08:00",
   "source": {
     "type": "ibkr_screenshot",
     "path": "/Users/patrick_giselle/Downloads/Screenshot_20260609_095652.jpg",
@@ -141,9 +141,69 @@
       "visibleTradeCount": 1,
       "screenTradeCount": 2,
       "note": "Rich.TW Discord screenshot shows one fully visible AMD short put trade out of 2 listed for 2026-09-15."
+    },
+    {
+      "type": "ibkr_screenshot",
+      "path": "data/youtuber-trades/sources/rich-2026-09-29-amd-put.jpg",
+      "visibleTradeCount": 1,
+      "screenTradeCount": 2,
+      "note": "Rich.TW IBKR screenshot shows one fully visible AMD short put trade out of 2 listed for 2026-09-29."
     }
   ],
   "trades": [
+    {
+      "id": "ibkr-20260929-095948-amd-20261009-560-put-sell-13",
+      "tradeDate": "2026-09-29",
+      "tradeTimeEt": "09:59:48",
+      "observedAtSgt": "2026-09-29T21:59:48+08:00",
+      "broker": "IBKR",
+      "executionVenue": "PHLX",
+      "accountLabel": "Rich.TW",
+      "positionKind": "executed_trade",
+      "ticker": "AMD",
+      "companyName": "Advanced Micro Devices",
+      "action": "sell",
+      "quantity": 13,
+      "optionType": "put",
+      "expiration": "2026-10-09",
+      "strike": 560,
+      "fillPrice": 2.95,
+      "limitPrice": 2.95,
+      "grossPremium": 3835,
+      "commission": 9.01,
+      "realizedPnl": 0,
+      "sourcePath": "data/youtuber-trades/sources/rich-2026-09-29-amd-put.jpg",
+      "validation": {
+        "status": "screenshot_only",
+        "nearestBeforeSnapshot": {
+          "bid": 3.35,
+          "ask": 3.65,
+          "mid": 3.5,
+          "underlyingPrice": 616.9799,
+          "iv": 51.786,
+          "delta": -0.12738868,
+          "volume": 8,
+          "openInterest": 506,
+          "path": "data/snapshots/2026-09-29/half_hourly-20260929T215140_0800.json",
+          "generatedAt": "2026-09-29T21:51:40+08:00",
+          "minutesFromTrade": -8.13
+        },
+        "nearestAfterSnapshot": {
+          "bid": 3.35,
+          "ask": 3.5,
+          "mid": 3.425,
+          "underlyingPrice": 617.84,
+          "iv": 52.912,
+          "delta": -0.127843567,
+          "volume": 149,
+          "openInterest": 506,
+          "path": "data/snapshots/2026-09-29/half_hourly-20260929T220628_0800.json",
+          "generatedAt": "2026-09-29T22:06:28+08:00",
+          "minutesFromTrade": 6.67
+        },
+        "assessment": "User-provided Rich.TW IBKR screenshot shows sale of 13 AMD 2026-10-09 560 puts at 2.95, gross premium $3,835, commission $9.01, and execution-time realized P&L $0. The reported fill was below both adjacent archived bid/ask spreads, so the screenshot remains the execution evidence and the nearby snapshot is used only for entry Greeks. No closing trade or assignment is shown."
+      }
+    },
     {
       "id": "ibkr-20260915-095600-amd-20260925-455-put-sell-10",
       "tradeDate": "2026-09-15",
