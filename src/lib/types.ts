@@ -89,6 +89,7 @@ export interface OptionCandidate {
   priceSource?: string;
   underlyingPriceSource?: string;
   ivPercentileSource?: string;
+  quoteTimeEt?: string;
 }
 
 export interface ScoredCandidate extends OptionCandidate {

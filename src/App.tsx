@@ -909,6 +909,7 @@ function YouTuberTracker({
                           ? `Mid/Ask ${formatCurrency(latestMid)} / ${formatCurrency(current.ask)}`
                           : "Waiting for matching snapshot"}
                       </small>
+                      {current?.quoteTimeEt && <small>Quote {current.quoteTimeEt}</small>}
                     </td>
                     <td>
                       <span className={`score ${pnlTone(pnl)}`}>{pnl === null ? "N/A" : formatCurrency(pnl, 0)}</span>
