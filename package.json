@@ -22,7 +22,7 @@
     "validate:lao-k": "node scripts/validate-lao-k-strategy.mjs",
     "import:ledger": "node scripts/import-option-ledger.mjs",
     "test": "node --test scripts/tests/*.test.mjs && python3 -m unittest discover -s scripts/tests -p \"test_*.py\"",
-    "compare:laok": "node scripts/compare-laok.mjs"
+    "compare:laok": "node --max-old-space-size=8192 scripts/compare-laok.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^5.0.0",
