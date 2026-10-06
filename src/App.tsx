@@ -770,7 +770,9 @@ function YouTuberTracker({
                     </small>
                     <small>Entry IV {formatMaybePercent(lifecycle.entryQuote.iv, 1)} · Delta {formatMaybeNumber(lifecycle.entryQuote.delta, 3)}</small>
                     <small>Entry DTE {entryDte === null ? "N/A" : `${entryDte} 天 (days)`}</small>
-                    <small>Snapshot {formatShortDate(lifecycle.entryQuote.generatedAt)}（本地時間）</small>
+                    <small>{lifecycle.entryQuote.iv === null && lifecycle.entryQuote.delta === null
+                      ? "Entry snapshot unavailable"
+                      : `Snapshot ${formatShortDate(lifecycle.entryQuote.generatedAt)}（本地時間）`}</small>
                   </td>
                   <td>
                     <strong>{returnOnCollateral === null ? "N/A" : formatPercent(returnOnCollateral, 2)} Entry ROC</strong>
@@ -784,6 +786,7 @@ function YouTuberTracker({
                         ? "No matching latest quote"
                         : `Bid/Mid ${formatCurrency(latestBid)} / ${formatCurrency(latestMid)}`}
                     </small>
+                    {current?.quoteTimeEt && <small>Quote {current.quoteTimeEt}</small>}
                   </td>
                   <td>
                     <span className={`score ${pnlTone(pnl)}`}>{pnl === null ? "N/A" : formatCurrency(pnl, 0)}</span>

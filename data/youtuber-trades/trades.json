@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-30T07:48:00+08:00",
+  "updatedAt": "2026-10-06T23:22:11+08:00",
   "source": {
     "type": "ibkr_screenshot",
     "path": "/Users/patrick_giselle/Downloads/Screenshot_20260609_095652.jpg",
@@ -155,9 +155,43 @@
       "visibleTradeCount": 2,
       "screenTradeCount": 5,
       "note": "Rich.TW Discord screenshot shows two fully visible AMZN option trades out of five listed for 2026-09-29."
+    },
+    {
+      "type": "ibkr_discord_screenshot",
+      "path": "data/youtuber-trades/sources/rich-2026-10-06-amd-put.jpg",
+      "visibleTradeCount": 1,
+      "screenTradeCount": 1,
+      "note": "Rich.TW Discord screenshot shows one fully visible AMD short put trade for 2026-10-06."
     }
   ],
   "trades": [
+    {
+      "id": "ibkr-20261006-095512-amd-20261016-580-put-sell-15",
+      "tradeDate": "2026-10-06",
+      "tradeTimeEt": "09:55:12",
+      "observedAtSgt": "2026-10-06T21:55:12+08:00",
+      "broker": "IBKR",
+      "executionVenue": "SAPPHIRE",
+      "accountLabel": "Rich.TW",
+      "positionKind": "executed_trade",
+      "ticker": "AMD",
+      "companyName": "Advanced Micro Devices",
+      "action": "sell",
+      "quantity": 15,
+      "optionType": "put",
+      "expiration": "2026-10-16",
+      "strike": 580,
+      "fillPrice": 2.4,
+      "limitPrice": 2.4,
+      "grossPremium": 3600,
+      "commission": 6.33,
+      "realizedPnl": 0,
+      "sourcePath": "data/youtuber-trades/sources/rich-2026-10-06-amd-put.jpg",
+      "validation": {
+        "status": "screenshot_only",
+        "assessment": "User-provided Rich.TW Discord screenshot shows IBKR sale of 15 AMD 2026-10-16 580 puts at 2.40, gross premium $3,600, commission $6.33, and execution-time realized P&L $0. No archived snapshot sufficiently close to the 09:55:12 ET fill is available to verify entry Greeks. A later moomoo OpenD quote at 2026-10-06 11:21:11 ET is used only for current mark-to-market, not as an entry snapshot. No closing trade or assignment is shown."
+      }
+    },
     {
       "id": "ibkr-20260929-123801-amzn-20271217-200-put-sell-8",
       "tradeDate": "2026-09-29",
