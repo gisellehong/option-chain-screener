@@ -1,31 +1,31 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-06T15:36:36.913Z",
+  "generatedAt": "2026-10-07T15:38:24.725Z",
   "configHash": "7e8001606f0736678e6c85f67cf783ee2aad0df71ec7149a6d9a5413eedbe5ac",
   "summary": {
-    "sourceDays": 18,
-    "recommendations": 70,
-    "latestSourceDate": "2026-10-02",
+    "sourceDays": 20,
+    "recommendations": 77,
+    "latestSourceDate": "2026-10-07",
     "frozenDays": 4,
     "replayDays": 12,
-    "screenshotExceptionRows": 18,
+    "screenshotExceptionRows": 24,
     "scenarios": {
       "execution": {
-        "total": 70,
+        "total": 77,
         "comparable": 30,
         "exactMatches": 4,
         "exactMatchPct": 13.333,
-        "outsideUniverse": 6,
-        "missingData": 34,
+        "outsideUniverse": 8,
+        "missingData": 39,
         "pairedMarks": 16
       },
       "conservative": {
-        "total": 70,
+        "total": 77,
         "comparable": 30,
         "exactMatches": 5,
         "exactMatchPct": 16.667,
-        "outsideUniverse": 6,
-        "missingData": 34,
+        "outsideUniverse": 8,
+        "missingData": 39,
         "pairedMarks": 22
       }
     }
@@ -9360,6 +9360,400 @@
       ],
       "sourceNote": null,
       "recommendationStatus": null
+    },
+    {
+      "date": "2026-10-06",
+      "sourceId": "117394353553813",
+      "sourcePage": "wiki/sources/laok-post-2026-10-06-117394353553813.md",
+      "publishedAt": "2026-10-06T14:07:58.000Z",
+      "snapshotAt": null,
+      "snapshotFile": null,
+      "alignmentMinutes": null,
+      "decisionMode": "unavailable",
+      "configHash": "7e8001606f0736678e6c85f67cf783ee2aad0df71ec7149a6d9a5413eedbe5ac",
+      "configVersion": "2026-09-07.v1",
+      "rows": [
+        {
+          "displayWeek": 2,
+          "expiration": "2026-10-16",
+          "strike": 125,
+          "dte": 10,
+          "otmPct": 25.9,
+          "expiryItmPct": 5.2,
+          "touchPct": 14.8,
+          "delta": -0.048,
+          "bid": 0.57,
+          "mid": 0.69,
+          "ask": 0.81,
+          "bidAnnualizedRoiPct": 16.6,
+          "midAnnualizedRoiPct": 20.1,
+          "openInterest": 1326,
+          "bidSize": null,
+          "ticker": "SOXL",
+          "date": "2026-10-06",
+          "optionType": "put",
+          "volume": 22,
+          "verification": "image-reviewed",
+          "sourceId": "117394353553813",
+          "screenshotExceptions": [
+            "ITM >5%"
+          ],
+          "scenarios": {
+            "execution": {
+              "status": "missing_snapshot",
+              "reasons": [
+                "發文前 60 分鐘內無正常交易時段快照"
+              ],
+              "pick": null,
+              "exactMatch": false,
+              "strikeDifference": null,
+              "outcome": null
+            },
+            "conservative": {
+              "status": "missing_snapshot",
+              "reasons": [
+                "發文前 60 分鐘內無正常交易時段快照"
+              ],
+              "pick": null,
+              "exactMatch": false,
+              "strikeDifference": null,
+              "outcome": null
+            }
+          }
+        },
+        {
+          "displayWeek": 3,
+          "expiration": "2026-10-23",
+          "strike": 110,
+          "dte": 17,
+          "otmPct": 34.8,
+          "expiryItmPct": 4.5,
+          "touchPct": 10,
+          "delta": -0.037,
+          "bid": 0.65,
+          "mid": 0.7,
+          "ask": 0.75,
+          "bidAnnualizedRoiPct": 12.7,
+          "midAnnualizedRoiPct": 13.7,
+          "openInterest": 1111,
+          "bidSize": null,
+          "ticker": "SOXL",
+          "date": "2026-10-06",
+          "optionType": "put",
+          "volume": 3,
+          "verification": "image-reviewed",
+          "sourceId": "117394353553813",
+          "screenshotExceptions": [
+            "Mid 年化 <20%"
+          ],
+          "scenarios": {
+            "execution": {
+              "status": "missing_snapshot",
+              "reasons": [
+                "發文前 60 分鐘內無正常交易時段快照"
+              ],
+              "pick": null,
+              "exactMatch": false,
+              "strikeDifference": null,
+              "outcome": null
+            },
+            "conservative": {
+              "status": "missing_snapshot",
+              "reasons": [
+                "發文前 60 分鐘內無正常交易時段快照"
+              ],
+              "pick": null,
+              "exactMatch": false,
+              "strikeDifference": null,
+              "outcome": null
+            }
+          }
+        },
+        {
+          "displayWeek": 4,
+          "expiration": "2026-10-30",
+          "strike": 145,
+          "dte": 24,
+          "otmPct": 27.2,
+          "expiryItmPct": 4.4,
+          "touchPct": 9.7,
+          "delta": -0.093,
+          "bid": 2.1,
+          "mid": 2.5,
+          "ask": 2.91,
+          "bidAnnualizedRoiPct": 22,
+          "midAnnualizedRoiPct": 26.3,
+          "openInterest": 93,
+          "bidSize": null,
+          "ticker": "MRNA",
+          "date": "2026-10-06",
+          "optionType": "put",
+          "volume": 115,
+          "verification": "image-reviewed",
+          "sourceId": "117394353553813",
+          "screenshotExceptions": [
+            "SOXL-only",
+            "OI <250"
+          ],
+          "scenarios": {
+            "execution": {
+              "status": "outside_universe",
+              "reasons": [
+                "標的範圍不同 · Universe"
+              ],
+              "pick": null,
+              "exactMatch": false,
+              "strikeDifference": null,
+              "outcome": null
+            },
+            "conservative": {
+              "status": "outside_universe",
+              "reasons": [
+                "標的範圍不同 · Universe"
+              ],
+              "pick": null,
+              "exactMatch": false,
+              "strikeDifference": null,
+              "outcome": null
+            }
+          }
+        },
+        {
+          "displayWeek": 5,
+          "expiration": "2026-11-06",
+          "strike": 105,
+          "dte": 31,
+          "otmPct": 37.6,
+          "expiryItmPct": 5.6,
+          "touchPct": 13.5,
+          "delta": -0.066,
+          "bid": 1.91,
+          "mid": 2.02,
+          "ask": 2.12,
+          "bidAnnualizedRoiPct": 21.4,
+          "midAnnualizedRoiPct": 22.6,
+          "openInterest": 2852,
+          "bidSize": null,
+          "ticker": "SOXL",
+          "date": "2026-10-06",
+          "optionType": "put",
+          "volume": 23,
+          "verification": "image-reviewed",
+          "sourceId": "117394353553813",
+          "screenshotExceptions": [
+            "ITM >5%"
+          ],
+          "scenarios": {
+            "execution": {
+              "status": "missing_snapshot",
+              "reasons": [
+                "發文前 60 分鐘內無正常交易時段快照"
+              ],
+              "pick": null,
+              "exactMatch": false,
+              "strikeDifference": null,
+              "outcome": null
+            },
+            "conservative": {
+              "status": "missing_snapshot",
+              "reasons": [
+                "發文前 60 分鐘內無正常交易時段快照"
+              ],
+              "pick": null,
+              "exactMatch": false,
+              "strikeDifference": null,
+              "outcome": null
+            }
+          }
+        }
+      ],
+      "extraPicks": {},
+      "excludedBuckets": [
+        {
+          "displayWeek": 1,
+          "ticker": "未標示標的",
+          "expiration": "2026-10-09",
+          "expirationBasis": "inferred weekly date",
+          "reason": "本期該檔無推薦；不降低標準湊數，未揭露具體門檻數值"
+        }
+      ],
+      "sourceNote": null,
+      "recommendationStatus": null
+    },
+    {
+      "date": "2026-10-07",
+      "sourceId": "117399975231893",
+      "sourcePage": "wiki/sources/laok-post-2026-10-07-117399975231893.md",
+      "publishedAt": "2026-10-07T13:57:38.000Z",
+      "snapshotAt": null,
+      "snapshotFile": null,
+      "alignmentMinutes": null,
+      "decisionMode": "unavailable",
+      "configHash": "7e8001606f0736678e6c85f67cf783ee2aad0df71ec7149a6d9a5413eedbe5ac",
+      "configVersion": "2026-09-07.v1",
+      "rows": [
+        {
+          "displayWeek": 1,
+          "expiration": "2026-10-16",
+          "strike": 115,
+          "dte": 9,
+          "otmPct": 25.5,
+          "expiryItmPct": 4.8,
+          "touchPct": 13.6,
+          "delta": -0.03,
+          "bid": 0.73,
+          "mid": 0.76,
+          "ask": 0.78,
+          "bidAnnualizedRoiPct": 25.7,
+          "midAnnualizedRoiPct": 26.6,
+          "openInterest": 2037,
+          "bidSize": null,
+          "ticker": "SOXL",
+          "date": "2026-10-07",
+          "optionType": "put",
+          "volume": 27,
+          "verification": "image-reviewed",
+          "sourceId": "117399975231893",
+          "screenshotExceptions": [],
+          "scenarios": {
+            "execution": {
+              "status": "missing_snapshot",
+              "reasons": [
+                "發文前 60 分鐘內無正常交易時段快照"
+              ],
+              "pick": null,
+              "exactMatch": false,
+              "strikeDifference": null,
+              "outcome": null
+            },
+            "conservative": {
+              "status": "missing_snapshot",
+              "reasons": [
+                "發文前 60 分鐘內無正常交易時段快照"
+              ],
+              "pick": null,
+              "exactMatch": false,
+              "strikeDifference": null,
+              "outcome": null
+            }
+          }
+        },
+        {
+          "displayWeek": 2,
+          "expiration": "2026-10-23",
+          "strike": 100,
+          "dte": 16,
+          "otmPct": 35.6,
+          "expiryItmPct": 4.1,
+          "touchPct": 8.9,
+          "delta": -0.04,
+          "bid": 0.6,
+          "mid": 0.72,
+          "ask": 0.85,
+          "bidAnnualizedRoiPct": 13.7,
+          "midAnnualizedRoiPct": 16.5,
+          "openInterest": 2260,
+          "bidSize": null,
+          "ticker": "SOXL",
+          "date": "2026-10-07",
+          "optionType": "put",
+          "volume": 1,
+          "verification": "image-reviewed",
+          "sourceId": "117399975231893",
+          "screenshotExceptions": [
+            "Mid 年化 <20%"
+          ],
+          "scenarios": {
+            "execution": {
+              "status": "missing_snapshot",
+              "reasons": [
+                "發文前 60 分鐘內無正常交易時段快照"
+              ],
+              "pick": null,
+              "exactMatch": false,
+              "strikeDifference": null,
+              "outcome": null
+            },
+            "conservative": {
+              "status": "missing_snapshot",
+              "reasons": [
+                "發文前 60 分鐘內無正常交易時段快照"
+              ],
+              "pick": null,
+              "exactMatch": false,
+              "strikeDifference": null,
+              "outcome": null
+            }
+          }
+        },
+        {
+          "displayWeek": 3,
+          "expiration": "2026-10-30",
+          "strike": 135,
+          "dte": 23,
+          "otmPct": 28.1,
+          "expiryItmPct": 3.3,
+          "touchPct": 8.5,
+          "delta": -0.09,
+          "bid": 1.78,
+          "mid": 2.16,
+          "ask": 2.54,
+          "bidAnnualizedRoiPct": 20.9,
+          "midAnnualizedRoiPct": 25.4,
+          "openInterest": 421,
+          "bidSize": null,
+          "ticker": "MRNA",
+          "date": "2026-10-07",
+          "optionType": "put",
+          "volume": 14,
+          "verification": "image-reviewed",
+          "sourceId": "117399975231893",
+          "screenshotExceptions": [
+            "SOXL-only"
+          ],
+          "scenarios": {
+            "execution": {
+              "status": "outside_universe",
+              "reasons": [
+                "標的範圍不同 · Universe"
+              ],
+              "pick": null,
+              "exactMatch": false,
+              "strikeDifference": null,
+              "outcome": null
+            },
+            "conservative": {
+              "status": "outside_universe",
+              "reasons": [
+                "標的範圍不同 · Universe"
+              ],
+              "pick": null,
+              "exactMatch": false,
+              "strikeDifference": null,
+              "outcome": null
+            }
+          }
+        }
+      ],
+      "extraPicks": {},
+      "excludedBuckets": [
+        {
+          "displayWeek": 4,
+          "ticker": "未標示標的",
+          "expiration": "2026-11-06",
+          "expirationBasis": "inferred weekly date",
+          "reason": "該檔最低到期 ITM 6.2% 仍高於 6%；不降低標準湊數；作者同時表示避開大選而不推薦十一月到期合約"
+        },
+        {
+          "displayWeek": 5,
+          "ticker": "未標示標的",
+          "expiration": "2026-11-13",
+          "expirationBasis": "inferred weekly date",
+          "reason": "該檔最低到期 ITM 6.3% 仍高於 6%；不降低標準湊數；作者同時表示避開大選而不推薦十一月到期合約"
+        }
+      ],
+      "sourceNote": null,
+      "recommendationStatus": null
     }
   ],
   "limitations": [
@@ -9465,6 +9859,16 @@
       "sourcePage": "wiki/sources/laok-post-2026-10-02-117371635892229.md",
       "postId": "117371635892229",
       "status": "imported"
+    },
+    {
+      "sourcePage": "wiki/sources/laok-post-2026-10-06-117394353553813.md",
+      "postId": "117394353553813",
+      "status": "imported"
+    },
+    {
+      "sourcePage": "wiki/sources/laok-post-2026-10-07-117399975231893.md",
+      "postId": "117399975231893",
+      "status": "imported"
     }
   ],
   "otherObservations": [
@@ -9541,6 +9945,26 @@
       "imageSha256": "a752f1333cfeda8a67ea93e459624f3f4800fdabc3741df518b44a72cbe41896",
       "kind": "position-tracker",
       "reason": "作者累計戰績追蹤圖，獨立保存；圖示平均浮盈 78.2%，貼文內文稱 74.9%，兩者不一致。75 筆、43 已到期、32 持倉及 100% 到期勝率均屬作者自述，非逐筆獨立核驗的成交或收益。"
+    },
+    {
+      "date": "2026-10-06",
+      "postId": "117394353553813",
+      "publishedAt": "2026-10-06T14:07:58.000Z",
+      "sourcePage": "wiki/sources/laok-post-2026-10-06-117394353553813.md",
+      "imagePath": "raw/assets/social-posts/moomoo/117394353553813/02.png",
+      "imageSha256": "84a1615bac7cca322983aa6afe06cb8d5c59cc77572e87862ed3c52945a197bf",
+      "kind": "position-tracker",
+      "reason": "作者自述累計 79 筆推薦、26 持有、53 安全到期、平均浮盈 69.6%；不當成新推薦、實際成交或獨立驗證績效。"
+    },
+    {
+      "date": "2026-10-07",
+      "postId": "117399975231893",
+      "publishedAt": "2026-10-07T13:57:38.000Z",
+      "sourcePage": "wiki/sources/laok-post-2026-10-07-117399975231893.md",
+      "imagePath": "raw/assets/social-posts/moomoo/117399975231893/02.png",
+      "imageSha256": "23e7f6133df89f9118e7a29e652e74b2766e8978537604043a0f0932639869a8",
+      "kind": "position-tracker",
+      "reason": "作者自述累計 82 筆推薦、29 持有、53 安全到期、平均浮盈 49.0%；不當成新推薦、實際成交或獨立驗證績效。"
     }
   ]
 }
