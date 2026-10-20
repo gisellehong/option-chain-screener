@@ -1,8 +1,8 @@
 # 老 K 每日比對 · Daily comparison
 
-更新：2026-10-19T15:37:17.015Z；來源截至 2026-10-19。共 25 日／100 筆。
+更新：2026-10-20T15:31:55.495Z；來源截至 2026-10-20。共 26 日／105 筆。
 
-歷史回放 12 日，事前凍結 9 日。40 筆至少違反一項舊版推定規則。
+歷史回放 12 日，事前凍結 10 日。43 筆至少違反一項舊版推定規則。
 
 ## 方法與限制
 
@@ -24,8 +24,29 @@
 
 |版本|可比筆數|同合約|缺資料|範圍外|紙上共同估值|
 |---|---:|---:|---:|---:|---:|
-|execution|41|8|39|20|22|
-|conservative|41|7|39|20|31|
+|execution|44|9|39|22|24|
+|conservative|44|8|39|22|34|
+
+## 2026-10-20
+
+模式：frozen_forward；發文：2026-10-20T13:55:52.000Z；快照：2026-10-20T21:48:46+08:00；間隔：7.1 分鐘。
+
+|老 K 合約|Risk first|選出合約|差異原因|Reference|
+|---|---|---|---|---|
+|SOXL 2026-10-23 60P|門檻淘汰|70P|Delta Guardrail / 相對價差 · Spread|門檻淘汰|
+|MRNA 2026-10-30 145P|標的範圍不同|—|標的範圍不同 · Universe|標的範圍不同|
+|SOXL 2026-11-06 55P|同合約|55P|—|同合約|
+|NBIS 2026-11-13 120P|標的範圍不同|—|標的範圍不同 · Universe|標的範圍不同|
+|SOXL 2026-11-20 45P|門檻淘汰|—|% OTM / 相對價差 · Spread|門檻淘汰|
+
+來源說明：五筆是公開演算法候選，作者明說部分實做、部分未做；同日隨筆再說自己實際開倉只從候選中選，但不即時公布操作。95% 是待驗目標。第二圖是獨立的模型追蹤，不代表 broker fills、realized P/L 或實際接股。
+
+|老 K / Risk first|共同觀察|老 K 現金報酬|Risk first 現金報酬|差（百分點）|
+|---|---|---:|---:|---:|
+|SOXL 2026-10-23 60P / 70P|2026-10-20T23:18:00+08:00|-0.033%|0.229%|0.262|
+|SOXL 2026-11-06 55P / 55P|2026-10-20T23:18:00+08:00|0.018%|0.018%|0|
+
+截圖例外：MRNA 145P (2026-10-30)：SOXL-only、OI <250；NBIS 120P (2026-11-13)：SOXL-only、ITM >5%、Delta 超出 -0.10～-0.02、OI <250；SOXL 45P (2026-11-20)：OTM 超出 20%～45%。
 
 ## 2026-10-19
 
@@ -43,7 +64,7 @@
 
 |老 K / Risk first|共同觀察|老 K 現金報酬|Risk first 現金報酬|差（百分點）|
 |---|---|---:|---:|---:|
-|SOXL 2026-10-23 60P / 70P|2026-10-19T23:34:13+08:00|0.05%|0.1%|0.05|
+|SOXL 2026-10-23 60P / 70P|2026-10-20T23:18:00+08:00|-0.05%|-0.043%|0.007|
 
 截圖例外：SOXL 60P (2026-10-23)：Delta 超出 -0.10～-0.02；MRNA 150P (2026-10-30)：SOXL-only；NBIS 120P (2026-11-13)：SOXL-only、OI <250；PEN 220P (2026-11-20)：SOXL-only、Delta 超出 -0.10～-0.02、OI <250。
 
@@ -63,7 +84,7 @@
 
 |老 K / Risk first|共同觀察|老 K 現金報酬|Risk first 現金報酬|差（百分點）|
 |---|---|---:|---:|---:|
-|SOXL 2026-10-23 65P / 60P|2026-10-19T23:34:13+08:00|0.554%|0.367%|-0.187|
+|SOXL 2026-10-23 65P / 60P|2026-10-20T23:18:00+08:00|0.415%|0.267%|-0.148|
 
 截圖例外：MRNA 148P (2026-10-30)：SOXL-only、OI <250；SOXL 60P (2026-11-06)：OI <250；SOXL 60P (2026-11-13)：OI <250；PEN 200P (2026-11-20)：SOXL-only、Delta 超出 -0.10～-0.02、OI <250。
 
@@ -84,8 +105,8 @@
 
 |老 K / Risk first|共同觀察|老 K 現金報酬|Risk first 現金報酬|差（百分點）|
 |---|---|---:|---:|---:|
-|SOXL 2026-10-23 85P / 85P|2026-10-19T23:34:13+08:00|-0.459%|-0.459%|0|
-|SOXL 2026-11-06 70P / 70P|2026-10-19T23:34:13+08:00|-1.1%|-1.1%|0|
+|SOXL 2026-10-23 85P / 85P|2026-10-20T23:18:00+08:00|-0.988%|-0.988%|0|
+|SOXL 2026-11-06 70P / 70P|2026-10-20T23:18:00+08:00|-1.714%|-1.714%|0|
 
 截圖例外：MRNA 148P (2026-10-30)：SOXL-only、OI <250；SOXL 70P (2026-11-20)：ITM >5%。
 
@@ -106,7 +127,7 @@
 
 |老 K / Risk first|共同觀察|老 K 現金報酬|Risk first 現金報酬|差（百分點）|
 |---|---|---:|---:|---:|
-|SOXL 2026-10-23 90P / 90P|2026-10-19T23:34:13+08:00|-1.089%|-1.089%|0|
+|SOXL 2026-10-23 90P / 90P|2026-10-20T23:18:00+08:00|-1.889%|-1.889%|0|
 
 截圖例外：MRNA 150P (2026-10-30)：SOXL-only；MRNA 135P (2026-11-06)：SOXL-only、OI <250；PEN 210P (2026-11-20)：SOXL-only、Delta 超出 -0.10～-0.02、OI <250。
 
@@ -175,7 +196,7 @@
 |老 K / Risk first|共同觀察|老 K 現金報酬|Risk first 現金報酬|差（百分點）|
 |---|---|---:|---:|---:|
 |SOXL 2026-10-16 114P / 100P|2026-10-17T03:47:56+08:00|-18.5%|-6.28%|12.22|
-|SOXL 2026-10-23 105P / 95P|2026-10-19T23:34:13+08:00|-4.857%|-1.979%|2.878|
+|SOXL 2026-10-23 105P / 95P|2026-10-20T23:18:00+08:00|-7.238%|-3.242%|3.996|
 
 截圖例外：MRNA 135P (2026-10-30)：SOXL-only；SOXL 90P (2026-11-06)：OTM 超出 20%～45%。
 
@@ -196,7 +217,7 @@
 |SOXL 2026-10-02 100P / 100P|2026-10-02T21:36:12+08:00|0.58%|0.58%|0|
 |SOXL 2026-10-09 90P / 80P|2026-10-08T21:50:01+08:00|0.7%|0.45%|-0.25|
 |SOXL 2026-10-16 85P / 80P|2026-10-17T01:35:37+08:00|1.094%|0.813%|-0.281|
-|SOXL 2026-10-23 80P / 80P|2026-10-19T23:34:13+08:00|0.787%|0.787%|0|
+|SOXL 2026-10-23 80P / 80P|2026-10-20T23:18:00+08:00|0.4%|0.4%|0|
 
 截圖例外：無。
 
@@ -437,28 +458,29 @@
 
 ## 參考連結
 
-- [2026-08-24 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-08-24-117150827544581.md)
-- [2026-08-25 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-08-25-117156534943749.md)
-- [2026-08-26 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-08-26-117162179821973.md)
-- [2026-08-27 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-08-27-117167858188293.md)
-- [2026-08-28 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-08-28-117173574434821.md)
-- [2026-08-31 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-08-31-117190628868101.md)
-- [2026-09-01 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-09-01-117196119080965.md)
-- [2026-09-02 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-09-02-117201805574157.md)
-- [2026-09-03 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-09-03-117207432167429.md)
-- [2026-09-04 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-09-04-117213080911877.md)
-- [2026-09-08 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-09-08-117235709050885.md)
-- [2026-09-09 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-09-09-117241410879501.md)
-- [2026-09-10 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-09-10-117247120048533.md)
-- [2026-09-11 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-09-11-117252701159833.md)
-- [2026-09-14 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-09-14-117269689532425.md)
-- [2026-09-18 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-09-18-117292349784469.md)
-- [2026-09-22 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-09-22-117314969665941.md)
-- [2026-10-02 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-10-02-117371635892229.md)
-- [2026-10-06 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-10-06-117394353553813.md)
-- [2026-10-07 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-10-07-117399975231893.md)
-- [2026-10-09 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-10-09-117411298476865.md)
-- [2026-10-12 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-10-12-117428258538277.md)
-- [2026-10-14 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-10-14-117439604654085.md)
-- [2026-10-15 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-10-15-117445333549061.md)
-- [2026-10-19 LaoK Wiki](/Users/patrick_giselle/Documents/llm_wiki/LaoK/wiki/sources/laok-post-2026-10-19-117467889270789.md)
+- 2026-08-24 LaoK Wiki source: wiki/sources/laok-post-2026-08-24-117150827544581.md
+- 2026-08-25 LaoK Wiki source: wiki/sources/laok-post-2026-08-25-117156534943749.md
+- 2026-08-26 LaoK Wiki source: wiki/sources/laok-post-2026-08-26-117162179821973.md
+- 2026-08-27 LaoK Wiki source: wiki/sources/laok-post-2026-08-27-117167858188293.md
+- 2026-08-28 LaoK Wiki source: wiki/sources/laok-post-2026-08-28-117173574434821.md
+- 2026-08-31 LaoK Wiki source: wiki/sources/laok-post-2026-08-31-117190628868101.md
+- 2026-09-01 LaoK Wiki source: wiki/sources/laok-post-2026-09-01-117196119080965.md
+- 2026-09-02 LaoK Wiki source: wiki/sources/laok-post-2026-09-02-117201805574157.md
+- 2026-09-03 LaoK Wiki source: wiki/sources/laok-post-2026-09-03-117207432167429.md
+- 2026-09-04 LaoK Wiki source: wiki/sources/laok-post-2026-09-04-117213080911877.md
+- 2026-09-08 LaoK Wiki source: wiki/sources/laok-post-2026-09-08-117235709050885.md
+- 2026-09-09 LaoK Wiki source: wiki/sources/laok-post-2026-09-09-117241410879501.md
+- 2026-09-10 LaoK Wiki source: wiki/sources/laok-post-2026-09-10-117247120048533.md
+- 2026-09-11 LaoK Wiki source: wiki/sources/laok-post-2026-09-11-117252701159833.md
+- 2026-09-14 LaoK Wiki source: wiki/sources/laok-post-2026-09-14-117269689532425.md
+- 2026-09-18 LaoK Wiki source: wiki/sources/laok-post-2026-09-18-117292349784469.md
+- 2026-09-22 LaoK Wiki source: wiki/sources/laok-post-2026-09-22-117314969665941.md
+- 2026-10-02 LaoK Wiki source: wiki/sources/laok-post-2026-10-02-117371635892229.md
+- 2026-10-06 LaoK Wiki source: wiki/sources/laok-post-2026-10-06-117394353553813.md
+- 2026-10-07 LaoK Wiki source: wiki/sources/laok-post-2026-10-07-117399975231893.md
+- 2026-10-09 LaoK Wiki source: wiki/sources/laok-post-2026-10-09-117411298476865.md
+- 2026-10-12 LaoK Wiki source: wiki/sources/laok-post-2026-10-12-117428258538277.md
+- 2026-10-14 LaoK Wiki source: wiki/sources/laok-post-2026-10-14-117439604654085.md
+- 2026-10-15 LaoK Wiki source: wiki/sources/laok-post-2026-10-15-117445333549061.md
+- 2026-10-19 LaoK Wiki source: wiki/sources/laok-post-2026-10-19-117467889270789.md
+- 2026-10-20 LaoK Wiki source: wiki/sources/laok-post-2026-10-20-117473578319877.md
